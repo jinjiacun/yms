@@ -1,0 +1,12 @@
+<?php if (!defined('THINK_PATH')) exit();?><html>
+<head>
+	<title>用户登录</title>
+</head>
+<body>
+	<form name="theForm" method="post">
+	用户名:<input type="text" name="user_name"/><br/>
+	密码:<input type="password" name="password"/><br/>
+	<input type="submit" name="submit" value="确定"/>
+	</form>
+</body>
+</html>

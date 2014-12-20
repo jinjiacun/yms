@@ -1,0 +1,23 @@
+<html>
+<head>
+	<title>添加商品</title>
+</head>
+<body>
+	<form name="theForm" method="post" enctype="multipart/form-data">
+	商品编号:<input type="text" name="goods_name"/><br/>
+	字号:<input type="text" name="post_no"/><br/>
+	商品图片:<input type="file" name="picture"/><br/>
+	邮票品相:<select name='post_condition'>
+		<volist name="post_condition_list" id="post_condition">
+			<option value="{$post_condition.sn}">{$post_condition.name}</option>
+		</volist>
+	</select><br/>
+	邮票规格:<select name='post_condition'>
+		<volist name="post_condition_list" id="post_condition">
+			<option value="{$post_condition.sn}">{$post_condition.name}</option>
+		</volist>
+	</select><br/>
+	<input type="submit" name="submit" value="确定"/>
+	</form>
+</body>
+</html>

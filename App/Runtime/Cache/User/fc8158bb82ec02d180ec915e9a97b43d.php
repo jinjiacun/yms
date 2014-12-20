@@ -1,0 +1,11 @@
+<?php if (!defined('THINK_PATH')) exit();?><html>
+<head>
+	<title>上传图片</title>
+</head>
+<body>
+	<form name="theForm" method="post" enctype="multipart/form-data">
+	图片:<input type="file" name="picture"/><br/>
+	<input type="submit" name="submit" value="确定"/>
+	</form>
+</body>
+</html>
