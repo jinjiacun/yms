@@ -19,6 +19,9 @@ define('APP_DEBUG',True);
 
 //define('BIND_MODULE','Admin');
 // 定义应用目录
+//define('APP_NAME', 'App');
+//define('APP_PATH', __FILE__);
+#复制代码复制代码
 define('APP_PATH','./App/');
 define('__PUBLIC__', dirname(__FILE__).'/Public/');
 // 引入ThinkPHP入口文件

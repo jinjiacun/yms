@@ -10,14 +10,14 @@ class UserController extends Controller {
 			$user_name = I('post.user_name');
 			$content = array(
                       'user_name'=>urlencode($user_name),
+                      'password'=>'123456',
             );
             $res = A('Callapi')->call_api('User.add', 
                                $content,
                               'text',
                               $handler);
             var_dump($res);
-            $callback_info = json_decode($res);
-            var_dump($callback_info);
+            $callback_info = json_decode($res, true);
             if(200 == $callback_info['status_code']
             &&	0  == $callback_info['content']['is_success']
             	)

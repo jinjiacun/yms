@@ -86,32 +86,23 @@ class GoodsController extends BaseController {
         if(200 == $result['status_code'])
         {
             if($result['content']
-            && 0 < count($result['content']))
+            && 0 < count($result['content']['list'])
+            && 0 <= $result['content']['record_count'])
             {
-                $this->assign('post_condition_list', $result['content']);
+                $this->assign('post_condition_list', $result['content']['list']);
+                $this->assign('record_count', $result);
             }
         }
 
         
-        #查询规格
-        $where = array(
-            'cat_id'=>1,
-            );
-        $res = A('Callapi')->call_api('Dict.get_list',
-                            $where,
-                            'text',
-                            $handler
-                );
-        $result = $this->deal_re_call_api($res);
-        if(200 == $result['status_code'])
-        {
-            if($result['content']
-            && 0 < count($result['content']))
-            {
-                $this->assign('post_spec_list', $result['content']);
-            }
-        }
-
+       #查询规格
+       $this->assign('post_spec_list', $this->get_post_spec());
+       #查询品相
+       $this->assign('post_condition_list', $this->get_post_condition());
+       #获取计量单位
+       $this->assign('unit_list', $this->get_unit());
+       #获取交易类型
+       
     	$this->display();    	
     }
 
@@ -123,15 +114,22 @@ class GoodsController extends BaseController {
                                     'text',
                                   null);
         $result = $this->deal_re_call_api($res);
+
         $list = array();
         if($result)
         {
             if(200 == $result['status_code'])
             {
-                $list   = $result['content'];        
+                if(isset($result['content']['list'])
+                && isset($result['content']['record_count']))
+                {
+                    $list   = $result['content']['list'];   
+                    $this->assign('goods_list', $list);     
+                    $record_count = $result['content']['record_count'];
+                    $this->assign('record_count', $record_count);
+                }
             }
         }
-        var_dump($list);
         $this->display();   
     }
 

@@ -4,7 +4,34 @@
 </head>
 <body>
 	<form name="theForm" method="post" enctype="multipart/form-data">
-	
+	<table width="100%">
+		<tr>
+			<th>编号</th>
+			<th>名称</th>
+			<th>字号</th>
+			<th></th>
+			<th></th>
+			<th>操作</th>
+		</tr>
+			<volist name="goods_list" id="goods">
+				<tr align="center">
+					<td>{$goods.id}</td>
+					<td>{$goods.goods_name}</td>
+					<td>{$goods.post_no}</td>
+					<td></td>
+					<td></td>
+					<td>
+					<a href=''>编辑</a>
+					<a href=''>查看</a>
+					</td>
+				</tr>
+			</volist>
+		<tr>
+			<td>记录总数{$record_count}</td>
+			<td colspan="6"></td>
+		</tr>
+	</table>
+
 	</form>
 </body>
 </html>

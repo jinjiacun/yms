@@ -14,7 +14,7 @@ class CallapiController extends Controller {
 	{
 		
         $url_post = C('url_api');
-        //	$url_post .= '/'.'yms_api'.'/'.'index.php';
+        $url_post .= '/'.'yms_api'.'/'.'index.php';
 
         $buff = null;
         switch($type)

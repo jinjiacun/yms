@@ -4,19 +4,46 @@
 </head>
 <body>
 	<form name="theForm" method="post" enctype="multipart/form-data">
-	商品编号:<input type="text" name="goods_name"/><br/>
-	字号:<input type="text" name="post_no"/><br/>
-	商品图片:<input type="file" name="picture"/><br/>
-	邮票品相:<select name='post_condition'>
+	邮品照片:<input type="file" name="picture"/><br/>
+	邮品志号:<input type="text" name="post_no"/><br/>
+
+	邮品品相:<select name='post_condition'>
 		<volist name="post_condition_list" id="post_condition">
 			<option value="{$post_condition.sn}">{$post_condition.name}</option>
 		</volist>
 	</select><br/>
-	邮票规格:<select name='post_condition'>
-		<volist name="post_condition_list" id="post_condition">
-			<option value="{$post_condition.sn}">{$post_condition.name}</option>
+	品相规格:<select name='post_condition'>
+		<volist name="post_spec_list" id="post_spec">
+			<option value="{$post_spec.sn}">{$post_spec.name}</option>
 		</volist>
 	</select><br/>
+	单位:<select name='post_condition'>
+		<volist name="post_spec_list" id="post_spec">
+			<option value="{$post_spec.sn}">{$post_spec.name}</option>
+		</volist>
+	</select><br/>
+	数量:<input type="text" name="post_number"/><br/>
+	单价:<input type="text" name="post_price"/><br/>
+	总价<input type="text" name="post_shop_price"/><br/>
+	交易类型<select name='transaction_type'>
+		<volist name="transaction_type_list" id="transaction_type">
+			<option value="{$transaction_type.sn}">{$transaction_type.name}</option>
+		</volist>
+	</select><br/>
+	有效期至
+	 <input type="radio" />
+	  <select name="year"></select>年
+	  <select name="month">
+	  	
+	  </select>月
+	  <select name="day"></select>日
+	  <select name="hour"></select>时
+	 <input type="radio" />长期有效
+	<br/>
+	承诺:
+	<areatext name="promise"></areatext>
+
+	<input type="hidden" name="user_id" value="1"/>
 	<input type="submit" name="submit" value="确定"/>
 	</form>
 </body>
