@@ -45,7 +45,26 @@ function add_row()
 	 var attr_name     = $('#id_attr').find("option:selected").text();
 	 var attr_val_id   = $('#id_attr_val').val();
 	 var attr_val_name = $('#id_attr_val').find("option:selected").text();
-	 var tr_str =  "<tr> "
+	  
+
+	  
+	 var is_exists = false;
+	 //检查是否存在
+	 $("input[name='attr_val_id[]']").each(
+		function(i, val){
+			if(attr_val_id == $(this).val()
+			&& attr_id     == $("input[name='attr_id[]']").get(i).value)
+			{
+				alert('此属性值已存在');
+				//$('#add_attr_val').val('');			
+				is_exists = true;
+				return;
+			}
+	 });
+
+	 if(!is_exists)
+	 {
+	 	var tr_str =  "<tr> "
 				 + "	    <td nowrap=\"nowrap\" align=\"right\" width=\"30%\" align=\"right\">"+attr_name+"</td> "
 			     + "	    <td>"+attr_val_name
 			      + "<input type='hidden' name='attr_id[]' value='"+attr_id+"'/>"
@@ -54,7 +73,8 @@ function add_row()
 			     + "<input type='hidden' name='attr_val_name[]' value='"+attr_val_name+"' />"
 			     + "              <a href=\"#\" onclick=\"remove_row(this);\">[-]</a></td>"
 				 + "  </tr>";
-	 $('#id_tr').after(tr_str);
+	 	$('#id_tr').after(tr_str);
+	 }
 }
 function remove_row(cur_obj)
 {

@@ -25,17 +25,9 @@ class CategoryController extends BaseController {
 				$count = count($attr_val_id_list);
 				for($i=0; $i< $count; $i++)
 				{
-					$goods_attr_val_id_list[intval($attr_val_id_list[$i])] = 0;
-					$fmt_attr_val_id_list[] = array(
-						'attr_id'       =>	intval($attr_id_list[$i]),
-						'attr_name'     =>  urlencode($attr_name_list[$i]),
-						'attr_val_id'   =>	intval($attr_val_id_list[$i]),
-						'attr_val_name'	=>	urlencode($attr_val_name_list[$i]),
-					);
+					$goods_attr_val_id_list[] = 0;
 				}	
 				unset($i, $count);
-				$fmt_attr_val_ids = $fmt_attr_val_id_list;
-				//implode('-',$fmt_attr_val_id_list);
 				$goods_attr_val_ids = implode(',', $goods_attr_val_id_list);
 				if(null == $goods_attr_val_ids)
 					$goods_attr_val_ids = '';
@@ -46,7 +38,6 @@ class CategoryController extends BaseController {
 				'name' => urlencode($name),
 				'attr_val_id'        => $attr_val_ids,
 				'goods_attr_val_ids' => $goods_attr_val_ids,
-				'fmt_attr_val_id'    => $fmt_attr_val_ids,
 				'add_time'           => time(),
 			);
 			$result = $this->_call('Category.add', $content);
@@ -59,7 +50,7 @@ class CategoryController extends BaseController {
 			unset($content);
 
 			
-/*			if(I('post.attr_id'))
+			if(I('post.attr_id'))
 			{
 				$cat_id = $result['content']['id'];
 				$attr_id_list     = I('post.attr_id');
@@ -84,7 +75,7 @@ class CategoryController extends BaseController {
 						$this->success("success");
 					}
 				}
-			}*/
+			}
 			
 		}
 		$this->get_attr();
@@ -110,20 +101,57 @@ class CategoryController extends BaseController {
 			$old_attr_name_val_list = I('post.old_attr_val_name');
             $attr_id_list           = I('post.attr_id');
 			$attr_val_id_list       = I('post.attr_val_id');
-			$attr_name_list         = I('post.attr_name');
-			$attr_val_name_list     = I('post.attr_val_name');
-			$del_attr_val_id_list   = I('post.del_attr_val_id');
-			#update category
-			if($old_attr_id_list
-			&& 0< count($old_attr_id_list)
-            )
-            {
-				$count = count($old_attr_id_list);
-				for($i=0; $i< $count; $i++)
+			$del_id_list            = I('post.del_id');
+			#add attr
+			if(I('post.attr_val_id'))
+			{
+				if(isset($content)) unset($content);
+				if($attr_val_id_list
+				&& 0< count($attr_val_id_list))
 				{
-					
+					$count = count($attr_val_id_list);
+					for($i=0; $i< $count; $i++)
+					{
+						 $content[] = array(
+						 	'cat_id'      => intval($id),
+						 	'attr_id'     => intval($attr_id_list[$i]),
+						 	'attr_val_id' => intval($attr_val_id_list[$i]),
+						 );
+					}
+					$result = $this->_call(
+										'Catattrval.add_mul',
+										$content
+								);
+					if(!$result
+					|| 200 != $result['status_code']
+					|| 0   != $result['content']['is_success']
+					)
+					{
+						$this->error('add new attr error');
+					}
 				}
-			}	
+			}
+
+			#delete attr
+			if(I('post.del_id'))
+			{
+				$del_id_list = I('post.del_id');
+				$del_ids     = implode(',', $del_id_list);
+				if(isset($content)) unset($content);
+				$content = array(
+					'ids' => $del_ids,
+				);
+				$result = $this->_call('Catattrval.del_by_ids',
+									   $content);
+				if(!$result
+				|| 200 != $result['status_code']
+				|| 0   != $result['content']['is_success'])
+				{
+					$this->error('del cat attr error');
+				}
+			}
+
+			#update category
 			$content['where'] = array(
 				'id' => $id,
 			);
@@ -151,7 +179,35 @@ class CategoryController extends BaseController {
 		&& 200 == $result['status_code'])
 		{
 			$this->assign('category_info', $result['content']);
-			$attr_val_ids = $result['content']['attr_val_id'];
+			$attr_val_ids = '';
+			$attr_val_id_list = array();
+			$attr_list    = $this->get_attr_info_by_cat_id($result['content']['id']);
+			$map_cat_attr_val_id_list  = array(); 
+			if($attr_list
+			&& 0< count($attr_list))
+			{
+				foreach($attr_list as $v)
+				{
+					$map_cat_attr_val_id_list[intval($v['attr_val_id'])] = 
+							intval($v['id']);
+					$attr_val_id_list[] = $v['attr_val_id'];
+				}
+				unset($v, $attr_list);
+				$this->assign('map_cat_attr_val_id_list', $map_cat_attr_val_id_list);
+				$attr_val_ids = implode(',', $attr_val_id_list);
+				unset($attr_val_id_list);
+			}
+			if(isset($content)) unset($content);
+			$content = array(
+				'attr_val_ids' => $attr_val_ids,
+			);
+			$result = $this->_call('Attrval.getview_by_attr_ids',
+				                   $content);
+			if($result
+			&& 200 == $result['status_code'])
+			{
+				$this->assign('attr_val_list', $result['content']);
+			}
 		}
 		$this->get_attr();
 		$this->display();
@@ -196,11 +252,35 @@ class CategoryController extends BaseController {
 				{
                 	#获取当前属性值的id和名称映射
 					$attr_val_id_list = array();
-    	            $attr_id_list     = array();
      				foreach($list as $k => $v){
-                        $category_attr_val_id = explode(',', $v['attr_val_id']);
-                        $list[$k]['attr_val_id_list'] =  $category_attr_val_id;
-                        $list[$k]['fmt_attr_val_id']  = $v['fmt_attr_val_id'];
+     					$attr_list = $this->get_attr_info_by_cat_id($v['id']);
+
+     					$attr_val_id_list = array();
+                        $attr_val_ids = ''; 
+                        if($attr_list
+                        && 0< count($attr_list))
+                        {
+                        	foreach($attr_list as $v)
+                        	{
+                        		$attr_val_id_list[] = $v['attr_val_id'];
+                        	}
+                        	unset($attr_list, $v);
+                        	$attr_val_ids = implode(',', $attr_val_id_list);
+                        }
+                        if('' != $attr_val_ids)
+                        {
+                        	if(isset($content)) unset($content);
+	                        $content = array(
+	                        	'attr_val_ids' => $attr_val_ids,
+	                        );
+	                      	$result = $this->_call('Attrval.getview_by_attr_ids',
+	                      		                   $content);
+	                      	if($result
+	                      	&& 200 == $result['status_code'])
+	                      	{
+	                      		$list[$k]['attr_val_list'] = $result['content'];
+	                      	}  	
+                        }
                     }
 				}
 				$this->assign('category_list', $list);
@@ -221,5 +301,21 @@ class CategoryController extends BaseController {
             $this->assign('attr_list', $result['content']['list']);
         }
         $this->assign('call_url', C('call_url'));
+	}
+
+	#get attr_info by cat_id
+	private function get_attr_info_by_cat_id($cat_id)
+	{
+		$content = array(
+			'cat_id' => $cat_id,
+		);
+
+		$result = $this->_call('Catattrval.get_list',
+			                   $content);
+		if($result
+		&& 200 == $result['status_code'])
+		{
+			return $result['content']['list'];
+		}
 	}
 }

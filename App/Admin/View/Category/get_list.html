@@ -132,8 +132,8 @@ function on_load(){
 				            <td bgcolor="#FFFFFF"><input type="checkbox" name="delid"/>{$category.id}</td>
                     <td height="20" bgcolor="#FFFFFF">{$category.name}</td>
                     <td height="20" bgcolor="#FFFFFF">
-                    <foreach name="category.fmt_attr_val_id" item="fmt_attr_val_id">
-                     {$fmt_attr_val_id.attr_name}-{$fmt_attr_val_id.attr_val_name}<br/>
+                    <foreach name="category.attr_val_list" item="attr_val">
+                     {$attr_val.attr_name}-{$attr_val.attr_val_name}<br/>
                     </foreach>
                     </td>
                     <td height="20" bgcolor="#FFFFFF"></td>

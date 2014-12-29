@@ -45,7 +45,41 @@ function add_row()
 	 var attr_name     = $('#id_attr').find("option:selected").text();
 	 var attr_val_id   = $('#id_attr_val').val();
 	 var attr_val_name = $('#id_attr_val').find("option:selected").text();
-	 var tr_str =  "<tr> "
+
+	 var is_exists = false;
+	 //检查是否存在
+	 $("input[name='attr_val_id[]']").each(
+		function(i, val){
+			if(attr_val_id == $(this).val()
+			&& attr_id     == $("input[name='attr_id[]']").get(i).value)
+			{
+				alert('此属性值已存在');
+				//$('#add_attr_val').val('');			
+				is_exists = true;
+				return;
+			}
+	 });
+
+	 if(!is_exists)
+	 {
+	 	//检查是否存在
+		 $("input[name='old_attr_val_id[]']").each(
+			function(i, val){
+				if(attr_val_id == $(this).val()
+				&& attr_id     == $("input[name='old_attr_id[]']").get(i).value)
+				{
+					alert('此属性值已存在');
+					//$('#add_attr_val').val('');			
+					is_exists = true;
+					return;
+				}
+		 });	
+	 }
+	 
+
+	 if(!is_exists)
+	 {
+	 	var tr_str =  "<tr> "
 				 + "	    <td nowrap=\"nowrap\" align=\"right\" width=\"30%\" align=\"right\">"+attr_name+"</td> "
 			     + "	    <td>"+attr_val_name
 			     + "<input type='hidden' name='attr_id[]' value='"+attr_id+"'/>"
@@ -54,14 +88,15 @@ function add_row()
 			     + "<input type='hidden' name='attr_val_name[]' value='"+attr_val_name+"' />"
 			     + "              <a href=\"#\" onclick=\"remove_row(this);\">[-]</a></td>"
 				 + "  </tr>";
-	 $('#id_tr').after(tr_str);
+	 	$('#id_tr').after(tr_str);
+	 }	 
 }
 function remove_row(cur_obj)
 {
 	//add delete old attr_val_id
 	if($(cur_obj).attr('is_old'))
 	{
-		$('#id_del_list').append('<input type="hidden" name="del_attr_val_id[]" value="'+$(cur_obj).attr('value')+'" />');
+		$('#id_del_list').append('<input type="hidden" name="del_id[]" value="'+$(cur_obj).attr('value')+'" />');
 	}
 	$(cur_obj).parent().parent().remove();
 }
@@ -74,7 +109,7 @@ function remove_row(cur_obj)
 </head>
 
 <body class="ContentBody">
-  <form action="" method="post" enctype="multipart/form-data" name="form">
+  <form method="post" enctype="multipart/form-data" name="form">
 <div class="MainDiv">
 <table width="99%" border="0" cellpadding="0" cellspacing="0" class="CContent">
   <tr>
@@ -121,7 +156,7 @@ function remove_row(cur_obj)
 				        </td>
 					  </tr>		
 
-					  <volist name="category_info.fmt_attr_val_id" id="attr_val">
+					  <volist name="attr_val_list" id="attr_val">
 						<tr>
 							<td align="right" width="30%">{$attr_val.attr_name}</td>
 							<td width="35%">{$attr_val.attr_val_name}
@@ -129,7 +164,7 @@ function remove_row(cur_obj)
 								<input type="hidden" name="old_attr_val_id[]" value="{$attr_val.attr_val_id}" />
 								<input type="hidden" name="old_attr_name[]" value="{$attr_val.attr_name}" />
 								<input type="hidden" name="old_attr_val_name[]" value="{$attr_val.attr_val_name}" />
-							<a is_old=1 value='{$attr_val.attr_val_id}' href='javascript:remove_row(this);'>[-]</a>
+							<a is_old=1 value='{$map_cat_attr_val_id_list[$attr_val['attr_val_id']]}' href='#' onclick='javascript:remove_row(this);'>[-]</a>
 							</td>
 						</tr>
                       </volist>
