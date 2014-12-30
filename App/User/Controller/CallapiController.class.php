@@ -54,6 +54,15 @@ class CallapiController extends Controller {
 		//echo $res;
 	}
 
+	public function ajax_call_api()
+	{
+		$method = I('post.method');
+		$content = I('post.content');
+		//$content = json_decode($content, true);
+		$type    = I('post.type');
+		echo $this->call_api($method, $content, $type, $handler);
+	}
+
 	function post($url, $params = false, $header = array()){
 		//$cookie_file = tempnam(dirname(__FILE__),'cookie');
 		$cookie_file = __PUBLIC__.'cookies.tmp';

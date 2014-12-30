@@ -20,15 +20,16 @@ document.getElementById("aa").style.display="";
 }
 
 //通过属性id获取属性值
-function get_attr_val_by_attr_id(attr_id)
+function get_attr_val_by_attr_id(cur_obj)
 {
+	  var attr_id = $('#id_attr').val();
 	  jQuery.ajax({  
         type:"post",  
         url:"{$call_url}",
  //       jsonp: 'jsoncallback',
         timeout: 5000,  
         dataType:"json",  
-        data:{"method":"Attrval.get_list","type":"text","content":{}},
+        data:{"method":"Attrval.get_list","type":"text","content":{"where":{"attr_id":attr_id}}},
         success: function aa(data) {  
         	   $('#id_attr_val').empty();
         	   $('#id_attr_val').append('<option value="0">---请选择属性名称---</option>');
@@ -113,7 +114,7 @@ function remove_row(cur_obj)
 <div class="MainDiv">
 <table width="99%" border="0" cellpadding="0" cellspacing="0" class="CContent">
   <tr>
-      <th class="tablestyle_title" >添加分类</th>
+      <th class="tablestyle_title" >编辑分类</th>
   </tr>
   <tr>
     <td class="CPanel">
@@ -130,7 +131,7 @@ function remove_row(cur_obj)
 			<TR>
 			<TD width="100%">
 				<fieldset style="height:100%;">
-				<legend>添加分类</legend>
+				<legend>编辑分类</legend>
 					  <table border="0" cellpadding="2" cellspacing="1" style="width:100%">
 					 
 					  <tr>

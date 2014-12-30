@@ -59,7 +59,7 @@ class CallapiController extends Controller {
 	{
 		$method = I('post.method');
 		$content = I('post.content');
-		$content = json_decode($content, true);
+		//$content = json_decode($content, true);
 		$type    = I('post.type');
 		echo $this->call_api($method, $content, $type, $handler);
 	}

@@ -19,35 +19,30 @@ class BaseController extends Controller
 		return $result_array;
 	}
 
-	#获取邮票品相
-	public function get_post_condition()
-	{
-		$where = array(
-            'cat_id'=>2,
-            );
-        return $this->get_dict($where);
-	}
-
-	#获取邮票规格
-	public function get_post_spec()
-	{
-		$where = array(
-            'cat_id'=>1,
-            );
-        return $this->get_dict($where);
-	}
-
 	#获取计量单位
 	public function get_unit()
 	{
 		$where = array(
-            'cat_id'=>10,
+            	'page_size'=>12,
+            	'where' =>array(
+            		'cat_id'=>10,
+            	),
             );
         return $this->get_dict($where);	
 	}
 
 	#获取交易类型
-	//public function get_
+	public function get_trade_type()
+	{
+		$where = array(
+			'page_size' =>100,
+			'where' =>array(
+				'cat_id' => 13,
+			),
+		);
+
+		return $this->get_dict($where);
+	}
 
 	#获取字典信息
 	private function get_dict($where)
@@ -60,10 +55,10 @@ class BaseController extends Controller
         $result = $this->deal_re_call_api($res);
         if(200 == $result['status_code'])
         {
-            if($result['content']
-            && 0 < count($result['content']))
+            if($result['content']['list']
+            && 0 < count($result['content']['list']))
             {
-               return $result['content'];
+               return $result['content']['list'];
             }
         }
 
@@ -132,5 +127,29 @@ class BaseController extends Controller
 		return array(
 			0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23
 			);
+	}
+
+	//分页
+	public function get_page($record_count, $page_size)
+	{
+		#页数
+        $this->assign('page_count', $page_count);
+        $Page = new \Think\Page($record_count, $page_size);// 实例化分页类 传入总记录数和每页显示的记录数(25)
+		$show = $Page->show();// 分页显示输出
+		$this->assign('page',$show);// 赋值分页输出
+	}
+
+	#调用接口
+	/**
+	*
+	*/
+	public function _call($method='', $content = array(), $type='text', $handler = null)
+	{
+		$res = A('Callapi')->call_api($method, 
+                                      $content,
+                                      $type,
+                                      $handler);
+        $result = $this->deal_re_call_api($res);
+        return $result;
 	}
 }
