@@ -3,7 +3,9 @@
 <head>
 	<title>添加商品</title>
 	<script type="text/javascript" src="__APP__/../Public/js/jquery-1.9.1.min.js"></script>
+	<script type="text/javascript" src="__APP__/../Public/js/comment.js"></script>
 	<script type='text/javascript'>
+
 		function change_cat()
 		{
 			var cat_id = $('#post_cat').val();
@@ -47,12 +49,13 @@
 		       				for(var i=0; i< attr_val_list.length; i++)
 		       				{
 		       					var item_list = attr_val_list[i].split('-');
-		       					attr_str += "<option value='{0}'>{1}</option>".print_f(item_list[0],
+		       					attr_str += "<option value='{0}'>{1}</option>".print_f(item_list[1],
 		       						                                                   item_list[2]);
 		       				}
-		       				var select = "{0}:<select name='attr_id[]'>{1}{2}</select>".print_f(attr_list[ele],
-		       					                                                   "<option>---select---</option>",
-		       					                                                   attr_str);
+		       				var select = "{0}<input type='hidden' name='attr_id[]' value='{1}' />:<select name='attr_val_id[]'>{2}{3}</select>".print_f(attr_list[ele],
+		       					                                              ele,
+		       					                                              "<option>---select---</option>",
+		       					                                              attr_str);
 		       				$('#id_spec').append(select);
 		       			}	   
 		        	}		       		
@@ -81,16 +84,7 @@ function remove_pic(cur_obj)
 	$(cur_obj).prev().remove();
 	$(cur_obj).next().remove();
 	$(cur_obj).remove();
-}
-
-String.prototype.print_f = function() {
-    var formatted = this;
-    for (var i = 0; i < arguments.length; i++) {
-        var regexp = new RegExp('\\{'+i+'\\}', 'gi');
-        formatted = formatted.replace(regexp, arguments[i]);
-    }
-    return formatted;
-};		
+}		
 </script>
 </head>
 <F5><body>

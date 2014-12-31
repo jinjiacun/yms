@@ -25,7 +25,6 @@ class GoodsController extends BaseController {
             $promise         = I('post.promise');           #承诺
             $add_time        = time();                      #添加日期
 
-            #
 
             //add picture
             $content = array(
@@ -55,8 +54,22 @@ class GoodsController extends BaseController {
                     //echo '成功添加';
                     if(isset($content)) unset($content);
                     $goods_id    = intval($result['content']['id']);
+
+                    //add attr
+                    if(I('post.attr_id'))
+                    {
+                        if(!$this->add_goods_attr($goods_id))
+                        {
+                            $this->error('add attr error');
+                        }
+                        if(!$this->add_goods_stat($post_cat))
+                        {
+                            $this->error('chg attr stat error');
+                        }
+                    }
+
+                    //add picture
                     $pic_id_list = $this->upload_goods_picture();
-                    var_dump($pic_id_list);
                     if($pic_id_list
                     && 0< count($pic_id_list))
                     {
@@ -113,8 +126,17 @@ class GoodsController extends BaseController {
     #商品列表
     public function getlist()
     {
+        $page_index = 1;
+        $page_size  = 10;
+        $content    = array();
+        if(I('get.p'))
+        {
+            $page_index = I('get.p');
+            $content['page_size'] = $page_size;
+            $content['page_index'] = $page_index;
+        }
         $res = A('Callapi')->call_api('Goods.get_list', 
-                                    null,
+                                    $content,
                                     'text',
                                   null);
         $result = $this->deal_re_call_api($res);
@@ -131,6 +153,7 @@ class GoodsController extends BaseController {
                     $this->assign('goods_list', $list);     
                     $record_count = $result['content']['record_count'];
                     $this->assign('record_count', $record_count);
+                    $this->get_page($record_count, 10);
                 }
             }
         }
@@ -212,5 +235,88 @@ class GoodsController extends BaseController {
         }
 
         return $pic_id_list;
+    }
+
+    #add attr of goods
+    private function add_goods_attr($goods_id)
+    {
+        if(0 >= $goods_id)
+        {
+            return false;
+        }
+
+        if(I('post.attr_id'))
+        {
+            $attr_id_list     = I('post.attr_id');
+            $attr_val_id_list = I('post.attr_val_id');
+            $content          = array();
+
+            if(0< count($attr_id_list))
+            {
+                $count = count($attr_id_list);
+                for($i=0; $i< $count; $i++)
+                {
+                    $content[] = array(
+                        'goods_id'    => intval($goods_id),
+                        'attr_id'     => intval($attr_id_list[$i]),
+                        'attr_val_id' => intval($attr_val_id_list['attr_val_id']),
+                        'add_time'    => time(),
+                    );
+                }
+                $result = $this->_call("Goodsattrval.add_mul",
+                                       $content);
+                if($result
+                && 200 == $result['status_code']
+                && 0   == $result['is_success'])
+                {
+                    return true;
+                }
+            }
+        }
+
+        return false;
+    }
+
+    //add goods_stat
+    private function add_goods_stat($cat_id)
+    {
+        if(0>= $cat_id)
+        {
+            return false;
+        }
+
+        if(I('post.attr_id'))
+        {
+            $attr_id_list     = I('post.attr_id');
+            $attr_val_id_list = I('post.attr_val_id');
+            $goods_stat       = 1;
+            $content          = array();
+
+            if(0 < count($attr_id_list))
+            {
+                foreach($attr_id_list as $k =>$v)
+                {
+                    $content = array(
+                        'cat_id'      => intval($cat_id),
+                        'attr_id'     => intval($v),
+                        'attr_val_id' => intval($attr_val_id_list[$k]),
+                        'chg_val'     => intval($goods_stat),
+                    );
+                    $result = $this->_call(
+                                'Category.chage_category_attr_val_show',
+                                $content
+                    );
+                    if(!$result
+                    || 200 != $result['status_code']
+                    || 0   != $result['content']['is_success']
+                    )
+                    {
+                        return false;
+                    }
+                }
+                unset($k, $v);
+                return true;
+            }
+        }
     }
 }

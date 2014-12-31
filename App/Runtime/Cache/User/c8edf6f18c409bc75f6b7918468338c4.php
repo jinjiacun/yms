@@ -30,12 +30,15 @@
 					<a href=''>查看</a>
 					</td>
 				</tr><?php endforeach; endif; else: echo "" ;endif; ?>
-		<tr>
-			<td>记录总数<?php echo ($record_count); ?></td>
-			<td colspan="6"></td>
-		</tr>
 	</table>
-
+ <table width="95%" border="0" align="center" cellpadding="0" cellspacing="0">
+        <tr>
+          <td height="6"><img src="/yms/index.php/../Public/Admin/images/spacer.gif" width="1" height="1" /></td>
+        </tr>
+        <tr>
+          <td colspan="5" align="right"><?php echo ($page); ?></td>
+        </tr>
+</table>
 	</form>
 </body>
 </html>
