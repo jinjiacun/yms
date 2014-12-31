@@ -1,0 +1,576 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+	<title>category info</title>
+	<!--
+	<script type="text/javascript" src="__APP__/../Public/js/jquery-1.9.1.min.js"></script>
+    -->
+    <script type="text/javascript" src="__APP__/../Public/js/jquery-1.5.1.js"></script>
+	<script type="text/javascript" src="__APP__/../Public/js/comment.js"></script>
+	<script type="text/javascript" src="__APP__/../Public/js/ui.tab.js"></script>
+	<script type="text/javascript" src="__APP__/../Public/js/focus.js"></script>
+	<script type="text/javascript">
+	$(function(){
+		var cat_id = {$cat_id};
+		jQuery.ajax({  
+		        type:"post",  
+		        url:"{$call_url}",
+		        timeout: 5000,  
+		        dataType:"json",  
+		        data:{"method":"Category.get_category_attr","type":"text","content":{"cat_id":cat_id}},
+		        success: function (data) {  
+		        	if(200 == data.status_code)
+		        	{
+		        		$('#id_attr_list').empty();
+		        		var attr_list    = new Array();
+		        		var attr_id_list = new Array();
+		        		$.each(data.content, function(i, val){
+		       				var attr_id       = val.attr_id;
+		       				var attr_name     = val.attr_name;
+		       				var attr_val_id   = val.attr_val_id;
+		       				var attr_val_name = val.attr_val_name;
+		       				attr_list[attr_id] = attr_name;
+		       				if(attr_id_list[attr_id])
+		       				{
+		       					attr_id_list[attr_id] = attr_id_list[attr_id]+','
+		       					                        + attr_id 
+		       					                        + '-'+attr_val_id
+		       					                        + '-'+attr_val_name;
+		       				}
+		       				else
+		       				{
+		       					attr_id_list[attr_id] = attr_id+'-'+attr_val_id+'-'+attr_val_name;
+		       				}
+		       			}); 
+
+		       			for(var ele in attr_list)
+		       			{
+		       				var attr_val_list = attr_id_list[ele].split(',');
+		       				var attr_str = '';
+		       				for(var i=0; i< attr_val_list.length; i++)
+		       				{
+		       					var item_list = attr_val_list[i].split('-');
+		       					attr_str += "<label> \
+		       					             <input name='checkbox2' type='checkbox' value='0' autocomplete='off' style='display:none;' /> \
+		       					             <a href='javascript:;' values2='' values1='' attrval=''>{1}<img src='__APP__/../Public/images/list_3.png' width='12px' height='9px'/></a> \
+		       					</label>".print_f(item_list[0],item_list[2]);
+		       				}
+		       				var select = "<dl class='listIndex' attr='terminal_brand_s'> \
+		       				             <dt>{0}</dt> \
+		       				             <dd data-more=true> \
+		       				             <label> \
+                                           <a href='javascript:;' values2='' values1='' attrval='不限' style='*+display:inline-block; *+padding-top:0px;'>不限</a> \
+                                         </label> \
+		       				               {1} \
+		       				             </dd></dl>".print_f(attr_list[ele], attr_str);
+		       				$('#id_attr_list').append(select);
+		       			}	   
+		        	}
+		        }
+		    });
+	});
+	</script>
+	<style>
+#page_num li
+{
+  list-style:none; /* 将默认的列表符号去掉 */
+  float:left;
+
+}
+.cur_sort
+{
+    background:#e74c3c no-repeat;
+	color:#fff;
+}
+.def_sort
+{
+  background:#f5f5f5 no-repeat;
+  color:#666;
+}
+.cur_page{ background-color: #e74c3c; color:#FFF;}
+.def_page{ background-color: #FFF}
+</style>
+</head>
+<body>
+<div class="block clearfix">
+
+  <div class="AreaR">
+       <!--商品筛选属性-->
+        <div class="w1200">
+          <div class="list-screen">
+            <div class="screen-term">
+              <div class="selectNumberScreen">
+                <div id="selectList" class="screenBox screenBackground">
+                  <h3><span>{$lang.goods_filter}</span></h3>
+                  <div id="hasBeenSelected" class="hasBeenSelected" style="display:none;">
+                       <dl>
+                          <dt>已选条件</dt>
+                          <dd style=" display:none;width:770px; *+width:855px; margin-top:5px; " class=clearDd>
+                          <div id="clearList" class="clearList" style="width:765px; float:left;"></div>
+                          </dd>
+                          <div style="*+width:85px;float:right; margin-top:9px; *+margin-top:4px;" class="eliminateCriteria">【清空全部】 </div>
+                       </dl>
+                   </div>
+                  
+				  <div id="id_attr_list">
+                 
+                  </div>
+                  <dl style="display:none;"></dl>
+                </div>
+              </div>   
+            </div>
+          </div>
+        </div>    
+        <script type="text/javascript" src="__APP__/../Public/js/shaixuan.js"></script>
+        <!--商品列表-->
+        <div id="new_list">
+            <h3>
+              <span>排列方式：</span>
+              <div class="sort" id="sort">
+                 <a style="padding: 2px 10px;" id="sort_way_0" class="cur_sort" href="javascript:void(0);" sort_val=0 onclick="goods_sort(0);">上架时间</a>
+                 <a style="padding: 2px 10px;" id="sort_way_1" class="def_sort" href="javascript:void(0);" sort_val=0 onclick="goods_sort(1);">更新时间</a>
+                 <a style="padding: 2px 10px;" id="sort_way_2" class="def_sort" href="javascript:void(0);" sort_val=0 onclick="goods_sort(2);">价格</a>
+              </div>
+            </h3>
+            <div class="goodsItems" style="float:right;">
+                <ul id="goods_list">
+                    
+                </ul>
+            </div>
+        </div>
+        <!--分页-->
+        <div class="pro_hr"></div>
+        <div id="pager_category">
+         <div class="right">          
+          <span class="pager_span1">
+               总计<span id="record_count">{$page.record_count}</span>个记录&nbsp;
+               <span id="all_pages">{$page_count}</span>页
+               第 <input type="text" name="id_page_index" id="id_page_index" size="8" value="1"/> 页 &nbsp;
+               <input type="button" name="go" id="go" value="GO" onclick="control_go(this);" />
+          </span> 
+          <span class="pager_span2">
+            <ul id="page_num">
+   
+            </ul>
+          </span>
+
+          </div>
+        </div>
+  </div>
+</div>
+<input type="hidden" id="cat_id" name="id" value="{$cat_id}"/>
+<!-- #BeginLibraryItem "/library/page_footer.lbi" --><!-- #EndLibraryItem -->
+</body>
+</html>
+<script type="text/javascript">
+var _map_attr_val = [];
+var _sort_val     = [0,0,0];
+var _cur_sort_index = 0;
+var _index = 0;
+
+_has_next = 1;
+_next_index = 11;
+//属性值数组对
+
+//商品回调
+function call_goods_by_filter()
+{
+ //请求真正需要筛选的属性值
+ var _need_request_attr_val = [];
+ //需要过滤的属性id
+ var _need_filter_attr_val =[];
+ //选中的属性对应的属性值数目
+ var _selected_attr_val_num = [];
+ var _attr_id = 0;
+ //统计属性选中的属性值数目
+ for(var i=0; i< filter_list.length; i++)
+ {
+  var _str_map = filter_list[i].split("_");
+  _attr_id = _str_map[0];
+  if(_selected_attr_val_num[_attr_id])
+  {
+    _selected_attr_val_num[_attr_id] ++;
+  }
+  else
+  {
+   _selected_attr_val_num[_attr_id] =1;
+  }
+ }
+ //过滤一行中全部选中
+ for(var elem in _map_attr_val)
+ {
+  if(_map_attr_val[elem] == _selected_attr_val_num[elem]
+    && 0 != _map_attr_val[elem])
+  {
+    _need_filter_attr_val[elem]=1;
+  }
+ }
+
+ //过滤同一行的属性值对
+ for(i=0; i< filter_list.length; i++)
+ {
+  var _tmp_list = filter_list[i].split("_");
+  if(_need_filter_attr_val[parseInt(_tmp_list[0])])
+  {
+
+  }
+  else
+  {
+    //加入
+    _need_request_attr_val.push(filter_list[i]);
+  }
+ }
+
+
+ $.ajax({
+       type: "GET",
+       url: "category.php?act=ajax&id="+ $('#cat_id').val()
+                            +'&filter='+ _need_request_attr_val
+                            +'&page_index='+_page_index
+                            +'&sort_way='+_sort_val
+                            +'&cur_sort_index='+_cur_sort_index,
+       data: {username:$("#username").val(), content:$("#content").val()},
+       dataType: "json",
+       success: function(data){
+                     $('#goods_list').html('');
+          					 if(data.goods_list == null || 0===data.goods_list.length)
+          					 {
+          					   var li_str = "";
+                       li_str += "<li style='width:941px;border:none;'>";
+                       li_str += "<div id='xianshi' class='f5 wsousuo' style='border-bottom: 1px solid #cccccc; border-left:none; border-top:none; border-right:none;' >";
+                       li_str += "<p class='wsousuo_p1'>非常抱歉，没有符合你筛选条件的商品</p>";
+                       li_str += "<p class='wsousuo_p2'>亲，你可以换个筛选条件试试……</p>";
+                       li_str += "</div>";
+                       li_str += "</li>";
+                       $('#goods_list').append(li_str);
+          					 }
+
+                       var tar_obj = document.getElementById("hasBeenSelected");
+                       var chk_obj = document.getElementById("clearList");
+                     if($(chk_obj).html() != "")
+                     {
+                        tar_obj.style.display = "block";
+                     }
+                       //$("#hasBeenSelected").css({"display":"none"});
+                     else
+                     {                     
+                        tar_obj.style.display = "none";
+                     }
+                         
+					 
+                    if(data.goods_list)
+                    {
+                      for(var i=0; i<data.goods_list.length; i++)
+                      {
+                        var li_str = "";
+                        //"<li><a href='"+data.goods_list[i].goods_id+"'>"+data.goods_list[i].goods_name+"</a></li>";
+                        li_str += "<li>";
+                        li_str += "<a href='goods-"+data.goods_list[i].goods_id+".html'>";
+                        li_str += "<img class='goodsimg' width='230' height='230' alt='"+data.goods_list[i].goods_name
+                                  +"' src='"+data.goods_list[i].goods_thumb+"'></a>";
+                        li_str += "<br/>"; 
+						if(data.goods_list[i].is_autoprice == 0)
+                        {         
+                        li_str += "<p><a title='' href=''>"+data.goods_list[i].goods_name
+                                  +"</a>&nbsp<font class='shop_s'>"+data.goods_list[i].shop_price+"</font></p>";
+						}else{
+						li_str += "<p><a title='' href=''>"+data.goods_list[i].goods_name
+                                  +"</a></p>"; 
+						}
+                        li_str += "<div class='list_nesw_g'> ";
+                        li_str += " <div class='xpfb_ri_num'> ";
+                        li_str += "    <a target='_blank' href='goods-"+data.goods_list[i].goods_id+".html'>";
+                        li_str += "       <img width='240' height='240' src='"+data.goods_list[i].goods_img_bg+"'>";
+                        li_str += "   </a>";
+                                      
+                        li_str += "<div class='xpfb_xia'>";
+                        if(data.goods_list[i].is_autoprice == 0)
+                        {
+                          //非投资系列 
+                          li_str += "<p class='left fy_xpfb1'>基础金价 ￥"+data.goods_list[i].basic_price+"<br />";
+                          li_str += "运保费　 ￥"+data.goods_list[i].procted_price+"<br />";
+                          li_str += "工费　　 ￥"+data.goods_list[i].process_price+"</p>";
+
+                          li_str += "   <div class='right fy_xpfb2'>";
+                          li_str += "     <p>";
+                          li_str += "       <img width='14px' height='13px' src='themes/huanrong/images/home_home_33.png'>";
+                          li_str += "       <a target='_blank' href='goods-"+data.goods_list[i].goods_id+".html'>立即购买</a>";
+                          li_str += "       </p>";
+                          li_str += "       <p style='display:none;'>";
+                          li_str += "       <img width='14px' height='13px' src='themes/huanrong/images/home_34.png'>";
+                          li_str += "       <a href='javascript:collect()'>加入收藏夹</a>";
+                          li_str += "     </p>";
+                          li_str += "   </div>";
+                          //非投资系列
+                        }
+                        else
+                        {
+                          //投资系列
+                          li_str += " <p class='left fy_xpfb3'>";
+                          li_str += "   <a href='goods-"+data.goods_list[i].goods_id+".html' target='_blank'>"
+                                    +data.goods_list[i].goods_name+"</a>";
+                          li_str += "    </p>";
+                          li_str += "    <p class='fy_xpfb3'>";
+                          li_str += "       <img src='images/home_home_33.png' width='14px' height='13px' />";
+                          li_str += "       <a href='goods-"+data.goods_list[i].goods_id+".html' target='_blank'>立即购买</a>";
+                          li_str += "    </p>";
+                           //投资系列 
+                       }
+                        
+                        li_str += "  </div>";
+                        li_str += "</div>";
+
+                        li_str += "</li>";
+                        $('#goods_list').append(li_str);
+                      }  
+                    }
+                    //总记录数
+                    $('#record_count').html(data.record_count); 
+                    $('#id_page_index').val(_page_index+1);
+                    $('#all_pages').html(data.page_count);
+                    $('#page_num').empty();
+                    var _page_count = data.page_count;
+                    //出现下一页
+                    if(11 <= _page_index+1 && _page_index+1 < _page_count)
+                    {
+                      _has_next = 1;
+                    }
+                    //下一页消失
+                    else if( _page_index+1 > _page_count)
+                    {
+                      _has_next = 0;
+                    }
+                    //出现上一页
+                   
+                    //上一页消失
+
+                    //下一页页码改变
+                    if(1 == _has_next)
+                    {
+                      if(_page_index+1 > _cur_page_max
+                       && _page_index+1 < _page_count+1)
+                      {
+                        _cur_page_min++;
+                        _cur_page_max++;
+                        if(_page_index == _page_count -1)
+                        {
+                          _has_next = 0;
+                        }
+                      }
+                    }
+
+                    if(1 < _cur_page_min)
+                    {
+                      _has_pref = 1;
+                    }
+
+                    if(1 == _has_pref)
+                    {
+                      if(_page_index+1 < _cur_page_min
+                       && _page_index > -1)
+                      {
+                        var _str = _page_index + ',' + _cur_page_min;
+                        _cur_page_min--;
+                        _cur_page_max--;
+                        if(_page_index == 0)
+                        {
+                          _has_pref = 0;
+                        }
+                      }
+                    }
+
+                    //出现上一页
+                    if(1< _cur_page_min)
+                    {
+                      _has_pref = 1;
+                    }
+                    if(_cur_page_max < _page_count)
+                    {
+                      _has_next = 1;
+                    }
+                    //出现下一页
+                   /* else
+                    {
+                       if(_page_index < _cur_page_min
+                       && _page_index > -1)
+                      {
+                        _cur_page_min--;
+                        _cur_page_max--;
+                        if(_page_index == 0)
+                        {
+                          _has_pref = 0;
+                        }
+                      }
+                    }*/
+
+
+                    if(9 >= _page_count || 9> _page_index)
+                    {
+                      for(var i=1; i<= 9 && i<=_page_count; i++)
+                      {
+                        var str = "";
+                        if(_page_index+1 == i)
+                          str = "<li class='pager_li'><a class='cur_page' href='javascript:void(0);' onclick='page_chg("
+                                 +i+");''>"
+                                 +i+"</a></li>";
+                        else                        
+                          str = "<li class='pager_li'><a class='def_page' href='javascript:void(0);' onclick='page_chg("
+                                 +i+");''>"
+                                 +i+"</a></li>";
+                        $('#page_num').append(str);
+                      }      
+                       //有下一页
+                      if(_has_next == 1)
+                      {
+                        var _tmp_index = 0;
+                        _tmp_index = _page_index + 2;
+                        if(_page_index+5< _page_count)
+                        {
+                           var str = '';
+                            str = "<li><a>...</a></li>";
+                            str += "<li class='pager_li'><a class='def_page' href='javascript:void(0);' onclick='page_chg("
+                                 +_tmp_index +");'"+">"
+                                 +"下一页"+"</a></li>";
+                           $('#page_num').append(str);
+                        }
+                      }    
+                    }
+                    else if(_page_index<=_page_count 
+                            && _page_index>=_page_count-8)
+                    {
+                       //有上一页
+                      //if(_has_pref == 1)
+                      //{
+                        var str = "";
+                            str += "<li class='pager_li'><a class='def_page' href='javascript:void(0);' onclick='page_chg("
+                                 +_page_index+");'"+"'>"
+                                 +"上一页"+"</a></li>";
+                            str += "<li class='pager_li'><a class='def_page' href='javascript:void(0);' onclick='page_chg("
+                                 +1+");'"+"'>"
+                                 +"1"+"</a></li>";
+                            str += "<li><a>...</a></li>";
+                        $('#page_num').append(str);
+                      //} 
+                      for(var i=_page_count -8; i<=_page_count; i++)
+                      {
+                        var str = "";
+                        if(_page_index+1 == i)
+                          str = "<li class='pager_li'><a class='cur_page' href='javascript:void(0);' onclick='page_chg("
+                                 +i+");''>"
+                                 +i+"</a></li>";
+                        else                        
+                          str = "<li class='pager_li'><a class='def_page' href='javascript:void(0);' onclick='page_chg("
+                                 +i+");''>"
+                                 +i+"</a></li>";
+                        $('#page_num').append(str);
+                      }
+                    }
+                    else
+                    {
+                      //有上一页
+                      if(_has_pref == 1)
+                      {
+                        var str = "";
+                           
+                            str = "<li class='pager_li'><a class='def_page' href='javascript:void(0);' onclick='page_chg("
+                                 +_page_index+");'"+"'>"
+                                 +"上一页"+"</a></li>";
+                            str += "<li class='pager_li'><a class='def_page' href='javascript:void(0);' onclick='page_chg("
+                                 +1+");'"+"'>"
+                                 +"1"+"</a></li>";
+                            str += "<li><a>...</a></li>";
+                        $('#page_num').append(str);
+                      }
+                      //中间
+                      for(var i= _page_index-3; i < _page_index+6 && i<_page_count+1 ; i++)
+                      {
+                        if(0 >= i)
+                          continue;
+                        var str = "";
+                        if(_page_index+1 == i)
+                          str = "<li class='pager_li'><a class='cur_page' href='javascript:void(0);' onclick='page_chg("
+                                 +i+");'"+">"
+                                 +i+"</a></li>";
+                        else
+                          str = "<li class='pager_li'><a class='def_page' href='javascript:void(0);' onclick='page_chg("
+                                 +i+");'"+">"
+                                 +i+"</a></li>";
+                        $('#page_num').append(str);
+                      }
+                      //有下一页
+                      if(_has_next == 1)
+                      {
+                        var _tmp_index = 0;
+                        _tmp_index = _page_index + 2;
+                        if(_page_index+5< _page_count)
+                        {
+                           var str = '';
+                            str = "<li><a>...</a></li>";
+                            str += "<li class='pager_li'><a class='def_page' href='javascript:void(0);' onclick='page_chg("
+                                 +_tmp_index +");'"+">"
+                                 +"下一页"+"</a></li>";
+                           $('#page_num').append(str);
+                        }
+                      }
+                    }
+                            
+                   }});
+}
+
+//翻页
+function page_chg(cur_page_index)
+{
+  _page_index = cur_page_index-1;
+  call_goods_by_filter();  
+}
+//go
+function control_go(obj)
+{
+  var obj_page_index = document.getElementById('id_page_index');
+  var _cur_max_page_count = $("#all_pages").html();
+  var cur_page_index = obj_page_index.value;
+  if(1<= cur_page_index
+    && cur_page_index <= _cur_max_page_count)
+ {
+    _page_index = cur_page_index-1;
+    call_goods_by_filter(); 
+ }
+ else
+ {
+  alert('输入参数不合法');
+  return;
+ }
+}
+//排序
+function goods_sort(_type)
+{
+  var _val = 0;
+  _cur_sort_index = _type;
+  _val  = $('#sort_way_'+_type).attr("sort_val");
+  if(0== _val)
+    _val = 1;
+  else
+    _val = 0;
+  //_val  = (_val+1)%2;
+  _sort_val[_type] = _val;
+  $('#sort_way_'+_type).attr("sort_val", _val);
+  //样式格式化
+  for(i=0; i<3; i++)
+  {
+    if(i== _type)
+    {
+      $('#sort_way_'+i).addClass("cur_sort");
+      if($('#sort_way_'+i).hasClass("def_sort"))
+      {
+        $('#sort_way_'+i).removeClass("def_sort");
+      }
+    }
+    else
+    {
+      $('#sort_way_'+i).addClass("def_sort");
+    }
+  }
+  call_goods_by_filter();
+}
+</script>
+</html>

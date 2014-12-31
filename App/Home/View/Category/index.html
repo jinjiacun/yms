@@ -1,0 +1,75 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+	<title>category info</title>
+	<script type="text/javascript" src="__APP__/../Public/js/jquery-1.9.1.min.js"></script>
+	<script type="text/javascript" src="__APP__/../Public/js/comment.js"></script>
+	<script type="text/javascript">
+	$(function(){
+		var cat_id = {$cat_id};
+		jQuery.ajax({  
+		        type:"post",  
+		        url:"{$call_url}",
+		        timeout: 5000,  
+		        dataType:"json",  
+		        data:{"method":"Category.get_category_attr_val_show","type":"text","content":{"cat_id":cat_id}},
+		        success: function (data) {  
+		        	if(200 == data.status_code)
+		        	{
+		        		$('#id_attr_list').empty();
+		        		var attr_list    = new Array();
+		        		var attr_id_list = new Array();
+		        		$.each(data.content, function(i, val){
+		       				var attr_id       = val.attr_id;
+		       				var attr_name     = val.attr_name;
+		       				var attr_val_id   = val.attr_val_id;
+		       				var attr_val_name = val.attr_val_name;
+		       				attr_list[attr_id] = attr_name;
+		       				if(attr_id_list[attr_id])
+		       				{
+		       					attr_id_list[attr_id] = attr_id_list[attr_id]+','
+		       					                        + attr_id 
+		       					                        + '-'+attr_val_id
+		       					                        + '-'+attr_val_name;
+		       				}
+		       				else
+		       				{
+		       					attr_id_list[attr_id] = attr_id+'-'+attr_val_id+'-'+attr_val_name;
+		       				}
+		       			}); 
+
+		       			for(var ele in attr_list)
+		       			{
+		       				var attr_val_list = attr_id_list[ele].split(',');
+		       				var attr_str = '';
+		       				for(var i=0; i< attr_val_list.length; i++)
+		       				{
+		       					var item_list = attr_val_list[i].split('-');
+		       					attr_str += "<li><a href='#'>{1}</a></li>".print_f(item_list[0],item_list[2]);
+		       				}
+		       				var select = "<span>{0}</span>:<ul>{1}{2}</ul>".print_f(attr_list[ele],
+		       					                                                   "<li>全选:</li>",
+		       					                                                   attr_str);
+		       				$('#id_attr_list').append(select);
+		       			}	   
+		        	}
+		        }
+		    });
+	});
+	</script>
+</head>
+<body>
+	<!--attr info-->
+	<div id="id_attr_list">
+	<!--
+	  <span>
+	  	{$attr.name}
+	  </span>
+	  <ul>
+		<li><span>{$attr_val.attr_val_name}</span></li>
+		</volist>
+	  </ul>
+	-->
+	</div>
+</body>
+</html>
