@@ -2,8 +2,9 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
 	<title>添加商品</title>
-	<script type="text/javascript" src="/yms/index.php/../Public/js/jquery-1.9.1.min.js"></script>
-	<script type="text/javascript" src="/yms/index.php/../Public/js/comment.js"></script>
+	<script type="text/javascript" src="/yms/Public/js/jquery-1.9.1.min.js"></script>
+	<script type="text/javascript" src="/yms/Public/js/comment.js"></script>
+	<script type="text/javascript" src="/yms/Public/js/DatePicker/WdatePicker.js"></script>
 	<script type='text/javascript'>
 
 		function change_cat()
@@ -85,6 +86,18 @@ function remove_pic(cur_obj)
 	$(cur_obj).next().remove();
 	$(cur_obj).remove();
 }		
+
+function is_show_validity(is_show)
+{
+	if(1 == is_show)
+	{
+		$('#end_of_date').css("display","");
+	}
+	else if(0 == is_show)
+	{
+		$('#end_of_date').css("display","none");
+	}
+}
 </script>
 </head>
 <F5><body>
@@ -93,42 +106,35 @@ function remove_pic(cur_obj)
     <div id="id_pic">
     	<input type="file" name="picture[]" /><br/>
     </div>
-	邮品志号:<input type="text" name="post_no"/><br/>
 	品类:<select id="post_cat" name="post_cat" onchange="change_cat();">
         <option value="0">---请选择品类---</option>
-        <?php if(is_array($cat_list)): $i = 0; $__LIST__ = $cat_list;if( count($__LIST__)==0 ) : echo "" ;else: foreach($__LIST__ as $key=>$cat): $mod = ($i % 2 );++$i;?><option value="<?php echo ($cat["id"]); ?>"><?php echo ($cat["name"]); ?></option><?php endforeach; endif; else: echo "" ;endif; ?>
+        <?php if(is_array($_map_category)): $i = 0; $__LIST__ = $_map_category;if( count($__LIST__)==0 ) : echo "" ;else: foreach($__LIST__ as $key=>$cat): $mod = ($i % 2 );++$i;?><option value="<?php echo ($key); ?>"><?php echo ($cat); ?></option><?php endforeach; endif; else: echo "" ;endif; ?>
         </select><br/>
 
 	<div id="id_spec">
 	<!--
 	
 	-->
-
 	</div>
 
 	单位:<select name='post_unit'>
 	 <option value="0">---select---</option>
-		<?php if(is_array($unit_list)): $i = 0; $__LIST__ = $unit_list;if( count($__LIST__)==0 ) : echo "" ;else: foreach($__LIST__ as $key=>$post_unit): $mod = ($i % 2 );++$i;?><option value="<?php echo ($post_unit["sn"]); ?>"><?php echo ($post_unit["name"]); ?></option><?php endforeach; endif; else: echo "" ;endif; ?>
+		<?php if(is_array($_map_unit)): $i = 0; $__LIST__ = $_map_unit;if( count($__LIST__)==0 ) : echo "" ;else: foreach($__LIST__ as $key=>$post_unit): $mod = ($i % 2 );++$i;?><option value="<?php echo ($key); ?>"><?php echo ($post_unit); ?></option><?php endforeach; endif; else: echo "" ;endif; ?>
 	</select><br/>
 	数量:<input type="text" name="post_number"/><br/>
 	单价:<input type="text" name="post_price"/><br/>
 	总价<input type="text" name="post_shop_price"/><br/>
 	交易类型<select name='transaction_type'>
 			<option value="0">---select---</option>
-			<?php if(is_array($transaction_type_list)): $i = 0; $__LIST__ = $transaction_type_list;if( count($__LIST__)==0 ) : echo "" ;else: foreach($__LIST__ as $key=>$transaction_type): $mod = ($i % 2 );++$i;?><option value="<?php echo ($transaction_type["sn"]); ?>"><?php echo ($transaction_type["name"]); ?></option><?php endforeach; endif; else: echo "" ;endif; ?>
+			<?php if(is_array($_map_transaction_type)): $i = 0; $__LIST__ = $_map_transaction_type;if( count($__LIST__)==0 ) : echo "" ;else: foreach($__LIST__ as $key=>$transaction_type): $mod = ($i % 2 );++$i;?><option value="<?php echo ($key); ?>"><?php echo ($transaction_type); ?></option><?php endforeach; endif; else: echo "" ;endif; ?>
 		  </select><br/>
 	有效期至
-	 <input type="radio" />
-	  <select name="year"></select>年
-	  <select name="month">
-	  	
-	  </select>月
-	  <select name="day"></select>日
-	  <select name="hour"></select>时
-	 <input type="radio" />长期有效
+	 <input type="radio" name="is_long" checked="checked" onclick="is_show_validity(1);" />
+	  <input readonly="readonly" type="text" class="Wdate" name='end_of_date' id="end_of_date" onfocus="WdatePicker({dateFmt:'yyyy-MM-dd HH:mm:ss'})" />
+	 <input type="radio" name="is_long" onclick="is_show_validity(0);" />长期有效
 	<br/>
 	承诺:
-	<areatext name="promise"></areatext>
+	<textarea name="promise"></textarea><br/>
 
 	<input type="hidden" name="user_id" value="1"/>
 	<input type="submit" name="submit" value="确定"/>

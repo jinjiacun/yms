@@ -2,8 +2,9 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
 	<title>添加商品</title>
-	<script type="text/javascript" src="__APP__/../Public/js/jquery-1.9.1.min.js"></script>
-	<script type="text/javascript" src="__APP__/../Public/js/comment.js"></script>
+	<script type="text/javascript" src="__PUBLIC__/js/jquery-1.9.1.min.js"></script>
+	<script type="text/javascript" src="__PUBLIC__/js/comment.js"></script>
+	<script type="text/javascript" src="__PUBLIC__/js/DatePicker/WdatePicker.js"></script>
 	<script type='text/javascript'>
 
 		function change_cat()
@@ -85,6 +86,18 @@ function remove_pic(cur_obj)
 	$(cur_obj).next().remove();
 	$(cur_obj).remove();
 }		
+
+function is_show_validity(is_show)
+{
+	if(1 == is_show)
+	{
+		$('#end_of_date').css("display","");
+	}
+	else if(0 == is_show)
+	{
+		$('#end_of_date').css("display","none");
+	}
+}
 </script>
 </head>
 <F5><body>
@@ -93,11 +106,10 @@ function remove_pic(cur_obj)
     <div id="id_pic">
     	<input type="file" name="picture[]" /><br/>
     </div>
-	邮品志号:<input type="text" name="post_no"/><br/>
 	品类:<select id="post_cat" name="post_cat" onchange="change_cat();">
         <option value="0">---请选择品类---</option>
-        <volist name="cat_list" id="cat">
-		<option value="{$cat.id}">{$cat.name}</option>
+        <volist name="_map_category" id="cat">
+		<option value="{$key}">{$cat}</option>
         </volist>
         </select><br/>
 
@@ -105,13 +117,12 @@ function remove_pic(cur_obj)
 	<!--
 	
 	-->
-
 	</div>
 
 	单位:<select name='post_unit'>
 	 <option value="0">---select---</option>
-		<volist name="unit_list" id="post_unit">
-			<option value="{$post_unit.sn}">{$post_unit.name}</option>
+		<volist name="_map_unit" id="post_unit">
+			<option value="{$key}">{$post_unit}</option>
 		</volist>
 	</select><br/>
 	数量:<input type="text" name="post_number"/><br/>
@@ -119,22 +130,17 @@ function remove_pic(cur_obj)
 	总价<input type="text" name="post_shop_price"/><br/>
 	交易类型<select name='transaction_type'>
 			<option value="0">---select---</option>
-			<volist name="transaction_type_list" id="transaction_type">
-			<option value="{$transaction_type.sn}">{$transaction_type.name}</option>
+			<volist name="_map_transaction_type" id="transaction_type">
+			<option value="{$key}">{$transaction_type}</option>
 			</volist>
 		  </select><br/>
 	有效期至
-	 <input type="radio" />
-	  <select name="year"></select>年
-	  <select name="month">
-	  	
-	  </select>月
-	  <select name="day"></select>日
-	  <select name="hour"></select>时
-	 <input type="radio" />长期有效
+	 <input type="radio" name="is_long" checked="checked" onclick="is_show_validity(1);" />
+	  <input readonly="readonly" type="text" class="Wdate" name='end_of_date' id="end_of_date" onfocus="WdatePicker({dateFmt:'yyyy-MM-dd HH:mm:ss'})" />
+	 <input type="radio" name="is_long" onclick="is_show_validity(0);" />长期有效
 	<br/>
 	承诺:
-	<areatext name="promise"></areatext>
+	<textarea name="promise"></textarea><br/>
 
 	<input type="hidden" name="user_id" value="1"/>
 	<input type="submit" name="submit" value="确定"/>

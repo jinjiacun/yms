@@ -102,25 +102,53 @@ class GoodsController extends BaseController {
             }
     	}
 
-        #查询邮件
-        $result = $this->_call(
-          'Category.get_list'  
-        );
-        if(200 == $result['status_code'])
-        {
-            if($result['content']
-            && 0 < count($result['content']['list'])
-            && 0 <= $result['content']['record_count'])
-            {
-                $this->assign('cat_list', $result['content']['list']);
-            }
-        }
-
-       $this->assign('call_url', C('call_url'));
-       #获取计量单位
-       $this->assign('unit_list', $this->get_unit());
-       $this->assign('transaction_type_list', $this->get_trade_type());
-       $this->display();    	
+        //map of category
+        $this->assign('_map_category', $this->_map_category());
+	//map of unit
+	$this->assign("_map_unit", $this->_map_unit());
+	//map of transaction type
+	$this->assign("_map_transaction_type", $this->_map_transaction_type());
+        $this->display();    	
+    }
+    
+    public function edit()
+    {
+	$id = intval(I('get.id'));
+	if(0>= $id)
+	{
+	    $this->error("参数传递错误");
+	}
+	if(I('post.submit'))
+	{
+	    
+	}
+	
+	#获取商品信息
+	$goods_info = array();
+	$content = array(
+			 'id' => $id
+			 );
+	$result = $this->_call("Goods.get_info",
+			       $content);
+	if($result
+	&& 200 ==$result['status_code'])
+	{
+	    $goods_info = $result['content'];
+	    $this->assign('goods_info', $goods_info);    
+	}
+	
+	//map of category
+        $this->assign('_map_category', $this->_map_category());
+	//map of unit
+	$this->assign("_map_unit", $this->_map_unit());
+	//map of transaction type
+	$this->assign("_map_transaction_type", $this->_map_transaction_type());
+	//get attr of category
+	$this->assign('attr_info', $this->get_attr($id));
+	
+	$this->assign('call_url', C('call_url'));
+	
+	$this->display();
     }
 
     #商品列表
@@ -157,6 +185,12 @@ class GoodsController extends BaseController {
                 }
             }
         }
+
+        //map of category
+        $this->assign('_map_category', $this->_map_category());
+	//map of unit
+	$this->assign("_map_unit", $this->_map_unit());
+
         $this->display();   
     }
 
@@ -259,7 +293,7 @@ class GoodsController extends BaseController {
                     $content[] = array(
                         'goods_id'    => intval($goods_id),
                         'attr_id'     => intval($attr_id_list[$i]),
-                        'attr_val_id' => intval($attr_val_id_list['attr_val_id']),
+                        'attr_val_id' => intval($attr_val_id_list[$i]),
                         'add_time'    => time(),
                     );
                 }
@@ -318,5 +352,33 @@ class GoodsController extends BaseController {
                 return true;
             }
         }
+    }
+    
+    //get attr of goods
+    private function get_attr($goods_id)
+    {
+	if(0 >= $goods_id)
+	{
+	    return array();
+	}
+	
+	$list = array();
+	$content = array(
+			 'goods_id' => $goods_id,
+			 );
+	$result = $this->_call('Goods.get_attr_by_id',
+			       $content);
+	if($result
+	&& 200 == $result['status_code']
+	&& 0< count($result['content']))
+	{
+	    $tmp_list = $result['content'];
+	    foreach($tmp_list as $v)
+	    {
+		$list[intval($v['attr_id'])] = intval($v['attr_val_id']);
+	    }
+	    unset($v);
+	}
+	return $list;
     }
 }
