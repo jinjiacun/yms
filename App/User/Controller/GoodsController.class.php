@@ -204,7 +204,6 @@ class GoodsController extends BaseController {
             fclose($fp);
             $filename = $_FILES['picture']["tmp_name"];
 
-
             $res = A('Callapi')->call_api('Media.upload', 
                                            array(
                                             'file_name'=>$filename,  #文件名称
