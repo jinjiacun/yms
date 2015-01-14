@@ -1,0 +1,101 @@
+<include file="Public/header" />
+
+<body class="ContentBody">
+    <script type="text/javascript" charset="utf-8" src="__PUBLIC__/ueditor/ueditor.config.js"></script>
+    <script type="text/javascript" charset="utf-8" src="__PUBLIC__/ueditor/ueditor.all.min.js"> </script>
+    <script type="text/javascript" charset="utf-8" src="__PUBLIC__/ueditor/lang/zh-cn/zh-cn.js"></script>
+
+    <style type="text/css">
+        div{
+            width:100%;
+        }
+    </style>
+    <meta http-equiv="Content-Type" content="text/html;charset=utf-8"/>
+    <script type="text/javascript" charset="utf-8">
+        window.UEDITOR_HOME_URL = "__PUBLIC__/ueditor/";  //UEDITOR_HOME_URL、config、all这三个顺序不能改变
+        window.onload=function(){
+            window.UEDITOR_CONFIG.initialFrameHeight=300;//编辑器的高度
+            window.UEDITOR_CONFIG.imageUrl="{:U('admin/Category/checkPic')}";          //图片上传提交地址
+            window.UEDITOR_CONFIG.imagePath=' /Uploads/thumb/';//编辑器调用图片的地址
+            UE.getEditor('editor');//里面的contents是我的textarea的id值
+           
+            }
+    </script>
+  <form method="post" enctype="multipart/form-data" name="form">
+<div class="MainDiv">
+<table width="99%" border="0" cellpadding="0" cellspacing="0" class="CContent">
+  <tr>
+      <th class="tablestyle_title" >添加新闻</th>
+  </tr>
+  <tr>
+    <td class="CPanel">
+		
+		<table border="0" cellpadding="0" cellspacing="0" style="width:100%">
+		
+		<tr align="center">
+			<td class="TablePanel">&nbsp;</td>
+		</tr>
+			<TR>
+			<TD width="100%">
+				<fieldset style="height:100%;">
+				<legend>添加新闻</legend>
+					  <table border="0" cellpadding="2" cellspacing="1" style="width:100%">
+					 
+					  <tr>
+					    <td nowrap align="right" width="30%">标题:</td>
+					    <td width="35%"><input name='title' type="text" class="text" style="width:154px" value="" />
+				            <span class="red">*</span></td>
+					  </tr>
+
+					 <tr>
+					    <td nowrap align="right" width="30%">来源:</td>
+					    <td width="35%"><input name='source' type="text" class="text" style="width:154px" value="" />
+				            <span class="red">*</span></td>
+					  </tr>
+
+                                        <tr>
+					    <td nowrap align="right" width="30%">作者:</td>
+					    <td width="35%"><input name='author' type="text" class="text" style="width:154px" value="" />
+				            <span class="red">*</span></td>
+					  </tr>
+                                        
+                                        <tr>
+					    <td nowrap align="right" width="30%">匹图:</td>
+					    <td width="35%"><input name='pic' type="file" class="file" style="width:154px" value="" />
+				            <span class="red">*</span></td>
+					  </tr>
+					 
+                                         <tr>
+					    <td width="35%" colspan="2">
+                                                 <textarea id="editor" name="content" style="width:100%;height:300px;"> </textarea>
+				            </td>
+					  </tr>
+                                         
+					  </table>
+			  <br />
+				</fieldset>			</TD>
+		</TR>
+		</TABLE>
+	 </td>
+  </tr>
+		
+		<TR>
+			<TD colspan="2" align="center" height="50px">
+			<input type="submit" name="submit" value="保存" class="button"/>　
+			<input type="button" name="Submit2" value="返回" class="button" onclick="window.history.go(-1);"/>
+			</TD>
+		</TR>
+		</TABLE>
+	
+	
+	 </td>
+  </tr>
+  
+  
+  
+  </table>
+
+</div>
+</form>
+</body>
+</html>
