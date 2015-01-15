@@ -1,0 +1,157 @@
+<include file="Public/header" />
+
+<body class="ContentBody">
+  <form method="post" enctype="multipart/form-data" name="form">
+<div class="MainDiv">
+<table width="99%" border="0" cellpadding="0" cellspacing="0" class="CContent">
+  <tr>
+      <th class="tablestyle_title" >编辑企业</th>
+  </tr>
+  <tr>
+    <td class="CPanel">
+		
+		<table border="0" cellpadding="0" cellspacing="0" style="width:100%">
+		
+		<tr align="center">
+			<td class="TablePanel">&nbsp;</td>
+	        </tr>
+			<TR>
+			<TD width="100%">
+				<fieldset style="height:100%;">
+				<legend>编辑企业</legend>
+					  <table border="0" cellpadding="2" cellspacing="1" style="width:100%">
+					 
+					  <tr>
+					    <td nowrap align="right" width="30%">性质:</td>
+					    <td width="35%">
+                                            <select name="nature">
+                                            <option value="003001" <if condiion="'003001' eq $company.nature">selected="selected"</if>>公司</option>
+                                            <option value="003002">平台</option>
+                                            </select>
+                                            
+				            <span class="red">*</span></td>
+					  </tr>
+                                        
+                                          <tr>
+					    <td nowrap align="right" width="30%">平台:</td>
+					    <td width="35%">
+                                            <select name="trade">
+                                            <option value="004001">贵金属</option>
+                                            <option value="004002">外汇</option>
+                                            </select>
+				            <span class="red">*</span></td>
+					   </tr>
+					 
+    					 <tr>
+					    <td nowrap align="right" width="30%">公司名称:</td>
+					    <td width="35%"><input name='company_name' type="text" class="text" style="width:154px" value="" />
+				            <span class="red">*</span></td>
+					   </tr>
+                                           
+                                           <tr>
+					    <td nowrap align="right" width="30%">认证级别:</td>
+					    <td width="35%">
+                                            <select name="auth_level">
+                                            <option value="006002">未验证</opttion>
+                                            <option value="006001">黑平台</opttion>
+                                            <option value="006003">合规</opttion>
+                                            </select>
+				            <span class="red">*</span></td>
+					   </tr>
+                                           
+                                           <tr>
+					    <td nowrap align="right" width="30%">企业类型:</td>
+					    <td width="35%"><input name='company_type' type="text" class="text" style="width:154px" value="" />
+				            <span class="red">*</span></td>
+					   </tr>
+                                           
+                                           <tr>
+					    <td nowrap align="right" width="30%">注册地址:</td>
+					    <td width="35%"><input name='reg_address' type="text" class="text" style="width:154px" value="" />
+				            <span class="red">*</span></td>
+					   </tr>
+                                           
+                                           <tr>
+					    <td nowrap align="right" width="30%">营业执照:</td>
+					    <td width="35%"><input name='busin_license' type="file" style="width:154px" value="" />
+				            <span class="red">*</span></td>
+					   </tr>
+                                           
+                                           <tr>
+					    <td nowrap align="right" width="30%">机构代码证:</td>
+					    <td width="35%"><input name='code_certificate' type="file" style="width:154px" value="" />
+				            <span class="red">*</span></td>
+					   </tr>
+                                           
+                                           <tr>
+					    <td nowrap align="right" width="30%">联系电话:</td>
+					    <td width="35%"><input name='telephone' type="text" class="text" style="width:154px" value="" />
+				            <span class="red">*</span></td>
+					   </tr>
+                                           
+                                           <tr>
+					    <td nowrap align="right" width="30%">官方网址:</td>
+					    <td width="35%"><input name='website' type="text" class="text" style="width:154px" value="" />
+				            <span class="red">*</span></td>
+					   </tr>
+                                           
+                                           <tr>
+					    <td nowrap align="right" width="30%">官网备案:</td>
+					    <td width="35%"><input name='record' type="text" class="text" style="width:154px" value="" />
+				            <span class="red">*</span></td>
+					   </tr>
+                                           
+                                           <tr>
+					    <td nowrap align="right" width="30%">查询网址:</td>
+					    <td width="35%"><input name='find_website' type="text" class="text" style="width:154px" value="" />
+				            <span class="red">*</span></td>
+					   </tr>
+                                           
+                                           <tr>
+					    <td nowrap align="right" width="30%">代理平台:</td>
+					    <td width="35%"><input name='agent_platform' type="text" class="text" style="width:154px" value="" />
+				            <span class="red">*</span></td>
+					   </tr>
+                                           
+                                           <tr>
+					    <td nowrap align="right" width="30%">会员编号:</td>
+					    <td width="35%"><input name='mem_sn' type="text" class="text" style="width:154px" value="" />
+				            <span class="red">*</span></td>
+					   </tr>
+                                           
+                                           <tr>
+					    <td nowrap align="right" width="30%">资质证明:</td>
+					    <td width="35%"><input name='certificate' type="file" style="width:154px" value="" />
+				            <span class="red">*</span></td>
+					   </tr>
+                                          
+                                           
+					  </table>
+			  <br />
+				</fieldset>			</TD>
+		</TR>
+		</TABLE>
+	 </td>
+  </tr>
+		
+		<TR>
+			<TD colspan="2" align="center" height="50px">
+			<input type="submit" name="submit" value="保存" class="button"/>　
+			<input type="button" name="Submit2" value="返回" class="button" onclick="window.history.go(-1);"/>
+			</TD>
+		</TR>
+		</TABLE>
+	
+	
+	 </td>
+  </tr>
+  
+  
+  
+  </table>
+
+</div>
+</form>
+</body>
+</html>
+
