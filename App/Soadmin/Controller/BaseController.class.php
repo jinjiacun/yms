@@ -53,4 +53,53 @@ class BaseController extends Controller {
         $result = $this->deal_re_call_api($res);
         return $result;
 	}
+	
+	//上传图片
+	protected function upload($field , $sn)
+	{
+	    if(I('post.submit'))
+	    {
+		if($_FILES[$field])
+		{
+		    $fp  = fopen($_FILES[$field]['tmp_name'], "rb");
+		    $buf = fread($fp, $_FILES[$field]['size']);
+		    fclose($fp);
+		    $content = array(
+			'file_name' => '123.jpg',
+			'buf'       => $buf,
+			'file_ext'  => 'jpg',
+			'module_sn' => $sn,
+		    ); 
+		    
+		    $result = $this->_call(
+				  'Media.upload',
+				  $content,
+				  'resource'  
+			    );
+		    if($result
+		    && 200 == $result['status_code']
+		    && 0   == $result['content']['is_success']
+		    )
+		    {
+		       return intval($result['content']['id']);
+		    }
+		}
+	    }
+	    
+	    return 0;
+	}
+	
+	public function _map_company()
+	{
+		$list = array();
+		//查询企业
+		$result = $this->_call("Company.get_id_name_map");
+		if($result
+		&& 200 == $result['status_code'])
+		{
+		    $list = $result['content'];
+		}
+		
+		return $list;
+	}
 }

@@ -41,6 +41,17 @@
 				<legend>添加新闻</legend>
 					  <table border="0" cellpadding="2" cellspacing="1" style="width:100%">
 					 
+                                          <tr>
+					    <td nowrap align="right" width="30%">企业:</td>
+					    <td width="35%">
+                                            <select name="company_id">
+                                            <volist name="company_list" id="company">
+                                            <option value="{$key}" <if condition="">selected="selected"</if>>{$company}</option>
+                                            </volist>
+                                            </select>
+				            <span class="red">*</span></td>
+					  </tr>
+                                         
 					  <tr>
 					    <td nowrap align="right" width="30%">标题:</td>
 					    <td width="35%"><input name='title' type="text" class="text" style="width:154px" value="{$news.title}" />
