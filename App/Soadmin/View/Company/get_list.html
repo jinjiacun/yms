@@ -51,8 +51,8 @@ function on_load(){
 		  <tr>
 			<td width="21"><img src="__PUBLIC__/Admin/images/ico07.gif" width="20" height="18" /></td>
 			<td width="550">查看内容：名称：
-			 <input name="name" type="text" size="12"/>
-			 <input name="Submit" type="submit" class="right-button02" value="查 询" />
+			 <input name="company_name" type="text" size="12"/>
+			 <input name="submit" type="submit" class="right-button02" value="查 询" />
 			 </td>
 			 <td width="132" align="left">
        <a href="#" onclick="sousuo()">			   
@@ -105,7 +105,8 @@ function on_load(){
                     <td height="20" bgcolor="#FFFFFF">{$item.company_name}</td>
                     <td bgcolor="#FFFFFF">
                         <a href="__APP__/Soadmin/Company/edit/id/{$item.id}">编辑</a>|
-                        <a href="__APP__/Soadmin/Company/delete/id/{$item.id}">删除</a>
+                        <a href="__APP__/Soadmin/Company/delete/id/{$item.id}">删除</a>|
+                        <a href="__APP__/Soadmin/Company/get_list_ex/id/{$item.id}">别名管理</a>
                      </td>
                   </tr>
                   </volist>

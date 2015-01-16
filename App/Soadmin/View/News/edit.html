@@ -46,7 +46,7 @@
 					    <td width="35%">
                                             <select name="company_id">
                                             <volist name="company_list" id="company">
-                                            <option value="{$key}" <if condition="">selected="selected"</if>>{$company}</option>
+                                            <option value="{$key}" <if condition="$key eq $news['company_id']">selected="selected"</if>>{$company}</option>
                                             </volist>
                                             </select>
 				            <span class="red">*</span></td>

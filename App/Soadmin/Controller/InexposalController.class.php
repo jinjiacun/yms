@@ -45,13 +45,14 @@ class InexposalController extends BaseController {
             }
         }
         
+        $this->assign('company_list', $this->_map_company());
         $this->display();
     }
     
     //认证申请
     public function get_list_ex()
     {
-         $page_index = 1;
+        $page_index = 1;
         $page_size  = 10;
         $content    = array();
         if(I('get.p'))
@@ -86,6 +87,50 @@ class InexposalController extends BaseController {
             }
         }
         
+        $this->assign('company_list', $this->_map_company());
         $this->display();
     }
+    
+    //关联企业
+    public function edit()
+    {
+        $id = I('get.id');
+        
+        if(I('post.submit'))
+        {
+            $content = array(
+                'id'          =>I('post.id'),
+                'company_id'  =>I('post.company_id'),
+            );
+            $result = $this->_call('Inexposal.chang_relate',
+                                   $content);
+            if($result
+            && 200 == $result['status_code']
+            && 0 == $result['is_success'])
+            {
+                $this->success('成功操作');
+            }
+        }
+        $this->assign('id', $id);
+        $this->assign('company_list', $this->_map_company());
+        $this->display();    
+    }
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
 }

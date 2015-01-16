@@ -81,7 +81,9 @@ function on_load(){
 				    <td width="5%" align="center" bgcolor="#EEEEEE">选择</td>
                     <td width="10%" height="20" align="center" bgcolor="#EEEEEE">会员</td>
                     <td width="10%" height="20" align="center" bgcolor="#EEEEEE">企业</td>
-                    <td width="10%" height="20" align="center" bgcolor="#EEEEEE">企业新闻</td>
+                    <td width="10%" height="20" align="center" bgcolor="#EEEEEE">是否盖楼</td>
+                    <td width="10%" height="20" align="center" bgcolor="#EEEEEE">评论类型</td>
+                    <td width="10%" height="20" align="center" bgcolor="#EEEEEE">评论日期</td>
                     <td width="14%" align="center" bgcolor="#EEEEEE">操作</td>
                   </tr>
 
@@ -90,7 +92,9 @@ function on_load(){
 		    <td bgcolor="#FFFFFF"><input type="checkbox" name="delid"/>{$item.id}</td>
                     <td height="20" bgcolor="#FFFFFF">{$item.user_id}</td>
                     <td height="20" bgcolor="#FFFFFF">{$item.company_id}</td>
-                    <td height="20" bgcolor="#FFFFFF">{$item.news_id}</td>
+                    <td height="20" bgcolor="#FFFFFF">{$item.parent_id}</td>
+                    <td height="20" bgcolor="#FFFFFF">{$item.type}</td>
+                    <td height="20" bgcolor="#FFFFFF">{$item.add_time|date="Y-m-d H:i:s",###}</td>
                     <td bgcolor="#FFFFFF">
                         <a href="__APP__/Soadmin/Company/edit/id/{$item.id}">编辑</a>|
                         <a href="__APP__/Soadmin/Company/delete/id/{$item.id}">删除</a>

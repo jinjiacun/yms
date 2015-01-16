@@ -165,6 +165,16 @@ function list(idstr){
 				  <td width="91%">
 						<a href="__APP__/Soadmin/Comment/get_list" target="mainFrame" class="left-font03" onClick="tupian('16');">评价管理</a></td>
 				</tr>
+				<tr>
+				  <td width="9%" height="20" ><img id="xiaotu15" src="__PUBLIC__/Admin/images/ico06.gif" width="8" height="12" /></td>
+				  <td width="91%">
+						<a href="__APP__/Soadmin/Comment/get_news_list" target="mainFrame" class="left-font03" onClick="tupian('15');">评价(新闻)管理</a></td>
+				</tr>
+				<tr>
+				  <td width="9%" height="20" ><img id="xiaotu14" src="__PUBLIC__/Admin/images/ico06.gif" width="8" height="12" /></td>
+				  <td width="91%">
+						<a href="__APP__/Soadmin/Comment/get_exposal_list" target="mainFrame" class="left-font03" onClick="tupian('14');">评价(曝光)管理</a></td>
+				</tr>
       </table>
 		<!--  评价管理结束    -->	
 		
@@ -186,28 +196,67 @@ function list(idstr){
 		<table id="subtree5" style="DISPLAY: none" width="80%" border="0" align="center" cellpadding="0" 
 				cellspacing="0" class="left-table02">
 				<tr>
-				  <td width="9%" height="20" ><img id="xiaotu15" src="__PUBLIC__/Admin/images/ico06.gif" width="8" height="12" /></td>
-				  <td width="91%">
-						<a href="__APP__/Soadmin/News/add" target="mainFrame" class="left-font03"  onClick="tupian('15');">添加企业新闻</a></td>
-				</tr>
-				<tr>
-				  <td width="9%" height="20" ><img id="xiaotu14" src="__PUBLIC__/Admin/images/ico06.gif" width="8" height="12" /></td>
-				  <td width="91%">
-						<a href="__APP__/Soadmin/News/get_list" target="mainFrame" class="left-font03" onClick="tupian('14');">企业新闻管理</a></td>
-				</tr>
-				<tr>
 				  <td width="9%" height="20" ><img id="xiaotu13" src="__PUBLIC__/Admin/images/ico06.gif" width="8" height="12" /></td>
 				  <td width="91%">
-						<a href="__APP__/Soadmin/News/add_ex" target="mainFrame" class="left-font03" onClick="tupian('13');">添加系统新闻</a></td>
+						<a href="__APP__/Soadmin/News/add" target="mainFrame" class="left-font03"  onClick="tupian('13');">添加企业新闻</a></td>
 				</tr>
 				<tr>
 				  <td width="9%" height="20" ><img id="xiaotu12" src="__PUBLIC__/Admin/images/ico06.gif" width="8" height="12" /></td>
 				  <td width="91%">
-						<a href="__APP__/Soadmin/News/get_list_ex" target="mainFrame" class="left-font03" onClick="tupian('12');">系统新闻管理</a></td>
+						<a href="__APP__/Soadmin/News/get_list" target="mainFrame" class="left-font03" onClick="tupian('12');">企业新闻管理</a></td>
+				</tr>
+				<tr>
+				  <td width="9%" height="20" ><img id="xiaotu11" src="__PUBLIC__/Admin/images/ico06.gif" width="8" height="12" /></td>
+				  <td width="91%">
+						<a href="__APP__/Soadmin/News/add_ex" target="mainFrame" class="left-font03" onClick="tupian('11');">添加系统新闻</a></td>
+				</tr>
+				<tr>
+				  <td width="9%" height="20" ><img id="xiaotu10" src="__PUBLIC__/Admin/images/ico06.gif" width="8" height="12" /></td>
+				  <td width="91%">
+						<a href="__APP__/Soadmin/News/get_list_ex" target="mainFrame" class="left-font03" onClick="tupian('10');">系统新闻管理</a></td>
 				</tr>
 				
       </table>
-		<!--  新闻管理结束    -->	
+		<!--  新闻管理结束    -->
+		
+		<!--  纪录管理开始    -->
+		<TABLE width="100%" border="0" cellpadding="0" cellspacing="0" class="left-table03" style="display: none">
+          <tr>
+            <td height="29">
+				<table width="85%" border="0" align="center" cellpadding="0" cellspacing="0">
+					<tr>
+						<td width="8%"><img name="img4" id="img5" src="__PUBLIC__/Admin/images/ico04.gif" width="8" height="11" /></td>
+						<td width="92%">
+								<a href="javascript:" target="mainFrame" class="left-font03" onClick="list('4');" >纪录管理</a></td>
+					</tr>
+				</table>
+			</td>
+          </tr>		  
+        </TABLE>
+		<table id="subtree4" style="DISPLAY: none" width="80%" border="0" align="center" cellpadding="0" 
+				cellspacing="0" class="left-table02" style="display: none">
+				<tr>
+				  <td width="9%" height="20" ><img id="xiaotu9" src="__PUBLIC__/Admin/images/ico06.gif" width="8" height="12" /></td>
+				  <td width="91%">
+				  <a href="__APP__/Soadmin/Record/exposal_top_list" target="mainFrame" class="left-font03"  onClick="tupian('9');">曝光评论顶纪录</a></td>
+				</tr>
+				<tr>
+				  <td width="9%" height="20" ><img id="xiaotu8" src="__PUBLIC__/Admin/images/ico06.gif" width="8" height="12" /></td>
+				  <td width="91%">
+				  <a href="__APP__/Soadmin/Record/com_news_assist_list" target="mainFrame" class="left-font03"  onClick="tupian('8');">企业新闻评论点赞</a></td>
+				</tr>
+				<tr>
+				  <td width="9%" height="20" ><img id="xiaotu7" src="__PUBLIC__/Admin/images/ico06.gif" width="8" height="12" /></td>
+				  <td width="91%">
+				  <a href="__APP__/Soadmin/Record/com_top_list" target="mainFrame" class="left-font03"  onClick="tupian('7');">企业评论的顶纪录</a></td>
+				</tr>
+				<tr>
+				  <td width="9%" height="20" ><img id="xiaotu6" src="__PUBLIC__/Admin/images/ico06.gif" width="8" height="12" /></td>
+				  <td width="91%">
+				  <a href="__APP__/Soadmin/Record/news_assist_list" target="mainFrame" class="left-font03"  onClick="tupian('6');">新闻点赞纪录</a></td>
+				</tr>
+      </table>
+		<!--  纪录管理结束    -->
 
 		 <TABLE width="100%" border="0" cellpadding="0" cellspacing="0" class="left-table03">
           <tr>

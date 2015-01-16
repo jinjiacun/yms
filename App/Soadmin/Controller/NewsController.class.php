@@ -9,8 +9,8 @@ class NewsController extends BaseController {
         if(I('post.submit'))
         {
             //上传图片
-            $pic     = $this->upload('pic');
-            $pic_app = $this->upload('pic_app');
+            $pic     = $this->upload('pic','001006');
+            $pic_app = $this->upload('pic_app','001007');
             $content = array(
                 'company_id'  => intval(I('post.company_id')),
                 'title'       => urlencode(I('post.title')),
@@ -93,6 +93,7 @@ class NewsController extends BaseController {
                 }
             }
         }
+        
         $company_list = $this->_map_company();
         $this->assign('company_list', $company_list);
         $this->display();
@@ -185,40 +186,5 @@ class NewsController extends BaseController {
     public function delete()
     {
         $this->display();
-    }
-    
-    //上传图片
-    public function upload($field ='pic')
-    {
-        if(I('post.submit'))
-        {
-            if($_FILES[$field])
-            {
-                $fp  = fopen($_FILES[$field]['tmp_name'], "rb");
-                $buf = fread($fp, $_FILES[$field]['size']);
-                fclose($fp);
-                $content = array(
-                    'file_name' => '123.jpg',
-                    'buf'       => $buf,
-                    'file_ext'  => 'jpg',
-                    'module_sn' => '001006',
-                ); 
-                
-                $result = $this->_call(
-                              'Media.upload',
-                              $content,
-                              'resource'  
-                        );
-                if($result
-                && 200 == $result['status_code']
-                && 0   == $result['content']['is_success']
-                )
-                {
-                   return intval($result['content']['id']);
-                }
-            }
-        }
-        
-        return 0;
     }
 }
