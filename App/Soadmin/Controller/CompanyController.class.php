@@ -102,7 +102,8 @@ class CompanyController extends BaseController {
             &&  0  == $result['content']['is_success']
             )
             {
-                $this->success("成功保存");
+                $this->success("成功保存","Company/get_list");
+                
             }
         }
         
@@ -134,9 +135,21 @@ class CompanyController extends BaseController {
         if(I('post.submit'))
         {
             $company_name = I('post.company_name');
-            $content['where'] = array(
-                'company_name'=>array('like', urlencode($company_name)),
-            );
+            if('' != $company_name)
+            {
+                $this->assign('company_name', $company_name);
+                $content['where']['company_name'] = array('like', '%'.urlencode($company_name).'%');
+            }
+            if(0 != I('post.nature'))
+            {
+                $this->assign('nature', I('post.nature'));
+                $content['where']['nature'] = I('post.nature');
+            }
+            if(0 != I('post.trade'))
+            {
+                $this->assign('trade', I('post.trade'));
+                $content['where']['trade'] = I('post.trade');
+            }
         }
         $res = A('Callapi')->call_api('Company.get_list', 
                                     $content,

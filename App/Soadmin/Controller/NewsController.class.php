@@ -24,7 +24,7 @@ class NewsController extends BaseController {
              if($result
              && 0 == $result['status_code'])
              {
-                $this->success("成功添加");
+                $this->success("成功添加","News/get_list");
              }
         }
         
@@ -39,8 +39,8 @@ class NewsController extends BaseController {
          if(I('post.submit'))
         {
             //上传图片
-            $pic     = $this->upload('pic');
-            $pic_app = $this->upload('pic_app');
+            $pic     = $this->upload('pic','001006');
+            $pic_app = $this->upload('pic_app','001007');
             $content = array(
                 'title'   => urlencode(I('post.title')),
                 'source'  => urlencode(I('post.source')),
@@ -51,9 +51,10 @@ class NewsController extends BaseController {
             );
              $result = $this->_call('News.add', $content);
              if($result
-             && 0 == $result['status_code'])
+             && 200 == $result['status_code']
+             && 0 == $result['content']['is_success'])
              {
-                $this->success("成功添加");
+                $this->success("成功添加", "News/get_list_ex");
              }
         }
         $this->display();

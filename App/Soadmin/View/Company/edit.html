@@ -41,10 +41,17 @@
                                             </select>
 				            <span class="red">*</span></td>
 					   </tr>
+                                           
+                                            <tr>
+					    <td nowrap align="right" width="30%">企业logo:</td>
+					    <td width="35%"><input type="file" name="logo" style="width:154px" />
+                                            <img src="{$obj.logo_url}" width="50px" height="50px"/>
+                                            </td>
+					   </tr>
 					 
     					 <tr>
 					    <td nowrap align="right" width="30%">公司名称:</td>
-					    <td width="35%"><input name='company_name' type="text" class="text" style="width:154px" value="{$obj.company_name}" />
+					    <td width="35%"><input name='company_name' type="text" class="text" style="width:154px" value="{$obj.company_name}" onblur="check_company_name()"/>
 				            <span class="red">*</span></td>
 					   </tr>
                                            
@@ -56,7 +63,7 @@
                                             <option value="006001" <if condition="'006001' eq $obj['auth_level']">selected="selected"</if>>黑平台</option>
                                             <option value="006003" <if condition="'006003' eq $obj['auth_level']">selected="selected"</if>>合规</option>
                                             </select>
-				            <span class="red">*</span></td>
+				            </td>
 					   </tr>
                                            
                                            <tr>
@@ -68,64 +75,64 @@
                                            <tr>
 					    <td nowrap align="right" width="30%">注册地址:</td>
 					    <td width="35%"><input name='reg_address' type="text" class="text" style="width:154px" value="{$obj.reg_address}" />
-				            <span class="red">*</span></td>
+				            </td>
 					   </tr>
                                            
                                            <tr>
 					    <td nowrap align="right" width="30%">营业执照:</td>
 					    <td width="35%"><input name='certificate' type="file" style="width:154px" value="" />
                                             <img src="{$obj.certificate_url}" width="50px" height="50px"/>
-				            <span class="red">*</span></td>
+				            </td>
 					   </tr>
                                            
                                            <tr>
 					    <td nowrap align="right" width="30%">机构代码证:</td>
 					    <td width="35%"><input name='code_certificate' type="file" style="width:154px" value="" />
                                             <img src="{$obj.code_certificate_url}" width="50px" height="50px"/>
-				            <span class="red">*</span></td>
+				            </td>
 					   </tr>
                                            
                                            <tr>
 					    <td nowrap align="right" width="30%">联系电话:</td>
 					    <td width="35%"><input name='telephone' type="text" class="text" style="width:154px" value="{$obj.telephone}" />
-				            <span class="red">*</span></td>
+				            </td>
 					   </tr>
                                            
                                            <tr>
 					    <td nowrap align="right" width="30%">官方网址:</td>
 					    <td width="35%"><input name='website' type="text" class="text" style="width:154px" value="{$obj.website}" />
-				            <span class="red">*</span></td>
+				            </td>
 					   </tr>
                                            
                                            <tr>
 					    <td nowrap align="right" width="30%">官网备案:</td>
 					    <td width="35%"><input name='record' type="text" class="text" style="width:154px" value="{$obj.record}" />
-				            <span class="red">*</span></td>
+				            </td>
 					   </tr>
                                            
                                            <tr>
 					    <td nowrap align="right" width="30%">查询网址:</td>
 					    <td width="35%"><input name='find_website' type="text" class="text" style="width:154px" value="" />
-				            <span class="red">*</span></td>
+				            </td>
 					   </tr>
                                            
                                            <tr>
 					    <td nowrap align="right" width="30%">代理平台:</td>
 					    <td width="35%"><input name='agent_platform' type="text" class="text" style="width:154px" value="{$obj.agent_platform}" />
-				            <span class="red">*</span></td>
+				            </td>
 					   </tr>
                                            
                                            <tr>
 					    <td nowrap align="right" width="30%">会员编号:</td>
 					    <td width="35%"><input name='mem_sn' type="text" class="text" style="width:154px" value="{$obj.mem_sn}" />
-				            <span class="red">*</span></td>
+				            </td>
 					   </tr>
                                            
                                            <tr>
 					    <td nowrap align="right" width="30%">资质证明:</td>
 					    <td width="35%"><input name='certificate' type="file" style="width:154px" />
                                             <img src="{$obj.certificate_url}" width="50px" height="50px"/>
-				            <span class="red">*</span></td>
+				            </td>
 					   </tr>
                                           
                                            
@@ -140,7 +147,7 @@
 		<TR>
 			<TD colspan="2" align="center" height="50px">
                         <input type="hidden" name="id" value="{$obj.id}"/>
-			<input type="submit" name="submit" value="保存" class="button"/>　
+			<input type="submit" name="submit" value="保存" class="button" onclick="validate()"/>　
 			<input type="button" name="Submit2" value="返回" class="button" onclick="window.history.go(-1);"/>
 			</TD>
 		</TR>
@@ -158,4 +165,46 @@
 </form>
 </body>
 </html>
+<script type="text/javascript">
+//检查企业名称是否存在
+function check_company_name() {
+    var company_name = $('#company_name').val();
+    company_name = encodeURI(company_name);
+    jQuery.ajax({  
+		        type:"post",  
+		        url:"{$call_url}",
+		        timeout: 5000,  
+		        dataType:"json",  
+		        data:{"method":"Company.exists_name","type":"text","content":{"company_name":company_name}},
+		        success: function aa(data) {
+                            if (200 == data.status_code
+                            &&  0 == data.content.is_exists) {
+                                $('#company_name').val("");
+                                $('#company_name').focus();
+                                alert('此企业名称已存在');
+                            }
+                        }
+    });
+}
 
+//提交审核
+function validate()
+{
+    var company_name = $('#company_name').val();
+    var company_type = $('#company_type').val();
+
+    //公司名称
+    if ('' == company_name) {
+        alert('企业名称不为空');
+        return false;
+    }
+    
+    //企业类型
+    if ('' == company_type) {
+        alert('企业类型不为空');
+        return false;
+    }
+    
+    return true;
+}
+</script>

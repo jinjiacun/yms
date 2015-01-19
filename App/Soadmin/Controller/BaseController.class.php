@@ -4,6 +4,7 @@ use Think\Controller;
 class BaseController extends Controller {
 	public function _initialize()
 	{
+		$this->assign('call_url', C('call_url'));
 		/*if(session('admin_name'))
 		{
 			//$this->display('Index:index');
@@ -59,7 +60,7 @@ class BaseController extends Controller {
 	{
 	    if(I('post.submit'))
 	    {
-		if($_FILES[$field])
+		if(!empty($_FILES[$field]['tmp_name']))
 		{
 		    $fp  = fopen($_FILES[$field]['tmp_name'], "rb");
 		    $buf = fread($fp, $_FILES[$field]['size']);
@@ -101,5 +102,13 @@ class BaseController extends Controller {
 		}
 		
 		return $list;
+	}
+	
+	public function _map_dict()
+	{
+		return array(
+			'001001'=>array(1,'图片','曝光图片'),
+			'001002'=>array(1,'图片','监管机构'),
+		);
 	}
 }

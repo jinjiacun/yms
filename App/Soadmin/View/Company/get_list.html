@@ -51,7 +51,17 @@ function on_load(){
 		  <tr>
 			<td width="21"><img src="__PUBLIC__/Admin/images/ico07.gif" width="20" height="18" /></td>
 			<td width="550">查看内容：名称：
-			 <input name="company_name" type="text" size="12"/>
+			 <input name="company_name" type="text" size="12" value="{$company_name}"/>
+                         &nbsp;公司性质：<select name="nature">
+                         <option value="0">---请选择公司性质---</option>
+                         <option value="003001">公司</option>
+                         <option value="003002">平台</option>
+                         </select>
+                         &nbsp;所属行业：<select name="trade">
+                         <option value=0>---请选择所属行业---</option>
+                         <option value="004001">贵金属</option>
+                         <option value="004002">外汇</option>
+                         </select>
 			 <input name="submit" type="submit" class="right-button02" value="查 询" />
 			 </td>
 			 <td width="132" align="left">
@@ -79,8 +89,8 @@ function on_load(){
 
                   <tr>
 				    <td width="5%" align="center" bgcolor="#EEEEEE">选择</td>
-                    <td width="10%" height="20" align="center" bgcolor="#EEEEEE">性质</td>
-                    <td width="10%" height="20" align="center" bgcolor="#EEEEEE">平台</td>
+                    <td width="10%" height="20" align="center" bgcolor="#EEEEEE">公司性质</td>
+                    <td width="10%" height="20" align="center" bgcolor="#EEEEEE">所属行业</td>
                     <td width="10%" height="20" align="center" bgcolor="#EEEEEE">公司名称</td>
                     <td width="14%" align="center" bgcolor="#EEEEEE">操作</td>
                   </tr>
