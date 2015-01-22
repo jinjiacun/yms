@@ -6,6 +6,15 @@ include_once(dirname(__FILE__).'/BaseController.class.php');
  *入库管理
 */
 class InexposalController extends BaseController {
+     public function _initialize()
+    {
+	parent::_initialize();
+	if(null == session('admin_name')
+	|| ''   == session('admin_name'))
+	{
+	    $this->redirect('/Soadmin/Login/index');
+	}
+    }
     
     //曝光
     public function get_list()

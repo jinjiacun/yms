@@ -6,6 +6,15 @@ include_once(dirname(__FILE__).'/BaseController.class.php');
  *企业管理
 */
 class CompanyController extends BaseController {
+     public function _initialize()
+    {
+	parent::_initialize();
+	if(null == session('admin_name')
+	|| ''   == session('admin_name'))
+	{
+	    $this->redirect('/Soadmin/Login/index');
+	}
+    }
     public function add()
     {
         if(I('post.submit'))

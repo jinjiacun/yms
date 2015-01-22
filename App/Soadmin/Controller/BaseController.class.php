@@ -3,17 +3,8 @@ namespace Soadmin\Controller;
 use Think\Controller;
 class BaseController extends Controller {
 	public function _initialize()
-	{
+	{	
 		$this->assign('call_url', C('call_url'));
-		/*if(session('admin_name'))
-		{
-			//$this->display('Index:index');
-		}
-		else
-		{
-			$this->display('Login:index');
-			exit();
-		}*/
 	}
 
 	//解析接口调用返回处理
@@ -111,4 +102,33 @@ class BaseController extends Controller {
 			'001002'=>array(1,'图片','监管机构'),
 		);
 	}
+	
+	public function _map_news()
+	{
+		$list = array();
+		$result = $this->_call("News.get_id_name_map");
+		if($result
+		&& 200 == $result['status_code'])
+		{
+			$list = $result['content'];
+		}
+		
+		return $list;
+	}
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
 }

@@ -1,5 +1,5 @@
 <?php
-namespace Admin\Controller;
+namespace Soadmin\Controller;
 use Think\Controller;
 include_once(dirname(__FILE__).'/BaseController.class.php');
 class LoginController extends BaseController {
@@ -10,7 +10,7 @@ class LoginController extends BaseController {
 			echo 'jump';
 			exit();
 			session('admin_name', I('post.admin_name'));
-			$this->display('Admin:Index');
+			$this->display('Soadmin:Index');
 		}
 		else
 		{

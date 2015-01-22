@@ -3,6 +3,16 @@ namespace Soadmin\Controller;
 use Soadmin\Controller;
 include_once(dirname(__FILE__).'/BaseController.class.php');
 class NewsController extends BaseController {
+
+    public function _initialize()
+    {
+	parent::_initialize();
+	if(null == session('admin_name')
+	|| ''   == session('admin_name'))
+	{
+	    $this->redirect('/Soadmin/Login/index');
+	}
+    }
     //添加企业新闻
     public function add()
     {
@@ -71,6 +81,11 @@ class NewsController extends BaseController {
             $content['page_size'] = $page_size;
             $content['page_index'] = $page_index;
         }
+        if(I('post.submit'))
+        {
+             if('' != I('post.title'))
+                $content['where']['title'] = urlencode(I('post.title'));
+        }        
         $content['where']['company_id'] = array("neq",0);
         $res = A('Callapi')->call_api('News.get_list', 
                                     $content,
@@ -111,6 +126,11 @@ class NewsController extends BaseController {
             $content['page_size'] = $page_size;
             $content['page_index'] = $page_index;
         }
+        if(I('post.submit'))
+        {
+             if('' != I('post.title'))
+                $content['where']['title'] = urlencode(I('post.title'));
+        }        
         $content['where']['company_id'] = array("eq",0);
         $res = A('Callapi')->call_api('News.get_list', 
                                     $content,
