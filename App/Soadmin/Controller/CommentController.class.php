@@ -169,6 +169,7 @@ class CommentController extends BaseController {
             }
         }
     
+        $this->assign('exposal_list', $this->_map_exposal());
         $this->display();
     }
     

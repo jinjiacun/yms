@@ -116,6 +116,18 @@ class BaseController extends Controller {
 		return $list;
 	}
 	
+	public function _map_exposal()
+	{
+		$list = array();
+		$result = $this->_call("Inexposal.get_id_name_map");
+		if($result
+		&& 200 == $result['status_code'])
+		{
+			$list = $result['content'];
+		}
+		return $list;
+	}
+	
 	
 	
 	

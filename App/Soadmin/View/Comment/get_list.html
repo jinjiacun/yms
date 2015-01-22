@@ -92,9 +92,15 @@ function on_load(){
                   <volist name="list" id="item">
                   <tr align="center">
 		    <td bgcolor="#FFFFFF"><input type="checkbox" name="delid"/>{$item.id}</td>
-                    <td height="20" bgcolor="#FFFFFF">{$item.user_id}</td>
+                    <td height="20" bgcolor="#FFFFFF">{$item.nickname}</td>
                     <td height="20" bgcolor="#FFFFFF">{$company_list[$item['company_id']]}</td>
-                    <td height="20" bgcolor="#FFFFFF">{$item.parent_id}</td>
+                    <td height="20" bgcolor="#FFFFFF">
+                    <if condition="0 eq $item['parent_id']">
+                    否
+                    <else />
+                    是
+                    </if>
+                    </td>
                     <td height="20" bgcolor="#FFFFFF">
                     <if condition="'005001' eq $item['type']">
                     点赞

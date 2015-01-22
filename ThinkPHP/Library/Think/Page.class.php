@@ -132,13 +132,13 @@ class Page{
             if($page > 0 && $page != $this->nowPage){
 
                 if($page <= $this->totalPages){
-                    $link_page .= '<a class="num" href="' . $this->url($page) . '">' . $page . '</a>';
+                    $link_page .= '<a class="num" style="display:inline-block;width:12px;" href="' . $this->url($page) . '">' . $page . '</a>';
                 }else{
                     break;
                 }
             }else{
                 if($page > 0 && $this->totalPages != 1){
-                    $link_page .= '<span class="current">' . $page . '</span>';
+                    $link_page .= '<span class="current" style="display:inline-block;background-color:red;width:15px;align:center;">' . $page . '</span>';
                 }
             }
         }

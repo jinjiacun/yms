@@ -46,7 +46,41 @@ class MediaController extends BaseController {
                     $this->get_page($record_count, 10);
                 }
             }
-
+    
+            $this->assign('sn_list', $this->_map_sn());
 	    $this->display();
 	}
+        
+        //图片编号映射名称
+        private function _map_sn()
+        {
+            return array(
+                '001001'=>'曝光图片',
+                '001002'=>'监管机构',
+                '001003'=>'营业执照',
+                '001004'=>'机构代码证',
+                '001005'=>'资质证明',
+                '001006'=>'新闻图片(pc)',
+                '001007'=>'新闻图片（app)',
+                '001008'=>'企业logo',
+                '001009'=>'评论图片',
+            );
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+        }
 }
