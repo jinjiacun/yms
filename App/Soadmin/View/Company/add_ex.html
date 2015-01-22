@@ -1,0 +1,102 @@
+<include file="Public/header" />
+
+<body class="ContentBody">
+  <form method="post" enctype="multipart/form-data" name="form">
+<div class="MainDiv">
+<table width="99%" border="0" cellpadding="0" cellspacing="0" class="CContent">
+  <tr>
+      <th class="tablestyle_title" >添加企业别名</th>
+  </tr>
+  <tr>
+    <td class="CPanel">
+		
+		<table border="0" cellpadding="0" cellspacing="0" style="width:100%">
+		
+		<tr align="center">
+			<td class="TablePanel">&nbsp;</td>
+	        </tr>
+			<TR>
+			<TD width="100%">
+				<fieldset style="height:100%;">
+				<legend>添加企业别名</legend>
+					  <table border="0" cellpadding="2" cellspacing="1" style="width:100%">
+					
+										 
+    					 <tr>
+					    <td nowrap align="right" width="30%">公司名称:</td>
+					    <td width="35%">
+                                            {$company_list[$company_id]}
+                                            <input name='company_id' type="hidden" value="{$company_id}"/>
+				            <span class="red">*</span></td>
+					   </tr>
+                                          
+                                           
+                                           <tr>
+					    <td nowrap align="right" width="30%">别名:</td>
+					    <td width="35%"><input id="name" name='name' type="text" class="text" style="width:154px" value="" onblur="check_name()"/>
+				            <span class="red">*</span></td>
+					   </tr>
+                                           
+					  </table>
+			  <br />
+				</fieldset>			</TD>
+		</TR>
+		</TABLE>
+	 </td>
+  </tr>
+		
+		<TR>
+			<TD colspan="2" align="center" height="50px">
+			<input type="submit" name="submit" value="保存" class="button" onclick="validate()"/>　
+			<input type="button" name="Submit2" value="返回" class="button" onclick="window.history.go(-1);"/>
+			</TD>
+		</TR>
+		</TABLE>
+	
+	
+	 </td>
+  </tr>
+  
+  
+  
+  </table>
+
+</div>
+</form>
+</body>
+</html>
+<script type="text/javascript">
+//检查企业名称是否存在
+function check_name() {
+    var name = $('#name').val();
+    name = encodeURI(name);
+    jQuery.ajax({  
+		        type:"post",  
+		        url:"{$call_url}",
+		        timeout: 5000,  
+		        dataType:"json",  
+		        data:{"method":"Companyalias.exists_name","type":"text","content":{"name":name}},
+		        success: function aa(data) {
+                            if (200 == data.status_code
+                            &&  0 == data.content.is_exists) {
+                                $('#name').val("");
+                                $('#name').focus();
+                                alert('此企业别名已存在');
+                            }
+                        }
+    });
+}
+//提交审核
+function validate()
+{
+    var name = $('#name').val();
+
+    //公司名称
+    if ('' == name) {
+        alert('企业别名不为空');
+        return false;
+    }
+    
+    return true;
+}
+</script>

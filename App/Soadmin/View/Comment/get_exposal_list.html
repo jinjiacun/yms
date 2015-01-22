@@ -1,0 +1,121 @@
+<include file="Public/header" />
+<SCRIPT language=JavaScript>
+function sousuo(){
+	window.open("gaojisousuo.htm","","depended=0,alwaysRaised=1,width=800,height=510,location=0,menubar=0,resizable=0,scrollbars=0,status=0,toolbar=0");
+}
+function selectAll(){
+	var obj = document.fom.elements;
+	for (var i=0;i<obj.length;i++){
+		if (obj[i].name == "delid"){
+			obj[i].checked = true;
+		}
+	}
+}
+
+function unselectAll(){
+	var obj = document.fom.elements;
+	for (var i=0;i<obj.length;i++){
+		if (obj[i].name == "delid"){
+			if (obj[i].checked==true) obj[i].checked = false;
+			else obj[i].checked = true;
+		}
+	}
+}
+
+function link(){
+    document.getElementById("fom").action="addjihua.htm";
+   document.getElementById("fom").submit();
+}
+
+function on_load(){
+	var loadingmsg=document.getElementById("loadingmsg");
+	var mainpage=document.getElementById("mainpage");
+	loadingmsg.style.display="";
+	mainpage.style.display="none";
+	
+	loadingmsg.style.display="none";
+	mainpage.style.display="";
+}
+</SCRIPT>
+
+<body onload="on_load()">
+<form name="fom" id="fom" method="post">
+<table id="mainpage" width="100%" border="0" cellspacing="0" cellpadding="0">
+
+  <tr>
+    <td height="30"><table width="100%" border="0" cellspacing="0" cellpadding="0">
+      <tr>
+        <td height="62" background="__PUBLIC__/Admin/images/nav04.gif">
+          
+		   <table width="98%" border="0" align="center" cellpadding="0" cellspacing="0">
+		  <tr>
+			<td width="21"><img src="__PUBLIC__/Admin/images/ico07.gif" width="20" height="18" /></td>
+			<td width="550">查看内容：
+			 </td>
+			 <td width="132" align="left">
+       <a href="#" onclick="sousuo()">			   
+         </a>
+         </td>	
+		  </tr>
+        </table></td>
+      </tr>
+    </table></td>
+  </tr>
+  <tr>
+    <td><table id="subtree1" style="DISPLAY: " width="100%" border="0" cellspacing="0" cellpadding="0">
+
+        <tr>
+          <td><table width="95%" border="0" align="center" cellpadding="0" cellspacing="0">
+
+          	 <tr>
+               <td height="20"><span class="newfont07">选择：<a href="#" class="right-font08" onclick="selectAll();">全选</a>-<a href="#" class="right-font08" onclick="unselectAll();">反选</a></span>
+	             
+	             </td>
+          	 </tr>
+              <tr>
+                <td height="40" class="font42"><table width="100%" border="0" cellpadding="4" cellspacing="1" bgcolor="#464646" class="newfont03">
+
+                  <tr>
+		    <td width="5%" align="center" bgcolor="#EEEEEE">选择</td>
+                    <td width="10%" height="20" align="center" bgcolor="#EEEEEE">会员</td>
+                    <td width="10%" height="20" align="center" bgcolor="#EEEEEE">曝光入库企业</td>
+                    <td width="10%" height="20" align="center" bgcolor="#EEEEEE">评论日期</td>
+                    <td width="14%" align="center" bgcolor="#EEEEEE">操作</td>
+                  </tr>
+
+                  <volist name="list" id="item">
+                  <tr align="center">
+		    <td bgcolor="#FFFFFF"><input type="checkbox" name="delid"/>{$item.id}</td>
+                    <td height="20" bgcolor="#FFFFFF">{$item.user_id}</td>
+                    <td height="20" bgcolor="#FFFFFF">{$item.exposal_id}</td>
+                    <td height="20" bgcolor="#FFFFFF">{$item.add_time|date="Y-m-d H:i:s",###}</td>
+                    <td bgcolor="#FFFFFF">
+                        <if condition="0 eq $item['is_validate']">
+                        <a href="__APP__/Soadmin/Comment/validate_exposal/id/{$item.id}">审核</a
+                        </if>
+                     </td>
+                  </tr>
+                  </volist>
+
+                </table></td>
+              </tr>
+            </table></td>
+        </tr>
+      </table>
+      <table width="95%" border="0" align="center" cellpadding="0" cellspacing="0">
+        <tr>
+          <td height="6"><img src="__PUBLIC__/Admin/images/spacer.gif" width="1" height="1" /></td>
+        </tr>
+        <tr>
+          <td colspan="5" align="right">{$page}</td>
+        </tr>
+</table>
+</form>
+
+<div id="loadingmsg" style="width:100px; height:18px; top:0px; display:none;">
+	<img src="file:///F|/项目管理相关资料/项目管理系统页面/images/loadon.gif" />
+</div>
+
+</body>
+</html>
+

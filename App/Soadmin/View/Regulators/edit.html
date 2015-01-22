@@ -1,0 +1,109 @@
+<include file="Public/header" />
+
+<body class="ContentBody">
+  <form method="post" enctype="multipart/form-data" name="form">
+<div class="MainDiv">
+<table width="99%" border="0" cellpadding="0" cellspacing="0" class="CContent">
+  <tr>
+      <th class="tablestyle_title" >添加监管机构</th>
+  </tr>
+  <tr>
+    <td class="CPanel">
+		
+		<table border="0" cellpadding="0" cellspacing="0" style="width:100%">
+		
+		<tr align="center">
+			<td class="TablePanel">&nbsp;</td>
+	        </tr>
+			<TR>
+			<TD width="100%">
+				<fieldset style="height:100%;">
+				<legend>添加监管机构</legend>
+					  <table border="0" cellpadding="2" cellspacing="1" style="width:100%">
+					 
+					  <tr>
+					    <td nowrap align="right" width="30%">类型:</td>
+					    <td width="35%">
+                                            <select name="type">
+                                            <option value="002001" <if condition="'002001' eq $obj['type']">selected="selected"</if>>贵金属监管机构</option>
+                                            <option value="002002" <if condition="'002002' eq $obj['type']"></if>>外汇监管机构</option>
+                                            </select>
+                                            
+				            <span class="red">*</span></td>
+					  </tr>
+                                        
+                                          <tr>
+					    <td nowrap align="right" width="30%">标题:</td>
+					    <td width="35%"><input type="text" name="title" value="{$obj.title}"/><span class="red">*</span></td>
+					   </tr>
+                                           
+                                           <tr>
+					    <td nowrap align="right" width="30%">官网:</td>
+					    <td width="35%"><input type="text" name="website" value="{$obj.website}"/><span class="red">*</span></td>
+					   </tr>
+					 
+                                           <tr>
+					    <td nowrap align="right" width="30%">图片:</td>
+					    <td width="35%"><input type="file" name="pic" />
+                                            <img src="{$obj.pic_url}" width="25px" height="25px"/>
+                                            <span class="red">*</span></td>
+					   </tr>
+                                           
+                                           <tr>
+					    <td nowrap align="right" width="30%">内容:</td>
+					    <td width="35%"><textarea name="content">{$obj.content}</textarea><span class="red">*</span></td>
+					   </tr>
+                                           
+					  </table>
+			  <br />
+				</fieldset>			</TD>
+		</TR>
+		</TABLE>
+	 </td>
+  </tr>
+		
+		<TR>
+			<TD colspan="2" align="center" height="50px">
+                        <input type="hidden" name="id" value="{$obj.id}" />
+			<input type="submit" name="submit" value="保存" class="button" onclick="validate()"/>　
+			<input type="button" name="Submit2" value="返回" class="button" onclick="window.history.go(-1);"/>
+			</TD>
+		</TR>
+		</TABLE>
+	
+	
+	 </td>
+  </tr>
+  
+  
+  
+  </table>
+
+</div>
+</form>
+</body>
+</html>
+<script type="text/javascript">
+
+//提交审核
+function validate()
+{
+    var company_name = $('#company_name').val();
+    var company_type = $('#company_type').val();
+
+    //公司名称
+    if ('' == company_name) {
+        alert('企业名称不为空');
+        return false;
+    }
+    
+    //企业类型
+    if ('' == company_type) {
+        alert('企业类型不为空');
+        return false;
+    }
+    
+    return true;
+}
+</script>
+

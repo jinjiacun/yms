@@ -1,0 +1,66 @@
+<include file="Public/header" />
+
+<body class="ContentBody">
+  <form method="post" enctype="multipart/form-data" name="form">
+<div class="MainDiv">
+<table width="99%" border="0" cellpadding="0" cellspacing="0" class="CContent">
+  <tr>
+      <th class="tablestyle_title" >关联企业</th>
+  </tr>
+  <tr>
+    <td class="CPanel">
+		
+		<table border="0" cellpadding="0" cellspacing="0" style="width:100%">
+		
+		<tr align="center">
+			<td class="TablePanel">&nbsp;</td>
+	        </tr>
+			<TR>
+			<TD width="100%">
+				<fieldset style="height:100%;">
+				<legend>关联企业</legend>
+					  <table border="0" cellpadding="2" cellspacing="1" style="width:100%">
+					   
+                                           <tr>
+					    <td nowrap align="right" width="30%">企业:</td>
+					    <td width="35%">
+                                            <input type="hidden" name="id" value="{$id}"/>
+                                            <select name="company_id">
+                                            <option value='0'>---请选择企业---</option>
+                                            <volist name="company_list" id="company">
+                                            <option value='{$key}'>{$company}</option>
+                                            </volist>
+                                            </select>
+				            <span class="red">*</span></td>
+					   </tr>
+                                           
+					  </table>
+			  <br />
+				</fieldset>			</TD>
+		</TR>
+		</TABLE>
+	 </td>
+  </tr>
+		
+		<TR>
+			<TD colspan="2" align="center" height="50px">
+			<input type="submit" name="submit" value="保存" class="button"/>　
+			<input type="button" name="Submit2" value="返回" class="button" onclick="window.history.go(-1);"/>
+			</TD>
+		</TR>
+		</TABLE>
+	
+	
+	 </td>
+  </tr>
+  
+  
+  
+  </table>
+
+</div>
+</form>
+</body>
+</html>
+
+
