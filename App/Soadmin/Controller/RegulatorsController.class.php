@@ -29,7 +29,7 @@ class RegulatorsController extends BaseController {
             && 0   == $result['content']['is_success']
             )
             {
-                $this->success("添加成功", "Regulators/get_list");
+                $this->success("添加成功", C('Template_pre')."Regulators/get_list");
             }
         }
         
@@ -97,7 +97,7 @@ class RegulatorsController extends BaseController {
             && 200 == $result['status_code']
             && 0 == $result['content']['is_success'])
             {
-                $this->success('保存成功',"Regulators/get_list");
+                $this->success('保存成功',C('Template_pre')."Regulators/get_list");
             }
         }
         
@@ -127,7 +127,7 @@ class RegulatorsController extends BaseController {
             && 0 == $result['content']['is_success']
             )
             {
-                $this->success('删除成功', "Regulators/get_list");
+                $this->success('删除成功', C('Template_pre')."Regulators/get_list");
             }
         }
     }

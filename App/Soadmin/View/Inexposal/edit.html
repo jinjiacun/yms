@@ -28,7 +28,7 @@
                                             <select name="company_id">
                                             <option value='0'>---请选择企业---</option>
                                             <volist name="company_list" id="company">
-                                            <option value='{$key}'>{$company}</option>
+                                            <option value='{$key}' <if condition="$key eq $company_id">selected="selected"</if>>{$company}</option>
                                             </volist>
                                             </select>
 				            <span class="red">*</span></td>

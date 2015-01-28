@@ -43,35 +43,29 @@
 					 
 					  <tr>
 					    <td nowrap align="right" width="30%">标题:</td>
-					    <td width="35%"><input name='title' type="text" class="text" style="width:154px" value="{$news.title}" />
+					    <td width="35%"><input id="title" name='title' type="text" class="text" style="width:154px" value="{$news.title}" />
 				            <span class="red">*</span></td>
 					  </tr>
 
 					 <tr>
 					    <td nowrap align="right" width="30%">来源:</td>
-					    <td width="35%"><input name='souce' type="text" class="text" style="width:154px" value="{$news.source}" />
+					    <td width="35%"><input id="source" name='source' type="text" class="text" style="width:154px" value="{$news.source}" />
 				            <span class="red">*</span></td>
 					  </tr>
 
                                         <tr>
 					    <td nowrap align="right" width="30%">作者:</td>
-					    <td width="35%"><input name='author' type="text" class="text" style="width:154px" value="{$news.author}" />
+					    <td width="35%"><input id="author" name='author' type="text" class="text" style="width:154px" value="{$news.author}" />
 				            <span class="red">*</span></td>
 					  </tr>
                                         
                                         <tr>
 					    <td nowrap align="right" width="30%">匹图(pc):</td>
-					    <td width="35%"><input name='pic' type="file" class="file" style="width:154px" />
+					    <td width="35%"><input id="pic"  name='pic' type="file" class="file" style="width:154px" />
                                             <img src="{$news.pic_url}" width="50px" height="50px"/>
 				            <span class="red">*</span></td>
 					  </tr>
-                                          
-					 <tr>
-					    <td nowrap align="right" width="30%">匹图(app):</td>
-					    <td width="35%"><input name='pic_app' type="file" class="file" style="width:154px" />
-                                            <img src="" width="50px" height="50px"/>
-				            <span class="red">*</span></td>
-					  </tr>
+                    
                                          <tr>
 					    <td width="35%" colspan="2">
                                            
@@ -108,3 +102,33 @@
 </form>
 </body>
 </html>
+<script type="text/javascript">
+//提交审核
+function validate()
+{
+    var title      = $('#title').val();
+    var source     = $('#source').val();
+    var author     = $('#author').val();
+    var content    = $('#content').val();
+    
+    if('' == title)
+    {
+    	alert('标题不为空');
+    	return false;
+    }
+    
+    if('' == source)
+    {
+    	alert('来源不为空');
+    	return false;
+    }
+   
+    if('' == author)
+    {
+    	alert('作者不为空');
+    	return false;
+    }
+    
+    return true;
+}
+</script>

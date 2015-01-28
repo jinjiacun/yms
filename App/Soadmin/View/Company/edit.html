@@ -169,13 +169,14 @@
 //检查企业名称是否存在
 function check_company_name() {
     var company_name = $('#company_name').val();
+    var id = $('#id').val();
     company_name = encodeURI(company_name);
     jQuery.ajax({  
 		        type:"post",  
 		        url:"{$call_url}",
 		        timeout: 5000,  
 		        dataType:"json",  
-		        data:{"method":"Company.exists_name","type":"text","content":{"company_name":company_name}},
+		        data:{"method":"Company.exists_name_ex","type":"text","content":{"company_name":company_name,'id':id}},
 		        success: function aa(data) {
                             if (200 == data.status_code
                             &&  0 == data.content.is_exists) {
@@ -198,6 +199,8 @@ function validate()
         alert('企业名称不为空');
         return false;
     }
+    
+    check_company_name();
     
     //企业类型
     if ('' == company_type) {

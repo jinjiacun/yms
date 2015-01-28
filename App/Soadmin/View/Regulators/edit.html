@@ -88,18 +88,18 @@
 //提交审核
 function validate()
 {
-    var company_name = $('#company_name').val();
-    var company_type = $('#company_type').val();
+	 var title = $('#title').val();
+	 var website = $('#website').val();
+	 var pic = $('#pic').val();
 
-    //公司名称
-    if ('' == company_name) {
-        alert('企业名称不为空');
+    if ('' == title) {
+        alert('标题不为空');
         return false;
     }
     
-    //企业类型
-    if ('' == company_type) {
-        alert('企业类型不为空');
+    //网站不为空
+    if ('' == website) {
+        alert('网站不为空');
         return false;
     }
     

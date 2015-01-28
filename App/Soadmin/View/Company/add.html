@@ -178,6 +178,7 @@ function check_company_name() {
                                 $('#company_name').val("");
                                 $('#company_name').focus();
                                 alert('此企业名称已存在');
+                                return;
                             }
                         }
     });
@@ -200,6 +201,8 @@ function validate()
         alert('企业类型不为空');
         return false;
     }
+
+    check_company_name();
     
     return true;
 }

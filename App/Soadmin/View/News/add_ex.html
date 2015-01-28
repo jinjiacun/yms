@@ -43,25 +43,25 @@
 					 
 					  <tr>
 					    <td nowrap align="right" width="30%">标题:</td>
-					    <td width="35%"><input name='title' type="text" class="text" style="width:154px" value="" />
+					    <td width="35%"><input id="title" name='title' type="text" class="text" style="width:154px" value="" />
 				            <span class="red">*</span></td>
 					  </tr>
 
 					 <tr>
 					    <td nowrap align="right" width="30%">来源:</td>
-					    <td width="35%"><input name='source' type="text" class="text" style="width:154px" value="" />
+					    <td width="35%"><input id="source" name='source' type="text" class="text" style="width:154px" value="" />
 				            <span class="red">*</span></td>
 					  </tr>
 
                                         <tr>
 					    <td nowrap align="right" width="30%">作者:</td>
-					    <td width="35%"><input name='author' type="text" class="text" style="width:154px" value="" />
+					    <td width="35%"><input id="author" name='author' type="text" class="text" style="width:154px" value="" />
 				            <span class="red">*</span></td>
 					  </tr>
                                         
                                         <tr>
 					    <td nowrap align="right" width="30%">匹图:</td>
-					    <td width="35%"><input name='pic' type="file" class="file" style="width:154px" value="" />
+					    <td width="35%"><input id="pic" name='pic' type="file" class="file" style="width:154px" value="" />
 				            <span class="red">*</span></td>
 					  </tr>
 					 
@@ -99,3 +99,41 @@
 </form>
 </body>
 </html>
+<script type="text/javascript">
+
+//提交审核
+function validate()
+{
+    var title      = $('#title').val();
+    var source     = $('#source').val();
+    var author     = $('#author').val();
+    var content    = $('#content').val();
+	var pic        = $('#pic').val();
+    
+    if('' == title)
+    {
+    	alert('标题不为空');
+    	return false;
+    }
+    
+    if('' == source)
+    {
+    	alert('来源不为空');
+    	return false;
+    }
+   
+    if('' == author)
+    {
+    	alert('作者不为空');
+    	return false;
+    }
+    
+    if('' == pic)
+    {
+    	alert('请选择图片');
+    	return false;
+    }
+    
+    return true;
+}
+</script>

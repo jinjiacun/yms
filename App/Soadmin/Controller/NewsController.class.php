@@ -34,7 +34,7 @@ class NewsController extends BaseController {
              if($result
              && 0 == $result['status_code'])
              {
-                $this->success("成功添加","News/get_list");
+                $this->success("成功添加", C('Template_pre')."News/get_list",3);
              }
         }
         
@@ -64,7 +64,7 @@ class NewsController extends BaseController {
              && 200 == $result['status_code']
              && 0 == $result['content']['is_success'])
              {
-                $this->success("成功添加", "News/get_list_ex");
+                $this->success("成功添加", C('Template_pre')."News/get_list_ex",3);
              }
         }
         $this->display();
@@ -167,6 +167,36 @@ class NewsController extends BaseController {
             $this->error('参数错误');
         }
         
+        if(I('post.submit'))
+        {
+        	$id = I('post.id');
+        	$company_id = I('post.company_id');
+        	$content['data'] = array(
+        			    'company_id'  => intval(I('post.company_id')),
+		                'title'       => urlencode(I('post.title')),
+		                'source'      => urlencode(I('post.source')),
+		                'author'      => urlencode(I('author')),
+		                'content'     => urlencode(base64_encode(I('post.content'))),
+        	);	
+        	if($pic = $this->upload('pic','001006'))
+        	{
+        		$content['data']['pic'] = $pic;
+        	}
+        	if($pic_app = $this->upload('pic_app','001007'))
+        	{
+        		$content['data']['pic_app'] = $pic_app;
+        	}
+        	$content['where'] = array(
+        			'id'=>$id,
+        	);
+        	$result = $this->_call("News.update", $content);
+        	if($result
+        	&& 200 == $result['status_code']
+        	&& 0 == $result['content']['is_success'])
+        	{
+        		$this->success("成功修改",C('Template_pre')."News/get_list");
+        	}
+        }
         
         $content['id'] = $id;
         $result = $this->_call("News.get_info", $content);
@@ -190,7 +220,35 @@ class NewsController extends BaseController {
         {
             $this->error('参数错误');
         }
-        
+        if(I('post.submit'))
+        {
+        	$id = I('post.id');
+        	$company_id = I('post.company_id');
+        	$content['data'] = array(
+        			'title'       => urlencode(I('post.title')),
+        			'source'      => urlencode(I('post.source')),
+        			'author'      => urlencode(I('author')),
+        			'content'     => urlencode(base64_encode(I('post.content'))),
+        	);
+        	if($pic = $this->upload('pic','001006'))
+        	{
+        		$content['data']['pic'] = $pic;
+        	}
+        	if($pic_app = $this->upload('pic_app','001007'))
+        	{
+        		$content['data']['pic_app'] = $pic_app;
+        	}
+        	$content['where'] = array(
+        			'id'=>$id,
+        	);
+        	$result = $this->_call("News.update", $content);
+        	if($result
+        			&& 200 == $result['status_code']
+        			&& 0 == $result['content']['is_success'])
+        	{
+        		$this->success("成功修改",C('Template_pre')."News/get_list");
+        	}
+        }
         
         $content['id'] = $id;
         $result = $this->_call("News.get_info", $content);
@@ -206,6 +264,19 @@ class NewsController extends BaseController {
     
     public function delete()
     {
-        $this->display();
+       if(I('get.id'))
+       {
+       	 $content = array(
+       	 		'id'=>I('get.id'),       	 		
+       	 );
+       	 
+       	 $result = $this->_call("News.delete",$content);
+       	 if($result
+       	 && 200 == $result['status_code']
+       	 && 0 == $result['content']['is_success'])
+       	 {
+       	 	$this->success("成功删除", C('Template_pre')."News/get_list_ex", 3);
+       	 }
+       }
     }
 }

@@ -24,7 +24,7 @@
 					  <tr>
 					    <td nowrap align="right" width="30%">类型:</td>
 					    <td width="35%">
-                                            <select name="type">
+                                            <select name="type" id="type">
                                             <option value="002001">贵金属监管机构</option>
                                             <option value="002002">外汇监管机构</option>
                                             </select>
@@ -34,22 +34,22 @@
                                         
                                           <tr>
 					    <td nowrap align="right" width="30%">标题:</td>
-					    <td width="35%"><input type="text" name="title" /><span class="red">*</span></td>
+					    <td width="35%"><input id="title" type="text" name="title" /><span class="red">*</span></td>
 					   </tr>
                                            
                                            <tr>
 					    <td nowrap align="right" width="30%">官网:</td>
-					    <td width="35%"><input type="text" name="website" /><span class="red">*</span></td>
+					    <td width="35%"><input id="website" type="text" name="website" /><span class="red">*</span></td>
 					   </tr>
 					 
                                            <tr>
 					    <td nowrap align="right" width="30%">图片:</td>
-					    <td width="35%"><input type="file" name="pic" /><span class="red">*</span></td>
+					    <td width="35%"><input id="pic" type="file" name="pic" /><span class="red">*</span></td>
 					   </tr>
                                            
                                            <tr>
 					    <td nowrap align="right" width="30%">内容:</td>
-					    <td width="35%"><textarea name="content"></textarea><span class="red">*</span></td>
+					    <td width="35%"><textarea id="content" name="content"></textarea><span class="red">*</span></td>
 					   </tr>
                                            
 					  </table>
@@ -85,18 +85,24 @@
 //提交审核
 function validate()
 {
-    var company_name = $('#company_name').val();
-    var company_type = $('#company_type').val();
+    var title = $('#title').val();
+    var website = $('#website').val();
+    var pic = $('#pic').val();
 
-    //公司名称
-    if ('' == company_name) {
-        alert('企业名称不为空');
+    if ('' == title) {
+        alert('标题不为空');
         return false;
     }
     
-    //企业类型
-    if ('' == company_type) {
-        alert('企业类型不为空');
+    //网站不为空
+    if ('' == website) {
+        alert('网站不为空');
+        return false;
+    }
+    
+    //图片不为空
+    if ('' == pic) {
+        alert('图片不为空');
         return false;
     }
     

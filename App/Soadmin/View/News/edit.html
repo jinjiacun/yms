@@ -44,7 +44,7 @@
                                           <tr>
 					    <td nowrap align="right" width="30%">企业:</td>
 					    <td width="35%">
-                                            <select name="company_id">
+                                            <select name="company_id" id="company_id">
                                             <volist name="company_list" id="company">
                                             <option value="{$key}" <if condition="$key eq $news['company_id']">selected="selected"</if>>{$company}</option>
                                             </volist>
@@ -54,23 +54,23 @@
                                          
 					  <tr>
 					    <td nowrap align="right" width="30%">标题:</td>
-					    <td width="35%"><input name='title' type="text" class="text" style="width:154px" value="{$news.title}" />
+					    <td width="35%"><input id="title" name='title' type="text" class="text" style="width:154px" value="{$news.title}" />
 				            <span class="red">*</span></td>
 					  </tr>
 
 					 <tr>
 					    <td nowrap align="right" width="30%">来源:</td>
-					    <td width="35%"><input name='souce' type="text" class="text" style="width:154px" value="{$news.source}" />
+					    <td width="35%"><input id="source" name='source' type="text" class="text" style="width:154px" value="{$news.source}" />
 				            <span class="red">*</span></td>
 					  </tr>
 
                                         <tr>
 					    <td nowrap align="right" width="30%">作者:</td>
-					    <td width="35%"><input name='author' type="text" class="text" style="width:154px" value="{$news.author}" />
+					    <td width="35%"><input id="author" name='author' type="text" class="text" style="width:154px" value="{$news.author}" />
 				            <span class="red">*</span></td>
 					  </tr>
                                         
-                                        <tr>
+                      <tr>
 					    <td nowrap align="right" width="30%">匹图(pc):</td>
 					    <td width="35%"><input name='pic' type="file" class="file" style="width:154px" />
                                             <img src="{$news.pic_url}" width="50px" height="50px"/>
@@ -101,7 +101,7 @@
 		<TR>
 			<TD colspan="2" align="center" height="50px">
                         <input type="hidden" name="id" value="{$news.id}"/>
-			<input type="submit" name="submit" value="保存" class="button"/>　
+			<input type="submit" name="submit" value="保存" class="button" onclick="validate()"/>　
 			<input type="button" name="Submit2" value="返回" class="button" onclick="window.history.go(-1);"/>
 			</TD>
 		</TR>
@@ -119,3 +119,40 @@
 </form>
 </body>
 </html>
+<script type="text/javascript">
+//提交审核
+function validate()
+{
+    var company_id = $('#company_id').val();
+    var title      = $('#title').val();
+    var source     = $('#source').val();
+    var author     = $('#author').val();
+    var content    = $('#content').val();
+    
+    //公司
+    if (0 >= company_id) {
+        alert('请选择企业');
+        return false;
+    }
+    
+    if('' == title)
+    {
+    	alert('标题不为空');
+    	return false;
+    }
+    
+    if('' == source)
+    {
+    	alert('来源不为空');
+    	return false;
+    }
+   
+    if('' == author)
+    {
+    	alert('作者不为空');
+    	return false;
+    }
+    
+    return true;
+}
+</script>

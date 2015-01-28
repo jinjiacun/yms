@@ -89,7 +89,13 @@ function on_load(){
                   <volist name="list" id="item">
                   <tr align="center">
 		    <td bgcolor="#FFFFFF"><input type="checkbox" name="delid"/>{$item.id}</td>
-                    <td height="20" bgcolor="#FFFFFF">{$item.type}</td>
+                    <td height="20" bgcolor="#FFFFFF">
+                    <if condition="'002001' eq $item['type']">
+                    	贵金属监管机构
+                    <else />
+                     	外汇监管机构
+                    </if>
+                    </td>
                     <td height="20" bgcolor="#FFFFFF">{$item.title}</td>
                     <td height="20" bgcolor="#FFFFFF"><img src="{$item.pic_url}" widht="25px" height="25px"/></td>
                     <td bgcolor="#FFFFFF">

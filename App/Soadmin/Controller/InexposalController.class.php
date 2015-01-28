@@ -104,6 +104,7 @@ class InexposalController extends BaseController {
     public function edit()
     {
         $id = I('get.id');
+        $company_id = I('get.company_id');
         
         if(I('post.submit'))
         {
@@ -117,10 +118,13 @@ class InexposalController extends BaseController {
             && 200 == $result['status_code']
             && 0 == $result['is_success'])
             {
-                $this->success('成功操作');
+                $this->success('成功操作',C('Template_pre')."Inexposal/get_list");
             }
         }
+        
+        
         $this->assign('id', $id);
+        $this->assign('company_id', $company_id);
         $this->assign('company_list', $this->_map_company());
         $this->display();    
     }
