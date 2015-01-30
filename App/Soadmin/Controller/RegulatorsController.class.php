@@ -30,6 +30,7 @@ class RegulatorsController extends BaseController {
             )
             {
                 $this->success("添加成功", C('Template_pre')."Regulators/get_list");
+                exit();
             }
         }
         
@@ -98,6 +99,7 @@ class RegulatorsController extends BaseController {
             && 0 == $result['content']['is_success'])
             {
                 $this->success('保存成功',C('Template_pre')."Regulators/get_list");
+                exit();
             }
         }
         

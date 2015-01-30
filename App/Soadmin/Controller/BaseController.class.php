@@ -2,6 +2,11 @@
 namespace Soadmin\Controller;
 use Think\Controller;
 class BaseController extends Controller {
+	function   _empty(){
+                    header("HTTP/1.0  404  Not Found");
+                    $this->display('Public:err_404');
+            }
+	    
 	public function _initialize()
 	{	
 		$this->assign('call_url', C('call_url'));
@@ -81,11 +86,16 @@ class BaseController extends Controller {
 	    return 0;
 	}
 	
-	public function _map_company()
+	//0-全部，1-过滤合规企业
+	public function _map_company($type=0)
 	{
 		$list = array();
+		if(1 == $type)
+		{
+			$content['where']['auth_level'] = array('neq', '006003');
+		}
 		//查询企业
-		$result = $this->_call("Company.get_id_name_map");
+		$result = $this->_call("Company.get_id_name_map", $content);
 		if($result
 		&& 200 == $result['status_code'])
 		{

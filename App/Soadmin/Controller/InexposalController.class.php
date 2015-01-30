@@ -31,6 +31,24 @@ class InexposalController extends BaseController {
         $content['where'] = array(
             'type'=>0,
         );
+        if(I('post.submit'))
+        {
+            if('' != I('post.nature'))
+            {
+                $content['where']['nature'] = I('post.nature');
+                $this->assign('nature', I('post.nature'));
+            }
+            if('' != I('post.trade'))
+            {
+                $content['where']['trade'] = I('post.trade');
+                $this->assign('trade', I('post.trade'));
+            }
+            if('' != I('post.company_name'))
+            {
+                $content['where']['company_name'] = urlencode(I('post.company_name'));
+                $this->assign('company_name', I('post.company_name'));
+            }
+        }
         $res = A('Callapi')->call_api('Inexposal.get_list', 
                                     $content,
                                     'text',
@@ -119,6 +137,7 @@ class InexposalController extends BaseController {
             && 0 == $result['is_success'])
             {
                 $this->success('成功操作',C('Template_pre')."Inexposal/get_list");
+                exit();
             }
         }
         
@@ -127,6 +146,48 @@ class InexposalController extends BaseController {
         $this->assign('company_id', $company_id);
         $this->assign('company_list', $this->_map_company());
         $this->display();    
+    }
+    
+    
+    public function view()
+    {
+        $id = I('get.id');
+        if(0>= $id)
+        {
+            $this->error("参数错误");
+            exit();
+        }
+        
+        $result = $this->_call('Inexposal.get_info',array('id'=>$id));
+        if($result
+        && 200 == $result['status_code']
+        )
+        {
+            $this->assign('obj', $result['content']);
+        }
+        
+        $this->assign('company_list', $this->_map_company());
+        $this->display();
+    }
+    
+    public function view_ex()
+    {
+         $id = I('get.id');
+        if(0>= $id)
+        {
+            $this->error("参数错误");
+            exit();
+        }
+        $result = $this->_call('Inexposal.get_info_ex',array('id'=>$id));
+        if($result
+        && 200 == $result['status_code']
+        )
+        {
+            $this->assign('obj', $result['content']);
+        }
+        
+        $this->assign('company_list', $this->_map_company());
+        $this->display();
     }
     
     

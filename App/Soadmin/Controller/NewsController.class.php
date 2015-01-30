@@ -35,10 +35,11 @@ class NewsController extends BaseController {
              && 0 == $result['status_code'])
              {
                 $this->success("成功添加", C('Template_pre')."News/get_list",3);
+                exit();
              }
         }
         
-        $this->assign('company_list', $this->_map_company());
+        $this->assign('company_list', $this->_map_company(1));
         
         $this->display();
     }
@@ -65,6 +66,7 @@ class NewsController extends BaseController {
              && 0 == $result['content']['is_success'])
              {
                 $this->success("成功添加", C('Template_pre')."News/get_list_ex",3);
+                exit();
              }
         }
         $this->display();
@@ -195,6 +197,7 @@ class NewsController extends BaseController {
         	&& 0 == $result['content']['is_success'])
         	{
         		$this->success("成功修改",C('Template_pre')."News/get_list");
+                        exit();
         	}
         }
         
@@ -208,7 +211,7 @@ class NewsController extends BaseController {
             $this->assign('news', $news_info);
         }
         
-        $company_list = $this->_map_company();
+        $company_list = $this->_map_company(1);
         $this->assign('company_list', $company_list);
         $this->display();
     }
@@ -247,6 +250,7 @@ class NewsController extends BaseController {
         			&& 0 == $result['content']['is_success'])
         	{
         		$this->success("成功修改",C('Template_pre')."News/get_list");
+                        exit();
         	}
         }
         

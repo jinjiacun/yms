@@ -90,7 +90,7 @@ function on_load(){
                     <td height="20" bgcolor="#FFFFFF">{$item.company_id}</td>
                     <td height="20" bgcolor="#FFFFFF">{$item.name}</td>
                     <td bgcolor="#FFFFFF">
-                        <a href="__APP__/Soadmin/Company/delete_ex/id/{$item.id}">删除</a>
+                        <a href="__APP__/Soadmin/Company/delete_ex/id/{$item.id}" onclick="return confirmdel('确定要删除吗')">删除</a>
                      </td>
                   </tr>
                   </volist>

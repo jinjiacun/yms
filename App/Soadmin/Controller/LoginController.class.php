@@ -23,6 +23,7 @@ class LoginController extends BaseController {
                     else
                     {
                         $this->error("登录失败");
+                        exit();
                     }
 		}
 		$this->display();

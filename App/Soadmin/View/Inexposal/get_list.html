@@ -50,9 +50,19 @@ function on_load(){
 		   <table width="98%" border="0" align="center" cellpadding="0" cellspacing="0">
 		  <tr>
 			<td width="21"><img src="__PUBLIC__/Admin/images/ico07.gif" width="20" height="18" /></td>
-			<td width="550">查看内容：名称：
-			 <input name="name" type="text" size="12" style="display: none"/>
-			 <input name="Submit" type="submit" class="right-button02" value="查 询" style="display: none"/>
+			<td width="550">查看内容：企业性质：
+			 <select name="nature">
+                         <option value="">---请选择---</option>
+                         <option value="003001" <if condition="'003001' eq $nature">selected='selected'</if>>公司</option>
+                            <option value="003002" <if condition="'003002' eq $nature">selected='selected'</if>>平台</option>
+                         </select>
+                         &nbsp;所属行业：<select name="trade">
+                            <option value="">---请选择---</option>
+                            <option value="004001" <if condition="'004001' eq $trade">selected='selected'</if>>贵金属</option>
+                            <option value="004002" <if condition="'004002' eq $trade">selected='selected'</if>>外汇</option>
+                         </select>
+                         &nbsp;公司名称:<input name="company_name" type="text" value="{$company_name}"/>
+			 <input name="submit" type="submit" class="right-button02" value="查 询" />
 			 </td>
 			 <td width="132" align="left">
        <a href="#" onclick="sousuo()">			   
@@ -115,7 +125,11 @@ function on_load(){
                     </if>
                     </td>
                     <td bgcolor="#FFFFFF">
+                       <if condition="0 eq $item['company_id']">
                         <a href="__APP__/Soadmin/Inexposal/edit/id/{$item.id}/company_id/{$item.company_id}">关联企业</a>
+                       |&nbsp; 
+                       </if>
+                       <a href='__APP__/Soadmin/Inexposal/view/id/{$item.id}'>查看</a>
                      </td>
                   </tr>
                   </volist>

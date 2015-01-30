@@ -30,6 +30,7 @@ class CompanyController extends BaseController {
             )
             {
                 $this->error("企业名称已存在");
+                exit();
             }
 
             $content = array(
@@ -57,6 +58,7 @@ class CompanyController extends BaseController {
             && 0 == $result['is_success'])
             {
                 $this->success('成功添加',C('Template_pre')."Company/get_list", 3);
+                exit();
             }
         }
             
@@ -95,6 +97,7 @@ class CompanyController extends BaseController {
             && 0 == $result['content']['is_success'])
             {
                 $this->success(‘添加成功’, C('Template_pre')."Company/get_list_ex/id/".$company_id);
+                exit();
             }
         }
         
@@ -121,6 +124,7 @@ class CompanyController extends BaseController {
         	)
         	{
         		$this->error("企业名称已存在");
+                        exit();
         	}
         	 
         	
@@ -155,7 +159,7 @@ class CompanyController extends BaseController {
             )
             {
                 $this->success("成功保存",C('Template_pre')."Company/get_list", 3);
-                
+                exit();   
             }
         }
         

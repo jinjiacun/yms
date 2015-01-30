@@ -100,6 +100,9 @@ function on_load(){
                     <td width="10%" height="20" align="center" bgcolor="#EEEEEE">所属行业</td>
                     <td width="10%" height="20" align="center" bgcolor="#EEEEEE">公司名称</td>
                     <td width="10%" height="20" align="center" bgcolor="#EEEEEE">认证等级</td>
+                    <td width="10%" height="20" align="center" bgcolor="#EEEEEE">加黑人数</td>
+                    <td width="10%" height="20" align="center" bgcolor="#EEEEEE">评论数</td>
+                    <td width="10%" height="20" align="center" bgcolor="#EEEEEE">曝光人数</td>
                     <td width="14%" align="center" bgcolor="#EEEEEE">操作</td>
                   </tr>
 
@@ -130,9 +133,12 @@ function on_load(){
 					合规
 					</if>
 					</td>
+                    <td height="20" bgcolor="#FFFFFF">{$item.add_blk_amount}</td>
+                    <td height="20" bgcolor="#FFFFFF">{$item.com_amount}</td>
+                    <td height="20" bgcolor="#FFFFFF">{$item.exp_amount}</td>
                     <td bgcolor="#FFFFFF">
                         <a href="__APP__/Soadmin/Company/edit/id/{$item.id}">编辑</a>|
-                        <a href="__APP__/Soadmin/Company/delete/id/{$item.id}">删除</a>|
+                        <a href="__APP__/Soadmin/Company/delete/id/{$item.id}" onclick="return confirmdel('确定要删除吗')">删除</a>|
                         <a href="__APP__/Soadmin/Company/get_list_ex/id/{$item.id}">别名管理</a>
                      </td>
                   </tr>

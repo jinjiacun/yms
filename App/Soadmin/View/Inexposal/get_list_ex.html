@@ -115,7 +115,11 @@ function on_load(){
                     </if>
                     </td>
                     <td bgcolor="#FFFFFF">
+                        <if condition="0 eq $item['company_id']">
                         <a href="__APP__/Soadmin/Inexposal/edit/id/{$news.id}">关联企业</a>
+                        |&nbsp;
+                        </if>
+                        <a href='__APP__/Soadmin/Inexposal/view_ex/id/{$item.id}'>查看</a>
                      </td>
                   </tr>
                   </volist>

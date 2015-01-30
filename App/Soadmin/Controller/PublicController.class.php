@@ -28,4 +28,9 @@ class PublicController extends BaseController {
 	{
 		$this->display();
 	}
+	
+	public function err_404()
+	{
+		$this->display();
+	}
 } 

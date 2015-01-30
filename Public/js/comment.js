@@ -12,3 +12,7 @@ String.prototype.format= function(){
    return args[i];
  });
 }
+
+function confirmdel(str){   
+    return confirm(str);   
+} 

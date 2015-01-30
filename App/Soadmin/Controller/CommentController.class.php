@@ -195,6 +195,6 @@ class CommentController extends BaseController {
     //删除
     public function delete()
     {
-        $this->display();
+       
     }
 }

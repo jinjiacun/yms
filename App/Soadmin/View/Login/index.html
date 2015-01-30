@@ -13,6 +13,7 @@ body {
 }
 -->
 </style>
+<script type="text/javascript" src="__PUBLIC__/js/jquery-1.9.1.min.js"></script>
 <link href="__PUBLIC__/Admin/css/css.css" rel="stylesheet" type="text/css" />
 </head>
 
@@ -62,7 +63,7 @@ body {
       </tr>
       <tr>
         <td height="35">&nbsp;</td>
-        <td><input name="submit" type="submit" class="right-button01" value="确认登陆" onClick="window.location='index.html'" />
+        <td><input name="submit" type="submit" class="right-button01" value="确认登陆" onClick="windows.location='index.html'" />
           <input name="Submit232" type="submit" class="right-button02" value="重 置" /></td>
       </tr>
     </table>
@@ -72,3 +73,13 @@ body {
 </table>
 </body>
 </html>
+<script type="text/javascript">
+$("document").ready(function(){ 
+    //防止在frame里面出现登录页面 
+    if(top.location!==self.location){ 
+    //alert(top.location); 
+    //alert(self.location); 
+    top.location.href=self.location.href; 
+} 
+});
+</script>

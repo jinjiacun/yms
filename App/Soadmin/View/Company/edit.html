@@ -100,7 +100,7 @@
                                            
                                            <tr>
 					    <td nowrap align="right" width="30%">官方网址:</td>
-					    <td width="35%"><input name='website' type="text" class="text" style="width:154px" value="{$obj.website}" />
+					    <td width="35%"><input id="website" name='website' type="text" class="text" style="width:154px" value="{$obj.website}" />
 				            </td>
 					   </tr>
                                            
@@ -147,7 +147,7 @@
 		<TR>
 			<TD colspan="2" align="center" height="50px">
                         <input type="hidden" name="id" value="{$obj.id}"/>
-			<input type="submit" name="submit" value="保存" class="button" onclick="validate()"/>　
+			<input type="submit" name="submit" value="保存" class="button" onclick="return validate()"/>　
 			<input type="button" name="Submit2" value="返回" class="button" onclick="window.history.go(-1);"/>
 			</TD>
 		</TR>
@@ -201,6 +201,14 @@ function validate()
     }
     
     check_company_name();
+    
+    //验证企业网址
+    //检查url  
+    if(!(checkData.isEmptySpan("website") && checkData.isURLSpan('website')))  
+    {
+        alert('网址不合法');
+        return false;
+    }
     
     //企业类型
     if ('' == company_type) {
