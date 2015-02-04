@@ -34,34 +34,66 @@ class CompanyController extends BaseController {
             }
 
             $content = array(
-                'logo'            => $this->upload('logo','001008'),
-                'nature'          => I('post.nature'),
+                        'logo'            => $this->upload('logo','001008'),
+                        'nature'          => I('post.nature'),
         		'trade'           => I('post.trade'),
         		'company_name'    => urlencode(I('post.company_name')),
         		'auth_level'      => I('post.auth_level'),
-        		'company_type'    => urlencode(I('post.company_type')),
         		'reg_address'     => urlencode(I('post.reg_address')),
         		'busin_license'   => $this->upload('busin_license','001003'),
         		'code_certificate'=> $this->upload('code_certificate','001004'),
         		'telephone'       => I('post.telephone'),
         		'website'         => I('post.website'),
         		'record'          => urlencode(I('post.record')),
+                        'regulators_id'   => I('post.regulators_id'),
         		'find_website'    => I('post.find_website'),
-                'agent_platform'  => urlencode(I('post.agent_platform')),
-                'mem_sn'          => urlencode(I('post.mem_sn')),
-                'certificate'     => $this->upload('certificate','001008'),
+                        'agent_platform'  => I('post.agent_platform'),
+                        'mem_sn'          => urlencode(I('post.mem_sn')),
+                        'certificate'     => $this->upload('certificate','001005'),
             );
             $result = $this->_call("Company.add",
                                    $content);
             if($result
             && 200 == $result['status_code']
-            && 0 == $result['is_success'])
+            && 0 == $result['content']['is_success'])
             {
+                $company_id = $result['content']['id'];
+                //添加别名
+                if('' !=  trim(I('post.company_alias')))
+                {
+                    $company_alias_list = array();
+                    $company_alias = trim(I('post.company_alias'));
+                    $company_alias = str_replace('，',',', $company_alias);
+                    $company_alias_list = explode(',', $company_alias);
+                    if($company_alias_list
+                    && 0<count($company_alias_list))
+                    {
+                        foreach($company_alias_list as $v)
+                        {
+                            if(isset($content)) unset($content);
+                            $content = array(
+                                'name'       =>urlencode($v),
+                                'company_id' => $company_id
+                            );
+                            $s_result = $this->_call("Companyalias.add", $content);
+                            if($s_result
+                            && 200 == $s_result['status_code']
+                            && -1 == $s_result['content']['is_success'])
+                            {
+                                $this->success("别名:($v)添加错误");
+                            }
+                        }
+                    }
+                }                
                 $this->success('成功添加',C('Template_pre')."Company/get_list", 3);
                 exit();
             }
         }
-            
+         
+        //平台
+        $this->assign('agent_flatform_list', $this->_map_company(2));
+        $this->assign('regulators_list', $this->_map_regulators());
+        $this->_map_trade_list();
         $this->display();   
     }
     
@@ -132,25 +164,38 @@ class CompanyController extends BaseController {
                 'where'=>array(
                     'id'=>I('post.id'),
                 ),    
-                'data' => array(
-                    'logo'            => $this->upload('logo','001008'),
+                'data' => array(                  
                     'nature'          => I('post.nature'),
                     'trade'           => I('post.trade'),
                     'company_name'    => urlencode(I('post.company_name')),
                     'auth_level'      => I('post.auth_level'),
-                    'company_type'    => urlencode(I('post.company_type')),
                     'reg_address'     => urlencode(I('post.reg_address')),
-                    'busin_license'   => $this->upload('busin_license','001003'),
-                    'code_certificate'=> $this->upload('code_certificate','001004'),
                     'telephone'       => I('post.telephone'),
                     'website'         => urlencode(I('post.website')),
                     'record'          => urlencode(I('post.record')),
+                    'regulators_id'   => I('post.regulators_id'),
                     'find_website'    => I('post.find_website'),
-                    'agent_platform'  => urlencode(I('post.agent_platform')),
-                    'mem_sn'          => urlencode(I('post.mem_sn')),
-                    'certificate'     => $this->upload('certificate','001008'),                
+                    'agent_platform'  => I('post.agent_platform'),
+                    'mem_sn'          => urlencode(I('post.mem_sn')),                              
                 )
             );
+            if($logo = $this->upload('logo','001008'))
+            {
+                 $content['data']['logo']   =  $logo;
+            }
+            if($busin_license = $this->upload('busin_license','001003'))
+            {
+                $content['data']['busin_license'] = $busin_license;
+            }
+            if($code_certificate = $this->upload('code_certificate','001004'))
+            {
+                $content['data']['code_certificate'] = $code_certificate;
+            }
+            if($certificate = $this->upload('certificate','001005'))
+            {
+                $content['data']['certificate'] = $certificate;
+            }
+            
             $result = $this->_call("Company.update",
                                     $content);
             if($result
@@ -174,6 +219,27 @@ class CompanyController extends BaseController {
             $this->assign('obj', $result['content']);
         }
         
+        $this->_map_trade_list();
+        $this->assign('agent_flatform_list', $this->_map_company(2));
+        $this->assign('regulators_list', $this->_map_regulators());
+        //查询企业别名
+        $result = $this->_call('Companyalias.get_list',array('where'=>array('company_id'=>$id)));
+        if($result
+        && 200 == $result['status_code'])
+        {
+            $tmp_list = array();
+            $tmp = $result['content']['list'];
+            if($tmp
+            && 0<count($tmp))
+            {
+                foreach($tmp as $v)
+                {
+                    $tmp_list[] = $v['name'];
+                }
+                unset($tmp, $v);
+            }
+            $this->assign('company_alias', trim(implode(',', $tmp_list)));
+        }
         $this->display();
     }
     
@@ -188,32 +254,32 @@ class CompanyController extends BaseController {
             $content['page_size'] = $page_size;
             $content['page_index'] = $page_index;
         }
-        if(I('post.submit'))
+        if(I('get.submit'))
         {
-            $company_name = I('post.company_name');
+            $company_name = I('get.company_name');
             if('' != $company_name)
             {
                 $this->assign('company_name', $company_name);
                 $content['where']['company_name'] = array('like', '%'.urlencode($company_name).'%');
                 $this->assign('company_name', $company_name);
             }
-            if(0 != I('post.nature'))
+            if(0 != I('get.nature'))
             {
-                $this->assign('nature', I('post.nature'));
-                $content['where']['nature'] = I('post.nature');
-                $this->assign('nature', I('post.nature'));
+                $this->assign('nature', I('get.nature'));
+                $content['where']['nature'] = I('get.nature');
+                $this->assign('nature', I('get.nature'));
             }
-            if(0 != I('post.trade'))
+            if(0 != I('get.trade'))
             {
-                $this->assign('trade', I('post.trade'));
-                $content['where']['trade'] = I('post.trade');
-                $this->assign('trade', I('post.trade'));
+                $this->assign('trade', I('get.trade'));
+                $content['where']['trade'] = I('get.trade');
+                $this->assign('trade', I('get.trade'));
             }
-            if(0 != I('post.auth_level'))
+            if(0 != I('get.auth_level'))
             {
-            	$this->assign('auth_level', I('post.auth_level'));
-            	$content['where']['auth_level'] = I('post.auth_level');
-            	$this->assign('auth_level', I('post.auth_level'));
+            	$this->assign('auth_level', I('get.auth_level'));
+            	$content['where']['auth_level'] = I('get.auth_level');
+            	$this->assign('auth_level', I('get.auth_level'));
             }
         }
         $res = A('Callapi')->call_api('Company.get_list', 
@@ -297,6 +363,10 @@ class CompanyController extends BaseController {
         && 200 == $result['status_code']
         && 0   == $result['content']['is_success'])
         {
+            //删除企业别名
+            $r_result = $this->_call('Companyalias.delete',array('company_id'=>$id));
+            //删除企业新闻
+            $this->_call('News.delete',array('company_id'=>$id));
             $this->success("成功操作", C('Template_pre')."Company/get_list", 3);
         }
     }

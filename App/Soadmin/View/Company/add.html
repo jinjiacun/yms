@@ -24,7 +24,7 @@
 					  <tr>
 					    <td nowrap align="right" width="30%">性质:</td>
 					    <td width="35%">
-                                            <select name="nature">
+                                            <select id="nature" name="nature" onchange="nature_change()">
                                             <option value="003001">公司</option>
                                             <option value="003002">平台</option>
                                             </select>
@@ -36,8 +36,9 @@
 					    <td nowrap align="right" width="30%">所属行业:</td>
 					    <td width="35%">
                                             <select name="trade">
-                                            <option value="004001">贵金属</option>
-                                            <option value="004002">外汇</option>
+                                            <volist name="trade_list" id="trade">
+                                            <option value="{$key}">{$trade}</option>
+                                            </volist>
                                             </select>
 				            <span class="red">*</span></td>
 					   </tr>
@@ -49,10 +50,17 @@
 				            </td>
 					   </tr>
                                          
-    					 <tr>
+    					  <tr>
 					    <td nowrap align="right" width="30%">公司名称:</td>
 					    <td width="35%"><input id="company_name" name='company_name' type="text" class="text" style="width:154px" value="" onblur="check_company_name()"/>
 				            <span class="red">*</span></td>
+					   </tr>
+                                           
+                                           <tr>
+					    <td nowrap align="right" width="30%">公司别名:</td>
+					    <td width="35%">
+                                            <textarea id="company_alias" name='company_alias' cols="30" rows="3"></textarea>注:之间用逗号隔开
+				            </td>
 					   </tr>
                                            
                                            <tr>
@@ -65,22 +73,11 @@
                                             </select>
 				            </td>
 					   </tr>
-                                           
-                                           <tr>
-					    <td nowrap align="right" width="30%">企业类型:</td>
-					    <td width="35%"><input id="company_type" name='company_type' type="text" class="text" style="width:154px" value="" />
-				            <span class="red">*</span></td>
-					   </tr>
-                                           
-                                           <tr>
-					    <td nowrap align="right" width="30%">注册地址:</td>
-					    <td width="35%"><input name='reg_address' type="text" class="text" style="width:154px" value="" />
-				            </td>
-					   </tr>
+                                         
                                            
                                            <tr>
 					    <td nowrap align="right" width="30%">营业执照:</td>
-					    <td width="35%"><input name='busin_license' type="file" style="width:154px" value="" />
+					    <td width="35%"><input name='busin_license' type="file" style="width:154px" />
 				            </td>
 					   </tr>
                                            
@@ -109,26 +106,44 @@
 					   </tr>
                                            
                                            <tr>
+					    <td nowrap align="right" width="30%">监管机构:</td>
+					    <td width="35%">
+                                             <select name='regulators_id'>
+                                             <option value=0>---请选择监管机构---</option>
+                                             <volist name="regulators_list" id="regulators">
+                                             <option value="{$key}">{$regulators}</option>
+                                             </volist>
+                                             </select>
+				            </td>
+					   </tr>
+                                           
+                                           <tr id="id_find_website">
 					    <td nowrap align="right" width="30%">查询网址:</td>
-					    <td width="35%"><input name='find_website' type="text" class="text" style="width:154px" value="" />
-				            <span class="red">*</span></td>
+					    <td width="35%"><input id="find_website" name='find_website' type="text" class="text" style="width:154px" value="" />
+				            </td>
 					   </tr>
                                            
-                                           <tr>
+                                           <tr id="id_agent_flatform">
 					    <td nowrap align="right" width="30%">代理平台:</td>
-					    <td width="35%"><input name='agent_platform' type="text" class="text" style="width:154px" value="" />
+					    <td width="35%">
+                                            <select id="agent_flatform" name='agent_platform'>
+                                            <option value=0>暂无监管机构</option>
+                                            <volist name="agent_flatform_list" id="agent_flatform">
+                                            <option value={$key}>{$agent_flatform}</option>
+                                            </volist>
+                                            </select>
 				            </td>
 					   </tr>
                                            
-                                           <tr>
+                                           <tr id="id_mem_sn">
 					    <td nowrap align="right" width="30%">会员编号:</td>
-					    <td width="35%"><input name='mem_sn' type="text" class="text" style="width:154px" value="" />
+					    <td width="35%"><input id="mem_sn" name='mem_sn' type="text" class="text" style="width:154px" value="" />
 				            </td>
 					   </tr>
                                            
-                                           <tr>
+                                           <tr id="id_certificate">
 					    <td nowrap align="right" width="30%">资质证明:</td>
-					    <td width="35%"><input name='certificate' type="file" style="width:154px" value="" />
+					    <td width="35%"><input id="certificate" name='certificate' type="file" style="width:154px" value="" />
 				            </td>
 					   </tr>
                                           
@@ -184,32 +199,49 @@ function check_company_name() {
     });
 }
 
+//企业性质改变
+function nature_change()
+{
+    var nature_val = $('#nature').val();
+    if('003002' == nature_val)//平台
+    {
+        $('#id_find_website').hide();
+        $('#id_agent_flatform').hide();
+        $('#id_mem_sn').hide();
+        $('#id_certificate').hide();
+    }
+    else
+    {
+        $('#id_agent_flatform').show();
+        $('#id_find_website').show()
+        $('#id_mem_sn').show();
+        $('#id_certificate').show();;
+    }
+}
+
 //提交审核
 function validate()
 {
     var company_name = $('#company_name').val();
     var company_type = $('#company_type').val();
+    var website      = $('#website').val();
 
     //公司名称
     if ('' == company_name) {
         alert('企业名称不为空');
         return false;
     }
-    
-    //企业类型
-    if ('' == company_type) {
-        alert('企业类型不为空');
-        return false;
-    }
 
     check_company_name();
     
     //验证企业网址
-    //检查url  
-    if(!(checkData.isEmptySpan("website") && checkData.isURLSpan('website')))  
-    {
-        alert('网址不合法');
-        return false;
+    //检查url
+    if (!checkData.isEmpty(website)) {
+        if(!checkData.isURLSpan('website'))  
+        {
+            alert('网址不合法');
+            return false;
+        }   
     }
     
     return true;

@@ -7,4 +7,5 @@ return array(
 	'Template_pre' => 'http://localhost/yms/index.php/'.'Soadmin/',
         'TMPL_ACTION_SUCCESS'=>'Public:dispatch_jump',
         'TMPL_ACTION_ERROR'=>'Public:dispatch_jump',
+        'bq_url' => "/yms/Public/Home/arclist",
 );

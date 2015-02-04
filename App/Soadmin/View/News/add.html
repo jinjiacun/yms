@@ -52,6 +52,15 @@
 				            <span class="red">*</span></td>
 					  </tr>
 					 
+                                         <tr>
+                                            <td nowrap align="right" width="30%">正负面新闻:</td>
+					    <td width="35%">
+                                            <select name="sign" id="sign">
+                                            <option value=0>正面</option>
+                                            <option value=1>负面</option>
+                                            </select>
+                                         </tr>
+                                         
 					  <tr>
 					    <td nowrap align="right" width="30%">标题:</td>
 					    <td width="35%"><input id="title" name='title' type="text" class="text" style="width:154px" value="" />
@@ -64,11 +73,13 @@
 				            <span class="red">*</span></td>
 					  </tr>
 
-                                        <tr>
+                                         <tr>
 					    <td nowrap align="right" width="30%">作者:</td>
 					    <td width="35%"><input id="author" name='author' type="text" class="text" style="width:154px" value="" />
 				            <span class="red">*</span></td>
 					  </tr>
+                                          
+                                         
                                         
                                         <tr>
 					    <td nowrap align="right" width="30%">配图:</td>
@@ -165,5 +176,5 @@ function validate()
     }
     
     return true;
-}
+}    
 </script>

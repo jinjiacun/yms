@@ -27,6 +27,58 @@ class CommentController extends BaseController {
             $content['page_size'] = $page_size;
             $content['page_index'] = $page_index;
         }
+        if(I('get.submit'))
+        {
+            $status = I('get.status');
+            switch($status)
+            {
+                case 0:{
+                        $content['where']['is_validate'] = 0;
+                        $content['where']['is_delete'] = 0;
+                        $this->assign('status', 0);
+                    }
+                    break;
+                case 1:{
+                        $content['where']['is_validate'] = 1;
+                        $content['where']['is_delete'] = 0;
+                        $this->assign('status', 1);
+                    }
+                    break;
+                case 2:{
+                        $content['where']['is_delete'] = 1;
+                        $this->assign('status', 2);
+                    }
+                    break;
+            }
+        }
+        else
+        {
+            $content['where']['is_validate'] = 0;
+            $content['where']['is_delete'] = 0;
+            $this->assign('status', 0);
+        }
+        //批量审核
+        if(I('get.check_mul'))
+        {
+            $id_list = I('get.id');
+            if(!is_array($id_list))
+            {
+                $this->error('参数错误');
+                exit();
+            }
+            $result = $this->_call('Comment.validate_mul', array('id'=>$id_list));
+            if($result
+            && 200 == $result['status_code']
+            && 0 == $result['content']['is_success'])
+            {
+                $this->success('成功操作', C('Template_pre').'Comment/get_list');
+                exit();
+            }
+            else{
+                $this->error('操作失败');
+                exit();
+            }
+        }
         $res = A('Callapi')->call_api('Comment.get_list', 
                                     $content,
                                     'text',
@@ -41,7 +93,16 @@ class CommentController extends BaseController {
                 if(isset($result['content']['list'])
                 && isset($result['content']['record_count']))
                 {
-                    $list   = $result['content']['list'];   
+                    $list   = $result['content']['list'];
+                    if($list
+                    && 0<count($list))
+                    {
+                        foreach($list as $k=>$v)
+                        {
+                            $list[$k]['content'] = $this->_format_face($v['content']);
+                            $list[$k]['parent_content'] = $this->_format_face($v['parent_content']);
+                        }
+                    }
                     $this->assign('list', $list);     
                     $record_count = $result['content']['record_count'];
                     $this->assign('record_count', $record_count);
@@ -57,8 +118,20 @@ class CommentController extends BaseController {
     public function validate()
     {
         $id = I('get.id');
+        $parent_id = I('get.parent_id');
         if(0< $id)
         {
+            //检查主体是否审核
+            $result = $this->_call('Comment.get_info', array('id'=>$parent_id));
+            if($result
+            && 200 == $result['status_code'])
+            {
+                if(0 == $result['content']['is_validate'])
+                {
+                    $this->error("相应的主体未审核");
+                }
+            }
+            
             $content = array(
                 'id'=>$id
             );
@@ -69,6 +142,23 @@ class CommentController extends BaseController {
             {
                 $this->success('成功操作',C('Template_pre').'Comment/get_list');
             }
+        }
+    }
+    
+    public function delete()
+    {
+        $id = I('get.id');
+        if(0>= $id)
+        {
+            $this->error('参数错误');
+        }
+        $content['id'] = $id;
+        $result = $this->_call("Comment.delete", $content);
+        if($result
+        && 200 == $result['status_code']
+        && 0 == $result['content']['is_success'])
+        {
+            $this->success('成功删除', C('Template_pre').'Comment/get_list');
         }
     }
     
@@ -89,6 +179,36 @@ class CommentController extends BaseController {
             $content['page_size'] = $page_size;
             $content['page_index'] = $page_index;
         }
+        if(I('get.submit'))
+        {
+            $status = I('get.status');
+            switch($status)
+            {
+                case 0:{
+                        $content['where']['is_validate'] = 0;
+                        $content['where']['is_delete'] = 0;
+                        $this->assign('status', 0);
+                    }
+                    break;
+                case 1:{
+                        $content['where']['is_validate'] = 1;
+                        $content['where']['is_delete'] = 0;
+                        $this->assign('status', 1);
+                    }
+                    break;
+                case 2:{
+                        $content['where']['is_delete'] = 1;
+                        $this->assign('status', 2);
+                    }
+                    break;
+            }
+        }
+        else
+        {
+            $content['where']['is_validate'] = 0;
+            $content['where']['is_delete'] = 0;
+            $this->assign('status', 0);
+        }
         $res = A('Callapi')->call_api('Comnews.get_list', 
                                     $content,
                                     'text',
@@ -103,8 +223,17 @@ class CommentController extends BaseController {
                 if(isset($result['content']['list'])
                 && isset($result['content']['record_count']))
                 {
-                    $list   = $result['content']['list'];   
-                    $this->assign('list', $list);     
+                    $list   = $result['content']['list'];
+                     if($list
+                    && 0<count($list))
+                    {
+                        foreach($list as $k=>$v)
+                        {
+                            $list[$k]['content'] = $this->_format_face($v['content']);
+                            $list[$k]['parent_content'] = $this->_format_face($v['parent_content']);
+                        }
+                    }
+                    $this->assign('list', $list);
                     $record_count = $result['content']['record_count'];
                     $this->assign('record_count', $record_count);
                     $this->get_page($record_count, 15);
@@ -120,8 +249,20 @@ class CommentController extends BaseController {
     public function validate_news()
     {
         $id = I('get.id');
+        $parent_id = I('get.parent_id');
         if(0< $id)
         {
+             //检查主体是否审核
+            $result = $this->_call('Comnews.get_info', array('id'=>$parent_id));
+            if($result
+            && 200 == $result['status_code'])
+            {
+                if(0 == $result['content']['is_validate'])
+                {
+                    $this->error("相应的主体未审核");
+                }
+            }
+            
             $content = array(
                 'id'=>$id
             );
@@ -130,8 +271,25 @@ class CommentController extends BaseController {
             && 200 == $result['status_code']
             && 0 == $result['content']['is_success'])
             {
-                $this->success('成功操作','Comment/get_news_list');
+                $this->success('成功操作',C('Template_pre').'Comment/get_news_list');
             }
+        }
+    }
+    
+    public function delete_news()
+    {
+        $id = I('get.id');
+        if(0>= $id)
+        {
+            $this->error('参数错误');
+        }
+        $content['id'] = $id;
+        $result = $this->_call("Commentnews.delete", $content);
+        if($result
+        && 200 == $result['status_code']
+        && 0 == $result['content']['is_success'])
+        {
+            $this->success('成功删除', C('Template_pre').'Comment/get_news_list');
         }
     }
     
@@ -160,7 +318,15 @@ class CommentController extends BaseController {
                 if(isset($result['content']['list'])
                 && isset($result['content']['record_count']))
                 {
-                    $list   = $result['content']['list'];   
+                    $list   = $result['content']['list'];
+                    if($list
+                    && 0<count($list))
+                    {
+                        foreach($list as $k=>$v)
+                        {
+                            $list[$k]['content'] = $this->_format_face($v['content']);
+                        }
+                    }
                     $this->assign('list', $list);     
                     $record_count = $result['content']['record_count'];
                     $this->assign('record_count', $record_count);
@@ -176,8 +342,19 @@ class CommentController extends BaseController {
      public function validate_exposal()
     {
         $id = I('get.id');
+        $parent_id = I('get.parent_id');
         if(0< $id)
         {
+            //检查主体是否审核
+            $result = $this->_call('Comnews.get_info', array('id'=>$parent_id));
+            if($result
+            && 200 == $result['status_code'])
+            {
+                if(0 == $result['content']['is_validate'])
+                {
+                    $this->error("相应的主体未审核");
+                }
+            }
             $content = array(
                 'id'=>$id
             );
@@ -189,12 +366,5 @@ class CommentController extends BaseController {
                 $this->success('成功操作',C('Template_pre').'Comment/get_exposal_list');
             }
         }
-    }
-   
-    
-    //删除
-    public function delete()
-    {
-       
     }
 }

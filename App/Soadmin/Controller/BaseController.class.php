@@ -80,19 +80,28 @@ class BaseController extends Controller {
 		    {
 		       return intval($result['content']['id']);
 		    }
+		    elseif(-4 == $result['content']['is_success'])
+		    {
+			$this->error('文件超过最大范围');
+			return 0;
+		    }
 		}
 	    }
 	    
 	    return 0;
 	}
 	
-	//0-全部，1-过滤合规企业
+	//0-全部，1-过滤合规企业,2-平台
 	public function _map_company($type=0)
 	{
 		$list = array();
 		if(1 == $type)
 		{
 			$content['where']['auth_level'] = array('neq', '006003');
+		}
+		elseif(2 == $type)
+		{
+			$content['where']['nature'] = array('eq', '003002');
 		}
 		//查询企业
 		$result = $this->_call("Company.get_id_name_map", $content);
@@ -102,6 +111,19 @@ class BaseController extends Controller {
 		    $list = $result['content'];
 		}
 		
+		return $list;
+	}
+	
+	//监管机构映射
+	public function _map_regulators()
+	{
+		$list = array();
+		$result = $this->_call("Regulators.get_id_name_map", $content);
+		if($result
+		&& 200 == $result['status_code'])
+		{
+			$list = $result['content'];
+		}
 		return $list;
 	}
 	
@@ -138,9 +160,42 @@ class BaseController extends Controller {
 		return $list;
 	}
 	
+	public function _format_face($content)
+	{
 	
+	//return $content;
 	
+		 $pat     = '#\[em_([0-9]+)\]#';
+                 $bq      = C('bq_url');
+                 //$replace = "<img src='$bq/$1.gif' />";
+		 $replace = "";
+		 $re_str  = preg_replace($pat,$replace,$content);
+		 $re_str = mb_strcut($re_str,0,40, 'utf-8');
+		 return $re_str;
+	}
 	
+	//企业性质
+	public function _map_nature_list()
+	{
+		$_map =  array(
+			'003001'=>'公司',
+			'003002'=>'平台',
+		);
+		$this->assign('nature_list', $_map);
+	}
+	
+	//所属行业
+	public function _map_trade_list()
+	{
+		$_map =  array(
+			'004001'=>'贵金属',
+			'004002'=>'外汇',
+			'004003'=>'石油',
+			'004004'=>'大宗商品',
+			'004005'=>'其他',
+		);
+		$this->assign('trade_list', $_map);
+	}
 	
 	
 	

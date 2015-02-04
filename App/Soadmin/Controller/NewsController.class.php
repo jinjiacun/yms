@@ -23,6 +23,7 @@ class NewsController extends BaseController {
             $pic_app = $this->upload('pic_app','001007');
             $content = array(
                 'company_id'  => intval(I('post.company_id')),
+                'sign'        => intval(I('post.sign')),
                 'title'       => urlencode(I('post.title')),
                 'source'      => urlencode(I('post.source')),
                 'author'      => urlencode(I('author')),
@@ -53,9 +54,10 @@ class NewsController extends BaseController {
             $pic     = $this->upload('pic','001006');
             $pic_app = $this->upload('pic_app','001007');
             $content = array(
+                'sign'    => intval(I('post.sign')),
                 'title'   => urlencode(I('post.title')),
                 'source'  => urlencode(I('post.source')),
-                'author'  => urlencode(I('author')),
+                'author'  => urlencode(I('post.author')),
                 'content' => urlencode(base64_encode(I('post.content'))),
                 'pic'     => $pic,
                 'pic_app' => $pic_app,
@@ -174,10 +176,11 @@ class NewsController extends BaseController {
         	$id = I('post.id');
         	$company_id = I('post.company_id');
         	$content['data'] = array(
-        			    'company_id'  => intval(I('post.company_id')),
+        			'company_id'  => intval(I('post.company_id')),
+                                'sign'        => intval(I('post.sign')),
 		                'title'       => urlencode(I('post.title')),
 		                'source'      => urlencode(I('post.source')),
-		                'author'      => urlencode(I('author')),
+		                'author'      => urlencode(I('post.author')),
 		                'content'     => urlencode(base64_encode(I('post.content'))),
         	);	
         	if($pic = $this->upload('pic','001006'))
@@ -228,9 +231,10 @@ class NewsController extends BaseController {
         	$id = I('post.id');
         	$company_id = I('post.company_id');
         	$content['data'] = array(
+                                'sign'        => I('post.sign'),
         			'title'       => urlencode(I('post.title')),
         			'source'      => urlencode(I('post.source')),
-        			'author'      => urlencode(I('author')),
+        			'author'      => urlencode(I('post.author')),
         			'content'     => urlencode(base64_encode(I('post.content'))),
         	);
         	if($pic = $this->upload('pic','001006'))

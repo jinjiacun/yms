@@ -152,7 +152,7 @@ function list(idstr){
 					<tr>
 						<td width="8%"><img name="img6" id="img6" src="__PUBLIC__/Admin/images/ico04.gif" width="8" height="11" /></td>
 						<td width="92%">
-								<a href="javascript:" target="mainFrame" class="left-font03" onClick="list('6');" >评价管理</a></td>
+								<a href="javascript:" target="mainFrame" class="left-font03" onClick="list('6');" >评论管理</a></td>
 					</tr>
 				</table>
 			</td>
@@ -163,17 +163,17 @@ function list(idstr){
 				<tr>
 				  <td width="9%" height="20" ><img id="xiaotu16" src="__PUBLIC__/Admin/images/ico06.gif" width="8" height="12" /></td>
 				  <td width="91%">
-						<a href="__APP__/Soadmin/Comment/get_list" target="mainFrame" class="left-font03" onClick="tupian('16');">评价管理</a></td>
+						<a href="__APP__/Soadmin/Comment/get_list" target="mainFrame" class="left-font03" onClick="tupian('16');">评论管理</a></td>
 				</tr>
 				<tr>
 				  <td width="9%" height="20" ><img id="xiaotu15" src="__PUBLIC__/Admin/images/ico06.gif" width="8" height="12" /></td>
 				  <td width="91%">
-						<a href="__APP__/Soadmin/Comment/get_news_list" target="mainFrame" class="left-font03" onClick="tupian('15');">评价(新闻)管理</a></td>
+						<a href="__APP__/Soadmin/Comment/get_news_list" target="mainFrame" class="left-font03" onClick="tupian('15');">评论(新闻)管理</a></td>
 				</tr>
 				<tr>
 				  <td width="9%" height="20" ><img id="xiaotu14" src="__PUBLIC__/Admin/images/ico06.gif" width="8" height="12" /></td>
 				  <td width="91%">
-						<a href="__APP__/Soadmin/Comment/get_exposal_list" target="mainFrame" class="left-font03" onClick="tupian('14');">评价(曝光)管理</a></td>
+						<a href="__APP__/Soadmin/Comment/get_exposal_list" target="mainFrame" class="left-font03" onClick="tupian('14');">评论(曝光)管理</a></td>
 				</tr>
       </table>
 		<!--  评价管理结束    -->	
@@ -248,6 +248,7 @@ function list(idstr){
       </table>
 		<!--  监管机构管理结束    -->
 
+		 <!-- 媒体管理开始-->
 		 <TABLE width="100%" border="0" cellpadding="0" cellspacing="0" class="left-table03">
           <tr>
             <td height="29">
@@ -270,7 +271,32 @@ function list(idstr){
 				  </td>
 				</tr>
       </table>
-		<!--  项目系统结束    -->
+		<!-- 媒体管理结束 -->
+		
+		<!-- 会员管理开始-->
+		 <TABLE width="100%" border="0" cellpadding="0" cellspacing="0" class="left-table03">
+          <tr>
+            <td height="29">
+				<table width="85%" border="0" align="center" cellpadding="0" cellspacing="0">
+					<tr>
+						<td width="8%"><img name="img2" id="img2" src="__PUBLIC__/Admin/images/ico04.gif" width="8" height="11" /></td>
+						<td width="92%">
+								<a href="javascript:" target="mainFrame" class="left-font03" onClick="list('2');" >会员管理</a></td>
+					</tr>
+				</table>
+			</td>
+          </tr>		  
+        </TABLE>
+		<table id="subtree2" style="DISPLAY: none" width="80%" border="0" align="center" cellpadding="0" 
+				cellspacing="0" class="left-table02">
+				<tr>
+				  <td width="9%" height="20" ><img id="xiaotu2" src="__PUBLIC__/Admin/images/ico06.gif" width="8" height="12" /></td>
+				  <td width="91%">
+				  <a href="__APP__/Soadmin/User/info"  target="mainFrame" class="left-font03" onClick="tupian('2');">会员管理</a>
+				  </td>
+				</tr>
+      </table>
+		<!-- 会员管理结束 -->
 
 	  </TD>
   </tr>

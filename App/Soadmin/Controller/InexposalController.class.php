@@ -31,22 +31,22 @@ class InexposalController extends BaseController {
         $content['where'] = array(
             'type'=>0,
         );
-        if(I('post.submit'))
+        if(I('get.submit'))
         {
-            if('' != I('post.nature'))
+            if('' != I('get.nature'))
             {
-                $content['where']['nature'] = I('post.nature');
-                $this->assign('nature', I('post.nature'));
+                $content['where']['nature'] = I('get.nature');
+                $this->assign('nature', I('get.nature'));
             }
-            if('' != I('post.trade'))
+            if('' != I('get.trade'))
             {
-                $content['where']['trade'] = I('post.trade');
-                $this->assign('trade', I('post.trade'));
+                $content['where']['trade'] = I('get.trade');
+                $this->assign('trade', I('get.trade'));
             }
-            if('' != I('post.company_name'))
+            if('' != I('get.company_name'))
             {
-                $content['where']['company_name'] = urlencode(I('post.company_name'));
-                $this->assign('company_name', I('post.company_name'));
+                $content['where']['company_name'] = urlencode(I('get.company_name'));
+                $this->assign('company_name', I('get.company_name'));
             }
         }
         $res = A('Callapi')->call_api('Inexposal.get_list', 

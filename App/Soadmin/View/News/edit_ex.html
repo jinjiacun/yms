@@ -41,6 +41,15 @@
 				<legend>添加新闻</legend>
 					  <table border="0" cellpadding="2" cellspacing="1" style="width:100%">
 					 
+                                         <tr>
+                                            <td nowrap align="right" width="30%">正负面新闻:</td>
+					    <td width="35%">
+                                            <select name="sign" id="sign">
+                                            <option value=0 <if condition="0 eq $news['sign']">selected="selected"</if>>正面</option>
+                                            <option value=1 <if condition="1 eq $news['sign']">selected="selected"</if>>负面</option>
+                                            </select>
+                                         </tr>
+                                         
 					  <tr>
 					    <td nowrap align="right" width="30%">标题:</td>
 					    <td width="35%"><input id="title" name='title' type="text" class="text" style="width:154px" value="{$news.title}" />
@@ -58,7 +67,7 @@
 					    <td width="35%"><input id="author" name='author' type="text" class="text" style="width:154px" value="{$news.author}" />
 				            <span class="red">*</span></td>
 					  </tr>
-                                        
+                                          
                                         <tr>
 					    <td nowrap align="right" width="30%">匹图(pc):</td>
 					    <td width="35%"><input id="pic"  name='pic' type="file" class="file" style="width:154px" />
