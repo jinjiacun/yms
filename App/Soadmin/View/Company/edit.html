@@ -235,6 +235,7 @@ function validate()
     return true;
 }
 
+var is_first = 0;
 function auth_level_change()
 {
   var nature_val = $('#nature').val();
@@ -270,15 +271,31 @@ function auth_level_change()
     jQuery.ajax({  
             type:"post",  
             url:"{$call_url}",
+            async:false,
             timeout: 5000,  
             dataType:"json",  
             data:param_data,
             success: function aa(data) {
                             if (200 == data.status_code) {
+                                var agent_platform_val = {$obj['agent_platform']};
                                 $('#agent_platform').empty();                                
                                 $('#agent_platform').append("<option value=0>暂无代理平台</option>");
-                                $.each(data.content, function(index, item){
-                                  $('#agent_platform').append("<option value="+index+">"+item+"</option>");
+                                $.each(data.content, function(index, item){                                
+                                  if(0 == is_first)
+                                  {
+                                    if(parseInt(index) == parseInt(agent_platform_val))
+                                    {
+                                      $('#agent_platform').append("<option value="+index+" selected='selected'>"+item+"</option>");
+                                    }
+                                    else                                      
+                                    {
+                                      $('#agent_platform').append("<option value="+index+">"+item+"</option>");
+                                    }
+                                  }
+                                  else
+                                  {
+                                    $('#agent_platform').append("<option value="+index+">"+item+"</option>");
+                                  }
                                 });
                             }
                         }

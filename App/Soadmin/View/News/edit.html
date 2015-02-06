@@ -21,7 +21,7 @@
            
             }
     </script>
-  <form method="post" enctype="multipart/form-data" name="form">
+  <form method="post" enctype="multipart/form-data" name="form" id="id_form">
 <div class="MainDiv">
 <table width="99%" border="0" cellpadding="0" cellspacing="0" class="CContent">
   <tr>
@@ -104,8 +104,8 @@
 		
 		<TR>
 			<TD colspan="2" align="center" height="50px">
-                        <input type="hidden" name="id" value="{$news.id}"/>
-			<input type="submit" name="submit" value="保存" class="button" onclick="return validate()"/>　
+            <input type="hidden" name="id" value="{$news.id}"/>
+			<input type="button" name="submit" value="保存" class="button" onclick="return validate()"/>　
 			<input type="button" name="Submit2" value="返回" class="button" onclick="window.history.go(-1);"/>
 			</TD>
 		</TR>
@@ -157,6 +157,7 @@ function validate()
     	return false;
     }
     
+    form_commit('id_form');
     return true;
 }
 </script>

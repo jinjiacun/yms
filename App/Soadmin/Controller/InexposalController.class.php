@@ -47,7 +47,8 @@ class InexposalController extends BaseController {
             }
             if('' != I('get.company_name'))
             {
-                $content['where']['company_name'] = urlencode(I('get.company_name'));
+                $company_name = I('get.company_name');
+                $content['where']['company_name'] = array('like', '%'.urlencode($company_name).'%');
                 $this->assign('company_name', I('get.company_name'));
             }
             $status = I('get.status');
@@ -135,7 +136,8 @@ class InexposalController extends BaseController {
             }
             if('' != I('get.company_name'))
             {
-                $content['where']['company_name'] = urlencode(I('get.company_name'));
+                $company_name = I('get.company_name');
+                $content['where']['company_name'] = array('like', '%'.urlencode($company_name).'%');
                 $this->assign('company_name', I('get.company_name'));
             }
             $status = I('get.status');
