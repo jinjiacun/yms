@@ -195,6 +195,7 @@ class BaseController extends Controller {
 			'004005'=>'其他',
 		);
 		$this->assign('trade_list', $_map);
+		return $_map;
 	}
 	
 	

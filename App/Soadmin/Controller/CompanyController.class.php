@@ -203,6 +203,38 @@ class CompanyController extends BaseController {
             &&  0  == $result['content']['is_success']
             )
             {
+                 //修改别名
+                if('' !=  trim(I('post.company_alias')))
+                {
+                    $company_id = I('post.id');
+                    $this->_call('Companyalias.delete',array('company_id'=>$company_id));
+                    //删除别名
+                    
+                    $company_alias_list = array();
+                    $company_alias = trim(I('post.company_alias'));
+                    $company_alias = str_replace('，',',', $company_alias);
+                    $company_alias_list = explode(',', $company_alias);
+                    if($company_alias_list
+                    && 0<count($company_alias_list))
+                    {
+                        foreach($company_alias_list as $v)
+                        {
+                            if(isset($content)) unset($content);
+                            $content = array(
+                                'name'       =>urlencode($v),
+                                'company_id' => $company_id
+                            );
+                            $s_result = $this->_call("Companyalias.add", $content);
+                            if($s_result
+                            && 200 == $s_result['status_code']
+                            && -1 == $s_result['content']['is_success'])
+                            {
+                                $this->success("别名:($v)添加错误");
+                            }
+                        }
+                    }
+                }
+                
                 $this->success("成功保存",C('Template_pre')."Company/get_list", 3);
                 exit();   
             }
@@ -220,7 +252,7 @@ class CompanyController extends BaseController {
         }
         
         $this->_map_trade_list();
-        $this->assign('agent_flatform_list', $this->_map_company(2));
+        $this->assign('agent_platform_list', $this->_map_company(2));
         $this->assign('regulators_list', $this->_map_regulators());
         //查询企业别名
         $result = $this->_call('Companyalias.get_list',array('where'=>array('company_id'=>$id)));
@@ -240,6 +272,8 @@ class CompanyController extends BaseController {
             }
             $this->assign('company_alias', trim(implode(',', $tmp_list)));
         }
+        
+        $this->_map_trade_list();
         $this->display();
     }
     
@@ -305,6 +339,8 @@ class CompanyController extends BaseController {
             }
         }
         
+        
+        $this->_map_trade_list();
         $this->display();
     }
     

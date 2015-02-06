@@ -66,11 +66,17 @@
                                            <tr>
 					    <td nowrap align="right" width="30%">认证级别:</td>
 					    <td width="35%">
-                                            <select name="auth_level">
+                                            <select name="auth_level" id="auth_level" onchange="auth_level_change()">
                                             <option value="006002">未验证</opttion>
                                             <option value="006001">黑平台</opttion>
                                             <option value="006003">合规</opttion>
                                             </select>
+				            </td>
+					   </tr>
+
+					    <tr>
+					    <td nowrap align="right" width="30%">联系地址:</td>
+					    <td width="35%"><input name='reg_address' type="text" class="text" style="width:154px" />
 				            </td>
 					   </tr>
                                          
@@ -126,11 +132,13 @@
                                            <tr id="id_agent_flatform">
 					    <td nowrap align="right" width="30%">代理平台:</td>
 					    <td width="35%">
-                                            <select id="agent_flatform" name='agent_platform'>
-                                            <option value=0>暂无监管机构</option>
+                                            <select id="agent_platform" name='agent_platform'>
+                                            <!--
+                                            <option value=0>暂无代理平台</option>
                                             <volist name="agent_flatform_list" id="agent_flatform">
                                             <option value={$key}>{$agent_flatform}</option>
                                             </volist>
+                                            -->
                                             </select>
 				            </td>
 					   </tr>
@@ -199,6 +207,58 @@ function check_company_name() {
     });
 }
 
+//auth_level change
+function auth_level_change()
+{
+	var nature_val = $('#nature').val();
+	var auth_level_val = $('#auth_level').val();
+	if('003001' == nature_val)
+	{
+		var is_limit = 0;
+		switch(auth_level_val)
+		{
+			case '006002':
+			case '006003':
+			{
+				is_limit = 1;
+			}
+			break;
+			case '006001'://all
+			{
+				is_limit = 0;
+			}
+			break;
+		}
+		var param_data = {};
+		if(is_limit)
+		{
+			param_data = {"method":"Company.get_id_name_map",
+			             "type":"text",
+			             "content":{"where":{"nature":"003002","auth_level":["in",["006002","006003"]]}}};
+		}
+		else
+		{
+			param_data = {"method":"Company.get_id_name_map","type":"text","content":{"where":{"nature":"003002"}}};
+		}
+		jQuery.ajax({  
+		        type:"post",  
+		        url:"{$call_url}",
+		        timeout: 5000,  
+		        dataType:"json",  
+		        data:param_data,
+		        success: function aa(data) {
+                            if (200 == data.status_code) {
+                                $('#agent_platform').empty();                                
+                                $('#agent_platform').append("<option value=0>暂无代理平台</option>");
+                                $.each(data.content, function(index, item){
+                                	$('#agent_platform').append("<option value="+index+">"+item+"</option>");
+                                });
+                            }
+                        }
+    	});
+	}
+}
+
 //企业性质改变
 function nature_change()
 {
@@ -246,5 +306,8 @@ function validate()
     
     return true;
 }
+$(function(){
+	auth_level_change();
+});
 </script>
 

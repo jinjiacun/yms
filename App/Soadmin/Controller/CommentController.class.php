@@ -50,6 +50,11 @@ class CommentController extends BaseController {
                     }
                     break;
             }
+            if('' != I('get.user_id'))
+            {
+                $content['where']['user_id']= htmlspecialchars(I('get.user_id'));
+                $this->assign('user_id', I('get.user_id'));
+            }
         }
         else
         {
@@ -60,13 +65,24 @@ class CommentController extends BaseController {
         //批量审核
         if(I('get.check_mul'))
         {
-            $id_list = I('get.id');
-            if(!is_array($id_list))
+            $tmp_list = I('get.id');
+            if(!is_array($tmp_list))
             {
                 $this->error('参数错误');
                 exit();
             }
-            $result = $this->_call('Comment.validate_mul', array('id'=>$id_list));
+
+            $id_list = $company_id_list = array();
+            foreach($tmp_list as $v)
+            {
+                $tmp = explode('|', $v);
+                $id_list[] = $tmp[0];
+                $company_id_list[] = $tmp[1];
+            }
+
+            $result = $this->_call('Comment.validate_mul', 
+                                   array('id'=>$id_list,
+                                         'company_id'=>$company_id_list));
             if($result
             && 200 == $result['status_code']
             && 0 == $result['content']['is_success'])
@@ -119,6 +135,7 @@ class CommentController extends BaseController {
     {
         $id = I('get.id');
         $parent_id = I('get.parent_id');
+        $company_id = I('get.company_id');
         if(0< $id)
         {
             //检查主体是否审核
@@ -133,7 +150,8 @@ class CommentController extends BaseController {
             }
             
             $content = array(
-                'id'=>$id
+                'id'=>$id,
+                'company_id'=>$company_id
             );
             $result = $this->_call('Comment.validate',$content);
             if($result
@@ -148,11 +166,19 @@ class CommentController extends BaseController {
     public function delete()
     {
         $id = I('get.id');
+        $company_id = I('get.company_id');
+        $is_validate = I('get.is_validate');
+        $parent_id = I('get.parent_id');
         if(0>= $id)
         {
             $this->error('参数错误');
         }
-        $content['id'] = $id;
+        $content = array(
+            'id'=> $id,
+            'company_id'=>$company_id,
+            'is_validate'=>$is_validate,
+            'parent_id' =>$parent_id,
+        );
         $result = $this->_call("Comment.delete", $content);
         if($result
         && 200 == $result['status_code']

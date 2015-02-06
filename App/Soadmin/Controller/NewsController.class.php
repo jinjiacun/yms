@@ -29,7 +29,6 @@ class NewsController extends BaseController {
                 'author'      => urlencode(I('author')),
                 'content'     => urlencode(base64_encode(I('post.content'))),
                 'pic'         => $pic,
-                'pic_app'     => $pic_app,
             );
              $result = $this->_call('News.add', $content);
              if($result
@@ -40,7 +39,7 @@ class NewsController extends BaseController {
              }
         }
         
-        $this->assign('company_list', $this->_map_company(1));
+        $this->assign('company_list', $this->_map_company());
         
         $this->display();
     }
@@ -60,7 +59,6 @@ class NewsController extends BaseController {
                 'author'  => urlencode(I('post.author')),
                 'content' => urlencode(base64_encode(I('post.content'))),
                 'pic'     => $pic,
-                'pic_app' => $pic_app,
             );
              $result = $this->_call('News.add', $content);
              if($result
@@ -214,7 +212,7 @@ class NewsController extends BaseController {
             $this->assign('news', $news_info);
         }
         
-        $company_list = $this->_map_company(1);
+        $company_list = $this->_map_company();
         $this->assign('company_list', $company_list);
         $this->display();
     }

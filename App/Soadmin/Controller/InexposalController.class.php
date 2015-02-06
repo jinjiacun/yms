@@ -33,12 +33,14 @@ class InexposalController extends BaseController {
         );
         if(I('get.submit'))
         {
-            if('' != I('get.nature'))
+            if('' != I('get.nature')
+            && 0 != I('get.nature'))
             {
                 $content['where']['nature'] = I('get.nature');
                 $this->assign('nature', I('get.nature'));
             }
-            if('' != I('get.trade'))
+            if('' != I('get.trade')
+            && 0 != I('get.trade'))
             {
                 $content['where']['trade'] = I('get.trade');
                 $this->assign('trade', I('get.trade'));
@@ -48,7 +50,35 @@ class InexposalController extends BaseController {
                 $content['where']['company_name'] = urlencode(I('get.company_name'));
                 $this->assign('company_name', I('get.company_name'));
             }
+            $status = I('get.status');
+            switch($status)
+            {
+                case 0:{
+                        $content['where']['company_id'] = 0;
+                        $content['where']['is_delete'] = 0;
+                        $this->assign('status', 0);
+                    }
+                    break;
+                case 1:{
+                        $content['where']['company_id'] = array('neq', 0);
+                        $content['where']['is_delete'] = 0;
+                        $this->assign('status', 1);
+                    }
+                    break;
+                case 2:{
+                        $content['where']['is_delete'] = 1;
+                        $this->assign('status', 2);
+                    }
+                    break;
+            }
         }
+        else
+        {
+            $content['where']['company_id'] = 0;
+            $content['where']['is_delete'] = 0;
+            $this->assign('status', 0);
+        }
+        
         $res = A('Callapi')->call_api('Inexposal.get_list', 
                                     $content,
                                     'text',
@@ -73,6 +103,7 @@ class InexposalController extends BaseController {
         }
         
         $this->assign('company_list', $this->_map_company());
+        $this->_map_trade_list();
         $this->display();
     }
     
@@ -88,9 +119,54 @@ class InexposalController extends BaseController {
             $content['page_size'] = $page_size;
             $content['page_index'] = $page_index;
         }
-        $content['where'] = array(
-            'type'=>1,
-        );
+        if(I('get.submit'))
+        {
+            if('' != I('get.nature')
+            && 0 != I('get.nature'))
+            {
+                $content['where']['nature'] = I('get.nature');
+                $this->assign('nature', I('get.nature'));
+            }
+            if('' != I('get.trade')
+            && 0 != I('get.trade'))
+            {
+                $content['where']['trade'] = I('get.trade');
+                $this->assign('trade', I('get.trade'));
+            }
+            if('' != I('get.company_name'))
+            {
+                $content['where']['company_name'] = urlencode(I('get.company_name'));
+                $this->assign('company_name', I('get.company_name'));
+            }
+            $status = I('get.status');
+            switch($status)
+            {
+                case 0:{
+                        $content['where']['company_id'] = 0;
+                        $content['where']['is_delete'] = 0;
+                        $this->assign('status', 0);
+                    }
+                    break;
+                case 1:{
+                        $content['where']['company_id'] = array('neq', 0);
+                        $content['where']['is_delete'] = 0;
+                        $this->assign('status', 1);
+                    }
+                    break;
+                case 2:{
+                        $content['where']['is_delete'] = 1;
+                        $this->assign('status', 2);
+                    }
+                    break;
+            }
+        }
+        else
+        {
+            $content['where']['company_id'] = 0;
+            $content['where']['is_delete'] = 0;
+            $this->assign('status', 0);
+        }
+        $content['where']['type'] = 1;
         $res = A('Callapi')->call_api('Inexposal.get_list', 
                                     $content,
                                     'text',
@@ -115,6 +191,7 @@ class InexposalController extends BaseController {
         }
         
         $this->assign('company_list', $this->_map_company());
+        $this->_map_trade_list();
         $this->display();
     }
     
@@ -167,6 +244,7 @@ class InexposalController extends BaseController {
         }
         
         $this->assign('company_list', $this->_map_company());
+        $this->_map_trade_list();
         $this->display();
     }
     
@@ -190,9 +268,47 @@ class InexposalController extends BaseController {
         $this->display();
     }
     
+    public function delete()
+    {
+        $content = array(
+            'id' =>  I('get.id'),
+            'company_id' => I('get.company_id')
+        );
+        $result = $this->_call("Inexposal.delete", $content);
+        
+        if($result
+        && 200 == $result['status_code']
+        && 0 == $result['content']['is_success'])
+        {
+            $this->success('成功删除', C('Template_pre').'Inexposal/get_list');
+            exit();
+        }
+        else
+        {
+            $this->error('删除失败');
+        }
+    }
     
-    
-    
+    public function delete_ex()
+    {
+        $content = array(
+            'id' =>  I('get.id'),
+            'company_id' => I('get.company_id')
+        );
+        $result = $this->_call("Inexposal.delete", $content);
+        
+        if($result
+        && 200 == $result['status_code']
+        && 0 == $result['content']['is_success'])
+        {
+            $this->success('成功删除', C('Template_pre').'Inexposal/get_list_ex');
+            exit();
+        }
+        else
+        {
+            $this->error('删除失败');
+        }
+    }
     
     
     

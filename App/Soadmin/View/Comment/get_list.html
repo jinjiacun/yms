@@ -51,11 +51,12 @@ function on_load(){
 		  <tr>
 			<td width="21"><img src="__PUBLIC__/Admin/images/ico07.gif" width="20" height="18" /></td>
 			<td width="550">查看内容：
-			 状态:<select name="status">
+			 状&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;态：<select name="status" style="width: 180px">
                             <option value=0 <if condition="0 eq $status">selected="selected"</if>>未审核</option>
                             <option value=1 <if condition="1 eq $status">selected="selected"</if>>已审核</option>
                             <option value=2 <if condition="2 eq $status">selected="selected"</if>>已删除</option>
-                         </select>
+                         </select>                         
+                         &nbsp;&nbsp;会员id：<input type="text" name="user_id" value="{$user_id}"/>
                          <input name="submit" type="submit" class="right-button02" value="查 询" />
 			 </td>
 			 <td width="132" align="left">
@@ -79,7 +80,9 @@ function on_load(){
                选择：<a href="#" class="right-font08" onclick="selectAll();">全选</a>
                -
                <a href="#" class="right-font08" onclick="unselectAll();">反选</a>
+               <if condition="0 eq $status">
                &nbsp<input type="submit" name="check_mul" value="批量审核"/>
+               </if>
                </span>
 	             
 	             </td>
@@ -102,7 +105,9 @@ function on_load(){
 
                   <volist name="list" id="item">
                   <tr align="center">
-		    <td bgcolor="#FFFFFF"><input type="checkbox" name="id[]" value="{$item.id}"/>{$item.id}</td>
+		                <td bgcolor="#FFFFFF">
+                      <input type="checkbox" name="id[]" value="{$item.id}|{$item.company_id}"/>
+                      {$item.id}</td>
                     <td height="20" bgcolor="#FFFFFF">{$item.user_id}</td>
                     <td height="20" bgcolor="#FFFFFF" style="word-break: break-all">{$item.nickname}</td>
                     <td height="20" bgcolor="#FFFFFF">{$company_list[$item['company_id']]}</td>
@@ -139,10 +144,10 @@ function on_load(){
                     </td>
                     <td bgcolor="#FFFFFF">
                         <if condition="0 eq $item['is_validate'] and 0 eq $item['is_delete']">
-                        <a href="__APP__/Soadmin/Comment/validate/id/{$item.id}/parent_id/{$item.parent_id}">审核</a>
+                        <a href="__APP__/Soadmin/Comment/validate/id/{$item.id}/parent_id/{$item.parent_id}/company_id/{$item.company_id}">审核</a>
                         </if>
                         <if condition="0 eq $item['is_delete']">
-                        <a href="__APP__/Soadmin/Comment/delete/id/{$item.id}" onclick="return confirmdel('确定要删除吗')">删除</a>
+                        <a href="__APP__/Soadmin/Comment/delete/parentid/{$item.parent_id}/id/{$item.id}/company_id/{$item.company_id}/is_validate/{$item.is_validate}" onclick="return confirmdel('确定要删除吗')">删除</a>
                         </if>
                      </td>
                   </tr>

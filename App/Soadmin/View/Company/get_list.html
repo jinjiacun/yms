@@ -50,26 +50,28 @@ function on_load(){
 		   <table width="98%" border="0" align="center" cellpadding="0" cellspacing="0">
 		  <tr>
 			<td width="21"><img src="__PUBLIC__/Admin/images/ico07.gif" width="20" height="18" /></td>
-			<td width="550">查看内容：名称：
-			 <input name="company_name" type="text" size="12" value="{$company_name}"/>
-                         &nbsp;公司性质：<select name="nature">
+			<td width="550">查看内容：
+                         公司性质：<select name="nature" style="width:180px;">
                          <option value="0">---请选择公司性质---</option>
                          <option value="003001" <if condition="'003001' eq $nature">selected="selected"</if>>公司</option>
                          <option value="003002" <if condition="'003002' eq $nature">selected="selected"</if>>平台</option>
                          </select>
-                         &nbsp;所属行业：<select name="trade">
+                         &nbsp;&nbsp;所属行业：<select name="trade" style="width:180px;">
                          <option value=0>---请选择所属行业---</option>
-                         <option value="004001" <if condition="'004001' eq $trade">selected="selected"</if>>贵金属</option>
-                         <option value="004002" <if condition="'004002' eq $trade">selected="selected"</if>>外汇</option>
-                         </select>
-                         <br/>
-                         &nbsp;企业认证级别：<select name="auth_level">
+                         <volist name="trade_list" id="trade">
+                         <option value="{$key}" <if condition="$key eq $trade">selected="selected"</if>>{$trade}</option>
+                         </volist>
+                         </select><br/>
+                         &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                         &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                         认证级别：<select name="auth_level" style="width:180px">
                          <option value=0>---请选择---</option>
                          <option value='006001' <if condition="'006001' eq $auth_level">selected="selected"</if>>黑平台</option>
                          <option value='006002' <if condition="'006002' eq $auth_level">selected="selected"</if>>未验证</option>
                          <option value='006003' <if condition="'006003' eq $auth_level">selected="selected"</if>>合规</option>
                          </select>
-			 <input name="submit" type="submit" class="right-button02" value="查 询" />
+                         &nbsp;&nbsp;公司名称：<input name="company_name" style="width:170px;" type="text" size="12" value="{$company_name}"/>
+			                   &nbsp;&nbsp;<input name="submit" type="submit" class="right-button02" value="查 询" />
 			 </td>
 			 <td width="132" align="left">
        <a href="#" onclick="sousuo()">			   
@@ -116,13 +118,7 @@ function on_load(){
                     平台
                     </if>
                     </td>
-                    <td height="20" bgcolor="#FFFFFF">
-                    <if condition="'004001' eq $item['trade']">
-                    贵金属
-                    <else />
-                    外汇
-                    </if>
-                    </td>
+                    <td height="20" bgcolor="#FFFFFF">{$trade_list[$item['trade']]}</td>
                     <td height="20" bgcolor="#FFFFFF">{$item.company_name}</td>
                     <td height="20" bgcolor="#FFFFFF">
 					<if condition="'006001' eq $item['auth_level']">

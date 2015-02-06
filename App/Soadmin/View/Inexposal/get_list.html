@@ -50,19 +50,28 @@ function on_load(){
 		   <table width="98%" border="0" align="center" cellpadding="0" cellspacing="0">
 		  <tr>
 			<td width="21"><img src="__PUBLIC__/Admin/images/ico07.gif" width="20" height="18" /></td>
-			<td width="550">查看内容：企业性质：
-			 <select name="nature">
+			<td width="550">查看内容：
+                        状&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;态：<select name="status" style="width:180px;">
+                         <option value=0 <if condition="0 eq $status">selected="selected"</if>>未审核</option>
+                         <option value=1 <if condition="1 eq $status">selected="selected"</if>>已审核</option>
+                         <option value=2 <if condition="2 eq $status">selected="selected"</if>>已删除</option>
+                        </select>
+                        &nbsp;&nbsp;企业性质：
+			                   <select name="nature" style="width:180px;">
                          <option value="">---请选择---</option>
                          <option value="003001" <if condition="'003001' eq $nature">selected='selected'</if>>公司</option>
                             <option value="003002" <if condition="'003002' eq $nature">selected='selected'</if>>平台</option>
+                         </select><br/>                         
+                         &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                         &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                         所属行业：<select name="trade" style="width:180px;">
+                            <option value="0">---请选择---</option>
+                            <volist name="trade_list" id="trade">
+                            <option value="{$key}" <if condition="$key eq $trade">selected="selected"</if>>{$trade}</option>
+                            </volist>
                          </select>
-                         &nbsp;所属行业：<select name="trade">
-                            <option value="">---请选择---</option>
-                            <option value="004001" <if condition="'004001' eq $trade">selected='selected'</if>>贵金属</option>
-                            <option value="004002" <if condition="'004002' eq $trade">selected='selected'</if>>外汇</option>
-                         </select>
-                         &nbsp;公司名称:<input name="company_name" type="text" value="{$company_name}"/>
-			 <input name="submit" type="submit" class="right-button02" value="查 询" />
+                         &nbsp;&nbsp;公司名称：<input name="company_name" type="text" value="{$company_name}"/>
+                         &nbsp;&nbsp;<input name="submit" type="submit" class="right-button02" value="查 询" />
 			 </td>
 			 <td width="132" align="left">
        <a href="#" onclick="sousuo()">			   
@@ -81,8 +90,11 @@ function on_load(){
 
           	 <tr>
                <td height="20"><span class="newfont07">选择：<a href="#" class="right-font08" onclick="selectAll();">全选</a>-<a href="#" class="right-font08" onclick="unselectAll();">反选</a></span>
-	             
-	       
+               <if condition="0 eq $status">
+               <!--
+	             &nbsp<input type="button" name="check_mul" value="批量审核"/>
+               -->
+	             </if>
                </td>
           	 </tr>
               <tr>
@@ -100,7 +112,7 @@ function on_load(){
 
                   <volist name="list" id="item">
                   <tr align="center">
-		    <td bgcolor="#FFFFFF"><input type="checkbox" name="delid"/>{$item.id}</td>
+		    <td bgcolor="#FFFFFF" align="left"><input type="checkbox" name="delid" <if condition="0 neq $status">style="display:none"</if>/>{$item.id}</td>
                     <td height="20" bgcolor="#FFFFFF">{$item.nickname}</td>
                     <td height="20" bgcolor="#FFFFFF">
                     <if condition="'003001' eq $item['nature']">
@@ -109,13 +121,7 @@ function on_load(){
                         平台
                     </if>
                     </td>
-                    <td height="20" bgcolor="#FFFFFF">
-                    <if condition="'004001' eq $item['trade']">
-                    贵金属
-                    <else />
-                    外汇
-                    </if>
-                    </td>
+                    <td height="20" bgcolor="#FFFFFF">{$trade_list[$item['trade']]}</td>
                     <td height="20" bgcolor="#FFFFFF">{$item.company_name}</td>
                     <td height="20" bgcolor="#FFFFFF">
                     <if condition="0 eq $item['company_id']">
@@ -125,11 +131,14 @@ function on_load(){
                     </if>
                     </td>
                     <td bgcolor="#FFFFFF">
-                       <if condition="0 eq $item['company_id']">
+                       <if condition="0 eq $item['company_id'] and 0 eq $item['is_delete']">
                         <a href="__APP__/Soadmin/Inexposal/edit/id/{$item.id}/company_id/{$item.company_id}">关联企业</a>
                        |&nbsp; 
                        </if>
                        <a href='__APP__/Soadmin/Inexposal/view/id/{$item.id}'>查看</a>
+                       <if condition="0 eq $item['is_delete']">
+                       <a href='__APP__/Soadmin/Inexposal/delete/id/{$item.id}/company_id/{$item.company_id}' onclick="return confirmdel('确定要删除吗')">删除</a>
+                       </if>
                      </td>
                   </tr>
                   </volist>
