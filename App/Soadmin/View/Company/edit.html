@@ -1,7 +1,7 @@
 <include file="Public/header" />
 
 <body class="ContentBody">
-  <form method="post" enctype="multipart/form-data" name="form">
+  <form method="post" enctype="multipart/form-data" name="myForm" id="myForm">
 <div class="MainDiv">
 <table width="99%" border="0" cellpadding="0" cellspacing="0" class="CContent">
   <tr>
@@ -35,7 +35,7 @@
                                           <tr>
 					    <td nowrap align="right" width="30%">所属行业:</td>
 					    <td width="35%">
-                                            <select name="trade">
+                                            <select name="trade"  onchange="trade_change();" id="trade">
                                             <volist name="trade_list" id="trade">
                                                 <option value="{$key}" <if condition="$key eq $obj['trade']">selected='selected'</if>>{$trade}</option>
                                             </volist>
@@ -82,15 +82,19 @@
                                            
                                            <tr>
 					    <td nowrap align="right" width="30%">营业执照:</td>
-					    <td width="35%"><input name='busin_license' type="file" style="width:154px"/>
-                                            <img src="{$obj.busin_license_url}" width="50px" height="50px"/>
+					    <td width="35%">
+                                            <input id="control_busin_license" type="checkbox" onclick="is_file_upload();" <if condition="0 neq $obj['busin_license']">checked</if>/>
+                                            <input name='busin_license' id="busin_license" type="file" <if condition="0 eq $obj['busin_license']">style="display:none;"</if> />                                            
+                                            <img id="img_busin_license" src="{$obj.busin_license_url}" width="50px" height="50px" <if condition="0 eq $obj['busin_license']">style="display:none;"</if>/>
 				            </td>
 					   </tr>
                                            
                                            <tr>
 					    <td nowrap align="right" width="30%">机构代码证:</td>
-					    <td width="35%"><input name='code_certificate' type="file" style="width:154px" value="" />
-                                            <img src="{$obj.code_certificate_url}" width="50px" height="50px"/>
+					    <td width="35%">
+                                            <input id="control_code_certificate" type="checkbox" onclick="is_file_upload();" <if condition="0 neq $obj['code_certificate']">checked</if>/>
+                                            <input name='code_certificate' id="code_certificate" type="file" <if condition="0 eq $obj['code_certificate']">style="display:none"</if>/>
+                                            <img id="img_code_certificate" src="{$obj.code_certificate_url}" width="50px" height="50px" <if condition="0 eq $obj['code_certificate']">style="display:none;"</if>/>
 				            </td>
 					   </tr>
                                            
@@ -112,10 +116,10 @@
 				            </td>
 					   </tr>
                                            
-                                            <tr>
+                                            <tr id="id_regulators_id">
 					    <td nowrap align="right" width="30%">监管机构:</td>
 					    <td width="35%">
-                                             <select name='regulators_id'>
+                                             <select name='regulators_id' id="regulators_id">
                                              <option value=0 <if condition="0 eq $obj['regulators_id']">selected="selected"</if>>---请选择监管机构---</option>
                                              <volist name="regulators_list" id="regulators">
                                              <option value="{$key}" <if condition="$key eq $obj['regulators_id']">selected="selected"</if>>{$regulators}</option>
@@ -150,8 +154,10 @@
                                            
                                            <tr id="id_certificate">
 					    <td nowrap align="right" width="30%">资质证明:</td>
-					    <td width="35%"><input name='certificate' type="file" style="width:154px" />
-                                            <img src="{$obj.certificate_url}" width="50px" height="50px"/>
+					    <td width="35%">
+                                            <input id="control_certificate" type="checkbox" onclick="is_file_upload();" <if condition="0 neq $obj['certificate']">checked</if>/>
+                                            <input id="certificate" name='certificate' type="file" <if condition="0 eq $obj['certificate']">style="display:none;"</if>/>
+                                            <img id="img_certificate" src="{$obj.certificate_url}" width="50px" height="50px" <if condition="0 eq $obj['certificate']">style="display:none;"</if>/>
 				            </td>
 					   </tr>
                                           
@@ -323,8 +329,64 @@ function nature_change()
     }
 }
 
+function is_file_upload()
+{
+    var control_busin_license    = document.getElementById('control_busin_license').checked;//营业执照
+    var control_code_certificate = document.getElementById('control_code_certificate').checked;//组织代码证
+    var control_certificate      = document.getElementById('control_certificate').checked;//资质证明
+    
+    //营业执照
+    if (control_busin_license)
+    {
+        $('#busin_license').show();
+        $('#img_busin_license').show();
+    }
+    else
+    {
+        $('#img_busin_license').hide();
+        $('#busin_license').hide();
+        $('#busin_license').val("");
+    }
+    
+    //组织代码证
+    if (control_code_certificate) {
+        $('#code_certificate').show();
+        $('#img_code_certificate').show();
+    }else
+    {
+        $('#img_code_certificate').hide();
+        $('#code_certificate').hide();
+        $('#code_certificate').val("");
+    }
+    
+    //资质证明
+    if (control_certificate) {
+        $('#certificate').show();
+        $('#img_certificate').show();
+    }
+    else{
+        $('#img_certificate').hide();
+        $('#certificate').hide();
+        $('#certificate').val("");
+    }
+}
+
+function trade_change(){
+    var trade = $('#trade').val();
+    if ('004002' == trade)//外汇
+    {
+        $('#id_regulators_id').show();
+    }
+    else
+    {
+        $('#regulators_id').val(0);
+        $('#id_regulators_id').hide();
+    }
+}
+
 $(function(){
     nature_change();
     auth_level_change();
+    trade_change();
 });
 </script>

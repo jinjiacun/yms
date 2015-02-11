@@ -215,7 +215,13 @@ class InexposalController extends BaseController {
             && 200 == $result['status_code']
             && 0 == $result['is_success'])
             {
-                $this->success('成功操作',C('Template_pre')."Inexposal/get_list");
+                //$this->success('成功操作',C('Template_pre')."Inexposal/get_list");
+                $this->echo_message(0,'成功操作', C('Template_pre')."Inexposal/get_list");
+                exit();
+            }
+            else
+            {
+                $this->echo_message(-1,"操作失败");    
                 exit();
             }
         }
@@ -233,7 +239,8 @@ class InexposalController extends BaseController {
         $id = I('get.id');
         if(0>= $id)
         {
-            $this->error("参数错误");
+            //$this->error("参数错误");
+            $this->echo_message(-100,'参数错误');
             exit();
         }
         
@@ -282,12 +289,15 @@ class InexposalController extends BaseController {
         && 200 == $result['status_code']
         && 0 == $result['content']['is_success'])
         {
-            $this->success('成功删除', C('Template_pre').'Inexposal/get_list');
+            //$this->success('成功删除', C('Template_pre').'Inexposal/get_list');
+            $this->echo_message(0,'成功删除',C('Template_pre').'Inexposal/get_list');
             exit();
         }
         else
         {
-            $this->error('删除失败');
+            $this->echo_message(-1,'删除失败');
+            exit();
+            //$this->error('删除失败');
         }
     }
     
@@ -303,12 +313,15 @@ class InexposalController extends BaseController {
         && 200 == $result['status_code']
         && 0 == $result['content']['is_success'])
         {
-            $this->success('成功删除', C('Template_pre').'Inexposal/get_list_ex');
+            //$this->success('成功删除', C('Template_pre').'Inexposal/get_list_ex');
+            $this->echo_message(0,'成功删除',C('Template_pre').'Inexposal/get_list_ex');
             exit();
         }
         else
         {
-            $this->error('删除失败');
+            //$this->error('删除失败');
+            $this->echo_message(-1,'删除失败');
+            exit();
         }
     }
     

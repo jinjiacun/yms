@@ -21,7 +21,7 @@ class RegulatorsController extends BaseController {
                 'title'   => urlencode(I('post.title')),
                 'website' => urlencode(I('post.website')),
                 'pic'     => $this->upload('pic','001002'),
-                'content' => urlencode(I('post.content')),
+                'content' => urlencode(htmlspecialchars(I('post.content'))),
             );
             $result = $this->_call("Regulators.add", $content);
             if($result
@@ -86,7 +86,7 @@ class RegulatorsController extends BaseController {
                 'type'    =>I('post.type'),
                 'title'   =>urlencode(I('post.title')),
                 'website' =>urlencode(I('website')),
-                'content' =>urlencode(I('content')),
+                'content' =>urlencode(htmlspecialchars(I('content'))),
             );
             $pic = $this->upload("pic", "001002");
             if(0< $pic)

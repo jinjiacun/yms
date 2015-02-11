@@ -18,11 +18,14 @@ class LoginController extends BaseController {
                     && 0 == $result['content']['is_success'])
                     {
                         session('admin_name', I('post.admin_name'));
-                        $this->redirect("Index/index");
+                        $this->echo_message(0,'成功登录', C('Template_pre')."Index/index");
+                        //$this->redirect("Index/index");
+                        exit();
                     }
                     else
                     {
-                        $this->error("登录失败");
+                        //$this->error("登录失败");
+                        $this->echo_message(-1,'登录失败');
                         exit();
                     }
 		}

@@ -80,7 +80,8 @@ function list(idstr){
 				  </tr>
 				  <tr>
 					<td height="22" class="left-font01">
-						[&nbsp;<a href="../login.html" target="_top" class="left-font01">退出</a>&nbsp;]</td>
+						[&nbsp;<a href="../login.html" target="_top" class="left-font01">退出</a>&nbsp;
+						&nbsp;<a href="__APP__/Soadmin/Admin/edit_ex/admin_name/{$admin_name}" target="mainFrame">修改密码</a>]</td>
 				  </tr>
 				</table>
 			</td>
@@ -247,7 +248,8 @@ function list(idstr){
 				</tr>
       </table>
 		<!--  监管机构管理结束    -->
-
+      
+      <if condition="1 eq $is_show">
 		 <!-- 媒体管理开始-->
 		 <TABLE width="100%" border="0" cellpadding="0" cellspacing="0" class="left-table03">
           <tr>
@@ -292,12 +294,39 @@ function list(idstr){
 				<tr>
 				  <td width="9%" height="20" ><img id="xiaotu2" src="__PUBLIC__/Admin/images/ico06.gif" width="8" height="12" /></td>
 				  <td width="91%">
-				  <a href="__APP__/Soadmin/User/info"  target="mainFrame" class="left-font03" onClick="tupian('2');">会员管理</a>
+				  <a href="__APP__/Soadmin/User/get_list"  target="mainFrame" class="left-font03" onClick="tupian('2');">会员管理</a>
 				  </td>
 				</tr>
       </table>
 		<!-- 会员管理结束 -->
 
+		<if condition="true eq $display">
+		
+				<!-- 会员管理开始-->
+		 <TABLE width="100%" border="0" cellpadding="0" cellspacing="0" class="left-table03">
+          <tr>
+            <td height="29">
+				<table width="85%" border="0" align="center" cellpadding="0" cellspacing="0">
+					<tr>
+						<td width="8%"><img name="img100" id="img2" src="__PUBLIC__/Admin/images/ico04.gif" width="8" height="11" /></td>
+						<td width="92%">
+								<a href="javascript:" target="mainFrame" class="left-font03" onClick="list('100');" >系统管理</a></td>
+					</tr>
+				</table>
+			</td>
+          </tr>		  
+        </TABLE>	
+		<table id="subtree100" style="DISPLAY: none" width="80%" border="0" align="center" cellpadding="0" 
+				cellspacing="0" class="left-table02">
+				<tr>
+				  <td width="9%" height="20" ><img id="xiaotu100" src="__PUBLIC__/Admin/images/ico06.gif" width="8" height="12" /></td>
+				  <td width="91%">
+				  <a href="__APP__/Soadmin/Admin/get_list"  target="mainFrame" class="left-font03" onClick="tupian('100');">帐号管理</a>
+				  </td>
+				</tr>
+      </table>
+		<!-- 会员管理结束 -->
+		</if>
 	  </TD>
   </tr>
   

@@ -134,7 +134,7 @@ function on_load(){
                     <td height="20" bgcolor="#FFFFFF">{$item.exp_amount}</td>
                     <td bgcolor="#FFFFFF">
                         <a href="__APP__/Soadmin/Company/edit/id/{$item.id}">编辑</a>|
-                        <a href="__APP__/Soadmin/Company/delete/id/{$item.id}" onclick="return confirmdel('确定要删除吗')">删除</a>
+                        <a href="javascript:request_get('__APP__/Soadmin/Company/delete/id/{$item.id}');" onclick="return confirmdel('确定要删除吗')">删除</a>
                         <!--|
                         <a href="__APP__/Soadmin/Company/get_list_ex/id/{$item.id}">别名管理</a>
                         -->

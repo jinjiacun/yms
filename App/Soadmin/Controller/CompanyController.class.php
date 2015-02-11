@@ -80,12 +80,19 @@ class CompanyController extends BaseController {
                             && 200 == $s_result['status_code']
                             && -1 == $s_result['content']['is_success'])
                             {
-                                $this->success("别名:($v)添加错误");
+                                //$this->success("别名:($v)添加错误");
+                                $this->echo_message(-1,"别名:($v)添加错误");
+                                exit();
                             }
                         }
                     }
                 }                
-                $this->success('成功添加',C('Template_pre')."Company/get_list", 3);
+                //$this->success('成功添加',C('Template_pre')."Company/get_list", 3);
+                $this->echo_message(0,'成功添加',C('Template_pre')."Company/get_list");    
+                exit();
+            }
+            else{
+                $this->echo_message(-2,'添加失败');    
                 exit();
             }
         }
@@ -155,7 +162,8 @@ class CompanyController extends BaseController {
         			&& 0 == $result['content']['is_exists']
         	)
         	{
-        		$this->error("企业名称已存在");
+        		//$this->error("企业名称已存在");
+                        $this->echo_message(-100,"企业名称已存在");
                         exit();
         	}
         	 
@@ -229,13 +237,15 @@ class CompanyController extends BaseController {
                             && 200 == $s_result['status_code']
                             && -1 == $s_result['content']['is_success'])
                             {
-                                $this->success("别名:($v)添加错误");
+                                //$this->error("别名:($v)添加错误");
+                                $this->echo_message(-1, "别名:($v)添加错误");
+                                exit();
                             }
                         }
                     }
                 }
-                
-                $this->success("成功保存",C('Template_pre')."Company/get_list", 3);
+               
+                $this->echo_message(0,'成功保存', C('Template_pre')."Company/get_list");
                 exit();   
             }
         }
@@ -388,7 +398,11 @@ class CompanyController extends BaseController {
     {
         $id = I('get.id');
         if(0>= $id)
-            $this->error("参数错误");
+        {
+            //$this->error("参数错误");
+            $this->echo_message(-100,"参数错误");
+            exit();
+        }   
             
         $content = array(
             'id'=> $id
@@ -403,7 +417,9 @@ class CompanyController extends BaseController {
             $r_result = $this->_call('Companyalias.delete',array('company_id'=>$id));
             //删除企业新闻
             $this->_call('News.delete',array('company_id'=>$id));
-            $this->success("成功操作", C('Template_pre')."Company/get_list", 3);
+            //$this->success("成功操作", C('Template_pre')."Company/get_list", 3);
+            $this->echo_message(0,"成功操作", C('Template_pre')."Company/get_list");
+            exit();
         }
     }
     

@@ -68,7 +68,8 @@ class CommentController extends BaseController {
             $tmp_list = I('get.id');
             if(!is_array($tmp_list))
             {
-                $this->error('参数错误');
+                //$this->error('参数错误');
+                $this->echo_message(-100,'参数错误');
                 exit();
             }
 
@@ -87,11 +88,13 @@ class CommentController extends BaseController {
             && 200 == $result['status_code']
             && 0 == $result['content']['is_success'])
             {
-                $this->success('成功操作', C('Template_pre').'Comment/get_list');
+                //$this->success('成功操作', C('Template_pre').'Comment/get_list');
+                $this->echo_message(0,'成功操作', C('Template_pre').'Comment/get_list');
                 exit();
             }
             else{
-                $this->error('操作失败');
+                //$this->error('操作失败');
+                $this->echo_message(-1,'操作失败');
                 exit();
             }
         }
@@ -145,7 +148,9 @@ class CommentController extends BaseController {
             {
                 if(0 == $result['content']['is_validate'])
                 {
-                    $this->error("相应的主体未审核");
+                    $this->echo_message(-100,"相应的主体未审核");
+                    exit();
+                    //$this->error("相应的主体未审核");
                 }
             }
             
@@ -158,7 +163,9 @@ class CommentController extends BaseController {
             && 200 == $result['status_code']
             && 0 == $result['content']['is_success'])
             {
-                $this->success('成功操作',C('Template_pre').'Comment/get_list');
+                //$this->success('成功操作',C('Template_pre').'Comment/get_list');
+                $this->echo_message(0,'成功操作',C('Template_pre').'Comment/get_list');
+                exit();
             }
         }
     }
@@ -171,7 +178,9 @@ class CommentController extends BaseController {
         $parent_id = I('get.parent_id');
         if(0>= $id)
         {
-            $this->error('参数错误');
+            //$this->error('参数错误');
+            $this->echo_message(-100, '参数错误');
+            exit();
         }
         $content = array(
             'id'=> $id,
@@ -184,7 +193,9 @@ class CommentController extends BaseController {
         && 200 == $result['status_code']
         && 0 == $result['content']['is_success'])
         {
-            $this->success('成功删除', C('Template_pre').'Comment/get_list');
+            //$this->success('成功删除', C('Template_pre').'Comment/get_list');
+            $this->echo_message(0, '成功删除', C('Template_pre').'Comment/get_list');
+            exit();
         }
     }
     
@@ -285,7 +296,9 @@ class CommentController extends BaseController {
             {
                 if(0 == $result['content']['is_validate'])
                 {
-                    $this->error("相应的主体未审核");
+                    //$this->error("相应的主体未审核");
+                    $this->echo_message(-100,"相应的主体未审核");
+                    exit();
                 }
             }
             
@@ -297,7 +310,13 @@ class CommentController extends BaseController {
             && 200 == $result['status_code']
             && 0 == $result['content']['is_success'])
             {
-                $this->success('成功操作',C('Template_pre').'Comment/get_news_list');
+                //$this->success('成功操作',C('Template_pre').'Comment/get_news_list');
+                $this->echo_message(0,'成功操作',C('Template_pre').'Comment/get_news_list');
+                exit();
+            }
+            else{
+                $this->echo_message(-1,'操作失败');
+                exit();
             }
         }
     }
@@ -307,7 +326,9 @@ class CommentController extends BaseController {
         $id = I('get.id');
         if(0>= $id)
         {
-            $this->error('参数错误');
+            //$this->error('参数错误');
+            $this->echo_message(-100,'参数错误');
+            exit();
         }
         $content['id'] = $id;
         $result = $this->_call("Commentnews.delete", $content);
@@ -315,7 +336,14 @@ class CommentController extends BaseController {
         && 200 == $result['status_code']
         && 0 == $result['content']['is_success'])
         {
-            $this->success('成功删除', C('Template_pre').'Comment/get_news_list');
+            //$this->success('成功删除', C('Template_pre').'Comment/get_news_list');
+            $this->echo_message(0, '成功删除', C('Template_pre').'Comment/get_news_list');
+            exit();
+        }
+        else
+        {
+            $this->echo_message(-1, '删除失败');
+            exit();
         }
     }
     
@@ -378,7 +406,9 @@ class CommentController extends BaseController {
             {
                 if(0 == $result['content']['is_validate'])
                 {
-                    $this->error("相应的主体未审核");
+                    //$this->error("相应的主体未审核");
+                    $this->echo_message(-100,"相应的主体未审核");
+                    exit();
                 }
             }
             $content = array(
@@ -389,7 +419,14 @@ class CommentController extends BaseController {
             && 200 == $result['status_code']
             && 0 == $result['content']['is_success'])
             {
-                $this->success('成功操作',C('Template_pre').'Comment/get_exposal_list');
+                //$this->success('成功操作',C('Template_pre').'Comment/get_exposal_list');
+                $this->echo_message(0,'成功操作',C('Template_pre').'Comment/get_exposal_list');
+                exit();
+            }
+            else
+            {
+                $this->echo_message(-1,'操作失败');
+                exit();
             }
         }
     }

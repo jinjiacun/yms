@@ -198,6 +198,18 @@ class BaseController extends Controller {
 		return $_map;
 	}
 	
+	//返回状态
+	public function echo_message($status=0, $message='操作成功', $jmp_url='')
+	{
+		echo json_encode(
+		        array(
+				'status'=>$status,
+				'message'=>$message,
+				'jmp_url'=>$jmp_url,
+			)
+		);
+	}
+	
 	
 	
 	

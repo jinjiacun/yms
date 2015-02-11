@@ -21,6 +21,10 @@ class PublicController extends BaseController {
 	{
 		if(session('admin_name'))
 			$this->assign('admin_name', session('admin_name'));
+		if('admin' == session('admin_name'))
+		{
+			$this->assign('is_show', 1);
+		}
 		$this->display();
 	}
 

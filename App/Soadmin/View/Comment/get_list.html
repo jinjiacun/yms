@@ -39,7 +39,7 @@ function on_load(){
 </SCRIPT>
 
 <body onload="on_load()">
-<form name="fom" id="fom" method="get">
+<form name="myForm" id="myForm" method="get">
 <table id="mainpage" width="100%" border="0" cellspacing="0" cellpadding="0">
 
   <tr>
@@ -144,10 +144,10 @@ function on_load(){
                     </td>
                     <td bgcolor="#FFFFFF">
                         <if condition="0 eq $item['is_validate'] and 0 eq $item['is_delete']">
-                        <a href="__APP__/Soadmin/Comment/validate/id/{$item.id}/parent_id/{$item.parent_id}/company_id/{$item.company_id}">审核</a>
+                        <a href="javascript:request_get('__APP__/Soadmin/Comment/validate/id/{$item.id}/parent_id/{$item.parent_id}/company_id/{$item.company_id}');">审核</a>
                         </if>
                         <if condition="0 eq $item['is_delete']">
-                        <a href="__APP__/Soadmin/Comment/delete/parentid/{$item.parent_id}/id/{$item.id}/company_id/{$item.company_id}/is_validate/{$item.is_validate}" onclick="return confirmdel('确定要删除吗')">删除</a>
+                        <a href="javascript:request_get('__APP__/Soadmin/Comment/delete/parentid/{$item.parent_id}/id/{$item.id}/company_id/{$item.company_id}/is_validate/{$item.is_validate}');" onclick="return confirmdel('确定要删除吗')">删除</a>
                         </if>
                      </td>
                   </tr>
