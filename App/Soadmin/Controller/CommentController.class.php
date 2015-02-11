@@ -55,6 +55,11 @@ class CommentController extends BaseController {
                 $content['where']['user_id']= htmlspecialchars(I('get.user_id'));
                 $this->assign('user_id', I('get.user_id'));
             }
+            if(0 != I('get.type'))
+            {
+                $content['where']['type']= htmlspecialchars(I('get.type'));
+                $this->assign('type', I('get.type'));
+            }
         }
         else
         {
@@ -64,7 +69,7 @@ class CommentController extends BaseController {
         }
         //批量审核
         if(I('get.check_mul'))
-        {
+        {                
             $tmp_list = I('get.id');
             if(!is_array($tmp_list))
             {

@@ -82,7 +82,9 @@ class BaseController extends Controller {
 		    }
 		    elseif(-4 == $result['content']['is_success'])
 		    {
-			$this->error('文件超过最大范围');
+			//$this->error('文件超过最大范围');
+		    $this->echo_message(-500,'文件超过最大范围');
+		    exit();
 			return 0;
 		    }
 		}

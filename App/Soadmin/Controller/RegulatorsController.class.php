@@ -21,7 +21,7 @@ class RegulatorsController extends BaseController {
                 'title'   => urlencode(I('post.title')),
                 'website' => urlencode(I('post.website')),
                 'pic'     => $this->upload('pic','001002'),
-                'content' => urlencode(htmlspecialchars(I('post.content'))),
+                'content' => urlencode(base64_encode(I('post.content'))),
             );
             $result = $this->_call("Regulators.add", $content);
             if($result
@@ -29,8 +29,14 @@ class RegulatorsController extends BaseController {
             && 0   == $result['content']['is_success']
             )
             {
-                $this->success("添加成功", C('Template_pre')."Regulators/get_list");
+                //$this->success("添加成功", C('Template_pre')."Regulators/get_list");
+                $this->echo_message(0,"添加成功", C('Template_pre')."Regulators/get_list");
                 exit();
+            }
+            else
+            {
+                $this->echo_message(-1,"添加失败");
+                exit();   
             }
         }
         
@@ -86,7 +92,7 @@ class RegulatorsController extends BaseController {
                 'type'    =>I('post.type'),
                 'title'   =>urlencode(I('post.title')),
                 'website' =>urlencode(I('website')),
-                'content' =>urlencode(htmlspecialchars(I('content'))),
+                'content' =>urlencode(base64_encode(I('content'))),
             );
             $pic = $this->upload("pic", "001002");
             if(0< $pic)
@@ -98,7 +104,13 @@ class RegulatorsController extends BaseController {
             && 200 == $result['status_code']
             && 0 == $result['content']['is_success'])
             {
-                $this->success('保存成功',C('Template_pre')."Regulators/get_list");
+                //$this->success('保存成功',C('Template_pre')."Regulators/get_list");
+                $this->echo_message(0,'保存成功',C('Template_pre')."Regulators/get_list");
+                exit();
+            }
+            else
+            {
+                $this->echo_message(-1,'保存失败',C('Template_pre')."Regulators/get_list");
                 exit();
             }
         }
@@ -110,7 +122,9 @@ class RegulatorsController extends BaseController {
         if($result
         && 200 == $result['status_code'])
         {
-            $this->assign('obj', $result['content']);
+            $obj = $result['content'];
+            $obj['content'] = base64_decode($obj['content']);
+            $this->assign('obj', $obj);
         }
         $this->display();
     }
@@ -129,7 +143,14 @@ class RegulatorsController extends BaseController {
             && 0 == $result['content']['is_success']
             )
             {
-                $this->success('删除成功', C('Template_pre')."Regulators/get_list");
+                //$this->success('删除成功', C('Template_pre')."Regulators/get_list");
+                $this->echo_message(0,'删除成功', C('Template_pre')."Regulators/get_list");
+                exit();
+            }
+            else
+            {
+                $this->echo_message(-1,'删除失败', C('Template_pre')."Regulators/get_list");
+                exit();   
             }
         }
     }

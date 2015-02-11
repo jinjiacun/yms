@@ -39,7 +39,7 @@ function on_load(){
 </SCRIPT>
 
 <body onload="on_load()">
-<form name="myForm" id="myForm" method="get">
+<form name="fom" id="fom" method="get">
 <table id="mainpage" width="100%" border="0" cellspacing="0" cellpadding="0">
 
   <tr>
@@ -57,6 +57,12 @@ function on_load(){
                             <option value=2 <if condition="2 eq $status">selected="selected"</if>>已删除</option>
                          </select>                         
                          &nbsp;&nbsp;会员id：<input type="text" name="user_id" value="{$user_id}"/>
+                         &nbsp;&nbsp;类型:<select name="type" style="width:180px;">
+                         <option value=0 >---请选择类型---</option>
+                         <option value='005001' <if condition="'005001' eq $type">selected="selected"</if>>点赞</option>
+                         <option value='005002' <if condition="'005002' eq $type">selected="selected"</if>>提问</option>
+                         <option value='005003' <if condition="'005003' eq $type">selected="selected"</if>>加黑</option>
+                         </select>
                          <input name="submit" type="submit" class="right-button02" value="查 询" />
 			 </td>
 			 <td width="132" align="left">
@@ -81,7 +87,7 @@ function on_load(){
                -
                <a href="#" class="right-font08" onclick="unselectAll();">反选</a>
                <if condition="0 eq $status">
-               &nbsp<input type="submit" name="check_mul" value="批量审核"/>
+               &nbsp<input type="button" name="check_mul" value="批量审核" onclick="validate_mul()"/>
                </if>
                </span>
 	             
@@ -110,14 +116,14 @@ function on_load(){
                       {$item.id}</td>
                     <td height="20" bgcolor="#FFFFFF">{$item.user_id}</td>
                     <td height="20" bgcolor="#FFFFFF" style="word-break: break-all">{$item.nickname}</td>
-                    <td height="20" bgcolor="#FFFFFF">{$company_list[$item['company_id']]}</td>
+                    <td height="20" bgcolor="#FFFFFF"><a href="__APP__/Home/Query/query_hpt/resid/{$item.company_id}" target="_black">{$company_list[$item['company_id']]}</a></td>
                     <td height="20" bgcolor="#FFFFFF" style="word-break: break-all">
                     <if condition="'005001' eq $item['type']">
-                    点赞
+                    <font style="color:#d53315">点赞</font>
                     <elseif condition="'005002' eq $item['type']" />
-                    提问
+                    <font style="color:#0086d2">提问</font>
                     <else />
-                    加黑
+                    <font style="color:#008000">加黑</font>
                     </if>
                     </td>                    
                     <td height="20" bgcolor="#FFFFFF" style="word-break: break-all">
@@ -174,4 +180,44 @@ function on_load(){
 
 </body>
 </html>
+<script type="text/javascript">
+//check of multi
+function validate_mul()
+{
+    var ajaxUrl = location.href;
+    var obj = document.fom.elements;
+    var params = '';
+    for (var i=0;i<obj.length;i++){
+            if (obj[i].name == "id[]"){
+                    //obj[i].checked = true;
+                    if (obj[i].checked) {
+                        params += "/id[]/"+obj[i].value;
+                    }
+            }
+    }
+    ajaxUrl+= "/check_mul/批量审核"+params;
+    jQuery.ajax({  
+                type:"get",  
+                url:ajaxUrl,
+                timeout: 5000,
+                dataType:"json",
+                success: function aa(data) {
+                    if (0 == data.status) {
+                       popStatus(1, data.message, 2);
+                       if ('' != data.jmp_url) {
+                        setTimeout("location.href= '"+data.jmp_url+"'; ",3000);//延时3秒 
+                        //location.href= data.jmp_url;
+                       }
+                    }
+                    else
+                    {
+                      popStatus(4, data.status+','+data.message, 2);
+                    }
+                },
+                error:function my_error(data){
+                    popStatus(4, data.status+','+data.message, 2);
+                }
+	    });
+}
+</script>
 

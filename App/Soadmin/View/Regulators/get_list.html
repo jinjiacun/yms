@@ -100,7 +100,7 @@ function on_load(){
                     <td height="20" bgcolor="#FFFFFF"><img src="{$item.pic_url}" widht="25px" height="25px"/></td>
                     <td bgcolor="#FFFFFF">
                         <a href="__APP__/Soadmin/Regulators/edit/id/{$item.id}">编辑</a>|
-                        <a href="__APP__/Soadmin/Regulators/delete/id/{$item.id}" onclick="return confirmdel('确定要删除吗')">删除</a>
+                        <a href="javascript:request_get('__APP__/Soadmin/Regulators/delete/id/{$item.id}');" onclick="return confirmdel('确定要删除吗')">删除</a>
                      </td>
                   </tr>
                   </volist>
