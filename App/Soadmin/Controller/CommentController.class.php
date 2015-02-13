@@ -136,6 +136,8 @@ class CommentController extends BaseController {
         }
         
         $this->assign('company_list', $this->_map_company());
+        $_auth_level_company = $this->_map_auth_level_company();
+        $this->assign('auth_level_company', $_auth_level_company);
         $this->display();
     }
     

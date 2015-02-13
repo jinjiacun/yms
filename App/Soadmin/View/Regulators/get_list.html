@@ -39,7 +39,7 @@ function on_load(){
 </SCRIPT>
 
 <body onload="on_load()">
-<form name="fom" id="fom" method="post">
+<form name="fom" id="fom" method="get">
 <table id="mainpage" width="100%" border="0" cellspacing="0" cellpadding="0">
 
   <tr>
@@ -50,8 +50,12 @@ function on_load(){
 		   <table width="98%" border="0" align="center" cellpadding="0" cellspacing="0">
 		  <tr>
 			<td width="21"><img src="__PUBLIC__/Admin/images/ico07.gif" width="20" height="18" /></td>
-			<td width="550">查看内容：类型：
-			 <input name="type" type="text" size="12" value="{$type}"/>
+			<td width="550">查看内容：类别：
+			 <select name="type" width="100px">
+                         <option value=0>---请选择类别---</option>
+                         <option value='002001' <if condition="'002001' eq $type">selected="selected"</if>>贵金属监管机构</option>
+                         <option value='002002' <if condition="'002002' eq $type">selected="selected"</if>>外汇监管机构</option>
+                         </select>
                          &nbsp;标题：<input type="text" name="title" value="{$title}"/>
 			 <input name="submit" type="submit" class="right-button02" value="查 询" />
 			 </td>
@@ -72,7 +76,7 @@ function on_load(){
 
           	 <tr>
                <td height="20"><span class="newfont07">选择：<a href="#" class="right-font08" onclick="selectAll();">全选</a>-<a href="#" class="right-font08" onclick="unselectAll();">反选</a></span>
-	             
+	             <input type="button" name="del_mul" value="批量删除" onclick="delete_mul();"/>
 	             </td>
           	 </tr>
               <tr>
@@ -88,7 +92,7 @@ function on_load(){
 
                   <volist name="list" id="item">
                   <tr align="center">
-		    <td bgcolor="#FFFFFF"><input type="checkbox" name="delid"/>{$item.id}</td>
+		    <td bgcolor="#FFFFFF"><input type="checkbox" name="id[]" value="{$item.id }"/>{$item.id}</td>
                     <td height="20" bgcolor="#FFFFFF">
                     <if condition="'002001' eq $item['type']">
                     	贵金属监管机构
@@ -126,4 +130,52 @@ function on_load(){
 
 </body>
 </html>
+<script type="text/javascript">
+function delete_mul()
+{
+    if(!confirmdel('确定要删除吗'))
+    {
+        return;
+    }
 
+    var ajaxUrl = location.href;
+    var obj = document.fom.elements;
+    var params = '';
+    for (var i=0;i<obj.length;i++){
+            if (obj[i].name == "id[]"){
+                    //obj[i].checked = true;
+                    if (obj[i].checked) {
+                        params += "&id[]="+obj[i].value;
+                    }
+            }
+    }
+    if ('' == params) {
+        alert('请选择要删除的对象');
+        return;
+    }
+    ajaxUrl+= "/del_mul/批量删除";
+    jQuery.ajax({  
+                type:"post",  
+                url:ajaxUrl,
+                timeout: 5000,
+                data:params,
+                dataType:"json",
+                success: function aa(data) {
+                    if (0 == data.status) {
+                       popStatus(1, data.message, 2);
+                       if ('' != data.jmp_url) {
+                        setTimeout("location.href= '"+data.jmp_url+"'; ",3000);//延时3秒 
+                        //location.href= data.jmp_url;
+                       }
+                    }
+                    else
+                    {
+                      popStatus(4, data.status+','+data.message, 2);
+                    }
+                },
+                error:function my_error(data){
+                    popStatus(4, data.status+','+data.message, 2);
+                }
+	    });
+}
+</script>

@@ -48,17 +48,49 @@ class RegulatorsController extends BaseController {
         $page_index = 1;
         $page_size  = 10;
         $content    = array();
+        
+        //批量删除
+        if(I('get.del_mul'))
+        {
+            $id_list = I('post.id');            
+            $ids = implode(',', $id_list);
+            $content['id'] = array('in', $ids);
+            $result = $this->_call('Regulators.delete', $content);
+            if($result
+            && 200 == $result['status_code']
+            && 0 == $result['content']['is_success'])
+            {
+                $this->echo_message(0, "成功删除", C('Template_pre')."Regulators/get_list");
+                exit();
+            }
+            else{
+                $this->echo_message(-1, "删除失败");
+                exit();
+            }
+        }
+        
         if(I('get.p'))
         {
             $page_index = I('get.p');
             $content['page_size'] = $page_size;
             $content['page_index'] = $page_index;
         }
-        $res = A('Callapi')->call_api('Regulators.get_list', 
-                                    $content,
-                                    'text',
-                                  null);
-        $result = $this->deal_re_call_api($res);
+        if(I('get.submit'))
+        {
+            if('' != I('get.title'))
+            {
+                $content['where']['title'] = array('like', '%'.urlencode(I("get.title")).'%');
+                $this->assign('title', I('get.title'));
+            }
+            if(0 != I('get.type'))
+            {
+                $content['where']['type'] = I('get.type');
+                $this->assign('type', I('get.type'));
+            }
+        }
+        
+        $result = $this->_call('Regulators.get_list', 
+                                    $content);
 
         $list = array();
         if($result)

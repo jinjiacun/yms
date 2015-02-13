@@ -87,7 +87,9 @@ function on_load(){
                -
                <a href="#" class="right-font08" onclick="unselectAll();">反选</a>
                <if condition="0 eq $status">
+               <!--
                &nbsp<input type="button" name="check_mul" value="批量审核" onclick="validate_mul()"/>
+               -->
                </if>
                </span>
 	             
@@ -116,7 +118,18 @@ function on_load(){
                       {$item.id}</td>
                     <td height="20" bgcolor="#FFFFFF">{$item.user_id}</td>
                     <td height="20" bgcolor="#FFFFFF" style="word-break: break-all">{$item.nickname}</td>
-                    <td height="20" bgcolor="#FFFFFF"><a href="__APP__/Home/Query/query_hpt/resid/{$item.company_id}" target="_black">{$company_list[$item['company_id']]}</a></td>
+                    <td height="20" bgcolor="#FFFFFF">
+                    <if condition="'006001' eq $auth_level_company[$item['company_id']]">
+                    <a href="__APP__/Home/Query/query_hpt/resid/{$item.company_id}" target="_black">{$company_list[$item['company_id']]}
+                    </a>
+                    <elseif condition="'006002' eq $auth_level_company[$item['company_id']]" />
+                    <a href="__APP__/Home/Query/query_wrz/resid/{$item.company_id}" target="_black">{$company_list[$item['company_id']]}
+                    </a>
+                    <elseif condition="'006003' eq $auth_level_company[$item['company_id']]" />
+                    <a href="__APP__/Home/Query/query_yrz/resid/{$item.company_id}" target="_black">{$company_list[$item['company_id']]}
+                    </a>
+                    </if>
+                    </td>
                     <td height="20" bgcolor="#FFFFFF" style="word-break: break-all">
                     <if condition="'005001' eq $item['type']">
                     <font style="color:#d53315">点赞</font>

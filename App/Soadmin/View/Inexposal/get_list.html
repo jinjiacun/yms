@@ -66,8 +66,8 @@ function on_load(){
                          &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                          所属行业：<select name="trade" style="width:180px;">
                             <option value="0">---请选择---</option>
-                            <volist name="trade_list" id="trade">
-                            <option value="{$key}" <if condition="$key eq $trade">selected="selected"</if>>{$trade}</option>
+                            <volist name="trade_list" id="item_trade">
+                            <option value="{$key}" <if condition="$key eq $trade">selected="selected"</if>>{$item_trade}</option>
                             </volist>
                          </select>
                          &nbsp;&nbsp;公司名称：<input name="company_name" type="text" value="{$company_name}"/>
@@ -91,9 +91,9 @@ function on_load(){
           	 <tr>
                <td height="20"><span class="newfont07">选择：<a href="#" class="right-font08" onclick="selectAll();">全选</a>-<a href="#" class="right-font08" onclick="unselectAll();">反选</a></span>
                <if condition="0 eq $status">
-               <!--
-	             &nbsp<input type="button" name="check_mul" value="批量审核"/>
-               -->
+                     <!--
+	             &nbsp<input type="button" name="delete_mul" value="批量删除"/>
+                     -->
 	             </if>
                </td>
           	 </tr>

@@ -116,6 +116,20 @@ class BaseController extends Controller {
 		return $list;
 	}
 	
+	//查询企业级别映射
+	public function _map_auth_level_company()
+	{
+		$list = array();
+		
+		$result = $this->_call("Company.get_id_auth_level_map");
+		if($result
+		&& 200 == $result['status_code'])
+		{
+			$list = $result['content'];
+		}
+		return $list;
+	}
+	
 	//监管机构映射
 	public function _map_regulators()
 	{

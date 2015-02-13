@@ -3,6 +3,82 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=gb2312" />
 <title>搜黑管理</title>
+<link type="image/x-icon" href="__PUBLIC__/s.ico" rel="icon">
+<script type="text/javascript" src="__PUBLIC__/js/jquery-1.9.1.min.js"></script>
+<script type="text/javascript">     
+        // 使用message对象封装消息 
+        var message={  
+            time: 0,  
+            title: document.title,  
+            timer: null,
+            // 显示新消息提示  
+            show:function(){  
+                var title = message.title.replace("【　　　】", "").replace("【新消息】", ""); 
+                // 定时器，设置消息切换频率闪烁效果就此产生  
+                message.timer = setTimeout( 
+                    function() {                    
+                       //查询是否有未审核数据
+                       if (state_no_validate()) {
+                          message.time++; 
+                          message.show();
+                          if (message.time % 2 == 0) {  
+                              document.title = "【新消息】" + title  
+                          } 
+                          else{  
+                              document.title = "【　　　】" + title  
+                          };
+                       }  
+                    },  
+                    2400 // 闪烁时间差 
+                );  
+                return [message.timer, message.title];  
+            },  
+     
+            // 取消新消息提示  
+            clear: function(){  
+                clearTimeout(message.timer);  
+                document.title = message.title;  
+            }  
+        };  
+     
+        message.show();     
+        // 页面加载时绑定点击事件，单击取消闪烁提示
+        /*
+        function bind() { 
+            document.onclick = function(){ 
+                message.clear();  
+            };  
+        }
+        */
+//查询是否有未审核数据
+function state_no_validate()
+{
+  var status = false;
+  jQuery.ajax({  
+		        type:"post",
+                        async:false,
+		        url:"{$call_url}",  
+		        timeout: 5000,                        
+		        dataType:"json",
+                        data:{"method":"Comment.stat_no_validate","type":"text"},
+		        success: function aa(data) {
+                            if (200 == data.status_code
+                            && 0< data.content.amount) {
+                              status = true;  
+			    }
+			    else
+			    {
+                              status = false;
+                              alert(data.content.message);
+			    }
+                        },
+			error:function my_error(data){
+			    alert('系统错误');
+			}
+	    });
+  return status;
+}
+</script>  
 </head>
 
 <frameset rows="59,*" cols="*" frameborder="no" border="0" framespacing="0">
@@ -15,3 +91,4 @@
 <noframes><body>
 </body>
 </noframes></html>
+

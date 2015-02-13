@@ -67,8 +67,8 @@ function on_load(){
                          &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                          所属行业：<select name="trade" style="width:180px;">
                             <option value="0">---请选择---</option>
-                            <volist name="trade_list" id="trade">
-                            <option value="{$key}" <if condition="$key eq $trade">selected="selected"</if>>{$trade}</option>
+                            <volist name="trade_list" id="item_trade">
+                            <option value="{$key}" <if condition="$key eq $trade">selected="selected"</if>>{$item_trade}</option>
                             </volist>
                          </select>
                          &nbsp;&nbsp;公司名称：<input name="company_name" type="text" value="{$company_name}"/>
@@ -121,8 +121,14 @@ function on_load(){
                     <td height="20" bgcolor="#FFFFFF">
                     <if condition="'004001' eq $item['trade']">
                     贵金属
-                    <else />
+                    <elseif condition="'004002'  eq $item['trade']"/>
                     外汇
+                    <elseif condition="'004003'  eq $item['trade']"/>
+                    石油
+                    <elseif condition="'004004'  eq $item['trade']"/>
+                    大宗商品
+                    <elseif condition="'004005'  eq $item['trade']"/>
+                    其他
                     </if>
                     </td>
                     <td height="20" bgcolor="#FFFFFF">{$item.company_name}</td>

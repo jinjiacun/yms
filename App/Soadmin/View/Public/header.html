@@ -63,7 +63,8 @@ function check()
                 }                
                 else
                 {
-                    popStatus(4, res_json.status+','+res_json.message, 2);
+                    //popStatus(4, res_json.status+','+res_json.message, 2);
+		    popStatus(4, res_json.message, 2);
                 }
             },
             error: function()
@@ -90,7 +91,8 @@ function check()
 			    }
 			    else
 			    {
-			      popStatus(4, data.status+','+data.message, 2);
+			      //popStatus(4, data.status+','+data.message, 2);
+			      popStatus(4, data.message, 2);
 			    }
                         },
 			error:function my_error(data){

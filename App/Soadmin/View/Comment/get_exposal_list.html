@@ -80,7 +80,9 @@ function on_load(){
                     <td width="10%" height="20" align="center" bgcolor="#EEEEEE">曝光入库企业</td>
                     
                     <td width="20%" height="20" align="center" bgcolor="#EEEEEE">主体</td>
+                    <!--
                     <td width="20%" height="20" align="center" bgcolor="#EEEEEE">回复</td>
+                    -->
                     <td width="10%" height="20" align="center" bgcolor="#EEEEEE">评论日期</td>
                     <td width="10%" height="20" align="center" bgcolor="#EEEEEE">是否审核</td>
                     <td width="10%" height="20" align="center" bgcolor="#EEEEEE">审核日期</td>
@@ -98,6 +100,7 @@ function on_load(){
                     {$item.parent_content}
                     </if>
                     </td>
+                    <!--
                     <td height="20" bgcolor="#FFFFFF" style="word-break: break-all">
                     <if condition="0 neq $item['parent_id']">
                     {$item.content}
@@ -105,6 +108,7 @@ function on_load(){
                     --
                     </if>
                     </td>
+                    -->
                     <td height="20" bgcolor="#FFFFFF">{$item.add_time|date="Y-m-d H:i:s",###}</td>
                     <td height="20" bgcolor="#FFFFFF">
                     <if condition="0 eq $item['is_validate']">
@@ -122,7 +126,7 @@ function on_load(){
                     </td>
                     <td bgcolor="#FFFFFF">
                         <if condition="0 eq $item['is_validate']">
-                        <a href="__APP__/Soadmin/Comment/validate_exposal/id/{$item.id}">审核</a
+                        <a href="javascript:request_get('__APP__/Soadmin/Comment/validate_exposal/id/{$item.id}');">审核</a
                         </if>
                      </td>
                   </tr>

@@ -85,6 +85,27 @@ class NewsController extends BaseController {
         $page_index = 1;
         $page_size  = 10;
         $content    = array();
+        
+         //批量删除
+        if(I('get.del_mul'))
+        {
+            $id_list = I('post.id');            
+            $ids = implode(',', $id_list);
+            $content['id'] = array('in', $ids);
+            $result = $this->_call('Regulators.delete', $content);
+            if($result
+            && 200 == $result['status_code']
+            && 0 == $result['content']['is_success'])
+            {
+                $this->echo_message(0, "成功删除", C('Template_pre')."News/get_list");
+                exit();
+            }
+            else{
+                $this->echo_message(-1, "删除失败");
+                exit();
+            }
+        }
+        
         if(I('get.p'))
         {
             $page_index = I('get.p');
@@ -130,6 +151,27 @@ class NewsController extends BaseController {
         $page_index = 1;
         $page_size  = 10;
         $content    = array();
+        
+         //批量删除
+        if(I('get.del_mul'))
+        {
+            $id_list = I('post.id');            
+            $ids = implode(',', $id_list);
+            $content['id'] = array('in', $ids);
+            $result = $this->_call('Regulators.delete', $content);
+            if($result
+            && 200 == $result['status_code']
+            && 0 == $result['content']['is_success'])
+            {
+                $this->echo_message(0, "成功删除", C('Template_pre')."News/get_list_ex");
+                exit();
+            }
+            else{
+                $this->echo_message(-1, "删除失败");
+                exit();
+            }
+        }
+        
         if(I('get.p'))
         {
             $page_index = I('get.p');
@@ -206,12 +248,12 @@ class NewsController extends BaseController {
         	&& 0 == $result['content']['is_success'])
         	{
         		//$this->success("成功修改",C('Template_pre')."News/get_list");
-                $this->echo_message("成功修改",C('Template_pre')."News/get_list");
+                $this->echo_message(0,"成功修改",C('Template_pre')."News/get_list");
                 exit();
         	}
             else
             {
-                $this->echo_message("修改失败",C('Template_pre')."News/get_list");
+                $this->echo_message(-1,"修改失败");
                 exit();   
             }
         }
@@ -266,12 +308,12 @@ class NewsController extends BaseController {
         			&& 0 == $result['content']['is_success'])
         	{
         		//$this->success("成功修改",C('Template_pre')."News/get_list");
-                $this->echo_message("成功修改",C('Template_pre')."News/get_list");
+                $this->echo_message(0,"成功修改",C('Template_pre')."News/get_list");
                 exit();
         	}
             else
             {
-                $this->echo_message("修改失败",C('Template_pre')."News/get_list");
+                $this->echo_message(-1,"修改失败");
                 exit();   
             }
         }
@@ -307,7 +349,7 @@ class NewsController extends BaseController {
        	 }
          else
          {
-            $this->echo_message(0,"删除失败", C('Template_pre')."News/get_list");
+            $this->echo_message(-1,"删除失败");
             exit();
          }
        }

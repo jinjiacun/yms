@@ -58,8 +58,8 @@ function on_load(){
                          </select>
                          &nbsp;&nbsp;所属行业：<select name="trade" style="width:180px;">
                          <option value=0>---请选择所属行业---</option>
-                         <volist name="trade_list" id="trade">
-                         <option value="{$key}" <if condition="$key eq $trade">selected="selected"</if>>{$trade}</option>
+                         <volist name="trade_list" id="item_trade">
+                         <option value="{$key}" <if condition="$key eq $trade">selected="selected"</if>>{$item_trade}</option>
                          </volist>
                          </select><br/>
                          &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
