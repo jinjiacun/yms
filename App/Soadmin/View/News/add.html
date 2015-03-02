@@ -39,8 +39,7 @@
 			<TD width="100%">
 				<fieldset style="height:100%;">
 				<legend>添加新闻</legend>
-					  <table border="0" cellpadding="2" cellspacing="1" style="width:100%">
-                                          
+					  <table border="0" cellpadding="2" cellspacing="1" style="width:100%">                                          
                                           <tr>
 					    <td nowrap align="right" width="30%">企业:</td>
 					    <td width="35%">
@@ -49,8 +48,21 @@
                                             <option value="{$key}">{$company}</option>
                                             </volist>
                                             </select>
-				            <span class="red">*</span></td>
+				            <span class="red">*</span>
+                                            <a href="javascript:add_company();">[+]</a>
+                                            </td>
 					  </tr>
+                                          
+                                          <tr>
+                                            <td nowrap align="right" width="30%">
+                                            其他企业
+                                            </td>
+                                            <td  width="35%">
+                                            <ul id="other_company">
+                                            
+                                            </ul>
+                                            </td>
+                                          </tr>                                          
 					 
                                          <tr>
                                             <td nowrap align="right" width="30%">正负面新闻:</td>
@@ -172,5 +184,42 @@ function validate()
     }
     
     return true;
-}    
+}
+
+//添加企业
+function add_company()
+{
+    var cur_node = $("#other_company");
+    var cur_company_id   = $('#company_id').val();
+    var cur_company_name = $('#company_id option:selected').text();
+    if(check_exists(cur_company_id))
+    {
+        alert('企业已存在');
+        return;
+    }
+    var new_company = "<li>"+cur_company_name+"<input type='hidden' name='other[]' value='"+cur_company_id+"'/><a href='#' onclick='remove_item(this);'>[-]</a></li>";
+    cur_node.append(new_company);
+}
+
+//检查是否存在
+function check_exists(company_id)
+{
+    var status = false;
+    $('#other_company li').each(
+        function(index, data){
+            var val = $(this).find("input").val();            
+            if (val == company_id){
+                status = true;
+                return;
+            }
+    });
+    
+    return status;
+}
+
+//移除当前项目
+function remove_item(target_obj)
+{
+   $(target_obj).parent().remove();
+}
 </script>

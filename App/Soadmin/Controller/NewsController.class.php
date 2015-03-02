@@ -18,11 +18,18 @@ class NewsController extends BaseController {
     {
         if(I('post.submit'))
         {
+            $other = I('post.other');
+            $company[0] = I('post.company_id');
+            $other = array_merge($company, $other);
+            $other = array_unique($other);
+        
             //上传图片
             $pic     = $this->upload('pic','001006');
             $pic_app = $this->upload('pic_app','001007');
-            $content = array(
-                'company_id'  => intval(I('post.company_id')),
+            foreach($other as $v)
+            {
+                $content = array(
+                'company_id'  => intval($v),#intval(I('post.company_id')),
                 'sign'        => intval(I('post.sign')),
                 'title'       => urlencode(I('post.title')),
                 'source'      => urlencode(I('post.source')),
@@ -34,16 +41,17 @@ class NewsController extends BaseController {
              if($result
              && 200 == $result['status_code']
              && 0 == $result['content']['is_success'])
-             {
-                //$this->success("成功添加", C('Template_pre')."News/get_list",3);
-                $this->echo_message(0,"成功添加", C('Template_pre')."News/get_list");
-                exit();
-             }
+             {}
              else
              {
                 $this->echo_message(-1,"添加失败");
                 exit();  
              }
+            }
+            unset($v);
+            //$this->success("成功添加", C('Template_pre')."News/get_list",3);
+            $this->echo_message(0,"成功添加", C('Template_pre')."News/get_list");
+            exit();
         }
         
         $this->assign('company_list', $this->_map_company());

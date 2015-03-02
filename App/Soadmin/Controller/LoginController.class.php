@@ -31,4 +31,11 @@ class LoginController extends BaseController {
 		}
 		$this->display();
 	}
+
+    public function quit()
+    {
+        session('admin_name',null);
+        $this->redirect("Index/index");
+        exit();
+    }
 }
