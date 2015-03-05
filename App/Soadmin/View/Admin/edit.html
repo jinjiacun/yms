@@ -1,0 +1,101 @@
+<include file="Public/header" />
+
+<body class="ContentBody">    
+  <form method="post" enctype="multipart/form-data" id="myForm" name="myForm">
+<div class="MainDiv">
+<table width="99%" border="0" cellpadding="0" cellspacing="0" class="CContent">
+  <tr>
+      <th class="tablestyle_title" >修改管理员</th>
+  </tr>
+  <tr>
+    <td class="CPanel">
+		
+		<table border="0" cellpadding="0" cellspacing="0" style="width:100%">
+		
+		<tr align="center">
+			<td class="TablePanel">&nbsp;</td>
+		</tr>
+			<TR>
+			<TD width="100%">
+				<fieldset style="height:100%;">
+				<legend>管理员信息</legend>
+					  <table border="0" cellpadding="2" cellspacing="1" style="width:100%">                                          
+                                          <tr>
+					    <td nowrap align="right" width="30%">用户名称:</td>
+					    <td width="35%">
+                                            <input type="hidden" name="admin_name" value="{$admin_name}"/>
+                                            {$admin_name}
+				            </td>
+					  </tr>
+                                          
+                                          <tr>
+					    <td nowrap align="right" width="30%">新密码:</td>
+					    <td width="35%">
+                                            <input type="password" name="passwd" id="passwd"/>
+				            <span class="red">*</span></td>
+					  </tr>
+                                          
+                                          <tr>
+					    <td nowrap align="right" width="30%">再输入一次密码:</td>
+					    <td width="35%">
+                                            <input type="password" name="re_passwd" id="re_passwd" />
+				            <span class="red">*</span></td>
+					  </tr>
+                                          
+					  </table>
+			  <br />
+				</fieldset>			</TD>
+		</TR>
+		</TABLE>
+	 </td>
+  </tr>
+		
+		<TR id="id_tr">
+			<TD colspan="2" align="center" height="50px">
+			<input type="submit" name="submit" value="保存" class="button"/>　
+			<input type="button" name="Submit2" value="返回" class="button" onclick="window.history.go(-1);"/>
+			</TD>
+		</TR>
+		</TABLE>	
+	 </td>
+  </tr>
+  </table>
+</div> 
+</form>
+</body>
+</html>
+<script type="text/javascript">
+//查询会员信息
+function get_info() {
+    var user_id = $('#user_id').val();
+    if (0>= user_id) {
+        alert('用户id不合法');
+        return ;
+    }
+}
+function get_info()
+{
+    var user_id = $('#user_id').val();
+    jQuery.ajax({  
+                type:"post",  
+                url:"{$call_url}",
+                timeout: 5000,  
+                dataType:"json",  
+                data:{"method":"User.get_info","type":"text","content":{"uid":user_id}},
+                success: function aa(data) {
+                    if (200 == data.status_code) {
+                        $('#nickname').html(data.content[0].UI_NickName);
+                        if (1 == data.content[0].UI_State) {
+                            $('#status1').attr('checked','checked');
+                        }
+                        else if(0 == data.content[0].UI_State)
+                        {
+                            $('#status2').attr('checked','checked');
+                        }
+                        $('#ip').val(data.content[0].UI_StrBak1);
+                        $('#id_tr').show();
+                    }
+                }
+    });
+}
+</script>

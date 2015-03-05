@@ -1,0 +1,6 @@
+所属行业：<select name="trade" style="width:180px;">
+                                 <option value="0">---请选择---</option>
+                                 <volist name="trade_list" id="item_trade">
+                                 <option value="{$key}" <if condition="$key eq $trade">selected="selected"</if>>{$item_trade}</option>
+                                 </volist>
+                              </select>

@@ -1,0 +1,141 @@
+<include file="Public/header" />
+
+<body class="ContentBody">
+  <form method="post" enctype="multipart/form-data" name="form">
+<div class="MainDiv">
+<table width="99%" border="0" cellpadding="0" cellspacing="0" class="CContent">
+  <tr>
+      <th class="tablestyle_title" >曝光企业</th>
+  </tr>
+  <tr>
+    <td class="CPanel">
+		
+		<table border="0" cellpadding="0" cellspacing="0" style="width:100%">
+		
+		<tr align="center">
+			<td class="TablePanel">&nbsp;</td>
+	        </tr>
+			<TR>
+			<TD width="100%">
+				<fieldset style="height:100%;">
+				<legend>曝光企业</legend>
+					  <table border="0" cellpadding="2" cellspacing="1" style="width:100%">
+					   
+                                           <tr>
+					    <td nowrap align="right" width="10%">关联企业:</td>
+					    <td width="30%">
+                                            <if condition="0 eq $obj['company_id']">
+                                            未关联
+                                            <else />
+                                            {$company_list[$obj['company_id']]}
+                                            </if>
+				           </td>
+                                           <td nowrap align="right" width="10%">会员昵称:</td>
+					    <td width="30%">                                           
+                                            {$obj.nickname}
+				           </td>
+					   </tr>
+                                           
+                                          <tr>
+					    <td nowrap align="right" width="10%">企业性质:</td>
+					    <td width="30%">
+                                             <if condition="'003001' eq $obj['nature']">
+                                                公司
+                                            <else />
+                                                平台
+                                            </if>
+				           </td>
+                                           <td nowrap align="right" width="10%">所属行业:</td>
+					    <td width="30%">
+                                            {$trade_list[$obj['trade']]}
+				           </td>
+					   </tr>
+						
+					   <tr>
+					    <td nowrap align="right" width="10%">公司名称:</td>
+					    <td width="30%">
+                                            {$obj.company_name}
+				           </td>
+                                           <td nowrap align="right" width="10%">涉及金额:</td>
+					    <td width="30%">
+                                            {$obj.amount}
+				           </td>
+					   </tr>                                           
+						
+                                            <tr>
+					    <td nowrap align="right" width="10%">公司网址:</td>
+					    <td width="30%">
+                                            {$obj.website}
+				           </td>
+                                           <td nowrap align="right" width="10%"></td>
+					    <td width="30%">
+                                           
+				           </td>
+					   </tr>
+                                                                                       
+                                           <tr>
+					    <td nowrap align="right" width="10%">曝光内容:</td>
+					    <td width="30%">
+                                            {$obj.content}
+				           </td>
+                                            <td  nowrap align="right" width="10%"></td>
+                                            <td  width="30%"></td>
+					   </tr>
+                                           
+                                           <tr>
+					    <td nowrap align="right" width="10%">图片:</td>
+					    <td width="30%">
+                                            <if condition="0 neq $obj['pic_1']">
+                                            <img src="{$obj.pic_1_url}" width="25px" height="25px"/>
+                                            </if>
+                                            <if condition="0 neq $obj['pic_2']">
+                                            <img src="{$obj.pic_2_url}" width="25px" height="25px"/>
+                                            </if>
+                                            <if condition="0 neq $obj['pic_3']">
+                                            <img src="{$obj.pic_3_url}" width="25px" height="25px"/>
+                                            </if>
+                                            <if condition="0 neq $obj['pic_4']">
+                                            <img src="{$obj.pic_4_url}" width="25px" height="25px"/>
+                                            </if>
+                                            <if condition="0 neq $obj['pic_5']">
+                                            <img src="{$obj.pic_5_url}" width="25px" height="25px"/>
+                                            </if>
+				           </td>
+					   </tr>
+                                           
+                                           <tr>
+					    <td nowrap align="right" width="10%">顶数:</td>
+					    <td width="30%">
+                                            {$obj.top_num}
+				           </td>
+					   </tr>
+                                                
+					  </table>
+			  <br />
+				</fieldset>			</TD>
+		</TR>
+		</TABLE>
+	 </td>
+  </tr>
+		
+		<TR>
+			<TD colspan="2" align="center" height="50px">
+			<input type="button" name="Submit2" value="返回" class="button" onclick="window.history.go(-1);"/>
+			</TD>
+		</TR>
+		</TABLE>
+	
+	
+	 </td>
+  </tr>
+  
+  
+  
+  </table>
+
+</div>
+</form>
+</body>
+</html>
+
+

@@ -1,0 +1,87 @@
+<include file="Public/header" />
+<SCRIPT language=JavaScript>
+function selectAll(){
+	var obj = document.fom.elements;
+	for (var i=0;i<obj.length;i++){
+		if (obj[i].name == "delid"){
+			obj[i].checked = true;
+		}
+	}
+}
+
+function unselectAll(){
+	var obj = document.fom.elements;
+	for (var i=0;i<obj.length;i++){
+		if (obj[i].name == "delid"){
+			if (obj[i].checked==true) obj[i].checked = false;
+			else obj[i].checked = true;
+		}
+	}
+}
+
+function on_load(){
+	
+}
+</SCRIPT>
+<link rel="stylesheet" href="__PUBLIC__/Soadmin/css/index.css" type="text/css" />
+<link rel="stylesheet" href="__PUBLIC__/Soadmin/css/histogram.css" type="text/css" />
+<link rel="stylesheet" href="__PUBLIC__/Soadmin/css/horizontal-bar.css" type="text/css" />
+<link rel="stylesheet" href="__PUBLIC__/Soadmin/css/linegraph.css" type="text/css" />
+<link rel="stylesheet" href="__PUBLIC__/Soadmin/css/pie-graph.css" type="text/css" />
+<link rel="stylesheet" href="__PUBLIC__/Soadmin/css/vertical-bar.css" type="text/css" />
+<script type="text/javascript" src="__PUBLIC__/js/DatePicker/WdatePicker.js"></script>
+<body>
+<form method="post" name="theForm">
+		方法名称:<input type="text" name="name" value="{$name}"/>&nbsp;
+		时间:从<input readonly="readonly" type="text" class="Wdate" name='start_of_date' id="start_of_date" onfocus="WdatePicker({dateFmt:'yyyy-MM-dd HH:mm:ss'})" />
+		到<input readonly="readonly" type="text" class="Wdate" name='end_of_date' id="end_of_date" onfocus="WdatePicker({dateFmt:'yyyy-MM-dd HH:mm:ss'})" />
+		<input type="submit" name="submit" value="查询"/>
+	</form>
+	<div id="wrapper">
+	
+
+	<div id="main"></div>
+
+	<div id="pie-main"></div>
+
+	</div>
+	<script src="__PUBLIC__/Soadmin/js/jquery.1.9.1.min.js"></script>
+	<script src="__PUBLIC__/Soadmin/js/jquery.histogram.js"></script>
+	<script src="__PUBLIC__/Soadmin/js/jquery.horizontalchart.js"></script>
+	<script src="__PUBLIC__/Soadmin/js/jquery.linechart.js"></script>
+	<script src="__PUBLIC__/Soadmin/js/jquery.piechart.js"></script>
+	<script src="__PUBLIC__/Soadmin/js/jquery.verticalchart.js"></script>
+
+	<script type="text/javascript">
+	$('#vertical-main').hide();
+	$('#horizontal-main').hide();
+	$('#line-main').hide();
+	$('#histogram-main').hide();
+	$('#pie-main').hide();
+
+	$(function(){
+		$('div[id$="main"]').hide();
+		$('#pie-main').show();
+		if($('#pie-wrapper').length == 0){
+				$('#pie-main').prepend('<div id="pie-wrapper"></div>');
+				$('#pie-wrapper').piechart({
+				piedata : ["{$list[0]['name']}","{$list[1]['name']}",
+				           "{$list[2]['name']}","{$list[3]['name']}",
+					   "{$list[4]['name']}","{$list[5]['name']}",
+					   "{$list[6]['name']}","{$list[7]['name']}",
+					   "{$list[8]['name']}","{$list[9]['name']}"],
+				pievalue : ["{$list[0]['run_time']}","{$list[1]['run_time']}",
+				            "{$list[2]['run_time']}","{$list[3]['run_time']}",
+					    "{$list[4]['run_time']}","{$list[5]['run_time']}",
+					    "{$list[6]['run_time']}","{$list[7]['run_time']}",
+					    "{$list[8]['run_time']}","{$list[9]['run_time']}"],
+				piecolor : ["red","blue","green","yellow","pink","black","violet","orange","brown","gray"],
+				label : "10 Populous method preform"
+				});
+		}
+	});
+	</script>
+
+</body>
+</html>
+

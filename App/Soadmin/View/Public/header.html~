@@ -1,0 +1,68 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=gb2312" />
+<title>搜黑管理</title>
+<link rel="stylesheet" rev="stylesheet" href="__PUBLIC__/Admin/css/style.css" type="text/css" media="all" />
+<script type="text/javascript" src="__PUBLIC__/js/jquery-1.9.1.min.js"></script>
+<script type="text/javascript" src="__PUBLIC__/js/comment.js"></script>
+<script type="text/javascript" src="__PUBLIC__/js/validate.js"></script>
+<script src="__PUBLIC__/Soadmin/js/common.js" type="text/javascript"></script>
+<script src="__PUBLIC__/Soadmin/js/jquery.form.js"></script>
+<script language="JavaScript" type="text/javascript">
+function tishi()
+{
+	
+}
+
+function check()
+{
+  document.getElementById("aa").style.display="";
+}
+</script>
+<style type="text/css">
+<!--
+.atten {font-size:12px;font-weight:normal;color:#F00;}
+-->
+</style>
+ <style>
+    /*弹窗用的到CSS*/
+    /*弹窗函数样式*/
+    #wstatus { position:fixed; left:200px; top:400px; width:auto; height:38px; line-height:38px; background:#fff; border:solid 4px #e5e5e5; padding:5px; z-index:9999 }
+    #wstatus .wstatus_s { width:38px; height:38px; float:left; }
+    #wstatus .wstatus_s1 {  background:url(__PUBLIC__/Soadmin/images/ico.png) no-repeat left top; }
+    #wstatus .wstatus_s2 {  background:url(__PUBLIC__/Soadmin/images/ico.png) no-repeat left bottom; }
+    #wstatus .wstatus_s3 {  background:url(__PUBLIC__/Soadmin/images/loading.gif) no-repeat center; }
+    #wstatus .wstatus_s4 {  background:url(__PUBLIC__/Soadmin/images/ico.png) no-repeat left -38px; }
+    #wstatus .wstatus_f { padding:0 6px 0 6px; text-align:left; font-size:14px; color:#333; font-family:"微软雅黑"; }
+    /*遮照*/
+    #bremove { width:100%; height:100%; background:#000; opacity:0.3; filter:alpha(opacity=30); z-index:900; position:fixed; left:0; top:0; }
+    /*CSS结束*/
+    body .span { display:block; width:120px; height:34px; line-height:34px;  background:#390; margin:20px 0 0 100px; color:#fff; text-align:center; font-family:"微软雅黑"; font-size:14px; }
+    body .span:hover { background:#360; cursor:pointer; }
+    </style>
+    <script>
+        $(document).ready(function()
+        {
+          var options = {
+            success: function() 
+            {
+                if(1 == response.responseText)
+                {
+                    popStatus(1, '操作成功', 2);
+                    $("#myForm")[0].reset();    
+                }                
+                else if(0 == response.responseText)
+                {
+                    popStatus(4, '操作成功', 2);
+                }
+            },
+            error: function()
+            {
+                popStatus(4, '执行失败', 1);
+            }
+          }; 
+          $("#myForm").ajaxForm(options);
+        });
+    </script>
+</head>
