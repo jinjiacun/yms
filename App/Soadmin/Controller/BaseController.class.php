@@ -227,7 +227,20 @@ class BaseController extends Controller {
 	}
 	
 	
-	
+	#-------------------------------------控制面板----------------------------------------------#
+	public function search()
+	{
+	    $this->display();
+	}
+	public function search_ex()
+	{
+	    $this->display();
+	}
+	public function search_exposal()
+	{
+	    $this->display();
+	}
+	#-------------------------------------控制面板----------------------------------------------#
 	
 	
 	

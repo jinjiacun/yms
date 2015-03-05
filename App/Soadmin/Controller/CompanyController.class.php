@@ -41,7 +41,9 @@ class CompanyController extends BaseController {
         		'auth_level'      => I('post.auth_level'),
         		'reg_address'     => urlencode(I('post.reg_address')),
         		'busin_license'   => $this->upload('busin_license','001003'),
+                        'control_busin_license' => ''==I('post.control_busin_license')?0:1,
         		'code_certificate'=> $this->upload('code_certificate','001004'),
+                        'control_code_certificate' => ''==I('post.control_code_certificate')?0:1,
         		'telephone'       => I('post.telephone'),
         		'website'         => I('post.website'),
         		'record'          => urlencode(I('post.record')),
@@ -50,6 +52,7 @@ class CompanyController extends BaseController {
                         'agent_platform'  => I('post.agent_platform'),
                         'mem_sn'          => urlencode(I('post.mem_sn')),
                         'certificate'     => $this->upload('certificate','001005'),
+                        'control_certificate'=>'' == I('post.control_certificate')?0:1,
             );
             $result = $this->_call("Company.add",
                                    $content);
@@ -178,13 +181,16 @@ class CompanyController extends BaseController {
                     'company_name'    => urlencode(I('post.company_name')),
                     'auth_level'      => I('post.auth_level'),
                     'reg_address'     => urlencode(I('post.reg_address')),
+                    'control_busin_license' => '' == I('post.control_busin_license')?0:1,
+                    'control_code_certificate' => '' == I('post.control_code_certificate')?0:1,
                     'telephone'       => I('post.telephone'),
                     'website'         => urlencode(I('post.website')),
                     'record'          => urlencode(I('post.record')),
                     'regulators_id'   => I('post.regulators_id'),
                     'find_website'    => I('post.find_website'),
                     'agent_platform'  => I('post.agent_platform'),
-                    'mem_sn'          => urlencode(I('post.mem_sn')),                              
+                    'mem_sn'          => urlencode(I('post.mem_sn')),
+                    'control_certificate'=> '' == I('post.certificate')?0:1,
                 )
             );
             if($logo = $this->upload('logo','001008'))

@@ -83,18 +83,18 @@
                                            <tr>
 					    <td nowrap align="right" width="30%">营业执照:</td>
 					    <td width="35%">
-                                            <input id="control_busin_license" type="checkbox" onclick="is_file_upload();" <if condition="0 neq $obj['busin_license']">checked</if>/>
-                                            <input name='busin_license' id="busin_license" type="file" <if condition="0 eq $obj['busin_license']">style="display:none;"</if> />                                            
-                                            <img id="img_busin_license" src="{$obj.busin_license_url}" width="50px" height="50px" <if condition="0 eq $obj['busin_license']">style="display:none;"</if>/>
+                                            <input id="control_busin_license" name="control_busin_license" type="checkbox"  <if condition="1 eq $obj['control_busin_license']">checked</if>/>
+                                            <input name='busin_license' id="busin_license" type="file"/>                                            
+                                            <img id="img_busin_license" src="{$obj.busin_license_url}" width="50px" height="50px"/>
 				            </td>
 					   </tr>
                                            
                                            <tr>
 					    <td nowrap align="right" width="30%">机构代码证:</td>
 					    <td width="35%">
-                                            <input id="control_code_certificate" type="checkbox" onclick="is_file_upload();" <if condition="0 neq $obj['code_certificate']">checked</if>/>
-                                            <input name='code_certificate' id="code_certificate" type="file" <if condition="0 eq $obj['code_certificate']">style="display:none"</if>/>
-                                            <img id="img_code_certificate" src="{$obj.code_certificate_url}" width="50px" height="50px" <if condition="0 eq $obj['code_certificate']">style="display:none;"</if>/>
+                                            <input id="control_code_certificate" name="control_code_cerficate" type="checkbox" <if condition="1 eq $obj['control_code_certificate']">checked</if>/>
+                                            <input name='code_certificate' id="code_certificate" type="file" />
+                                            <img id="img_code_certificate" src="{$obj.code_certificate_url}" width="50px" height="50px" />
 				            </td>
 					   </tr>
                                            
@@ -155,9 +155,9 @@
                                            <tr id="id_certificate">
 					    <td nowrap align="right" width="30%">资质证明:</td>
 					    <td width="35%">
-                                            <input id="control_certificate" type="checkbox" onclick="is_file_upload();" <if condition="0 neq $obj['certificate']">checked</if>/>
-                                            <input id="certificate" name='certificate' type="file" <if condition="0 eq $obj['certificate']">style="display:none;"</if>/>
-                                            <img id="img_certificate" src="{$obj.certificate_url}" width="50px" height="50px" <if condition="0 eq $obj['certificate']">style="display:none;"</if>/>
+                                            <input id="control_certificate" name="control_certificate" type="checkbox" <if condition="1 eq $obj['control_certificate']">checked</if>/>
+                                            <input id="certificate" name='certificate' type="file" />
+                                            <img id="img_certificate" src="{$obj.certificate_url}" width="50px" height="50px" />
 				            </td>
 					   </tr>
                                           

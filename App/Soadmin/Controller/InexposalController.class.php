@@ -323,19 +323,6 @@ class InexposalController extends BaseController {
             $this->echo_message(-1,'删除失败');
             exit();
         }
-    }
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
+    }   
     
 }

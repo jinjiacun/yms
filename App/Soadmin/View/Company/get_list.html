@@ -1,87 +1,8 @@
 <include file="Public/header" />
-<SCRIPT language=JavaScript>
-function sousuo(){
-	window.open("gaojisousuo.htm","","depended=0,alwaysRaised=1,width=800,height=510,location=0,menubar=0,resizable=0,scrollbars=0,status=0,toolbar=0");
-}
-function selectAll(){
-	var obj = document.fom.elements;
-	for (var i=0;i<obj.length;i++){
-		if (obj[i].name == "delid"){
-			obj[i].checked = true;
-		}
-	}
-}
-
-function unselectAll(){
-	var obj = document.fom.elements;
-	for (var i=0;i<obj.length;i++){
-		if (obj[i].name == "delid"){
-			if (obj[i].checked==true) obj[i].checked = false;
-			else obj[i].checked = true;
-		}
-	}
-}
-
-function link(){
-    document.getElementById("fom").action="addjihua.htm";
-   document.getElementById("fom").submit();
-}
-
-function on_load(){
-	var loadingmsg=document.getElementById("loadingmsg");
-	var mainpage=document.getElementById("mainpage");
-	loadingmsg.style.display="";
-	mainpage.style.display="none";
-	
-	loadingmsg.style.display="none";
-	mainpage.style.display="";
-}
-</SCRIPT>
-
 <body onload="on_load()">
 <form name="fom" id="fom" method="get">
 <table id="mainpage" width="100%" border="0" cellspacing="0" cellpadding="0">
-
-  <tr>
-    <td height="30"><table width="100%" border="0" cellspacing="0" cellpadding="0">
-      <tr>
-        <td height="62" background="__PUBLIC__/Admin/images/nav04.gif">
-          
-		   <table width="98%" border="0" align="center" cellpadding="0" cellspacing="0">
-		  <tr>
-			<td width="21"><img src="__PUBLIC__/Admin/images/ico07.gif" width="20" height="18" /></td>
-			<td width="550">查看内容：
-                         公司性质：<select name="nature" style="width:180px;">
-                         <option value="0">---请选择公司性质---</option>
-                         <option value="003001" <if condition="'003001' eq $nature">selected="selected"</if>>公司</option>
-                         <option value="003002" <if condition="'003002' eq $nature">selected="selected"</if>>平台</option>
-                         </select>
-                         &nbsp;&nbsp;所属行业：<select name="trade" style="width:180px;">
-                         <option value=0>---请选择所属行业---</option>
-                         <volist name="trade_list" id="item_trade">
-                         <option value="{$key}" <if condition="$key eq $trade">selected="selected"</if>>{$item_trade}</option>
-                         </volist>
-                         </select><br/>
-                         &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                         &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                         认证级别：<select name="auth_level" style="width:180px">
-                         <option value=0>---请选择---</option>
-                         <option value='006001' <if condition="'006001' eq $auth_level">selected="selected"</if>>黑平台</option>
-                         <option value='006002' <if condition="'006002' eq $auth_level">selected="selected"</if>>未验证</option>
-                         <option value='006003' <if condition="'006003' eq $auth_level">selected="selected"</if>>合规</option>
-                         </select>
-                         &nbsp;&nbsp;公司名称：<input name="company_name" style="width:170px;" type="text" size="12" value="{$company_name}"/>
-			                   &nbsp;&nbsp;<input name="submit" type="submit" class="right-button02" value="查 询" />
-			 </td>
-			 <td width="132" align="left">
-       <a href="#" onclick="sousuo()">			   
-         </a>
-         </td>	
-		  </tr>
-        </table></td>
-      </tr>
-    </table></td>
-  </tr>
+  <include file="Company/search"/>
   <tr>
     <td><table id="subtree1" style="DISPLAY: " width="100%" border="0" cellspacing="0" cellpadding="0">
 
@@ -89,7 +10,11 @@ function on_load(){
           <td><table width="95%" border="0" align="center" cellpadding="0" cellspacing="0">
 
           	 <tr>
-               <td height="20"><span class="newfont07">选择：<a href="#" class="right-font08" onclick="selectAll();">全选</a>-<a href="#" class="right-font08" onclick="unselectAll();">反选</a></span>
+               <td height="20">
+               <span class="newfont07">选择：
+                <a id="selectAll" href="#" class="right-font08">全选</a>-
+                <a id="unselectAll" href="#" class="right-font08">反选</a>
+               </span>
 	             
 	             </td>
           	 </tr>
@@ -97,7 +22,7 @@ function on_load(){
                 <td height="40" class="font42"><table width="100%" border="0" cellpadding="4" cellspacing="1" bgcolor="#464646" class="newfont03">
 
                   <tr>
-				    <td width="5%" align="center" bgcolor="#EEEEEE">选择</td>
+		    <td width="5%" align="center" bgcolor="#EEEEEE">选择</td>
                     <td width="10%" height="20" align="center" bgcolor="#EEEEEE">公司性质</td>
                     <td width="10%" height="20" align="center" bgcolor="#EEEEEE">所属行业</td>
                     <td width="10%" height="20" align="center" bgcolor="#EEEEEE">公司名称</td>
