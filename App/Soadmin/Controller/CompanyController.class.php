@@ -304,8 +304,16 @@ class CompanyController extends BaseController {
             $content['page_size'] = $page_size;
             $content['page_index'] = $page_index;
         }
-        if(I('get.submit'))
+        
+         //匹狼删除请求
+        if(I('get.del_mul'))
         {
+            $this->del_mul();
+            exit();
+        }
+        
+        if(I('get.submit'))
+        {   
             $company_name = I('get.company_name');
             if('' != $company_name)
             {
@@ -360,6 +368,30 @@ class CompanyController extends BaseController {
         $this->display();
     }
     
+    //批量删除企业
+    private function del_mul()
+    {
+        $id_list = I('post.id');
+        if(0<count($id_list))
+        {
+            foreach($id_list as $id)
+            {
+                $result = $this->_call("Company.delete",array('id'=>$id));
+                if($result
+                && 200 == $result['status_code']
+                && 0 == $result['content']['is_success']
+                )
+                {}
+                else
+                {
+                    $this->echo_message(-1,"删除失败");
+                    exit();
+                }
+            }
+        }
+        $this->echo_message(0,"成功删除",C('Template_pre')."Company/get_list");
+    }
+    
     public function get_list_ex()
     {
         $company_id = I('get.id');
@@ -409,25 +441,24 @@ class CompanyController extends BaseController {
             $this->echo_message(-100,"参数错误");
             exit();
         }   
-            
-        $content = array(
-            'id'=> $id
-        );
-        $result = $this->_call('Company.delete',
-                               $content);
-        if($result
-        && 200 == $result['status_code']
-        && 0   == $result['content']['is_success'])
-        {
-            //删除企业别名
-            $r_result = $this->_call('Companyalias.delete',array('company_id'=>$id));
-            //删除企业新闻
-            $this->_call('News.delete',array('company_id'=>$id));
+          
+        $result = $this->_call("Company.delete",array('id'=>$id));    
+       if($result
+       && 200 == $result['status_code']
+       && 0 == $result['content']['is_success']
+       )
+       {
             //$this->success("成功操作", C('Template_pre')."Company/get_list", 3);
             $this->echo_message(0,"成功操作", C('Template_pre')."Company/get_list");
             exit();
         }
+        else
+        {
+            $this->echo_message(-1,"删除失败");
+            exit();
+        }
     }
+    
     
     //删除企业别名
     public function delete_ex()
