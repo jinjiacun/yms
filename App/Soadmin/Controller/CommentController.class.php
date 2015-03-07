@@ -103,7 +103,8 @@ class CommentController extends BaseController {
                 exit();
             }
         }
-        $res = A('Callapi')->call_api('Comment.get_list', 
+        $content['where']['parent_id'] = array('eq',0);
+        $res = A('Callapi')->call_api('Comment.get_list_ex', 
                                     $content,
                                     'text',
                                   null);
@@ -436,5 +437,10 @@ class CommentController extends BaseController {
                 exit();
             }
         }
+    }
+    
+    public function test1()
+    {
+        $this->display();
     }
 }

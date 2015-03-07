@@ -1,5 +1,20 @@
 <include file="Public/header" />
 <body onload="on_load()">
+<script>
+function get_nextsibling(n)
+{
+    var x=n.nextSibling;
+    while (x.nodeType!=1)
+    {
+        x=x.nextSibling;
+    }
+    return x;
+}
+</script>
+<!--
+<script src="__PUBLIC__/Soadmin/js/jquery.js" type="text/javascript"> </script>
+-->
+<script src="__PUBLIC__/Soadmin/js/treeTable/jquery.treeTable.js" type="text/javascript"> </script>
 <form name="fom" id="fom" method="get">
 <table id="mainpage" width="100%" border="0" cellspacing="0" cellpadding="0">
   <include file="Comment/search"/> 
@@ -12,9 +27,9 @@
           	 <tr>
                <td height="20">
                <span class="newfont07">
-               选择：<a id="selectAll" href="#" class="right-font08" >全选</a>
+               选择：<a id="selectAll" href="#" class="right-font08">全选</a>
                -
-               <a id="unselectAll" href="#" class="right-font08" >反选</a>
+               <a id="unselectAll" href="#" class="right-font08">反选</a>
                <if condition="0 eq $status">
                <!--
                &nbsp<input type="button" name="check_mul" value="批量审核" onclick="validate_mul()"/>
@@ -41,10 +56,13 @@
                   </tr>
 
                   <volist name="list" id="item">
-                  <tr align="center">
-		                <td bgcolor="#FFFFFF">
+                  <tr align="center" id="{$item.id}">
+		    <td bgcolor="#FFFFFF">
                       <input type="checkbox" name="id[]" value="{$item.id}|{$item.company_id}"/>
-                      {$item.id}</td>
+                      <span <if condition="0 eq $item['has_child']">controller="true"</if>>
+                      {$item.id}</span>
+                    </td>
+                    
                     <td height="20" bgcolor="#FFFFFF">{$item.user_id}</td>
                     <td height="20" bgcolor="#FFFFFF" style="word-break: break-all">{$item.nickname}</td>
                     <td height="20" bgcolor="#FFFFFF">
@@ -68,7 +86,7 @@
                     <font style="color:#008000">加黑</font>
                     </if>
                     </td>                    
-                    <td height="20" bgcolor="#FFFFFF" style="word-break: break-all">
+                    <td height="20" bgcolor="#FFFFFF" >                    
                     <if condition="0 eq $item['parent_id']">
                     {$item.content}
                     <else />
@@ -99,6 +117,143 @@
                         </if>
                      </td>
                   </tr>
+                  
+                  <!--获取评论回复-->
+                  <if condition="0 neq $item['re_sub']['record_count']">
+                    <volist name="item.re_sub.list" id="sub_item">
+                        <tr id="{$sub_item.id}" pId="{$sub_item.parent_id}">
+                          <td bgcolor="#FFFFFF">
+                            <input type="checkbox" name="id[]" value="{$sub_item.id}"/>
+                            <span>{$sub_item.id}</span>
+                          </td>
+                           <td height="20" bgcolor="#FFFFFF">{$sub_item.user_id}</td>
+                    <td height="20" bgcolor="#FFFFFF" style="word-break: break-all">{$sub_item.nickname}</td>
+                    <td height="20" bgcolor="#FFFFFF">
+                    <if condition="'006001' eq $auth_level_company[$item['company_id']]">
+                    <a href="__APP__/Home/Query/query_hpt/resid/{$item.company_id}" target="_black">{$company_list[$sub_item['company_id']]}
+                    </a>
+                    <elseif condition="'006002' eq $auth_level_company[$item['company_id']]" />
+                    <a href="__APP__/Home/Query/query_wrz/resid/{$item.company_id}" target="_black">{$company_list[$sub_item['company_id']]}
+                    </a>
+                    <elseif condition="'006003' eq $auth_level_company[$item['company_id']]" />
+                    <a href="__APP__/Home/Query/query_yrz/resid/{$item.company_id}" target="_black">{$company_list[$sub_item['company_id']]}
+                    </a>
+                    </if>
+                    </td>
+                    <td height="20" bgcolor="#FFFFFF" style="word-break: break-all">
+                    <if condition="'005001' eq $sub_item['type']">
+                    <font style="color:#d53315">点赞</font>
+                    <elseif condition="'005002' eq $sub_item['type']" />
+                    <font style="color:#0086d2">提问</font>
+                    <else />
+                    <font style="color:#008000">加黑</font>
+                    </if>
+                    </td>                    
+                    <td height="20" bgcolor="#FFFFFF" >                    
+                    
+                    </td>
+                    <td height="20" bgcolor="#FFFFFF" style="word-break: break-all">
+                    <if condition="0 neq $sub_item['parent_id']">
+                    {$sub_item.content}
+                    <else />
+                    --
+                    </if>
+                    </td>
+                    <td height="20" bgcolor="#FFFFFF">{$sub_item.add_time|date="Y-m-d H:i:s",###}</td>
+                    <td height="20" bgcolor="#FFFFFF">
+                    <if condition="0 eq $sub_item['validate_time']">
+                    --
+                    <else />
+                    {$sub_item.validate_time|date="Y-m-d H:i:s",###}
+                    </if>
+                    </td>
+                    <td bgcolor="#FFFFFF">
+                        <if condition="0 eq $sub_item['is_validate'] and 0 eq $sub_item['is_delete']">
+                        <a href="javascript:request_get('__APP__/Soadmin/Comment/validate/id/{$item.id}/parent_id/{$item.parent_id}/company_id/{$item.company_id}');">审核</a>
+                        </if>
+                        <if condition="0 eq $sub_item['is_delete']">
+                        <a href="javascript:request_get('__APP__/Soadmin/Comment/delete/parentid/{$item.parent_id}/id/{$item.id}/company_id/{$item.company_id}/is_validate/{$item.is_validate}');" onclick="return confirmdel('确定要删除吗')">删除</a>
+                        </if>
+                     </td>  
+                        </tr>
+                    </volist>
+                    <!--超过10条-->
+                  <if condition="10 lt $item['re_sub']['record_count']">
+                    <tr>
+                    <td id="page_{$item.id}" colspan="10" bgcolor="#FFFFFF" style="text-align:right;">
+                      
+                    </td>
+                    </tr>
+                    <style>
+                    .page
+                    {
+                    
+                    }
+                    .page_a {
+                        padding:2px 5px;
+                    }
+                    </style>
+                    <script>                    
+                    var pId = {$item.id};
+                    var cur_obj = document.getElementById(pId);
+                    var record_count = {$item['re_sub']['record_count']};
+                    var page_control_id = "page_"+ {$item.id};
+                    var page_size = 10;
+                    var page_count = Math.ceil(record_count/page_size);
+                    var page_control = document.getElementById(page_control_id);
+                    for(var i=1; i<=page_count; i++)
+                    {
+                        var a = document.createElement("a");
+                        a.href = '#';
+                        a.className = "page_a";
+                        a.onclick = function(){
+                            var cur_url = location.href;
+                            cur_url += "&s_p="+i;
+                            var next_obj  = get_nextsibling(cur_obj);
+                            //清除当前的列表
+                            while(next_obj
+                            && next_obj.getAttribute('depth') == 2
+                            && next_obj.getAttribute('pId') == pId
+                            )
+                            {
+                                var parent_node = next_obj.parentNode;
+                                if(parent_node)
+                                {
+                                    parent_node.removeChild(next_obj);
+                                    next_obj = get_nextsibling(cur_obj);
+                                }
+                            }
+                            /*
+                            jQuery.ajax({  
+                                type:"get",  
+                                url:ajaxUrl,
+                                timeout: 5000,
+                                dataType:"json",
+                                success: function aa(data) {
+                                    if (0 == data.status) {
+                                       popStatus(1, data.message, 2);
+                                       if ('' != data.jmp_url) {
+                                        setTimeout("location.href= '"+data.jmp_url+"'; ",3000);//延时3秒 
+                                        //location.href= data.jmp_url;
+                                       }
+                                    }
+                                    else
+                                    {
+                                      popStatus(4, data.status+','+data.message, 2);
+                                    }
+                                },
+                                error:function my_error(data){
+                                    popStatus(4, data.status+','+data.message, 2);
+                                }
+                            });
+                            */
+                        };
+                        a.innerHTML = i;
+                        page_control.appendChild(a);
+                    }
+                    </script>
+                  </if>
+                  </if>                  
                   </volist>
 
                 </table></td>
@@ -162,4 +317,31 @@ function validate_mul()
 	    });
 }
 </script>
+<script type="text/javascript">
+$(function(){
+    var option = {
+        theme:'vsStyle',
+        expandLevel : 1,
+        column:5,
+        beforeExpand : function($treeTable, id) {
+            //判断id是否已经有了孩子节点，如果有了就不再加载，这样就可以起到缓存的作用
+            if ($('.' + id, $treeTable).length) { return; }
+            //这里的html可以是ajax请求
+            var html = '<tr id="8" pId="6"><td>5.1</td><td>可以是ajax请求来的内容</td></tr>'
+                     + '<tr id="9" pId="6"><td>5.2</td><td>动态的内容</td></tr>';
 
+            $treeTable.addChilds(html);
+        },
+        onSelect : function($treeTable, id) {
+            window.console && console.log('onSelect:' + id);
+        }
+
+    };
+    $('#subtree1').treeTable(option);
+});
+</script>
+<!--
+insert into so_comment(user_id,company_id,parent_id,type,content,pic_1,pic_2,pic_3,pic_4,pic_5,is_validate,
+validate_time,is_anonymous,top_num,is_delete,ip,user_agent,add_time)
+values(3166,18,311,005001,'急急急',0,0,0,0,0,0,0,1,0,0,'192.168.1.149','Mozilla/5.0 (Linux; U; Android 0.5; en-us) AppleWebKit/522+ (KHTML, like Gecko) Safari/419.3',1423895508)
+-->
