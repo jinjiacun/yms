@@ -323,6 +323,23 @@ class InexposalController extends BaseController {
             $this->echo_message(-1,'删除失败');
             exit();
         }
-    }   
-    
+    }  
+
+    public function test3()
+    {
+        if(I('get.searchTerm'))
+        {
+            $arr = array(
+                array(
+                    'id'=>1,
+                    'name'=>'abc',
+                    'author'=>'ddd',
+                    )
+            );
+            $response->row = $arr;
+            echo json_encode($response);
+            exit();
+        }
+        $this->display();
+    }     
 }

@@ -157,7 +157,7 @@ function getDate(tm){
                         </if>
                         >
                           <td bgcolor="#C0C0C0">
-                            <input type="checkbox" name="id[]" value="{$sub_item.id}" />
+                            <input type="checkbox" name="id[]" value="{$sub_item.id}" onclick="select_master_comment(this);"/>
                             <span>{$sub_item.id}</span>
                           </td>
                           <td height="20" class="sub">{$sub_item.user_id}</td>
@@ -555,7 +555,51 @@ $(function(){
                                             <span> \
                                             '+item.id+'</span> \
                                             </td> \
-                                          ';
+                                            <td height="20" class="ssub">'+item.user_id+'</td> \
+                                            <td height="20" class="ssub">'+item.nickname+'</td> \
+                                            <td height="20" class="ssub"> \
+                                            ';
+                                            td += item.company_name;
+                                            td += '</td> \
+                                            <td height="20" class="ssub">';
+                                            if('005001' == item.type)
+                                            {
+                                              td += '<font style="color:#d53315">点赞</font>';
+                                            }
+                                            else if('005002' == item.type)
+                                            {
+                                              td += '<font style="color:#0086d2">提问</font>';
+                                            }
+                                            else
+                                            {
+                                              td += '<font style="color:#008000">加黑</font>';
+                                            }
+                                            td += '</td> \
+                                            <td height="20" class="ssub"> \
+                                            </td> \
+                                            <td height="20" class="ssub">'+item.content+'</td> \
+                                            <td height="20" class="ssub">'+item.add_time+'</td> \
+                                            <td height="20" class="ssub">';
+                                            if(0 == item.validate_time)
+                                            {
+                                              td += '--';
+                                            }
+                                            else
+                                            {
+                                              td += item.validate_time;
+                                            }
+                                            td += '</td><td class="ssub">';
+                                            if(0 == item.is_validate
+                                            && 0 == item.is_delete)
+                                            {
+                                              td += ' \
+                                                <a href="javascript:request_get(\'__APP__/Soadmin/Comment/validate/id/'+item.id+'/parent_id/'+item.parent_id+'/company_id/'+item.company_id+' \');">审核</a> \
+                                               ';
+                                            }
+                                            if(0 == item.is_delete)
+                                            {
+                                              td += '<a href="javascript:request_get(\'__APP__/Soadmin/Comment/delete/parentid/'+item.parent_id+'/id/'+item.id+'/company_id/'+item.company_id+'/is_validate/'+item.is_validate+'\');" onclick="return \confirmdel(\'确定要删除吗\')">删除</a></td>';
+                                            }
                                           tr += td;
                                           tr += '</tr>';
                                           html += tr;
@@ -587,15 +631,18 @@ function select_master_comment(cur_obj)
         {           
             var next_obj = get_nextsibling(parent_tr);
             var pId = parent_tr.id;
+            //alert(pId);
             while(next_obj
-            && 2 == next_obj.getAttribute("depth")
-            && pId == next_obj.getAttribute("pId")
+            && (2 == next_obj.getAttribute("depth") && pId == next_obj.getAttribute("pId"))
+            || (3 == next_obj.getAttribute("depth"))
             )
             {
                 var cur_id = next_obj.id;
                 var cur_checkbox = jQuery(next_obj).find("input[name='id[]']")[0];
-                cur_checkbox.checked = true;
+                if(cur_checkbox)
+                  cur_checkbox.checked = true;
                 next_obj = get_nextsibling(next_obj);
+                $('#'+cur_id).click();
             }            
         }
         else
@@ -603,8 +650,8 @@ function select_master_comment(cur_obj)
             var next_obj = get_nextsibling(parent_tr);
             var pId = parent_tr.id;
             while(next_obj
-            && 2 == next_obj.getAttribute("depth")
-            && pId == next_obj.getAttribute("pId")
+            && (2 == next_obj.getAttribute("depth")||pId == next_obj.getAttribute("pId"))
+            ||  3 == next_obj.getAttribute("depth")
             )
             {
                 var cur_id = next_obj.id;
@@ -616,8 +663,3 @@ function select_master_comment(cur_obj)
     }
 }
 </script>
-<!--
-insert into so_comment(user_id,company_id,parent_id,type,content,pic_1,pic_2,pic_3,pic_4,pic_5,is_validate,
-validate_time,is_anonymous,top_num,is_delete,ip,user_agent,add_time)
-values(3166,18,311,005001,'急急急',0,0,0,0,0,0,0,1,0,0,'192.168.1.149','Mozilla/5.0 (Linux; U; Android 0.5; en-us) AppleWebKit/522+ (KHTML, like Gecko) Safari/419.3',1423895508)
--->

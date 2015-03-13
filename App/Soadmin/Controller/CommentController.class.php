@@ -477,4 +477,9 @@ class CommentController extends BaseController {
     {
         $this->display();
     }
+
+    public function test2()
+    {
+        $this->display();
+    }
 }
