@@ -1,0 +1,100 @@
+<include file="Public/header" />
+<style type="text/css">
+*{margin:0;padding:0;}
+.login{width:400px; margin:0 auto; background:#EBEBEB; position:relative;}
+input{ width:230px; height:28px; margin:10px 0; line-height:28px;}
+.on_changes{width:232px; position:absolute; top:40px; list-style:none; background:#FFF; border:1px solid #000; display:none; padding:10px;}
+.on_changes li{margin:8px;padding:4px;}
+.on_changes li.active{ background:#CEE7FF;}
+</style>
+<script type="text/javascript" src="__PUBLIC__/Soadmin/js/inputmail.js"></script>
+<body class="ContentBody">
+  <form method="post" enctype="multipart/form-data" name="myForm" id="myForm">
+<div class="MainDiv">
+<table width="99%" border="0" cellpadding="0" cellspacing="0" class="CContent">
+  <tr>
+      <th class="tablestyle_title" >关联企业</th>
+  </tr>
+  <tr>
+    <td class="CPanel">
+		
+		<table border="0" cellpadding="0" cellspacing="0" style="width:100%">
+		
+		<tr align="center">
+			<td class="TablePanel">&nbsp;</td>
+	        </tr>
+			<TR>
+			<TD width="100%">
+				<fieldset style="height:100%;">
+				<legend>关联企业</legend>
+					  <table border="0" cellpadding="2" cellspacing="1" style="width:100%">
+					   
+                        <tr>
+                        <td nowrap align="right" width="20px"><input type="radio" name="module"/></td>
+					    <td nowrap align="right" width="30%">企业:</td>
+					    <td width="35%">
+                            <input type="hidden" name="id" value="{$id}"/>
+                            <select name="company_id">
+                            <option value='0'>---请选择企业---</option>
+                            <volist name="company_list" id="company">
+                            <option value='{$key}' <if condition="$key eq $company_id">selected="selected"</if>>{$company}</option>
+                            </volist>
+                            </select>
+				            <span class="red">*</span></td>
+					   </tr>
+					   <tr>
+						   <td nowrap align="right" width="20px"><input type="radio" name="module"/></td>
+                           <td nowrap align="right" width="30%">企业:</td>
+                           <td width="35%">
+                           <div class="ln">
+								<input type="text" maxlength="128" name="loginName" id="loginName" placeholder="企业名称" />
+								</div>
+								<ul class="on_changes">
+									<li email="">请选择</li>
+						            <li email=""></li>
+									<li email="@sina.com"></li>
+									<li email="@163.com"></li>
+									<li email="@qq.com"></li>
+									<li email="@hotmail.com"></li>
+									<li email="@126.com"></li>
+									<li email="@gmail.com"></li>
+									<li email="@yahoo.com"></li>
+								</ul>
+                           </td>
+                       </tr>                
+					  </table>
+			  <br />
+				</fieldset>			</TD>
+		</TR>
+		</TABLE>
+	 </td>
+  </tr>
+		
+		<TR>
+			<TD colspan="2" align="center" height="50px">
+			<input type="submit" name="submit" value="保存" class="button"/>　
+			<input type="button" name="Submit2" value="返回" class="button" onclick="window.history.go(-1);"/>
+			</TD>
+		</TR>
+		</TABLE>
+	
+	
+	 </td>
+  </tr>
+  
+  
+  
+  </table>
+
+</div>
+</form>
+</body>
+</html>
+<script type="text/javascript">
+$(function(){
+	$("#loginName").changeTips({
+		divTip:".on_changes"
+	}); 
+})
+</script>
+
