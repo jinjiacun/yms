@@ -225,6 +225,33 @@ class InexposalController extends BaseController {
                 exit();
             }
         }
+        if(I('get.search'))
+        {
+            $kword = I('post.search-text');
+            $content = array();
+            if('' != htmlspecialchars(trim($kword)))
+            {
+                $content['where']['company_name'] = array("like", "%".urlencode($kword)."%");
+            }
+            $arr = array();
+            //select name of company
+            $result = $this->_call("Company.get_id_name_map", $content);
+            if($result
+            && 200 == $result['status_code'])
+            {
+                
+               foreach($result['content'] as $k=>$v)
+               {
+                $arr[] = $k.','.$v;
+               }
+               unset($k, $v);
+               //$arr = $result['content'];
+            }
+            $response = $arr;
+            echo json_encode($response);
+            exit();
+        }
+
         
         
         $this->assign('id', $id);
@@ -329,14 +356,19 @@ class InexposalController extends BaseController {
     {
         if(I('get.searchTerm'))
         {
-            $arr = array(
-                array(
-                    'id'=>1,
-                    'name'=>'abc',
-                    'author'=>'ddd',
-                    )
-            );
-            $response->row = $arr;
+            $arr = array();
+            //select name of company
+            $result = $this->_call("Company.get_id_name_map");
+            if($result
+            && 200 == $result['status_code'])
+            {
+               foreach($result['content'] as $v)
+               {
+                $arr[] = $v;
+               }
+               unset($v);
+            }
+            $response = $arr;
             echo json_encode($response);
             exit();
         }

@@ -154,5 +154,31 @@ class UserController extends BaseController {
             exit();
         }
     }
+    
+    public function unbind()
+    {
+        if(I('post.submit'))
+        {
+            $content = array(
+                "uid"=>I("post.uid"),
+                "logintype"=>I("post.logintype"),
+                "loginname"=>I("post.loginname")
+            );
+            $result = $this->_call("User.cancel_bind",$content);
+            if($result
+            && 200 == $result['status_code']
+            && 0 == $result['content']['is_success'])
+            {
+                $this->echo_message(0,"操作成功", C('Template_pre')."User/unbind");
+                exit();
+            }
+            else
+            {
+                $this->echo_message(-1,"操作失败");
+                exit();
+            }
+        }
+        $this->display();
+    }
 }
 ?>
