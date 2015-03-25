@@ -83,7 +83,7 @@
                                            <tr>
 					    <td nowrap align="right" width="30%">营业执照:</td>
 					    <td width="35%">
-                                            <input id="control_busin_license" name="control_busin_license" type="checkbox"  <if condition="1 eq $obj['control_busin_license']">checked</if>/>
+                                            <input id="control_busin_license" name="control_busin_license" type="checkbox"  <if condition="1 eq $obj['control_busin_license']">checked</if> />
                                             <input name='busin_license' id="busin_license" type="file"/>                                            
                                             <img id="img_busin_license" src="{$obj.busin_license_url}" width="50px" height="50px"/>
 				            </td>
@@ -92,7 +92,8 @@
                                            <tr>
 					    <td nowrap align="right" width="30%">机构代码证:</td>
 					    <td width="35%">
-                                            <input id="control_code_certificate" name="control_code_cerficate" type="checkbox" <if condition="1 eq $obj['control_code_certificate']">checked</if>/>
+                                            <input id="control_code_certificate" name="control_code_certificate" type="checkbox" <if condition="1 eq $obj['control_code_certificate']">checked</if>
+                                            />
                                             <input name='code_certificate' id="code_certificate" type="file" />
                                             <img id="img_code_certificate" src="{$obj.code_certificate_url}" width="50px" height="50px" />
 				            </td>

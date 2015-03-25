@@ -170,7 +170,6 @@ class CompanyController extends BaseController {
                         exit();
         	}
         	 
-        	
             $content = array(
                 'where'=>array(
                     'id'=>I('post.id'),
@@ -190,7 +189,7 @@ class CompanyController extends BaseController {
                     'find_website'    => I('post.find_website'),
                     'agent_platform'  => I('post.agent_platform'),
                     'mem_sn'          => urlencode(I('post.mem_sn')),
-                    'control_certificate'=> '' == I('post.certificate')?0:1,
+                    'control_certificate'=> '' == I('post.control_certificate')?0:1,
                 )
             );
             if($logo = $this->upload('logo','001008'))

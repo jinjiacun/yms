@@ -14,3 +14,11 @@ childs                   未审核的回复数量
 2015-3-16
 so_company
 select_time
+
+2015-3-18
+so_inexposal
+add validate_time
+
+2015-3-24
+so_comment表添加
+pparent_id 祖父id 默认为0

@@ -42,6 +42,7 @@ class CommentController extends BaseController {
                        // $content['where']['is_validate'] = 0;
                         $where['is_validate'] = 0;
                         $where['childs']  = array('gt', 0);
+                        $where['pparent_id'] = array('gt', 0);
                         $where['_logic'] = 'or';
                         $content['where']['_complex'] = $where;
                         $content['where']['is_delete'] = 0;
@@ -80,6 +81,7 @@ class CommentController extends BaseController {
             //$content['where']['is_validate'] = 0;
             $where['is_validate'] = 0;
             $where['childs']  = array('gt', 0);
+            $where['pparent_id'] = array('gt', 0);
             $where['_logic'] = 'or';
             $content['where']['_complex'] = $where;
             $content['where']['is_delete'] = 0;
@@ -137,6 +139,43 @@ class CommentController extends BaseController {
                 exit();
             }
         }
+        
+        //批量删除
+         if(I('get.delete_mul'))
+        {                
+            $tmp_list = I('get.id');
+            if(!is_array($tmp_list))
+            {
+                //$this->error('参数错误');
+                $this->echo_message(-100,'参数错误');
+                exit();
+            }
+
+            $id_list = $company_id_list = array();
+            foreach($tmp_list as $v)
+            {
+                $tmp = explode('|', $v);
+                $id_list[] = $tmp[0];
+                $company_id_list[] = $tmp[1];
+            }
+
+            $result = $this->_call('Comment.delete_mul', 
+                                   array('id'=>$id_list));
+            if($result
+            && 200 == $result['status_code']
+            && 0 == $result['content']['is_success'])
+            {
+                //$this->success('成功操作', C('Template_pre').'Comment/get_list');
+                $this->echo_message(0,'成功操作', C('Template_pre').'Comment/get_list');
+                exit();
+            }
+            else{
+                //$this->error('操作失败');
+                $this->echo_message(-1,'操作失败');
+                exit();
+            }
+        }
+        
         $content['where']['parent_id'] = array('eq',0);
         $res = A('Callapi')->call_api('Comment.get_list_ex', 
                                     $content,
@@ -481,5 +520,35 @@ class CommentController extends BaseController {
     public function test2()
     {
         $this->display();
+    }
+    
+    //恢复
+    public function recover()
+    {
+        $id = I('get.id');
+        $company_id = I('get.company_id');
+        $is_validate = I('get.is_validate');
+        $parent_id = I('get.parent_id');
+        if(0>= $id)
+        {
+            //$this->error('参数错误');
+            $this->echo_message(-100, '参数错误');
+            exit();
+        }
+        $content = array(
+            'id'=> $id,
+            'company_id'=>$company_id,
+            'is_validate'=>$is_validate,
+            'parent_id' =>$parent_id,
+        );
+        $result = $this->_call("Comment.recover", $content);
+        if($result
+        && 200 == $result['status_code']
+        && 0 == $result['content']['is_success'])
+        {
+            //$this->success('成功删除', C('Template_pre').'Comment/get_list');
+            $this->echo_message(0, '成功恢复', C('Template_pre').'Comment/get_list');
+            exit();
+        }
     }
 }
