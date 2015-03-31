@@ -22,3 +22,8 @@ add validate_time
 2015-3-24
 so_comment表添加
 pparent_id 祖父id 默认为0
+
+2015-3-30
+so_comment表添加
+has_child 审核通过的回复数量
+

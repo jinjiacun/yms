@@ -153,7 +153,7 @@ function getDate(tm){
                     <volist name="item.re_sub.list" id="sub_item">
                         <tr id="{$sub_item.id}"
                         pId="{$sub_item.parent_id}"
-                        <if condition="0 eq $sub_item['has_child']">
+                        <if condition="0 eq $sub_item['has_child_ex']">
                         hasChild="true"
                         </if>
                         >
