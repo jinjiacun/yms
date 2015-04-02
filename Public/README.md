@@ -27,3 +27,6 @@ pparent_id 祖父id 默认为0
 so_comment表添加
 has_child 审核通过的回复数量
 
+2015-4-2
+so_com_exposal表添加
+is_anonymous 是否匿名(0-不匿名,-1-匿名)

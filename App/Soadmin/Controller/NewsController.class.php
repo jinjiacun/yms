@@ -20,8 +20,12 @@ class NewsController extends BaseController {
         {
             $other = I('post.other');
             $company[0] = I('post.company_id');
-            $other = array_merge($company, $other);
-            $other = array_unique($other);
+            //var_dump($company);
+            if('' != $other
+            && is_array($other))
+                $other = array_merge($company, $other);
+            else
+                $other = $company;
         
             //上传图片
             $pic     = $this->upload('pic','001006');
@@ -29,24 +33,24 @@ class NewsController extends BaseController {
             foreach($other as $v)
             {
                 $content = array(
-                'company_id'  => intval($v),#intval(I('post.company_id')),
-                'sign'        => intval(I('post.sign')),
-                'title'       => urlencode(I('post.title')),
-                'source'      => urlencode(I('post.source')),
-                'author'      => urlencode(I('author')),
-                'content'     => urlencode(base64_encode(I('post.content'))),
-                'pic'         => $pic,
-            );
-             $result = $this->_call('News.add', $content);
-             if($result
-             && 200 == $result['status_code']
-             && 0 == $result['content']['is_success'])
-             {}
-             else
-             {
-                $this->echo_message(-1,"添加失败");
-                exit();  
-             }
+                    'company_id'  => intval($v),#intval(I('post.company_id')),
+                    'sign'        => intval(I('post.sign')),
+                    'title'       => urlencode(I('post.title')),
+                    'source'      => urlencode(I('post.source')),
+                    'author'      => urlencode(I('author')),
+                    'content'     => urlencode(base64_encode(I('post.content'))),
+                    'pic'         => $pic,
+                );
+                $result = $this->_call('News.add', $content);
+                if($result
+                && 200 == $result['status_code']
+                && 0 == $result['content']['is_success'])
+                {}
+                else
+                {
+                   $this->echo_message(-1,"添加失败");
+                   exit();  
+                }
             }
             unset($v);
             //$this->success("成功添加", C('Template_pre')."News/get_list",3);
