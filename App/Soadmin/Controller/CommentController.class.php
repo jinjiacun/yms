@@ -278,6 +278,11 @@ class CommentController extends BaseController {
             $this->echo_message(0, '成功删除', C('Template_pre').'Comment/get_list');
             exit();
         }
+        else
+        {
+            $this->echo_message(-1, '成功失败');
+            exit();
+        }
     }
     
     public function get_news_list()

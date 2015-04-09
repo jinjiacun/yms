@@ -565,3 +565,17 @@ div{
 
 .tablestyle_td4{border-bottom:#fff 1px solid; background:#FFF;
 		}
+
+
+.span_title {
+	display:-moz-inline-box;
+	display:inline-block;
+	width:80px; 
+	text-align: right;
+}
+.span_control{
+	display:-moz-inline-box;
+	display:inline-block;
+	width:180px; 
+	text-align: left;	
+}

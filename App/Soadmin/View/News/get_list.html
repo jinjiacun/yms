@@ -24,21 +24,45 @@
                 <td height="40" class="font42"><table width="100%" border="0" cellpadding="4" cellspacing="1" bgcolor="#464646" class="newfont03">
 
                   <tr>
+                  <!--
 		    <td width="5%" align="center" bgcolor="#EEEEEE">选择</td>
+                    -->
                     <td width="10%" height="20" align="center" bgcolor="#EEEEEE">企业名称</td>
-                    <td width="10%" height="20" align="center" bgcolor="#EEEEEE">标题</td>
-                    <td width="10%" height="20" align="center" bgcolor="#EEEEEE">作者</td>
-                    <td width="10%" height="20" align="center" bgcolor="#EEEEEE">来源</td>
+                    <td width="5%" height="20" align="center" bgcolor="#EEEEEE">认证等级</td>
+                    <td width="20%" height="20" align="center" bgcolor="#EEEEEE">标题</td>
+                    <td width="5%" height="20" align="center" bgcolor="#EEEEEE">来源</td>
+                    <td width="5%" height="20" align="center" bgcolor="#EEEEEE">作者</td>
+                    <td width="5%" height="20" align="center" bgcolor="#EEEEEE">正负面</td>
+                    <td width="10%" height="20" align="center" bgcolor="#EEEEEE">创建时间</td>
                     <td width="14%" align="center" bgcolor="#EEEEEE">操作</td>
                   </tr>
 
                   <volist name="news_list" id="news">
                   <tr align="center">
+                    <!--
                     <td bgcolor="#FFFFFF"><input type="checkbox" name="id[]" value="{$news.id}"/>{$news.id}</td>
-                    <td height="20" bgcolor="#FFFFFF">{$company_list[$news['company_id']]}</td>                        
-                    <td height="20" bgcolor="#FFFFFF">{$news.title}</td>
-                    <td height="20" bgcolor="#FFFFFF">{$news.author}</td>
+                    -->
+                    <td height="20" bgcolor="#FFFFFF">{$company_list[$news['company_id']]}</td>
+                    <td height="20" bgcolor="#FFFFFF">
+                    <if condition="'006001' eq $company_auth_list[$news['company_id']]">
+                    黑平台
+                    <elseif condition="'006002' eq $company_auth_list[$news['company_id']]" />
+                    未验证
+                    <else />
+                    合规
+                    </if>
+                    </td>
+                    <td height="20" bgcolor="#FFFFFF">{$news.title}</td>                    
                     <td height="20" bgcolor="#FFFFFF">{$news.source}</td>
+                    <td height="20" bgcolor="#FFFFFF">{$news.author}</td>
+                    <td height="20" bgcolor="#FFFFFF">
+                    <if condition="0 eq $news['sign']">
+                    正面
+                    <else />
+                    负面
+                    </if>
+                    </td>
+                    <td height="20" bgcolor="#FFFFFF">{$news.add_time|date='Y-m-d H:i:s',###}</td>
                     <td bgcolor="#FFFFFF">
                         <a href="__APP__/Soadmin/News/edit/id/{$news.id}">编辑</a>|
                         <a href="javascript:request_get('__APP__/Soadmin/News/delete/id/{$news.id}');" onclick="return confirmdel('确定要删除吗')">删除</a>

@@ -40,16 +40,7 @@
 				<fieldset style="height:100%;">
 				<legend>添加新闻</legend>
 					  <table border="0" cellpadding="2" cellspacing="1" style="width:100%">
-					 
-                                         <tr>
-                                            <td nowrap align="right" width="30%">正负面新闻:</td>
-					    <td width="35%">
-                                            <select name="sign" id="sign">
-                                            <option value=0>正面</option>
-                                            <option value=1>负面</option>
-                                            </select>
-                                         </tr>
-                                         
+					  
 					  <tr>
 					    <td nowrap align="right" width="30%">标题:</td>
 					    <td width="35%"><input id="title" name='title' type="text" class="text" style="width:154px" value="" />
@@ -71,7 +62,7 @@
                                           <tr>
 					    <td nowrap align="right" width="30%">匹图:</td>
 					    <td width="35%"><input id="pic" name='pic' type="file" class="file" style="width:154px" value="" />
-				            <span class="red">*</span></td>
+                                            </td>
 					  </tr>
 					 
                                          <tr>
@@ -137,11 +128,7 @@ function validate()
     	return false;
     }
     
-    if('' == pic)
-    {
-    	alert('请选择图片');
-    	return false;
-    }
+   
     
     return true;
 }

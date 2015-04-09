@@ -25,11 +25,15 @@
 
                   <tr>
 		    <td width="5%" align="center" bgcolor="#EEEEEE">选择</td>
-                    <td width="10%" height="20" align="center" bgcolor="#EEEEEE">会员</td>
-                    <td width="10%" height="20" align="center" bgcolor="#EEEEEE">企业性质</td>
-                    <td width="10%" height="20" align="center" bgcolor="#EEEEEE">所属行业</td>
+                    <td width="5%" height="20" align="center" bgcolor="#EEEEEE">会员昵称</td>
+                    <td width="5%" height="20" align="center" bgcolor="#EEEEEE">企业性质</td>
+                    <td width="5%" height="20" align="center" bgcolor="#EEEEEE">所属行业</td>
                     <td width="10%" height="20" align="center" bgcolor="#EEEEEE">企业名称</td>
-                    <td width="10%" height="20" align="center" bgcolor="#EEEEEE">关联企业</td>
+                    <td width="10%" height="20" align="center" bgcolor="#EEEEEE">营业执照</td>
+                    <td width="10%" height="20" align="center" bgcolor="#EEEEEE">机构代码证</td>
+                    <td width="10%" height="20" align="center" bgcolor="#EEEEEE">联系人</td>
+                    <td width="10%" height="20" align="center" bgcolor="#EEEEEE">电话</td>
+                    <td width="5%" height="20" align="center" bgcolor="#EEEEEE">状态</td>
                     <td width="14%" align="center" bgcolor="#EEEEEE">操作</td>
                   </tr>
 
@@ -59,17 +63,39 @@
                     </td>
                     <td height="20" bgcolor="#FFFFFF">{$item.company_name}</td>
                     <td height="20" bgcolor="#FFFFFF">
+                    <if condition="0 neq $item['busin_license']">
+                        <img style="width:50px;height:50px;" src="{$item.busin_license_url}" />
+                    </if>
+                    </td>
+                    <td height="20" bgcolor="#FFFFFF">
+                    <if condition="0 neq $item['code_certificate']">
+                        <img style="width:50px;height:50px;" src="{$item.code_certificate_url}" />
+                    </if>
+                    </td>
+                    <td height="20" bgcolor="#FFFFFF">{$item.contact}</td>
+                    <td height="20" bgcolor="#FFFFFF">{$item.telephone}</td>
+                    <td height="20" bgcolor="#FFFFFF">
+                    <if condition="0 eq $item['company_id']">
+                    未关联
+                    <else />
+                    已关联
+                    </if>
+                    </td>
+                    <!--
+                    <td height="20" bgcolor="#FFFFFF">
                     <if condition="0 eq $item['company_id']">
                     未关联
                     <else />
                     {$company_list[$item['company_id']]}
                     </if>
                     </td>
+                    -->
                     <td bgcolor="#FFFFFF">
                         <if condition="0 eq $item['company_id'] and 0 eq $item['is_delete']">
                         <a href="__APP__/Soadmin/Inexposal/edit/id/{$item.id}">关联企业</a>
                         |&nbsp;
                         </if>
+                        <a href='#' onclick='request_get("__APP__/Soadmin/Inexposal/save_as/id/{$item.id}/type/2")'>新增企业</a>
                         <a href='__APP__/Soadmin/Inexposal/view_ex/id/{$item.id}'>查看</a>
                         <if condition="0 eq $item['is_delete']">
                        <a href='javascript:request_get("__APP__/Soadmin/Inexposal/delete_ex/id/{$item.id}/company_id/{$item.company_id}");' onclick="return confirmdel('确定要删除吗')">删除</a>

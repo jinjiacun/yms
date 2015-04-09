@@ -29,10 +29,14 @@
                     <table width="100%" border="0" cellpadding="4" cellspacing="1" bgcolor="#464646" class="newfont03">
                         <tr>
                             <td width="5%" align="center" bgcolor="#EEEEEE">选择</td>
-                            <td width="10%" height="20" align="center" bgcolor="#EEEEEE">会员</td>
-                            <td width="10%" height="20" align="center" bgcolor="#EEEEEE">企业性质</td>
-                            <td width="10%" height="20" align="center" bgcolor="#EEEEEE">所属行业</td>
-                            <td width="10%" height="20" align="center" bgcolor="#EEEEEE">企业名称</td>
+                            <td width="10%" height="20" align="center" bgcolor="#EEEEEE">会员昵称</td>
+                            <td width="5%" height="20" align="center" bgcolor="#EEEEEE">企业性质</td>
+                            <td width="5%" height="20" align="center" bgcolor="#EEEEEE">所属行业</td>
+                            <td width="5%" height="20" align="center" bgcolor="#EEEEEE">企业名称</td>
+                            <td width="20%" height="20" align="center" bgcolor="#EEEEEE">曝光内容</td>
+                            <td width="15%" height="20" align="center" bgcolor="#EEEEEE">附件</td>
+                            <td width="5%" height="20" align="center" bgcolor="#EEEEEE">曝光时间</td>
+                            <td width="5%" height="20" align="center" bgcolor="#EEEEEE">状态</td>
                             <td width="10%" height="20" align="center" bgcolor="#EEEEEE">关联企业</td>
                             <td width="14%" align="center" bgcolor="#EEEEEE">操作</td>
                         </tr>
@@ -46,6 +50,24 @@
                             </td>
                             <td height="20" bgcolor="#FFFFFF">{$trade_list[$item['trade']]}</td>
                             <td height="20" bgcolor="#FFFFFF">{$item.company_name}</td>
+                            <td height="20" bgcolor="#FFFFFF">{$item.content|msubstr=###,0,10,'utf-8'}</td>
+                            <td height="20" bgcolor="#FFFFFF">
+                            <if condition="0 neq $item['pic_1']"><a style="cursor: pointer;" onclick="view_pic('{$item.pic_1_url}');"><img src="{$item.pic_1_url}" style="width:50px;height:50px;"</a></if>
+                            <if condition="0 neq $item['pic_2']"><a style="cursor: pointer;" onclick="view_pic('{$item.pic_2_url}');"><img src="{$item.pic_2_url}" style="width:50px;height:50px;"</a></if>
+                            <if condition="0 neq $item['pic_3']"><a style="cursor: pointer;" onclick="view_pic('{$item.pic_3_url}');"><img src="{$item.pic_3_url}" style="width:50px;height:50px;"</a></if>
+                            <if condition="0 neq $item['pic_4']"><a style="cursor: pointer;" onclick="view_pic('{$item.pic_4_url}');"><img src="{$item.pic_4_url}" style="width:50px;height:50px;"</a></if>
+                            <if condition="0 neq $item['pic_5']"><a style="cursor: pointer;" onclick="view_pic('{$item.pic_5_url}');"><img src="{$item.pic_5_url}" style="width:50px;height:50px;"</a></if>
+                            </td>
+                            <td height="20" bgcolor="#FFFFFF">{$item.add_time|date="Y-m-d",###}</td>
+                            <td height="20" bgcolor="#FFFFFF">
+                            <if condition="0 eq $item.company_id">
+                            未审核
+                            <elseif condition="0 eq $item.is_delete" />
+                            已审核
+                            <else />
+                            已删除
+                            </if>
+                            </td>
                             <td height="20" bgcolor="#FFFFFF">
                             <if condition="0 eq $item['company_id']">未关联<else />{$company_list[$item['company_id']]}</if>
                             </td>
@@ -55,8 +77,9 @@
                             |&nbsp; 
                             </if>
                             <a href='__APP__/Soadmin/Inexposal/view/id/{$item.id}'>查看</a>
+                            <a href='#' onclick='request_get("__APP__/Soadmin/Inexposal/save_as/id/{$item.id}/type/1")'>新增企业</a>
                             <if condition="0 eq $item['is_delete']">
-                            <a href='javascript:request_get("__APP__/Soadmin/Inexposal/delete/id/{$item.id}/company_id/{$item.company_id}")' onclick="return confirmdel('确定要删除吗')">删除</a>
+                            <a href='#' onclick='request_get("__APP__/Soadmin/Inexposal/delete/id/{$item.id}/company_id/{$item.company_id}")' onclick="return confirmdel('确定要删除吗')">删除</a>
                             </if>
                             </td>
                         </tr>
@@ -81,6 +104,52 @@
 <div id="loadingmsg" style="width:100px; height:18px; top:0px; display:none;">
 	<img src="file:///F|/项目管理相关资料/项目管理系统页面/images/loadon.gif" />
 </div>
-
+<include file="Public/pop_picture"/>
 </body>
 </html>
+<script type='text/javascript'>
+function del(url) {
+    if(!confirmdel('确定要删除吗'))
+        return false;
+    
+    // 传递至子窗口的参数
+    //var paramObj = param || { };
+    
+    /*
+    // 模态窗口高度和宽度
+    var whparamObj = { width: 500, height: 500 };
+    
+    // 相对于浏览器的居中位置
+    var bleft = ($(window).width() - whparamObj.width) / 2;
+    var btop = ($(window).height() - whparamObj.height) / 2;
+    
+    // 根据鼠标点击位置算出绝对位置
+    var tleft = e.screenX - e.clientX;
+    var ttop = e.screenY - e.clientY;
+    
+    // 最终模态窗口的位置
+    var left = bleft + tleft;
+    var top = btop + ttop;
+    
+    // 参数
+    var p = "help:no;status:no;center:yes;";
+        p += 'dialogWidth:'+(whparamObj.width)+'px;';
+        p += 'dialogHeight:'+(whparamObj.height)+'px;';
+        p += 'dialogLeft:' + left + 'px;';
+        p += 'dialogTop:' + top + 'px;';
+    */
+     var bleft = ($(window).width()) / 2;
+     var btop = ($(window).height()) / 2;
+    
+    var arr = showModalDialog('{:U("Public/pop_value")}', '',   
+    'dialogWidth:400px; dialogHeight:100px; help: no; scroll: yes; status: no;center:yes;dialogLeft:'+bleft+'px;dialogTop:'+btop+"px;");
+    
+            if (arr != null) {
+                url += '/reason/'+arr;
+                request_get(url);
+                //document.getElementById(ctlName).value = arr;  
+            }  
+        
+    //alert(url);
+}
+</script>

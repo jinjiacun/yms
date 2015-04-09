@@ -20,11 +20,16 @@ class InexposalController extends BaseController {
     public function get_list()
     {
         $page_index = 1;
-        $page_size  = 10;
+        $page_size  = 20;
         $content    = array();
         if(I('get.p'))
         {
             $page_index = I('get.p');
+            $content['page_size'] = $page_size;
+            $content['page_index'] = $page_index;
+        }
+        else
+        {
             $content['page_size'] = $page_size;
             $content['page_index'] = $page_index;
         }
@@ -98,13 +103,14 @@ class InexposalController extends BaseController {
                     $this->assign('list', $list);     
                     $record_count = $result['content']['record_count'];
                     $this->assign('record_count', $record_count);
-                    $this->get_page($record_count, 10);
+                    $this->get_page($record_count, $page_size);
                 }
             }
         }
         
         $this->assign('company_list', $this->_map_company());
         $this->_map_trade_list();
+        $this->assign('title','网友曝光');
         $this->display();
     }
     
@@ -112,13 +118,17 @@ class InexposalController extends BaseController {
     public function get_list_ex()
     {
         $page_index = 1;
-        $page_size  = 10;
+        $page_size  = 20;
         $content    = array();
         if(I('get.p'))
         {
             $page_index = I('get.p');
             $content['page_size'] = $page_size;
             $content['page_index'] = $page_index;
+        }
+        else{
+            $content['page_size'] = $page_size;
+            $content['page_index'] = 1;
         }
         if(I('get.submit'))
         {
@@ -187,7 +197,7 @@ class InexposalController extends BaseController {
                     $this->assign('list', $list);     
                     $record_count = $result['content']['record_count'];
                     $this->assign('record_count', $record_count);
-                    $this->get_page($record_count, 10);
+                    $this->get_page($record_count, $page_size);
                 }
             }
         }
@@ -279,6 +289,7 @@ class InexposalController extends BaseController {
             $this->assign('obj', $result['content']);
         }
         
+        $this->assign('title','曝光企业详情页面');
         $this->assign('company_list', $this->_map_company());
         $this->_map_trade_list();
         $this->display();
@@ -373,5 +384,50 @@ class InexposalController extends BaseController {
             exit();
         }
         $this->display();
-    }     
+    }
+    
+    public function save_as()
+    {
+        $id   = I('get.id');
+        $type = I('get.type');
+        if(0>= $id
+        || 0>= $type)
+        {
+            $this->echo_message(-100,"参数错误");
+            exit();
+        }
+        
+        $content = array(
+            'id'=>$id,
+            'type'=>$type,
+        );
+        $result = $this->_call("Inexposal.save_as_company",$content);
+        if($result
+        && 200 == $result['status_code']
+        && 0 == $result['content']['is_success']
+        )
+        {
+            $this->echo_message(0,"新增成功",C('Template_pre').'Inexposal/get_list_ex');
+            exit();
+        }
+        elseif(-2 == $result['content']['is_success'])
+        {
+            $this->echo_message(-2,"此企业名称已存在");
+            exit();
+        }
+        else
+        {
+            $this->echo_message(-1,"新增企业失败");
+            exit();
+        }
+    }
+    
+    
+    
+    
+    
+    
+    
+    
+    
 }

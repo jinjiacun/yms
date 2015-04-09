@@ -1,6 +1,7 @@
- 认证级别：<select name="auth_level" style="width:180px">
+ <span class="span_title">认证级别：</span>
+ <span class="span_control"><select name="auth_level" style="width:180px">
                          <option value=0>---请选择---</option>
                          <option value='006001' <if condition="'006001' eq $auth_level">selected="selected"</if>>黑平台</option>
                          <option value='006002' <if condition="'006002' eq $auth_level">selected="selected"</if>>未验证</option>
                          <option value='006003' <if condition="'006003' eq $auth_level">selected="selected"</if>>合规</option>
-                         </select>
+                         </select></span>                         

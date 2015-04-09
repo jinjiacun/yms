@@ -37,4 +37,19 @@ class PublicController extends BaseController {
 	{
 		$this->display();
 	}
+	
+	public function pop_window()
+	{
+		$this->display();
+	}
+
+	public function pop_value()
+	{
+		$this->display();
+	}
+
+	public function pop_picture()
+	{
+		$this->display();
+	}
 } 

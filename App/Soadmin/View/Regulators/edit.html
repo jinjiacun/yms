@@ -45,7 +45,9 @@
                                            <tr>
 					    <td nowrap align="right" width="30%">图片:</td>
 					    <td width="35%"><input type="file" name="pic" />
+                                            <a style="cursor: pointer;" onclick="view_pic('{$obj.pic_url}');">
                                             <img src="{$obj.pic_url}" width="25px" height="25px"/>
+                                            </a>
                                             <span class="red">*</span></td>
 					   </tr>
                                            
@@ -81,6 +83,7 @@
 
 </div>
 </form>
+<include file="Public/pop_picture"/>
 </body>
 </html>
 <script type="text/javascript">

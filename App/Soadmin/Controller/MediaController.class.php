@@ -18,14 +18,14 @@ class MediaController extends BaseController {
             $content = array();
             $page_index = 1;
             $page_size  = 10;
-            if(I('post.Submit'))
+            if(I('get.Submit'))
             {
-                    if(I('post.dict_sn'))
+                    if(I('get.dict_sn'))
                     {
                             $content['where'] = array(
-                                    'dict_sn'=>urlencode(I('post.dict_sn')),
+                                    'dict_sn'=>urlencode(I('get.dict_sn')),
                             );
-                            $this->assign('dict_sn', I('post.dict_sn'));
+                            $this->assign('dict_sn', I('get.dict_sn'));
                     }
             }
             if(I('get.p'))

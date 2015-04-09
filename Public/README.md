@@ -30,3 +30,16 @@ has_child 审核通过的回复数量
 2015-4-2
 so_com_exposal表添加
 is_anonymous 是否匿名(0-不匿名,-1-匿名)
+
+2015-4-8
+so_com_exposal表添加
+pic_1 图片id
+pic_2 图片id
+pic_3 图片id
+pic_4 图片id
+pic_5 图片id
+type 评论类型
+top_num 顶总数
+has_child 审核通过的回复数量
+添加so_com_exposal_top表
+

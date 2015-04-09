@@ -37,7 +37,7 @@ class NewsController extends BaseController {
                     'sign'        => intval(I('post.sign')),
                     'title'       => urlencode(I('post.title')),
                     'source'      => urlencode(I('post.source')),
-                    'author'      => urlencode(I('author')),
+                    'author'      => urlencode(I('post.author')),
                     'content'     => urlencode(base64_encode(I('post.content'))),
                     'pic'         => $pic,
                 );
@@ -95,7 +95,7 @@ class NewsController extends BaseController {
     public function get_list()
     {
         $page_index = 1;
-        $page_size  = 10;
+        $page_size  = 20;
         $content    = array();
         
          //批量删除
@@ -124,6 +124,11 @@ class NewsController extends BaseController {
             $content['page_size'] = $page_size;
             $content['page_index'] = $page_index;
         }
+        else
+        {
+            $content['page_size'] = $page_size;
+            $content['page_index'] = $page_index;
+        }
         if(I('post.submit'))
         {
              if('' != I('post.title'))
@@ -148,13 +153,15 @@ class NewsController extends BaseController {
                     $this->assign('news_list', $list);     
                     $record_count = $result['content']['record_count'];
                     $this->assign('record_count', $record_count);
-                    $this->get_page($record_count, 10);
+                    $this->get_page($record_count, $page_size);
                 }
             }
         }
         
         $company_list = $this->_map_company();
         $this->assign('company_list', $company_list);
+        $company_auth_list = $this->_map_auth_level_company();
+        $this->assign('company_auth_list', $company_auth_list);
         $this->display();
     }
     
@@ -214,7 +221,7 @@ class NewsController extends BaseController {
                     $this->assign('news_list', $list);     
                     $record_count = $result['content']['record_count'];
                     $this->assign('record_count', $record_count);
-                    $this->get_page($record_count, 10);
+                    $this->get_page($record_count, $page_size);
                 }
             }
         }

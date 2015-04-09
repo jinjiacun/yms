@@ -6,11 +6,15 @@
 		   <table width="98%" border="0" align="center" cellpadding="0" cellspacing="0">
 		  <tr>
 			<td width="21"><img src="__PUBLIC__/Admin/images/ico07.gif" width="20" height="18" /></td>
-			<td width="550">查看内容：
+			<td width="550">
 			 <include file="Public/com_status"/>
-                         &nbsp;&nbsp;会员id：<input type="text" name="user_id" value="{$user_id}"/>
-                         &nbsp;&nbsp;<include file="Public/com_type"/>
+                         <span class="span_title">会员id：</span>
+                         <span class="span_control"><input type="text" name="user_id" value="{$user_id}"/></span>
+                         <br/>
+                         <include file="Public/com_type"/>
+                         <span class="span_control">
                          <input name="submit" type="submit" class="right-button02" value="查 询" />
+                         </span>
 			 </td>
 			 <td width="132" align="left">
        <a href="#" onclick="sousuo()">			   

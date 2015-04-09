@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=gb2312" />
-<title>搜黑管理</title>
+<title>搜黑管理-{$title}</title>
 <link rel="stylesheet" rev="stylesheet" href="__PUBLIC__/Admin/css/style.css" type="text/css" media="all" />
 <!--
 <script type="text/javascript" src="__PUBLIC__/js/jquery-1.9.1.min.js"></script>
@@ -44,6 +44,65 @@ function check()
     body .span { display:block; width:120px; height:34px; line-height:34px;  background:#390; margin:20px 0 0 100px; color:#fff; text-align:center; font-family:"微软雅黑"; font-size:14px; }
     body .span:hover { background:#360; cursor:pointer; }
     </style>
+    <style type="text/css"> 
+    .window{ 
+	width:auto; 
+	background-color:#d0def0; 
+	position:absolute; 
+	padding:2px; 
+	margin:5px; 
+	display:none; 
+	} 
+    .content{ 
+	height:auto;
+	background-color:#FFF; 
+	font-size:14px; 
+	overflow:auto; 
+	} 
+    .title{ 
+        padding:2px; 
+        color:#0CF; 
+        font-size:14px; 
+        } 
+    .title img{ 
+	    float:right;
+	    margin-top: 20px;
+	    } 
+    </style> 
+     <script type="text/javascript">
+     //获取窗口的高度 
+     var windowHeight; 
+     //获取窗口的宽度 
+     var windowWidth; 
+     //获取弹窗的宽度 
+     var popWidth; 
+     //获取弹窗高度 
+     var popHeight; 
+    function init(){ 
+       windowHeight=$(window).height(); 
+       windowWidth=$(window).width(); 
+       popHeight=$(".window").height(); 
+       popWidth=$(".window").width();
+    } 
+    //关闭窗口的方法 
+    function closeWindow(){ 
+        $(".title img").click(function(){ 
+            $(this).parent().parent().hide("slow"); 
+            }); 
+    } 
+    //定义弹出居中窗口的方法 
+    function popCenterWindow(){ 
+        init(); 
+        //计算弹出窗口的左上角Y的偏移量 
+        var popY=(windowHeight-popHeight)/2; 
+        var popX=(windowWidth-popWidth)/2; 
+        //alert('jihua.cnblogs.com');	
+        //设定窗口的位置
+	//alert($("#center").html());
+        $("#center").css("top",popY).css("left",popX).slideToggle("slow");  
+        closeWindow(); 
+    }     
+    </script> 
     <script>
         $(document).ready(function()
         {
@@ -102,6 +161,16 @@ function check()
 			    popStatus(4, data.status+','+data.message, 2);
 			}
 	    });
+      }
+      
+      function view_pic(pic_url)
+      {
+	   $('#center_pic').attr("src",pic_url);
+	   popCenterWindow();
+      }
+      function close_pic(obj)
+      {
+	$(obj).parent().parent().hide("slow"); 
       }
     </script>
 </head>

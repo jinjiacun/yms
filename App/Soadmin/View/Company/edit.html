@@ -84,8 +84,10 @@
 					    <td nowrap align="right" width="30%">营业执照:</td>
 					    <td width="35%">
                                             <input id="control_busin_license" name="control_busin_license" type="checkbox"  <if condition="1 eq $obj['control_busin_license']">checked</if> />
-                                            <input name='busin_license' id="busin_license" type="file"/>                                            
+                                            <input name='busin_license' id="busin_license" type="file"/>
+                                            <a style="cursor: pointer;" onclick="view_pic('{$obj.busin_license_url}');">
                                             <img id="img_busin_license" src="{$obj.busin_license_url}" width="50px" height="50px"/>
+                                            </a>
 				            </td>
 					   </tr>
                                            
@@ -95,7 +97,9 @@
                                             <input id="control_code_certificate" name="control_code_certificate" type="checkbox" <if condition="1 eq $obj['control_code_certificate']">checked</if>
                                             />
                                             <input name='code_certificate' id="code_certificate" type="file" />
+                                            <a style="cursor: pointer;" onclick="view_pic('{$obj.code_certificate_url}');">
                                             <img id="img_code_certificate" src="{$obj.code_certificate_url}" width="50px" height="50px" />
+                                            </a>
 				            </td>
 					   </tr>
                                            
@@ -158,7 +162,9 @@
 					    <td width="35%">
                                             <input id="control_certificate" name="control_certificate" type="checkbox" <if condition="1 eq $obj['control_certificate']">checked</if>/>
                                             <input id="certificate" name='certificate' type="file" />
+                                            <a style="cursor: pointer;" onclick="view_pic('{$obj.certificate_url}');">
                                             <img id="img_certificate" src="{$obj.certificate_url}" width="50px" height="50px" />
+                                            </a>
 				            </td>
 					   </tr>
                                           
@@ -190,6 +196,7 @@
 
 </div>
 </form>
+<include file="Public/pop_picture"/>
 </body>
 </html>
 <script type="text/javascript">
