@@ -415,6 +415,11 @@ class InexposalController extends BaseController {
             $this->echo_message(-2,"此企业名称已存在");
             exit();
         }
+        elseif(-3 == $result['content']['is_success'])
+        {
+            $this->echo_message(-3,"添加企业别名失败");
+            exit();
+        }
         else
         {
             $this->echo_message(-1,"新增企业失败");

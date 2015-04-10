@@ -142,7 +142,7 @@
                                            <tr id="id_agent_flatform">
 					    <td nowrap align="right" width="30%">代理平台:</td>
 					    <td width="35%"> 
-                                            <select id="agent_platform" name='agent_platform'>
+                                            <select id="agent_platform" name='agent_platform' onchange="agent_platform_change()">
                                             <option value=0 <if condition="0 eq $obj['agent_platform']">selected="selected"</if>>暂无代理平台</option>
                                             <volist name="agent_platform_list" id="agent_platform">
                                             <option value={$key} <if condition="intval($key) eq $obj['agent_platform']">selected="selected"</if>>{$agent_platform}</option>
@@ -153,7 +153,7 @@
                                            
                                            <tr id="id_mem_sn">
 					    <td nowrap align="right" width="30%">会员编号:</td>
-					    <td width="35%"><input name='mem_sn' type="text" class="text" style="width:154px" value="{$obj.mem_sn}" />
+					    <td width="35%"><input name='mem_sn' type="text" class="text" style="width:154px" value="{$obj.mem_sn}" <if condition="0  eq $obj['agent_platform']">readonly="readonly"</if>/>
 				            </td>
 					   </tr>
                                            
@@ -389,6 +389,21 @@ function trade_change(){
     {
         $('#regulators_id').val(0);
         $('#id_regulators_id').hide();
+    }
+}
+
+//代理平台选择
+function agent_platform_change()
+{
+    var agent_platform_val = $('#agent_platform').val();
+    if(0 == agent_platform_val)
+    {
+        $('#mem_sn').attr("readonly","readonly");
+        $('#mem_sn').val("");
+    }
+    else
+    {
+        $('#mem_sn').removeAttr("readonly");        
     }
 }
 

@@ -136,7 +136,7 @@
                                            <tr id="id_agent_flatform">
 					    <td nowrap align="right" width="30%">代理平台:</td>
 					    <td width="35%">
-                                            <select id="agent_platform" name='agent_platform'>
+                                            <select id="agent_platform" name='agent_platform' onchange="agent_platform_change()">
                                             <!--
                                             <option value=0>暂无代理平台</option>
                                             <volist name="agent_flatform_list" id="agent_flatform">
@@ -149,7 +149,7 @@
                                            
                                            <tr id="id_mem_sn">
 					    <td nowrap align="right" width="30%">会员编号:</td>
-					    <td width="35%"><input id="mem_sn" name='mem_sn' type="text" class="text" style="width:154px" value="" />
+					    <td width="35%"><input id="mem_sn" name='mem_sn' type="text" class="text" style="width:154px" value=""  readonly='readonly'/>
 				            </td>
 					   </tr>
                                            
@@ -360,6 +360,21 @@ function is_file_upload()
     else{
         $('#certificate').hide();
         $('#certificate').val("");
+    }
+}
+
+//代理平台选择
+function agent_platform_change()
+{
+    var agent_platform_val = $('#agent_platform').val();
+    if(0 == agent_platform_val)
+    {
+        $('#mem_sn').attr("readonly","readonly");
+        $('#mem_sn').val("");
+    }
+    else
+    {
+        $('#mem_sn').removeAttr("readonly");        
     }
 }
 
