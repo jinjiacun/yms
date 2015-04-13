@@ -1,0 +1,33 @@
+<div class="window" id="center"> 
+<div id="title" class="title">
+<span style="cursor: pointer" onclick="pic_chg(1);"><</span>
+<img id="center_pic" style="cursor: pointer;" src="http://192.168.1.131/yms_api/Public/media/expression/2015-04-01/1427856929_1120.jpg" alt="关闭" onclick="close_pic(this)"/>
+<span style="cursor: pointer" onclick="pic_chg(2);">></span>
+</div> 
+<div class="content">图片</div> 
+</div>
+<script type="text/javascript">
+function pic_chg(flag)
+{
+    if (1 == flag) { //右切换
+        cur_index--;
+        if(0 >= cur_index
+        || '' == pic_arr[cur_index])
+        {
+            alert('已经是第一张图片');
+            return;
+        }
+        $('#center_pic').attr('src', pic_arr[cur_index]);        
+    }
+    else { //右切换
+        cur_index++;        
+        if(5 <= cur_index
+        || '' == pic_arr[cur_index])
+        {
+            alert('已经是最后一张图片');
+            return;
+        }
+        $('#center_pic').attr('src', pic_arr[cur_index]);
+    }
+}
+</script>

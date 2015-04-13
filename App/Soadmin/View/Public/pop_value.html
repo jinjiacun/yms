@@ -1,0 +1,18 @@
+<html>
+<head></head>
+<body>
+<center>
+<textarea id="reason" style="width:200px;height:80px;"></textarea><br/>
+<input type="button" value="ok" onclick="on_ok()"/>
+</center>
+</body>
+</html>
+<script type='text/javascript'>
+function on_ok()
+{
+	var reason = document.getElementById('reason');
+	var reason_str = reason.value;
+	window.returnValue = reason_str;
+  	window.close();
+}
+</script>

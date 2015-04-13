@@ -1,0 +1,179 @@
+<!doctype html>
+<html>
+    <head>
+        <meta charset="utf-8" />
+        <title></title>
+        <!--
+        <link href="css/style.css" rel="stylesheet" />
+        <script src="js/js.js" type="text/javascript"></script>
+        -->
+    </head>
+    <body>
+        <div class="lp_wrap">
+            <div class="lp_left"></div>
+            <div class="lp_main">
+                <ul>
+                    <li><img src="images/1.jpg" alt="我是1" /></li>
+                    <li><img src="images/2.jpg" alt="我是2" /></li>
+                    <li><img src="images/3.jpg" alt="我是2" /></li>
+                    <li><img src="images/4.jpg" alt="我是2" /></li>
+                    <li><img src="images/5.jpg" alt="我是2" /></li>
+                    <li><img src="images/6.jpg" alt="我是2" /></li>
+                    <li><img src="images/7.jpg" alt="我是2" /></li>
+                    <li><img src="images/8.jpg" alt="我是2" /></li>
+                </ul>
+            </div>
+            <div class="lp_right"></div>
+        </div>
+         
+         
+        <!--隐藏域-->
+        <div class="lp_alert">
+            <div class="lp_aleft"></div>
+            <div class="lp_aimg" style="width:540px; height:400px;">
+                <img src="images/1.jpg" />
+                <span></span>
+                <font></font>
+            </div>
+            <div class="lp_aright"></div>
+            <div class="clear"></div>
+        </div>
+        <div class="zhezhao"></div>
+        <!--隐藏域-->
+    </body>
+</html>
+<script>
+window.onload = function (){
+    function getClass(className){
+        var get = document.getElementsByTagName('*');
+        var arr = [];
+        for(var i = 0; i < get.length; i ++){
+            if(get[i].className == className){
+                arr.push(get[i]);
+            }
+        }
+        return arr;
+    }
+     
+    function lp(lp1,lp2,lp3,lp4,lp5,lp6,lp7){
+        var wrap = getClass(lp1)[0];
+        var ul = getClass(lp2)[0].getElementsByTagName('ul')[0];
+        var li = ul.getElementsByTagName('li');
+        var mar_r = 10; //margin-right 
+        var w = li[0].offsetWidth + mar_r; 
+        var l = li.length;
+        var max = w * l;
+        var setIndex = 0;   
+        var lp_aleft = getClass(lp3)[0];
+        var lp_img = getClass(lp4)[0];
+        var img = lp_img.getElementsByTagName('img')[0];
+        var font = lp_img.getElementsByTagName('font')[0];
+        var lp_aright = getClass(lp5)[0];
+        var lp_zhezhao = getClass(lp6)[0];
+        var lp_wrap = getClass(lp7)[0];
+        var lp_iw = 540; //为弹出 元素宽  ps：隐藏元素获取不到宽 高，估 写死值
+        var lp_ih = 400; //为弹出 元素高
+        //获取屏幕宽高
+        var wid = document.body.clientWidth | document.documentElement.clientWidth;
+        var hei = document.body.clientHeight | document.documentElement.clientHeight;
+        //求值居中
+        function left(n,w){
+            return (n - w) / 2;
+        }
+        function top(n,h){
+            return (n - h) / 2;
+        }
+        lp_img.style.left = left(wid,lp_iw) + 'px';
+        lp_img.style.top = top(hei,lp_ih) + 'px';
+        lp_aleft.style.top = top(hei,lp_aleft.offsetHeight) + 'px';
+        lp_aright.style.top = top(hei,lp_aleft.offsetHeight) + 'px';
+        lp_zhezhao.style.width = wid + 'px';
+        lp_zhezhao.style.height = hei + 'px';
+        //窗口改变大小
+        window.onresize = function (){
+        console.log(lp_img.offsetWidth);
+            wid = document.body.clientWidth | document.documentElement.clientWidth;
+            hei = document.body.clientHeight | document.documentElement.clientHeight;
+            lp_img.style.left = left(wid,lp_img.offsetWidth) + 'px';
+            lp_img.style.top = top(hei,lp_img.offsetHeight) + 'px';
+            lp_aleft.style.top = top(hei,lp_aleft.offsetHeight) + 'px';
+            lp_aright.style.top = top(hei,lp_aleft.offsetHeight) + 'px';
+            lp_zhezhao.style.width = wid + 'px';
+            lp_zhezhao.style.height = hei + 'px';
+        }
+         
+        for(var i = 0; i < l; i ++){
+            ul.appendChild(li[i].cloneNode(true));
+        }
+         
+        for(var i = 0; i < li.length; i ++){
+            li[i].index = i;
+            li[i].onclick = function (){
+                _this = this;
+                img.src = this.getElementsByTagName('img')[0].src
+                font.innerHTML = this.getElementsByTagName('img')[0].alt;
+                lp_wrap.style.display = 'block';
+                lp_zhezhao.style.display = 'block';
+                 
+                lp_aleft.onclick = function (){
+                    _this.index --;
+                    if(_this.index < 1){
+                        _this.index = 0;
+                        alert('当前第一张');
+                    }
+                    console.log(_this.index);
+                    img.src = li[_this.index].getElementsByTagName('img')[0].src
+                    font.innerHTML = li[_this.index].getElementsByTagName('img')[0].alt;
+                }
+                lp_aright.onclick = function (){
+                    _this.index ++;
+                    if(_this.index >= li.length){
+                        _this.index = li.length - 1;
+                        alert('最后一张');
+                    }  
+                    img.src = li[_this.index].getElementsByTagName('img')[0].src
+                    font.innerHTML = li[_this.index].getElementsByTagName('img')[0].alt;
+                }
+            }
+        }
+                         
+        var stop = setInterval(setl,30);
+         
+        function setl(){
+            if(setIndex >= max){
+                setIndex = 0;
+            }
+            setIndex ++;
+            ul.style.left = -setIndex + 'px';
+        }
+         
+        wrap.onmouseover = function (){
+            clearInterval(stop);
+        }
+        wrap.onmouseout = function (){
+            stop = setInterval(setl,30);
+        }
+    }
+    new lp('lp_wrap','lp_main','lp_aleft','lp_aimg','lp_aright','zhezhao','lp_alert');
+}
+</script>
+<style>
+*{ margin:0; padding:0; list-style:none; }
+ 
+.clear{ clear:both; }
+.lp_wrap{ width:900px; margin:0 auto; }
+.lp_main{ width:835px; margin-left:17px; height:188px; overflow:hidden; float:left; position:relative; }
+.lp_main ul{ width:1000em; position:absolute; }
+.lp_main ul li{ float:left; margin-right:10px; }
+.lp_main ul li img{ width:253px; height:188px; }
+.lp_left{ background:url(../images/left_arrow.jpg) 0 50% no-repeat; width:15px; height:188px; float:left; }
+.lp_right{ background:url(../images/right_arrow.jpg) 0 50% no-repeat; width:15px; height:188px; float:right; }
+ 
+.zhezhao{ display:none; background:#000; opacity:0.3; position:fixed; top:0; left:0; z-index:233;}
+.lp_aleft{ background:url(../images/aleft.png) no-repeat; width:35px; cursor:pointer; height:63px; margin-left:165px; }
+.lp_alert{height:0; width:1000px; margin:0 auto; display:none;}
+.lp_aimg,.lp_aleft,.lp_aright{ position:absolute; z-index:234;}
+.lp_aright{ background:url(../images/aright.png) no-repeat; width:35px; cursor:pointer; height:63px; margin-left:800px; }
+.lp_aimg span{ width:540px; height:30px; background:#000; display:block; opacity:0.5; position:absolute; margin-top:-33px; }
+.lp_aimg font{ width:540px; height:30px; margin-top:-33px; display:block; color:#fff; font-size:14px; position:absolute; line-height:30px; text-align:center; }
+</style>
