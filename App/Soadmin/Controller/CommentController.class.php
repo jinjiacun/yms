@@ -462,6 +462,7 @@ class CommentController extends BaseController {
                         $content['where']['_complex'] = $where;
                         $content['where']['is_delete'] = 0;
                         $content['where']['parent_id'] = 0;
+                        $content['user_id'] = -10000;
                         $this->assign('status', 0);
                         //调用统计
                         $this->_call("Comexposal.stat_re_comment");
@@ -473,6 +474,7 @@ class CommentController extends BaseController {
                         $where['_logic'] = 'and';
                         $content['where']['_complex'] = $where;
                         $content['where']['parent_id'] = 0;
+                        $content['user_id'] = -10000;
                         $this->assign('status', 1);
                     }
                     break;
@@ -503,11 +505,26 @@ class CommentController extends BaseController {
             $content['where']['_complex'] = $where;
             $content['where']['is_delete'] = 0;
             $content['where']['parent_id'] = 0;
+            $content['user_id'] = -10000;
             $this->assign('status', 0);
              //调用统计
             $this->_call("Comexposal.stat_re_comment");
         }
         
+         if(I('get.s_p'))
+        {
+            //回复查询
+            $content['page_index'] = I('get.s_p');
+            $content['where']['parent_id'] = I('get.parent_id');
+            $result = $this->_call("Comexposal.get_list", $content);
+            if($result
+            && 200 == $result['status_code']
+            )
+            {
+                echo json_encode($result['content']);
+            }
+            exit();
+        }
         
         
         $res = A('Callapi')->call_api('Comexposal.get_list_com_ex', 

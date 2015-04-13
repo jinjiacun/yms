@@ -21,12 +21,20 @@ function insertAfter(newElement, targetElement){
         //如果不是，则插入在目标元素的下一个兄弟节点 的前面。也就是目标元素的后面
     }
 }
-function getDate(tm){
-    //alert(new Date(parseInt(tm) * 1000).toLocaleString());
-    var tt=new Date(parseInt(tm) * 1000).toLocaleString().replace(new RegExp(/(\/)/g), '-');
-    //replace('/年|月/g', "-").replace('/日/g', " ");
-    return tt; 
-} 
+function getDate(timestamp) {
+  var d = new Date(timestamp * 1000),	// Convert the passed timestamp to milliseconds
+		yyyy = d.getFullYear(),
+		mm = ('0' + (d.getMonth() + 1)).slice(-2),	// Months are zero based. Add leading 0.
+		dd = ('0' + d.getDate()).slice(-2),			// Add leading 0.
+		hh = d.getHours(),
+		h = hh,
+		min = ('0' + d.getMinutes()).slice(-2),		// Add leading 0.
+		ampm = 'AM',
+		time;
+	var seconds = d.getSeconds();
+	time = yyyy + '-' + mm + '-' + dd + ' ' + h + ':' + min+':'+seconds;
+	return time;
+}
 </script>
 <style>
 .sub
@@ -282,12 +290,7 @@ function getDate(tm){
                                 var cur_url = location.href;
                                 //判定是否以get_list结尾,否则截断
                                 var off_last = cur_url.lastIndexOf("html");
-                                if(4 == cur_url.length- off_last) 
-                                {
-                                    cur_url += '?';
-                                }
-                                
-                                cur_url += "&parent_id="+pId+"&s_p="+this.getAttribute('p');
+                                cur_url += "?parent_id="+pId+"&s_p="+this.getAttribute('p');
                                 //alert(cur_url);
                                 var next_obj  = get_nextsibling(cur_obj);
                                 //清除当前的列表
@@ -580,7 +583,7 @@ $(function(){
             {
                 cur_url += '?';
             }
-            cur_url += "&parent_id="+id+"&s_p="+1;
+            cur_url += "?parent_id="+id+"&s_p="+1;
             var next_obj = get_nextsibling(cur_obj);
             jQuery.ajax({  
                                     type:"get",  
@@ -623,7 +626,7 @@ $(function(){
                                             <td height="20" class="ssub"> \
                                             </td> \
                                             <td height="20" class="ssub">'+item.content+'</td> \
-                                            <td height="20" class="ssub">'+item.add_time+'</td> \
+                                            <td height="20" class="ssub">'+getDate(item.add_time)+'</td> \
                                             <td height="20" class="ssub">';
                                             if(0 == item.validate_time)
                                             {
