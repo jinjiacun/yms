@@ -29,8 +29,7 @@ class CommentController extends BaseController {
         }
         else
         {
-            $page_index = 1;
-            $content['page_size'] = 10;
+            $content['page_size'] = $page_size;
             $content['page_index'] = $page_index;
         }
         if(I('get.submit'))
@@ -444,7 +443,74 @@ class CommentController extends BaseController {
             $content['page_size'] = $page_size;
             $content['page_index'] = $page_index;
         }
-        $res = A('Callapi')->call_api('Comexposal.get_list', 
+        else
+        {
+            $content['page_size'] = $page_size;
+            $content['page_index'] = $page_index;
+        }
+        
+         if(I('get.submit'))
+        {
+            $status = I('get.status');
+            switch($status)
+            {
+                case 0:{
+                       // $content['where']['is_validate'] = 0;
+                        $where['is_validate'] = 0;
+                        $where['childs']  = array('gt', 0);
+                        $where['_logic'] = 'or';
+                        $content['where']['_complex'] = $where;
+                        $content['where']['is_delete'] = 0;
+                        $content['where']['parent_id'] = 0;
+                        $this->assign('status', 0);
+                        //调用统计
+                        $this->_call("Comexposal.stat_re_comment");
+                    }
+                    break;
+                case 1:{
+                        $where['is_validate'] = 1;
+                        $where['is_delete'] = 0;
+                        $where['_logic'] = 'and';
+                        $content['where']['_complex'] = $where;
+                        $content['where']['parent_id'] = 0;
+                        $this->assign('status', 1);
+                    }
+                    break;
+                case 2:{
+                        $content['where']['is_delete'] = 1;
+                        $content['where']['parent_id'] = 0;
+                        $this->assign('status', 2);
+                    }
+                    break;
+            }
+            if('' != I('get.user_id'))
+            {
+                $content['where']['user_id']= htmlspecialchars(I('get.user_id'));
+                $this->assign('user_id', I('get.user_id'));
+            }
+            if(0 != I('get.type'))
+            {
+                $content['where']['type']= htmlspecialchars(I('get.type'));
+                $this->assign('type', I('get.type'));
+            }
+        }
+        else
+        {
+            //$content['where']['is_validate'] = 0;
+            $where['is_validate'] = 0;
+            $where['childs']  = array('gt', 0);
+            $where['_logic'] = 'or';
+            $content['where']['_complex'] = $where;
+            $content['where']['is_delete'] = 0;
+            $content['where']['parent_id'] = 0;
+            $this->assign('status', 0);
+             //调用统计
+            $this->_call("Comexposal.stat_re_comment");
+        }
+        
+        
+        
+        $res = A('Callapi')->call_api('Comexposal.get_list_com_ex', 
                                     $content,
                                     'text',
                                   null);
@@ -470,7 +536,7 @@ class CommentController extends BaseController {
                     $this->assign('list', $list);     
                     $record_count = $result['content']['record_count'];
                     $this->assign('record_count', $record_count);
-                    $this->get_page($record_count, 10);
+                    $this->get_page($record_count, $page_size);
                 }
             }
         }

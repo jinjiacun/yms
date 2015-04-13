@@ -64,12 +64,16 @@
                     <td height="20" bgcolor="#FFFFFF">{$item.company_name}</td>
                     <td height="20" bgcolor="#FFFFFF">
                     <if condition="0 neq $item['busin_license']">
+                        <a style="cursor: pointer;" onclick="view_pic('{$item.busin_license_url}');">
                         <img style="width:50px;height:50px;" src="{$item.busin_license_url}" />
+                        </a>    
                     </if>
                     </td>
                     <td height="20" bgcolor="#FFFFFF">
                     <if condition="0 neq $item['code_certificate']">
+                        <a style="cursor: pointer;" onclick="view_pic('{$item.code_certificate_url}');">
                         <img style="width:50px;height:50px;" src="{$item.code_certificate_url}" />
+                        </a>
                     </if>
                     </td>
                     <td height="20" bgcolor="#FFFFFF">{$item.contact}</td>
@@ -123,7 +127,7 @@
 <div id="loadingmsg" style="width:100px; height:18px; top:0px; display:none;">
 	<img src="file:///F|/项目管理相关资料/项目管理系统页面/images/loadon.gif" />
 </div>
-
+<include file="Public/pop_picture"/>
 </body>
 </html>
 

@@ -22,7 +22,7 @@
 					  <table border="0" cellpadding="2" cellspacing="1" style="width:100%">
 					   
                                            <tr>
-					    <td nowrap align="right" width="10%">关联企业:</td>
+					    <td nowrap align="right" width="10%"><b>关联企业:</b></td>
 					    <td width="30%">
                                             <if condition="0 eq $obj['company_id']">
                                             未关联
@@ -30,14 +30,14 @@
                                             {$company_list[$obj['company_id']]}
                                             </if>
 				           </td>
-                                            <td nowrap align="right" width="10%">会员昵称:</td>
+                                            <td nowrap align="right" width="10%"><b>会员昵称:</b></td>
 					    <td width="30%">                                           
                                             {$obj.nickname}
 				           </td>
 					   </tr>
 				        
                                           <tr>
-					    <td nowrap align="right" width="10%">企业性质:</td>
+					    <td nowrap align="right" width="10%"><b>企业性质:</b></td>
 					    <td width="30%">
                                              <if condition="'003001' eq $obj['nature']">
                                                 公司
@@ -45,7 +45,7 @@
                                                 平台
                                             </if>
 				           </td>
-                                            <td nowrap align="right" width="10%">所属行业:</td>
+                                            <td nowrap align="right" width="10%"><b>所属行业:</b></td>
 					    <td width="30%">
                                              <if condition="'004001' eq $obj['trade']">
                                                 贵金属
@@ -62,18 +62,18 @@
 					   </tr>
 						
 					   <tr>
-					    <td nowrap align="right" width="10%">公司全称:</td>
+					    <td nowrap align="right" width="10%"><b>公司全称:</b></td>
 					    <td width="30%">
                                             {$obj.company_name}
 				           </td>
-                                           <td nowrap align="right" width="10%">公司简称:</td>
+                                           <td nowrap align="right" width="10%"><b>公司简称:</b></td>
 					    <td width="30%">
                                             {$obj.corporation}
 				           </td>
 					   </tr>                                           
 						
                                             <tr>
-					    <td nowrap align="right" width="10%">注册地址:</td>
+					    <td nowrap align="right" width="10%"><b>注册地址:</b></td>
 					    <td width="30%">
                                             {$obj.reg_address}
 				           </td>
@@ -84,13 +84,13 @@
 					   </tr>
                                            
                                            <tr>
-					    <td nowrap align="right" width="10%">营业执照:</td>
+					    <td nowrap align="right" width="10%"><b>营业执照:</b></td>
 					    <td width="30%">
                                             <a href="{$obj.busin_license_url}" target="_black">
                                             <img src="{$obj.busin_license_url}" width="25px" height="25px"/>
                                             </a>                                            
 				           </td>
-                                            <td nowrap align="right" width="10%">机构代码证:</td>
+                                            <td nowrap align="right" width="10%"><b>机构代码证:</b></td>
 					    <td width="30%">
                                             <a href="{$obj.code_certificate_url}">
                                             <img src="{$obj.code_certificate_url}" width="25px" height="25px"/>
@@ -100,23 +100,23 @@
                                           
                                           
                                            <tr>
-					    <td nowrap align="right" width="10%">公司电话:</td>
+					    <td nowrap align="right" width="10%"><b>公司电话:</b></td>
 					    <td width="30%">
                                             {$obj.telephone}
 				           </td>
-                                           <td nowrap align="right" width="10%">官方网址:</td>
+                                           <td nowrap align="right" width="10%"><b>官方网址:</b></td>
 					    <td width="30%">
                                             {$obj.website}
 				           </td>
 					   </tr>
                                                                                            
                                             <tr>
-					    <td nowrap align="right" width="10%">官网备案:</td>
+					    <td nowrap align="right" width="10%"><b>官网备案:</b></td>
 					    <td width="30%">
                                             {$obj.record}
 				            </td>
                                             <td nowrap align="right" width="10%">
-                                            <if condition="'003001' eq $obj['nature']">代理平台:</if>
+                                            <if condition="'003001' eq $obj['nature']"><b>代理平台:</b></if>
                                             </td>
 					    <td width="30%">
                                             <if condition="'003001' eq $obj['nature']">
@@ -128,7 +128,7 @@
                                            <tr>
 					    <td nowrap align="right" width="10%" >
                                             <if condition="'003001' eq $obj['nature']">
-                                            会员编码:
+                                            <b>会员编码:<b/>
                                             </if>
                                             </td>
 					    <td width="30%">
@@ -138,7 +138,7 @@
 				            </td>
                                             <td nowrap align="right" width="10%">
                                             <if condition="'003001' eq $obj['nature']">
-                                            资质证明:
+                                            <b>资质证明:<b/>
                                             </if>
                                             </td>
 					    <td width="30%">
@@ -153,7 +153,7 @@
                                            
                                             <tr>
 					    <td nowrap align="right" width="10%" >
-                                            <if condition="'003001' eq $obj['nature']">查询网址:</if>
+                                            <if condition="'003001' eq $obj['nature']"><b>查询网址:<b/></if>
                                             </td>
 					    <td width="30%">
                                             <if condition="'003001' eq $obj['nature']">
@@ -164,11 +164,11 @@
 					   </tr>
                                            
                                            <tr>
-					    <td nowrap align="right" width="10%">联系人:</td>
+					    <td nowrap align="right" width="10%"><b>联系人:</b></td>
 					    <td width="30%">
                                             {$obj.contact}
 				           </td>
-                                           <td nowrap align="right" width="10%">联系电话:</td>
+                                           <td nowrap align="right" width="10%"><b>联系电话:</b></td>
                                            <td width="30%">{$obj.mobile}</td>
 					   </tr>
                                                 

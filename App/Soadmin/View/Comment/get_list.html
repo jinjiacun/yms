@@ -72,6 +72,7 @@ function getDate(tm){
 
                   <tr>
 		    <td width="6%" align="center" bgcolor="#EEEEEE">选择</td>
+                    <td width="3%" align="center" bgcolor="#EEEEEE">标记</td>
                     <td width="5%" align="10%" align="center" bgcolor="#EEEEEE">会员id</td>
                     <td width="8%" height="20" align="center" bgcolor="#EEEEEE">会员</td>
                     <td width="10%" height="20" align="center" bgcolor="#EEEEEE">企业</td>                    
@@ -90,7 +91,7 @@ function getDate(tm){
                       <span <if condition="0 eq $item['has_child']">controller="true"</if>>
                       {$item.id}</span>
                     </td>
-                    
+                    <td height="20" bgcolor="#FFFFFF"></td>
                     <td height="20" bgcolor="#FFFFFF">{$item.user_id}</td>
                     <td height="20" bgcolor="#FFFFFF" style="word-break: break-all">{$item.nickname}</td>
                     <td height="20" bgcolor="#FFFFFF">
@@ -156,11 +157,12 @@ function getDate(tm){
                         <if condition="0 eq $sub_item['has_child_ex']">
                         hasChild="true"
                         </if>
-                        >
+                        >                            
                           <td bgcolor="#C0C0C0">
                             <input type="checkbox" name="id[]" value="{$sub_item.id}|{$sub_item.company_id}" onclick="select_master_comment(this);"/>
                             <span>{$sub_item.id}</span>
                           </td>
+                          <td height="20" class="sub"></td>
                           <td height="20" class="sub">{$sub_item.user_id}</td>
                           <td height="20" class="sub" style="word-break: break-all">{$sub_item.nickname}</td>
                           <td height="20" class="sub">
@@ -553,9 +555,9 @@ function delete_mul() {
 <script type="text/javascript">
 $(function(){
     var option = {
-        theme:'vsStyle',
+        //theme:'vsStyle',
         expandLevel : 1,
-        column:5,
+        column:1,
         beforeExpand : function($treeTable, id) {
             //判断id是否已经有了孩子节点，如果有了就不再加载，这样就可以起到缓存的作用
             if ($('.' + id, $treeTable).length) { return; }
@@ -597,6 +599,7 @@ $(function(){
                                             <span> \
                                             '+item.id+'</span> \
                                             </td> \
+                                            <td height="20" class="ssub"></td> \
                                             <td height="20" class="ssub">'+item.user_id+'</td> \
                                             <td height="20" class="ssub">'+item.nickname+'</td> \
                                             <td height="20" class="ssub"> \

@@ -135,7 +135,20 @@ class Dispatcher {
         define('__SELF__',strip_tags($_SERVER[C('URL_REQUEST_URI')]));
 
         // 获取模块名称
-        define('MODULE_NAME', defined('BIND_MODULE')? BIND_MODULE : self::getModule($varModule));
+            define('MODULE_NAME', defined('BIND_MODULE')? BIND_MODULE : self::getModule($varModule));
+        /*
+        $request = self::getModule($varModule);
+        if('Home'== $request
+        || 'Soadmin'== $request
+        )
+        {
+            define('MODULE_NAME', $request);    
+        }
+        else
+        {
+            define('MODULE_NAME', 'Home');       
+        }
+        */
         
         // 检测模块是否存在
         if( MODULE_NAME && (defined('BIND_MODULE') || !in_array_case(MODULE_NAME,C('MODULE_DENY_LIST')) ) && is_dir(APP_PATH.MODULE_NAME)){

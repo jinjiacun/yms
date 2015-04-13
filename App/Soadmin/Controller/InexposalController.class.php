@@ -179,7 +179,7 @@ class InexposalController extends BaseController {
             $this->assign('status', 0);
         }
         $content['where']['type'] = 1;
-        $res = A('Callapi')->call_api('Inexposal.get_list', 
+        $res = A('Callapi')->call_api('Inexposal.get_list_ex', 
                                     $content,
                                     'text',
                                   null);

@@ -52,4 +52,9 @@ class PublicController extends BaseController {
 	{
 		$this->display();
 	}
+	
+	public function pic_chg()
+	{
+		$this->display();
+	}
 } 

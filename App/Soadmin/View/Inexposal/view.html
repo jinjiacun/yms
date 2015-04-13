@@ -22,7 +22,7 @@
 					  <table border="0" cellpadding="2" cellspacing="1" style="width:100%">
 					   
                                            <tr>
-					    <td nowrap align="right" width="10%">关联企业:</td>
+					    <td nowrap align="right" width="10%"><b>关联企业:</b></td>
 					    <td width="30%">
                                             <if condition="0 eq $obj['company_id']">
                                             未关联
@@ -30,14 +30,14 @@
                                             {$company_list[$obj['company_id']]}
                                             </if>
 				           </td>
-                                           <td nowrap align="right" width="10%">会员昵称:</td>
+                                           <td nowrap align="right" width="10%"><b>会员昵称:</b></td>
 					    <td width="30%">                                           
                                             {$obj.nickname}
 				           </td>
 					   </tr>
                                            
                                           <tr>
-					    <td nowrap align="right" width="10%">企业性质:</td>
+					    <td nowrap align="right" width="10%"><b>企业性质:</b></td>
 					    <td width="30%">
                                              <if condition="'003001' eq $obj['nature']">
                                                 公司
@@ -45,25 +45,25 @@
                                                 平台
                                             </if>
 				           </td>
-                                           <td nowrap align="right" width="10%">所属行业:</td>
+                                           <td nowrap align="right" width="10%"><b>所属行业:</b></td>
 					    <td width="30%">
                                             {$trade_list[$obj['trade']]}
 				           </td>
 					   </tr>
 						
 					   <tr>
-					    <td nowrap align="right" width="10%">公司名称:</td>
+					    <td nowrap align="right" width="10%"><b>公司名称:</b></td>
 					    <td width="30%">
                                             {$obj.company_name}
 				           </td>
-                                           <td nowrap align="right" width="10%">涉及金额:</td>
+                                           <td nowrap align="right" width="10%"><b>涉及金额:</b></td>
 					    <td width="30%">
                                             {$obj.amount}
 				           </td>
 					   </tr>                                           
 						
                                             <tr>
-					    <td nowrap align="right" width="10%">公司网址:</td>
+					    <td nowrap align="right" width="10%"><b>公司网址:</b></td>
 					    <td width="30%">
                                             {$obj.website}
 				           </td>
@@ -74,7 +74,7 @@
 					   </tr>
                                                                                        
                                            <tr>
-					    <td nowrap align="right" width="10%">曝光内容:</td>
+					    <td nowrap align="right" width="10%"><b>曝光内容:</b></td>
 					    <td width="30%">
                                             {$obj.content}
 				           </td>
@@ -83,7 +83,7 @@
 					   </tr>
                                            
                                            <tr>
-					    <td nowrap align="right" width="10%">图片:</td>
+					    <td nowrap align="right" width="10%"><b>图片:</b></td>
 					    <td width="30%">
                                             <if condition="0 neq $obj['pic_1']">
                                             <a style="cursor: pointer;" onclick="view_pic('{$obj.pic_1_url}');"><img src="{$obj.pic_1_url}" width="25px" height="25px"/></a>
@@ -104,7 +104,7 @@
 					   </tr>
                                            
                                            <tr>
-					    <td nowrap align="right" width="10%">顶数:</td>
+					    <td nowrap align="right" width="10%"><b>顶数:</b></td>
 					    <td width="30%">
                                             {$obj.top_num}
 				           </td>

@@ -43,3 +43,7 @@ top_num 顶总数
 has_child 审核通过的回复数量
 添加so_com_exposal_top表
 
+2015-4-10
+so_com_exposal表添加
+childs 未审核的回复数量
+

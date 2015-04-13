@@ -18,7 +18,7 @@ class LoginController extends BaseController {
                     && 0 == $result['content']['is_success'])
                     {
                         session('admin_name', I('post.admin_name'));
-                        $this->echo_message(0,'成功登录', C('Template_pre')."Index/index");
+                        $this->echo_message(0,'成功登录', C('admin_url'));
                         //$this->redirect("Index/index");
                         exit();
                     }
