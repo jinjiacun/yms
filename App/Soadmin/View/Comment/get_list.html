@@ -162,7 +162,9 @@ function getDate(timestamp) {
                     <volist name="item.re_sub.list" id="sub_item">
                         <tr id="{$sub_item.id}"
                         pId="{$sub_item.parent_id}"
-                        <if condition="0 eq $sub_item['has_child_ex']">
+                        <if condition="(0 eq $sub_item['has_child_ex']) AND (0 eq $_GET['status'])">
+                        hasChild="true"
+                        <elseif condition="(1 eq $_GET['status']) AND (0 neq $sub_item['has_child'])"/>
                         hasChild="true"
                         </if>
                         >                            
@@ -226,7 +228,7 @@ function getDate(timestamp) {
                     <!--超过10条-->
                   <if condition="10 lt $item['re_sub']['record_count']">
                     <tr>
-                    <td id="page_{$item.id}" colspan="10" bgcolor="#FFFFFF" style="text-align:right;">
+                    <td id="page_{$item.id}" colspan="11" bgcolor="#FFFFFF" style="text-align:right;">
                       
                     </td>
                     </tr>
@@ -294,9 +296,13 @@ function getDate(timestamp) {
                                 //alert(cur_url);
                                 var next_obj  = get_nextsibling(cur_obj);
                                 //清除当前的列表
-                                while(next_obj
+                                while((next_obj
                                 && next_obj.getAttribute('depth') == 2
-                                && next_obj.getAttribute('pId') == pId
+                                && next_obj.getAttribute('pId') == pId)
+                                || (
+                                next_obj
+                                && next_obj.getAttribute('depth') == 3
+                                )
                                 )
                                 {
                                     var parent_node = next_obj.parentNode;
@@ -306,6 +312,8 @@ function getDate(timestamp) {
                                         next_obj = get_nextsibling(cur_obj);
                                     }
                                 }
+                            
+                                
                                 //清空分页样式
                                 var child_length = page_control.childNodes.length;
                                 var page_childs = page_control.childNodes;
@@ -331,11 +339,11 @@ function getDate(timestamp) {
                                             tr.setAttribute("pId", pId);
                                             tr.setAttribute("class", item.parent_id);
                                             tr.setAttribute("depth", 2);
-                                            if (0 == item.has_child)
+                                            if (0 == item.has_child_ex)
                                             {
                                                 //alert(item.has_child);
                                                 //alert(item.id);
-                                                tr.setAttribute("has_child", true);
+                                                tr.setAttribute("hasChild", true);
                                             }
                                             tr.style.display = "table-row";
                                             if(0 == i)
@@ -355,14 +363,29 @@ function getDate(timestamp) {
                                         
                                             //选择和id
                                             var td = document.createElement("td");
-                                            td.className = "ssub";
+                                            td.className = "sub";
                                             td.innerHTML = '<input type="checkbox" name="id[]" value="'+item.id+'|'+item.company_id+'"/> \
                                                             <span>'+item.id+'</span>';
                                             tr.appendChild(td);
                                             
+                                            //标记
+                                            td = document.createElement("td");
+                                            td.className = "sub";
+                                            td.style.textAlign = "center";
+                                            td.innerHTML = '<span class="prev_span"> \
+                                                            <span class="default_node default_leaf" arrow="true"></span>';
+                                            //如果有三层回复                                            
+                                            if (0 == item.has_child_ex) {
+                                             td.innerHTML = '<span class="prev_span"> \
+                                                             <span class="default_node default_vertline"></span> \
+                                                             </span> \
+                                                             <span class="default_active_node default_shut" arrow="true"></span>';
+                                            }
+                                            tr.appendChild(td);
+                                            
                                             //会员id
                                             td = document.createElement("td");
-                                            td.style.backgroundColor = '#C0C0C0';
+                                            td.className = "sub";
                                             td.style.height = '20px';
                                             td.style.textAlign = "center";
                                             td.innerHTML = item.user_id;
@@ -370,21 +393,21 @@ function getDate(timestamp) {
                                         
                                             //会员昵称
                                             td = document.createElement("td");
-                                            td.style.backgroundColor = '#C0C0C0';
+                                            td.className = "sub";
                                             td.style.textAlign = "center";
                                             td.innerHTML = item.nickname;
                                             tr.appendChild(td);
                                         
                                             //企业
                                             td = document.createElement("td");
-                                            td.style.backgroundColor = "#C0C0C0";
+                                            td.className = "sub";
                                             td.style.textAlign = "center";
                                             td.innerHTML = item.company_name;
                                             tr.appendChild(td);
                                         
                                             //类型
                                             td = document.createElement("td");
-                                            td.style.backgroundColor = "#C0C0C0";
+                                            td.className = "sub";
                                             td.style.textAlign = "center";
                                             if('005001' == item.type)
                                             {
@@ -402,37 +425,46 @@ function getDate(timestamp) {
                                         
                                             //主体
                                             td = document.createElement("td");
-                                            td.style.backgroundColor = "#C0C0C0";
+                                            td.className = "sub";
                                             td.style.textAlign = "center";
                                             td.innerHTML = '';
                                             tr.appendChild(td);
                                         
                                             //回复
                                             td = document.createElement('td');
-                                            td.style.backgroundColor = "#C0C0C0";
+                                            td.className = "sub";
                                             td.style.textAlign = "center";
                                             td.innerHTML = item.content;
                                             tr.appendChild(td);
                                         
                                             //评论日期
                                             td = document.createElement("td");
-                                            td.style.backgroundColor = "#C0C0C0";
+                                            td.className = "sub";
                                             td.style.textAlign = "center";
                                             td.innerHTML = getDate(item.add_time);
                                             tr.appendChild(td);
                                             
                                             //审核日期
                                             td = document.createElement("td");
-                                            td.style.backgroundColor = "#C0C0C0";
+                                            td.className = "sub";
                                             td.style.textAlign = "center";
-                                            td.innerHTML = item.validate_time;
+                                            if(0 == item.is_validate)
+                                                td.innerHTML = '--';
+                                            else
+                                                td.innerHTML = getDate(item.validate_time);
                                             tr.appendChild(td);
                                         
                                             //操作
                                             td = document.createElement("td");
-                                            td.style.backgroundColor = "#C0C0C0";
+                                            td.className = "sub";
                                             td.style.textAlign = "center";
-                                            td.innerHTML = '<a onclick="return confirmdel(\'确定要删除吗\')" \
+                                            if(0 == item.is_validate && 0 == item.is_delete)
+                                            {
+                                                td.innerHTML = '<a href="javascript:request_get(\'__APP__/Soadmin/Comment/validate/id/'+
+                                                               item.id+'/parent_id/'+item.parent_id+'/company_id/'+item.company_id
+                                                               +');">审核</a> ';
+                                            }                                            
+                                            td.innerHTML += '<a onclick="return confirmdel(\'确定要删除吗\')" \
                                                              href="javascript:request_get(\'/yms/index.php/Soadmin/Comment/delete/parentid/'+item.parent_id+'/id/'+item.id+'/company_id/'+item.company_id+'/is_validate/'+item.is_validate+'\');"> \
                                                             删除</a>';
                                             tr.appendChild(td);
@@ -571,19 +603,25 @@ $(function(){
             
             $treeTable.addChilds(html);
             */
-
             
             cur_obj = document.getElementById(id);;
             var pId = 0;
             pId = $("#"+id).attr("pId");
             var cur_url = location.href;
             //判定是否以get_list结尾,否则截断
+            var off_last = cur_url.lastIndexOf("get_list");
             var off_last = cur_url.lastIndexOf("html");
-            if(4 == cur_url.length- off_last) 
+            if(8 == cur_url.length- off_last) 
             {
-                cur_url += '?';
+                cur_url += "?&parent_id="+id+"&s_p="+1;
             }
-            cur_url += "?parent_id="+id+"&s_p="+1;
+            else if (4 == cur_url.length- off_last)
+            {
+                cur_url += "?&parent_id="+id+"&s_p="+1;
+            }
+            else{
+                cur_url += "&parent_id="+id+"&s_p="+1;
+            }
             var next_obj = get_nextsibling(cur_obj);
             jQuery.ajax({  
                                     type:"get",  
@@ -594,6 +632,9 @@ $(function(){
                                         var html = '';                                        
                                         for(var i= 0; i< data.record_count; i++)
                                         {
+                                          if (null == data.list[i]) {
+                                            continue;
+                                          }
                                           var item = data.list[i];
                                           var tr = '<tr id="'+item.id+'" pId="'+item.parent_id+'"">';
                                           var td = ' \

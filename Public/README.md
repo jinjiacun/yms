@@ -47,3 +47,6 @@ has_child 审核通过的回复数量
 so_com_exposal表添加
 childs 未审核的回复数量
 
+2015-4-14
+so_attention表添加
+

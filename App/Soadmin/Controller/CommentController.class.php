@@ -119,8 +119,25 @@ class CommentController extends BaseController {
                 $tmp = explode('|', $v);
                 $id_list[] = $tmp[0];
                 $company_id_list[] = $tmp[1];
+                $content = array(
+                    'id'         => $tmp[0],
+                    'company_id' => $tmp[1],
+                );
+                $result = $this->_call();
+                if($result
+                && 200 == $result['status_code']
+                && 0 == $result['content']['is_success']
+                )
+                {
+                }
+                else
+                {
+                    $this->echo_message(-1,"操作失败");
+                    exit();
+                }
             }
 
+            /*
             $result = $this->_call('Comment.validate_mul', 
                                    array('id'=>$id_list,
                                          'company_id'=>$company_id_list));
@@ -137,6 +154,9 @@ class CommentController extends BaseController {
                 $this->echo_message(-1,'操作失败');
                 exit();
             }
+            */
+            $this->echo_message(0,'成功操作', C('Template_pre').'Comment/get_list');
+            exit();
         }
         
         //批量删除
