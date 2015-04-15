@@ -1,0 +1,203 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>首页--搜黑</title>
+<link type="text/css" rel="stylesheet" href="__PUBLIC__/Home/css/main.css"/>
+<script type="text/javascript" src="__PUBLIC__/js/jquery-1.8.3.min.js" ></script>
+<script type="text/javascript" src="__PUBLIC__/js/Validform_v5.3.2.js" ></script>
+<script type="text/javascript" src="__PUBLIC__/Home/js/main.js" ></script>
+<script src="__PUBLIC__/Home/js/scrolling.js" type="text/javascript"></script> 
+</head>
+
+<body style="overflow-x:hidden;">
+<!--Begin--登陆-->   
+<include file="Public:login" />
+<div id="wrap">
+
+<!--头部--Begin-->   
+  <include file="Public:top" />
+  <div class="sy_headerbox">
+    <div class="sy_header">
+              <div class="sy_header_logo"><a href="#"><img src="__PUBLIC__/Home/images/logo1.png" /></a></div>
+              <div class="searchbox">
+                    <ul>
+                      <li class="active">全部</li>
+                      <li>公司</li>
+                      <li>平台</li>
+                      <li>网址</li>
+                    </ul>
+                    <div class="chaxun">
+                      <form class="registerform" action="__URL__/search" name="theForm" method="post" onsubmit="return ValidateFile()">
+                       <input name="search_name" id="search_name_ex" type="text" class="chuax1" value="请输入公司名称、平台名称或网址" onblur="if (this.value =='') this.value='请输入公司名称、平台名称或网址'" onclick="if (this.value == '请输入公司名称、平台名称或网址') this.value = '' " />
+                       <input name="submit" type="submit" class="chuax2" value="立即查询" />
+                      </form>
+                    </div>
+              </div>
+      </div>
+  </div>
+  
+  <!--头部--End--> 
+
+<!--内容--Begin-->     
+   <div id="content">
+     <div class="cont_lt">
+              <div class="cont_lta">
+                <h2 class="titles"><a href="__APP__/home">首页</a></h2>
+                <ul>
+                   <li><a href="javascript:void(0)" class="ptcx">平台查询</a></li>
+                   <li><a class="wybg_a" href="__APP__/home/Inexposure/exposure" target='_blank'>我要曝光</a></li>
+                   <li><a class="wybg_a" href="__APP__/home/Inexposure/authentication" target='_blank'>合规认证</a></li>
+                   <li><a href="__APP__/home/Ranking/machine" tassrget='_blank'>曝光台</a></li>
+                   <li><a href="__APP__/home/Regulators/regulators" target='_blank'>监管机构</a></li>
+                 </ul>
+                 <div class="ewm"><img src="__PUBLIC__/Home/images/pic01.jpg" width="104" height="140" /></div>
+                <div class="wybg"><a href="__APP__/home/Inexposure/exposure">我要曝光</a></div>
+          </div>
+              <div class="cont_ltb">
+                 <h3>支持机构</h3>
+                <ul>
+                     <li><a href="http://www.cngold.com.cn" target='_blank'><img src="__PUBLIC__/Home/images/lg05.jpg"/></a></li>
+                     <li><a href="http://www.fx678.com" target='_blank'><img src="__PUBLIC__/Home/images/lg06.jpg"/></a></li>
+                     <li><a href="http://www.eastmoney.com" target='_blank'><img src="__PUBLIC__/Home/images/lg07.jpg"/></a></li>
+                     <li><a href="http://www.xinhuanet.com" target='_blank'><img src="__PUBLIC__/Home/images/lg08.jpg"/></a></li>
+                </ul>
+           </div> 
+     </div>
+     <div class="cont_rt">
+         
+         
+       <div class="centbox">
+           <div class="centbox_lt">
+             <div class="bgls">
+                <h3>曝光动态</h3>
+                <p>已有<span>{$user_amout}</span>名网友曝光了<span>{$record_count|subtext=15}</span>个平台</p>
+             </div>
+             <div class="dongtaibox">
+             <div class="room_show">
+                <div class="room_shadow">
+              <div class="room_hide_all">
+                <div class="room_hide" id="room_hide1">
+                  <volist id='bgdt' name='bgdt' key="k">
+                    <div class="room_show_item">
+                     <dl>
+                         <dt>{$bgdt.add_time|date="H:i:s",###}</dt>
+                         <dd>
+                           <div class="txt">
+                               <h4>{$bgdt.nickname}</h4>
+                               <p>被曝平台：<span>{$bgdt.company_name}</span></p>
+                           </div>
+                           <div class="neirong"><em class="em1"></em><p>{$bgdt.content|subtext=55}<em class="em2"></em></p></div>
+                         </dd>
+                     </dl>
+                    </div>
+                 </volist> 
+                </div>
+                <div class="room_hide" id="room_hide2"></div>
+              </div>
+             </div>
+             </div>
+           </div>
+           </div>
+           <div class="centbox_rt">
+             <ul class="zuiduo">
+               <li class="zuiduoa"><a href="#"><img src="__PUBLIC__/Home/images/btn10.png"/></a></li>
+               <li class="zuiduob"><a href="__APP__/Home/Query/query_hpt/resid/{$bg_max}/p/1"><img src="__PUBLIC__/Home/images/btn11.png"/></a></li>
+               <li class="zuiduoc"><a href="__APP__/Home/Query/query_hpt/resid/{$jh_max}/p/1"><img src="__PUBLIC__/Home/images/btn12.png"/></a></li>
+             </ul>
+             <div class="jgous">
+               <h3>查询动态</h3>
+                   <div id="demo">
+                    <ol>
+                    <volist id='cx_list' name='cx_list'>
+                      <li>
+                        <p><span>{$cx_list.add_time|date="H:i:s",###}</span>{$cx_list.nickname}</p>
+                        <p>查询了<a href="#" title="{$cx_list.keyword}">{$cx_list.keyword|subtext=10}</a></p>
+                      </li>
+                    </volist>
+                    </ol>
+                </div>
+               <h3>监管机构<span>正规来自有效合法的监管</span></h3>
+               <ul class="jgjg">
+                 <li><a href="#" target='_blank'><img src="__PUBLIC__/Home/images/lg01.jpg" /></a></li>
+                 <li><a href="#" target='_blank'><img src="__PUBLIC__/Home/images/lg02.jpg" /></a></li>
+                 <li><a href="#" target='_blank'><img src="__PUBLIC__/Home/images/lg03.jpg" /></a></li>
+                 <li><a href="#" target='_blank'><img src="__PUBLIC__/Home/images/lg04.jpg" /></a></li>
+                 <li><a href="#" target='_blank'><img src="__PUBLIC__/Home/images/lg09.jpg" /></a></li>
+                 <li><a href="#" target='_blank'><img src="__PUBLIC__/Home/images/lg10.jpg" /></a></li>
+                 <li><a href="#" target='_blank'><img src="__PUBLIC__/Home/images/lg11.jpg" /></a></li>
+                 <li><a href="#" target='_blank'><img src="__PUBLIC__/Home/images/lg12.jpg" /></a></li>
+               </ul>
+             </div>
+           </div>
+       </div>
+     </div>
+     <div class="clear"></div>
+  </div>
+<!--内容--End--> 
+
+<!--底部--Begin-->     
+   <include file="Public:footer" />
+<!--底部--End--> 
+
+</div>
+</body>
+<script type="text/javascript">
+  function ValidateFile(){ 
+      var checkbox_ok = document.getElementById("search_name_ex").value;
+      var userid      = '{$userid}'; 
+      if(checkbox_ok == "请输入公司名称、平台名称或网址" 
+         || checkbox_ok == ""){ 
+          alert("请输入搜索内容！"); 
+          return false; 
+      }
+      if (userid == "") {
+      	  //alert('请登录后搜索！');
+      	  $(".bd_wd").css("width", $(document).width());
+          $(".bd_wd").css("height", $(document).height());
+          $(".bd_wd").show();
+          $("#tcwindows1").show();
+      	  return false;
+      }
+    }
+</script>  
+<script>         
+        $(function(){
+          
+          var z = setInterval("auto_scroll()",2000);
+          $(".room_show").hover(function(){
+            clearInterval(z);
+          },function(){
+            z = setInterval("auto_scroll()",2000);
+          }); 
+  
+          
+          })
+          var le_height = $("#room_hide1").height();
+             if(le_height > 685){
+          //room scroll
+          var room_cout = 0;
+          var h = 0;
+          var tab1=document.getElementById("room_hide1");
+          var tab2=document.getElementById("room_hide2");
+            tab2.innerHTML=tab1.innerHTML;
+             
+          function auto_scroll()
+          {   
+            var room_num = $("#room_hide1").children(".room_show_item").length;
+            if(room_cout < room_num)
+            {
+              h = h - ($("#room_hide1").children(".room_show_item").eq(room_cout).height() );
+              $(".room_hide_all").animate({top:""+h+""});
+              room_cout++;
+            }
+            else
+            {
+              room_cout = 0;
+              h = 0;
+              $(".room_hide_all").css({top:""+h+""});
+            }
+          }
+          }
+</script>
+</html>

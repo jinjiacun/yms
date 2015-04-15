@@ -1,0 +1,240 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>企业认证--搜黑</title>
+<link type="text/css" rel="stylesheet" href="__PUBLIC__/Home/css/main.css"/>
+<script type="text/javascript" src="__PUBLIC__/js/jquery-1.8.3.min.js" ></script>
+<script type="text/javascript" src="__PUBLIC__/js/Validform_v5.3.2.js" ></script>
+<script type="text/javascript" src="__PUBLIC__/Home/js/main.js" ></script>
+</head>
+
+<body>
+
+<!--提交成功-->
+<div class="tj_box" style="display:none; top:45%">
+  <div class="tj_box_close"><a href="javascript:void(0)">关闭</a></div>
+  <div class="tj_box_nr">
+     <h3>提交成功，稍后会有相关负责人员联系您。</h3>
+     <p>如有疑问，请联系：021-31063666-2017</p>
+     <input name="" type="button" value="确认" />
+  </div>
+</div>
+
+<!--没有查询到相关认证机构-->
+<div class="tjsb_box" style="display:none; top:15%">
+  <div class="tj_box_close"><a href="javascript:void(0)">关闭</a></div>
+  <div class="tjsb_box_nr">
+     <h3>没有查询到相关认证机构</h3>
+  </div>
+</div>
+
+<!--Begin--登陆-->   
+<include file="Public:login" />
+<!--End--登陆--> 
+<div id="wrap">
+
+<!--头部--Begin-->   
+  <include file="Public:top" />
+<!--头部--End--> 
+
+<!--内容--Begin-->     
+   <div id="content">
+     <div class="renzheng">
+       <h2>申请搜黑可信企业认证</h2>
+       <div class="txneirong">
+   		 <p class="txnr_ts">请如实填写申请企业或机构的相关信息后，提交认证。</p>
+        <form class="registerform" name="theForm" method="post" enctype="multipart/form-data" onsubmit="return ValidateFile()">
+         <div class="xzqyxz">
+                <span>企业性质：</span>
+                <select name="nature">
+                  <option value="003001">公司</option>
+                  <option value="003002">平台</option>
+                </select>
+                <span>所属行业：</span>
+                <select name="trade" class="gjshu">
+                  <option value="004001">贵金属</option>
+                  <option value="004002">外汇</option>
+                </select>
+         </div>
+         <div class="txkuang">
+            <h3><span>基本信息</span></h3>
+            <dl>
+              <dt>公司全称：</dt>
+              <dd>
+                <input name="company_name" type="text" class="text1" datatype="s" nullmsg="不能为空！" /><span>*</span>
+                <em class="Validform_checktip"></em>
+              </dd>
+            </dl>
+            <dl>
+              <dt>公司简称：</dt>
+              <dd>
+                <input name="corporation" type="text" class="text1"/>
+              </dd>
+            </dl>
+            <dl>
+              <dt>注册地址：</dt>
+              <dd>
+                <input name="reg_address" type="text" class="text1" datatype="s" nullmsg="不能为空！" /><span>*</span>
+                <em class="Validform_checktip"></em>
+              </dd>
+            </dl>
+            <dl>
+              <dt>企业类型：</dt>
+              <dd>
+                <input name="company_type" type="text" class="text1" datatype="s" nullmsg="不能为空！" /><span>*</span>
+                <em class="Validform_checktip"></em>
+              </dd>
+            </dl>
+            <dl>
+              <dt>营业执照：</dt>
+              <dd>
+                <input type="file" name="busin_license" id="busin_license" class="file" /><span>*</span>
+                <em class="Validform_checktip"></em>
+              </dd>
+            </dl>
+            <dl>
+              <dt>机构代码证：</dt>
+              <dd>
+                <input type="file" name="code_certificate" id="code_certificate"  class="file" /><span>*</span>
+                <em class="Validform_checktip"></em>
+              </dd>
+            </dl>
+            <dl>
+              <dt>联系电话：</dt>
+              <dd>
+                <input name="telephone" type="text" class="text1" datatype="n5-11" nullmsg="输入电话号码！" errormsg="输入的电话有误" /><span>*</span>
+                <em class="Validform_checktip"></em>
+              </dd>
+            </dl>
+            <dl>
+              <dt>官方网站：</dt>
+              <dd>
+                <input name="website" type="text" class="text1" datatype="url" nullmsg="不能为空" /><span>*</span>
+                <em class="Validform_checktip"></em>
+              </dd>
+            </dl>
+            <dl>
+              <dt>官网备案：</dt>
+              <dd>
+                <input name="record" type="text" class="text1" datatype="s" nullmsg="不能为空" /><span>*</span>
+                <em class="Validform_checktip"></em>
+              </dd>
+            </dl>
+         </div>
+         <div class="txkuang nobian">
+            <h3><span>资质信息</span></h3>
+            <dl>
+              <dt>代理平台：</dt>
+              <dd>
+                <input name="agent_platform" type="text" class="text1" datatype="* , /^(([^\^\.<>%&',;=?$':#@!~\]\[{}\\/`\|])*)$/" ignore="ignore" />
+                <em class="Validform_checktip"></em>
+              </dd>
+            </dl>
+            <dl>
+              <dt>会员编号：</dt>
+              <dd>
+                <input name="mem_sn" type="text" class="text1" datatype="* , /^(([^\^\.<>%&',;=?$':#@!~\]\[{}\\/`\|])*)$/" ignore="ignore" />
+                <em class="Validform_checktip"></em>
+              </dd>
+            </dl>
+            <dl>
+              <dt>资质证明：</dt>
+              <dd>
+                <input type="file" name="certificate" id="certificate" class="file"/>
+              </dd>
+            </dl>
+            <dl>
+              <dt>查询网址：</dt>
+              <dd>
+                <input name="find_website" type="text" class="text1" datatype="url" ignore="ignore" />
+                <em class="Validform_checktip"></em>
+              </dd>
+            </dl>
+            <dl>
+              <dt>&nbsp;</dt><dd><input name="submit" type="submit" value="提交认证" class="textn1" /></dd>
+            </dl>     
+         </div>
+        </form>
+       </div>
+       
+     
+     </div>
+  </div>
+<!--内容--End--> 
+
+<!--底部--Begin-->     
+<include file="Public:footer" />
+<!--底部--End--> 
+
+</div>
+</body>
+<script type="text/javascript">
+    //表单验证插件
+    $(function(){
+      $(".registerform").Validform({
+        tiptype:function(msg,o,cssctl){
+          if(!o.obj.is("form")){
+            var objtip=o.obj.siblings(".Validform_checktip");
+            cssctl(objtip,o.type);
+            objtip.text(msg);
+          }
+        }
+      });
+    })
+    //图片上传验证
+    function ValidateFile(){ 
+      var tmp     = document.getElementById("busin_license").value; 
+      var tmp1    = document.getElementById("code_certificate").value;
+      var tmp2    = document.getElementById("certificate").value;
+      var tmpStr  = tmp.substring(tmp.lastIndexOf('.')+1,tmp.length).toLowerCase(); 
+      var tmpStr1 = tmp1.substring(tmp1.lastIndexOf('.')+1,tmp1.length).toLowerCase();
+      var tmpStr2 = tmp2.substring(tmp2.lastIndexOf('.')+1,tmp2.length).toLowerCase();
+      if(tmpStr == ""){ 
+          alert("请上传营业执照！"); 
+          return false; 
+      }else if(!/.(gif|jpg|jpeg|png|GIF|JPG|png)$/.test(tmp)){
+		  alert("营业执照类型必须是.gif,jpeg,jpg,png中的一种");
+		  return false;
+	  }else{
+	  	  var image = new Image();
+	      image.src = tmp;
+	      var filesize = image.filesize;
+	      if(filesize>358400){
+	        alert('请上传大小小于350k的图片');
+	        return false;
+	      }
+	  }
+      if (tmpStr1 == "") {
+          alert("请上传机构代码证！"); 
+          return false;
+      }else if(!/.(gif|jpg|jpeg|png|GIF|JPG|png)$/.test(tmp1)){
+		  alert("机构代码证类型必须是.gif,jpeg,jpg,png中的一种");
+		  return false;
+	  }else{
+	  	  var image = new Image();
+	      image.src = tmp1;
+	      var filesize = image.filesize;
+	      if(filesize>358400){
+	        alert('请上传大小小于350k的图片');
+	        return false;
+	      }
+	  }
+	  if(tmpStr2 != ""){
+		  if(!/.(gif|jpg|jpeg|png|GIF|JPG|png)$/.test(tmp2)){
+			  alert("资质证明类型必须是.gif,jpeg,jpg,png中的一种");
+			  return false;
+		  }else{
+		  	  var image = new Image();
+		      image.src = tmp2;
+		      var filesize = image.filesize;
+		      if(filesize>20480){
+		        alert('请上传大小小于20k的图片');
+		        return false;
+		      }
+	     }
+	  }
+    }
+</script>
+
+</html>

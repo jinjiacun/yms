@@ -1,0 +1,175 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>个人中心--搜黑</title>
+<link type="text/css" rel="stylesheet" href="__PUBLIC__/Home/css/main.css"/>
+<script type="text/javascript" src="__PUBLIC__/js/jquery-1.8.3.min.js" ></script>
+<script type="text/javascript" src="__PUBLIC__/Home/js/main.js" ></script>
+<style type="text/css">
+  .sr{color: red;font-size: 13px;width: 30px;}
+</style>
+</head>
+
+<body>
+
+<div class="tcwindows_grzx">
+<iterate name="us_list" id="vo">
+  <dl>
+     <dt>用户昵称：</dt>
+     <dd><input name="nickname" type="text" class="gr_txt1 gr_txt" value="{$vo.UI_NickName}" /></dd>
+  </dl>
+  <dl>
+    <dt>性别：</dt>
+    <dd>
+        <input name="sex" type="radio" id="checkbox-id" value="1" class="xinbie" <if condition="$vo.UI_Sex eq 1 ">checked="checked"</if> />男&nbsp;&nbsp;&nbsp;&nbsp;
+        <input name="sex" type="radio" id="checkbox-id" value="0"  class="xinbie" <if condition="$vo.UI_Sex eq 0 ">checked="checked"</if>/>女
+        <input name="sex" type="radio" id="checkbox-id" value="-1"  class="xinbie" <if condition="$vo.UI_Sex eq -1 ">checked="checked"</if>/>未知
+    </dd>
+  </dl>
+  <dl>
+    <dt>绑定手机：</dt>
+    <dd>{$vo.UI_LoginNames}</dd>
+  </dl>
+  <dl>
+    <dt>生日：</dt>
+    <dd><input type="text" name="birthday" class="gr_txt2 gr_txt" value="{$vo.UI_BirthDay}"><br>
+    <em class="sr">生日格式：1900-01-01</em>
+    </dd>
+  </dl>
+  <dl>
+    <dt>职业：</dt>
+    <dd><input name="job" type="text" class="gr_txt3 gr_txt"  value="{$vo.UI_Job}" /></dd>
+  </dl>
+  <dl>
+    <dt>所在地：</dt>
+    <dd><input type="text" name="address" class="gr_txt4 gr_txt" value="{$vo.UI_Address}"></dd>
+  </dl>
+  <dl>
+    <dt>&nbsp;</dt>
+    <dd>
+      <input name="button" type="button" id="{$vo.UI_Id}" value="修 改" class="xigs" />
+      <a href="javascript:void(0)" class="qvxiao">取 消</a>
+    </dd>
+  </dl>
+</iterate>
+</div>
+
+
+
+<div id="wrap">
+
+<!--头部--Begin-->   
+  <div class="header_zc">
+    <div class="header_box">
+      <div class="zhuce_logo">
+        <a href="__APP__/Home/Index/index" class="zhuce1"><img src="__PUBLIC__/Home/images/logo3.png"/></a>
+        <a class="zhuce2">个人中心</a>
+       </div>
+      <div class="back_sy"><a href="__APP__/Home/Index/index">搜黑首页</a></div>
+    </div>
+  </div>
+  
+  
+  <!--头部--End--> 
+
+<!--内容--Begin-->     
+   <div id="content_ny">
+    	 <div class="zhucebox">
+           <div class="center_gr">
+             <iterate name="us_list" id="vo">
+               <div class="center_gr_lt">
+                 <dl>
+                     <dt><img src="{$vo.UI_Avatar}"/></dt>
+                 </dl>
+               </div>
+               
+               <div class="center_gr_ct">
+                 <dl><dt>用户昵称：</dt><dd><span>{$vo.UI_NickName}</span><a href="javascript:void(0)" class="xggrxx">[ 修改个人信息 ]</a></dd></dl>
+                 <dl><dt>性别：</dt>
+                  <dd>
+                    <if condition="$vo.UI_Sex eq 1 "> 男
+                    <elseif condition="$vo.UI_Sex eq 0 "/>女
+                    <else /> 未知
+                    </if>
+                  </dd>
+                 </dl>
+                 <dl><dt>生日：</dt><dd>{$vo.UI_BirthDay}</dd></dl>
+                 <dl><dt>职业：</dt><dd>{$vo.UI_Job}</dd></dl>
+                 <dl><dt>所在地：</dt><dd>{$vo.UI_Address}</dd></dl>
+               </div>
+               <div class="center_gr_rt"><img src="__PUBLIC__/Home/images/pic02.jpg" width="274" height="179" /></div>
+               </iterate>
+           </div>
+    	 </div>
+  </div>
+<!--内容--End--> 
+
+<!--底部--Begin-->     
+   <div id="footer_zc">
+                 <p>Copyright © 2014 souhei.com 搜黑 版权所有 复制必究</p> 
+                 <p>沪ICP备13040259号-1</p>
+   </div>
+<!--底部--End--> 
+
+</div>
+<script type="text/javascript">
+  $(function(){
+    //用户信息修改
+    $('.xigs').click(function(){
+              var nickname = $(this).parents('.tcwindows_grzx').find('.gr_txt1').val();
+              var sex      = $('input[name="sex"]:checked').val();
+              var birthday = $(this).parents('.tcwindows_grzx').find('.gr_txt2').val();
+              var job      = urlencode($(this).parents('.tcwindows_grzx').find('.gr_txt3').val());
+              var address  = urlencode($(this).parents('.tcwindows_grzx').find('.gr_txt4').val());
+              var userid   = $(this).attr('id');
+              var regex    = /^[^_][A-Za-z]*[a-z0-9_]*$/ ;
+              var ret      = regex.test(nickname);
+              //alert(nickname+'/'+birthday+'/'+job+'/'+address+'/'+userid+'/'+sex);
+              //return false;
+              if (nickname == "") {
+                alert('昵称不能为空');
+                return false;
+              }else if(ret == false) {
+                 alert('只能输入字母和数字');
+                 return false;
+              }else if(nickname.length > 16){
+                alert('昵称长度最多为16位字符');
+                return false;
+              }
+              if (userid == "") {
+                 alert("请登录后在修改！"); 
+                 return false; 
+              }
+              jQuery.ajax({  
+                  type:"post",  
+                  url:"__URL__/information_modify/nickname/"+nickname+"/sex/"+sex+"/birthday/"+birthday+"/job/"+job+"/address/"+address+"/userid/"+userid+"",
+                  timeout: 5000,  
+                  dataType:"json",  
+                  data:{nickname:nickname,
+                        userid:userid,
+                        sex:sex,
+                        birthday:birthday,
+                        job:job,
+                        address:address},
+                  success: function aa(data) {  
+                       if (0 == data) {
+                            alert('修改成功！');
+                            window.location.reload();  
+                       }else{
+                          alert('修改失败！');
+                       }
+                  }  
+              })  
+      });
+
+  });
+//urlencode数据转换
+  function urlencode (str) {  
+      str = (str + '').toString();   
+      return encodeURIComponent(str).replace(/!/g, '%21').replace(/'/g, '%27').replace(/\(/g, '%28').  
+      replace(/\)/g, '%29').replace(/\*/g, '%2A').replace(/%20/g, '+');  
+  } 
+</script>
+</body>
+</html>

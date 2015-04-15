@@ -1,0 +1,452 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>查询结果--搜黑</title>
+<link type="text/css" rel="stylesheet" href="__PUBLIC__/Home/css/main.css"/>
+<link type="text/css" rel="stylesheet" href="__PUBLIC__/Home/css/lightbox.css"/>
+<script type="text/javascript" src="__PUBLIC__/js/jquery-1.8.3.min.js" ></script>
+<script type="text/javascript" src="__PUBLIC__/Home/js/main.js" ></script>
+<script type="text/javascript" src="__PUBLIC__/Home/js/lightbox.js" ></script>
+<script type="text/javascript" src="__PUBLIC__/js/jPages.js" ></script>
+<style type="text/css">
+	.jp-disabled{
+		display: none;
+	}
+	.wysyij a{
+		margin-left: 5px;
+		cursor:pointer;
+	}
+	.wysyij a:hover{
+		color: #3dafea;
+	}
+	.wysyij a.jp-current{
+		color: #3dafea;
+	}
+	.wysyij a.jp-next:hover{
+		color: #3dafea;
+	}
+</style>
+</head>
+
+<body>
+<!--Begin--登陆-->   
+<include file="Public:login" />
+<!--End--登陆--> 
+<div id="wrap">
+
+<!--头部--Begin-->   
+  <include file="Public:top" />
+<!--头部--End-->
+
+<!--内容--Begin-->     
+   <div id="content">
+     <iterate name="yrz_list" id="vo">
+     <div class="hptbox1 yrzbox1">
+       <div class="dibubj">
+              <h2><span>{$vo.company_name}</span>的查询结果：</h2>
+              <div class="hpt_box">
+                  <dl>
+                      <dt><img src="__PUBLIC__/Home/images/pic18.jpg" /></dt>
+                      <dd>
+                          <p class="wsr1">公司资料已通过合规认证</p>
+                          <p class="wsr2">经监管机构核实，公司资料完整可信！</p>
+                      </dd>
+                  </dl>
+             </div>
+        </div>
+     </div>
+     <div class="hptbox2 yrzbox2">
+        <dl>
+        	<dt><img src="{$vo.logo_url}" /></dt>
+            <dd>
+            	<h3><a href="http://{$vo.website}">{$vo.company_name}</a></h3>
+                <p><span>其他名称</span>
+                <volist id="bm_list" name="bm_list">
+                <a href="http://{$vo.website}">{$bm_list.name}</a>&nbsp
+                </volist>
+                </p>
+            </dd>
+        </dl>
+        <div class="gongsijs">
+           <table width="100%" border="0" cellspacing="0" cellpadding="0">
+              <tr>
+                <td width="76"><span>公司资质</span></td>
+                <td width="320"><em>{$vo.agent_platform}-{$vo.mem_sn}</em></td>
+                <td width="76"><span>代理平台</span></td>
+                <td width="230">{$vo.agent_platform}</td>
+                <td width="76"><span>联系电话</span></td>
+                <td>{$vo.telephone}</td>
+         </tr>
+              <tr>
+                <td><span>营业执照</span></td>
+                <td>
+	                <if condition="$vo.busin_license gt 0 ">
+		            <a href="{$vo.busin_license_url}" rel="lightbox[plants]"><img src="{$vo.busin_license_url}"/></a>
+		            <else />
+		            暂无
+		            </if>
+                </td>
+                <td><span>机构代码证</span></td>
+                <td>
+	                <if condition="$vo.code_certificate gt 0 ">
+		            <a href="{$vo.busin_license_url}" rel="lightbox[plants]"><img src="{$vo.busin_license_url}"/></a>
+		            <else />
+		            暂无
+		            </if>
+		        </td>
+                <td><span>资质证明</span></td>
+                <td>
+                    <if condition="$vo.certificate gt 0 ">
+		            <a href="{$vo.busin_license_url}" rel="lightbox[plants]"><img src="{$vo.busin_license_url}"/></a>
+		            <else />
+		            暂无
+		            </if>
+                </td>
+              </tr>
+              <tr>
+         </tr>
+              <tr>
+                <td><span>企业类型</span></td>
+                <td>{$vo.company_type}</td>
+                <td><span>官方网站</span></td>
+                <td><a href="{$vo.website}" target="_blank">{$vo.website}</a></td>
+                <td><span>官网备案</span></td>
+                <td>{$vo.record}</td>
+              </tr>
+              <tr>
+                <td><span>注册地址</span></td>
+                <td colspan="5">{$vo.reg_address}</td>
+              </tr>
+       </table>
+        </div>
+     </div>
+     </iterate>
+     <div class="wybgbox_lt"> 
+       <div class="baoguan_pl">
+            <h3 class="titltes">
+	            <span>网友评论
+	            <if condition="$record_count lt 999 ">
+	            <em>({$record_count})</em>
+	            <else />
+	            <em>(999+)</em>
+	            </if>
+	            </span>
+	        </h3>
+            <div class="baoguan_pl2">
+                <volist id="con_yrz" name="con_yrz" key="mm">
+                 <dl class="pinglubox">
+                     <dt class="pinglubox_lt"><a href="#"><img src="{$con_yrz.user_id}" /></a></dt>
+                     <dd class="pinglubox_rt">
+                       <h3>{$con_yrz.nickname}</h3>
+                       <p class="pinglubox_xs">
+                        <if condition="$con_yrz.type eq '005001'">
+                          <em class="dinzan1">点赞</em>
+                        <elseif condition="$con_yrz.type eq '005002'"/>'
+                          <em class="tiwen">提问</em>
+                        <else />
+                          <em class="jiahei">加黑</em>
+                        </if>
+                           {$con_yrz.content}
+                       </p>
+                           <div class="hfpl_chd">
+                             <div class="timens">
+                                <span>{$con_yrz.add_time}</span>
+                                <p><a class="ding" id="{$con_yrz.id}" href="javascript:void(0)">顶 <em>({$con_yrz.top_num})</em></a>|
+                                <a href="#"> 分享</a>|
+                                <a class="huifu_btn hfusd" href="javascript:void(0)">收起回复</a>
+                                <!-- <a href="#">回复<em>(1)</em></a> --></p>
+                                <input type="hidden" class="p3" name="p3" value="{$con_yrz.company_id}">   
+                             </div>
+                             <div class="showhide" style="display:block" id="">
+                             	<div class="" id="itemContainer_{$mm}">
+                             	<foreach name="sonList" item="list" key="k" >
+                               	<if condition="$con_yrz.id eq $k">
+                                <volist name="list" id="vo">
+
+	                           <dl >
+	                                 <dt><a href="#"><img src="__PUBLIC__/Home/images/pic04.jpg" /></a></dt>
+	                                 <dd>
+	                                    <p><a href="#">{$vo.nickname}：</a>{$vo.content}</p>
+	                                    <p class="timen"><span>{$vo.add_time}</span><a href="#">回复</a></p>
+	                                 </dd>
+	                           </dl>
+	                       </volist>
+	                           </if>
+	                           </foreach>
+	                       </div>
+<!-- 	                           <dl>
+	                                 <dt><a href="#"><img src="__PUBLIC__/Home/images/pic04.jpg" /></a></dt>
+	                                 <dd>
+	                                    <p><a href="#">炒番茄：</a>这公司的客户大部分都是赔钱的，我都赔了好几万，千万别信，业务员会不停打电话骚扰，恶心死了</p>
+	                                    <p class="timen"><span>2014-12-30 16:35</span><a href="#">回复</a></p>
+	                                 </dd>
+	                             </dl> -->
+	                           <div class="wysyij">
+	                           	
+	                           	<ul class="pages">
+	                                    <div class="myPages_{$mm}">
+	                           		
+	                           	</div>
+	                                    </ul>
+	                           <a href="#" class="wzsyiju">我也说一句</a>
+	                           </div>
+	                           <div class="fanbiaob">
+	                             <textarea name="saytext" id="saytext" class="saytext" autocomplete="off"></textarea>
+	                             <div class="tisbox">
+	                                     <input class="fb" name="" type="button" value="发表" id="{$con_yrz.id}" />
+	                                     <a href="javascript:void(0)"  class="touxin emotion">&nbsp;</a>
+                                         <input type="hidden" class="p3" name="p3" value="{$con_yrz.company_id}">  
+	                             </div>
+	                           </div>
+	                         </div>
+                           </div>
+                     </dd>
+                 </dl>
+                </volist>
+                <!-- <div class="page" id="myPage">
+                	{$page}
+                </div> -->
+		          <ul class="page" >
+		          	   <li>{$page}</li>
+		          </ul>
+            </div>
+       </div>
+     </div>
+     <div class="textbox_rt">
+      <div  id="fixeds">
+       <div class="rzpttj">
+       <h3 class="titltes">我要评论</h3>
+         <p class="wypl_wypl1">
+	         <span><input class="wypl" name="wypl" type="radio" value="005001" checked="checked" />点赞</span>
+	         <span><input class="wypl" name="wypl" type="radio" value="005002" />提问</span>
+	         <span><input class="wypl" name="wypl" type="radio" value="005003" />加黑</span>
+         </p>
+         <p class="wypl_wypl2">
+            <textarea name="saytext" id="saytext" class="saytext" autocomplete="off"></textarea>
+         </p>
+	         <p class="wypl_wypl3">
+	         <a href="javascript:void(0)"  class="touxin emotion">&nbsp;</a>
+	         <a href="javascript:void(0)" class="tupian">&nbsp;</a>
+	         <span><input name="nim" id="checkbox-id" type="checkbox" />匿名评论</span>
+         </p>
+         <p class="wypl_wypl4">
+             <iterate name="yrz_list" id="vo">
+         	 <input id="{$vo.id}" name="" type="button" value="发表评论" class="sub_btn" />
+         	 </iterate>
+         </p>
+       </div>
+       <div class="hgrzs"><a href="__APP__/home/Inexposure/authentication">合规认证</a></div>
+       </div>
+     </div>
+     <div class="clear"></div>
+  </div>
+<!--内容--End--> 
+
+<!--底部--Begin-->     
+<include file="Public:footer" />
+<!--底部--End--> 
+
+</div>
+</body>
+<script type="text/javascript" src="__PUBLIC__/Home/js/jquery.qqFace.js" ></script>
+<script type="text/javascript">
+  $(function(){
+        //切换
+        $(".bgbox_tit a").click(function(){
+		      $(this).parents("div.bgbox_tit").children("a").removeClass("bian");
+		      $(this).addClass("bian");
+		      for(var i = 0; i < $(this).parents("div.bgbox_tit").children("a").length; i++)
+		      {
+		        if($(this).parents("div.bgbox_tit").children("a").eq(i).attr("class") == "bian")
+		        {
+		          $(this).parents("div.baoguan_pl").children("div.baoguan_pl2").removeClass("show").addClass("hide");
+		          $(this).parents("div.baoguan_pl").children("div.baoguan_pl2").eq(i).removeClass("hide").addClass("show");
+		        }
+		      }
+	    });
+	    //表情
+	    $('.emotion').qqFace({
+	        id : 'facebox', 
+	        assign:'saytext', 
+	        path:'__PUBLIC__/Home/arclist/' //表情存放的路径
+	    });
+        //用户评论
+        $('.sub_btn').click(function(){
+	            var id        = $(this).attr('id');//获取企业id属性
+	            var type      = $("input[name='wypl']:checked").val();
+                var content   = urlencode($(this).parents('.rzpttj').find('.saytext').val());
+	            var userid    = '{$userid}';
+	            if (content == "") {
+	            	alert('评论内容不能为空');
+	            	return false;
+	            }else if(content.length > 400){
+	            	alert('评论内容最多为400字符')
+	            	return false;
+	            }
+	            if($('#checkbox-id').is(':checked')) {
+					var nim = 1;
+				}else{
+					var nim = 0;
+				}
+	            if (userid == "") {
+	               alert("请登录后在点赞！"); 
+	               return false; 
+	            }
+	            //alert(id+'/'+type+'/'+content+'/'+userid+'/'+nim);
+	            //return false;
+	            jQuery.ajax({  
+	                type:"post",  
+	                url:"{$call_url}",
+	                timeout: 5000,  
+	                dataType:"json",  
+	                data:{"method":"Comment.add","type":"text",
+	                "content":{"company_id":id,
+				               "user_id":userid,
+				               "type":type,
+				               "content":content,
+				               "is_anonymous":nim}},
+	                success: function aa(data) {  
+	                     if (200 == data.status_code && 0 == data.content.is_success) {
+	                          alert('评论成功！');//模拟异步数据加1
+	                          window.location.reload();  
+	                     }else{
+	                        alert('评论失败！');
+	                     }
+	                }  
+	            })  
+	    });
+        //评论回复
+        $('.fb').click(function(){
+        	    $(".saytext").select();
+			    $(".saytext").val("")
+	            var id        = $(this).attr('id');//获取企业id属性
+	            var type      = '005001';
+                var content   = urlencode($(this).parents('.fanbiaob').find('.saytext').val());
+                var companyid = $(this).parents('.fanbiaob').find('.p3').val();
+	            var userid    = '{$userid}';
+	            // alert(id+'/'+type+'/'+content+'/'+userid+'/'+companyid);
+	            return false;
+	            if (content == "") {
+	            	alert('评论内容不能为空');
+	            	return false;
+	            }else if(content.length > 400){
+	            	alert('评论内容最多为400字符')
+	            	return false;
+	            }
+	            if (userid == "") {
+	               alert("请登录后在点赞！"); 
+	               return false; 
+	            }
+	            jQuery.ajax({  
+	                type:"post",  
+	                url:"{$call_url}",
+	                timeout: 5000,  
+	                dataType:"json",  
+	                data:{"method":"Comment.add","type":"text",
+	                "content":{"company_id":companyid,
+				               "user_id":userid,
+				               "type":type,
+				               "content":content,
+				               "parent_id":id}},
+	                success: function aa(data) {  
+	                     if (200 == data.status_code && 0 == data.content.is_success) {
+	                          alert('评论成功！');//模拟异步数据加1
+	                          window.location.reload();  
+	                     }else{
+	                        alert('评论失败！');
+	                     }
+	                }  
+	            })  
+	    });
+        //评论顶
+        $('.ding').click(function(){
+	            var id        = $(this).attr('id');//获取企业id属性
+                var companyid = $(this).parents('.timens').find('.p3').val();
+	            var userid    = '{$userid}';
+	             // alert(id+'/'+userid+'/'+companyid);
+	             // return false;
+	            if (userid == "") {
+	               alert("请登录后在点赞！"); 
+	               return false; 
+	            }
+	            jQuery.ajax({  
+	                type:"post",  
+	                url:"{$call_url}",
+	                timeout: 5000,  
+	                dataType:"json",  
+	                data:{"method":"Comtop.add","type":"text",
+	                "content":{"company_id":companyid,
+				               "user_id":userid,
+				               "comment_id":id}},
+	                success: function aa(data) {  
+	                     if (200 == data.status_code && 0 == data.content.is_success) {
+	                          alert('顶+1');//模拟异步数据加1
+	                          window.location.reload();  
+	                     }else{
+	                        alert('操作失败！');
+	                     }
+	                }  
+	            })  
+	    });
+  });
+  //urlencode数据转换
+	function urlencode (str) {  
+	    str = (str + '').toString();   
+	    return encodeURIComponent(str).replace(/!/g, '%21').replace(/'/g, '%27').replace(/\(/g, '%28').  
+	    replace(/\)/g, '%29').replace(/\*/g, '%2A').replace(/%20/g, '+');  
+	}       
+</script>
+<script type="text/javascript">
+    $(function (){
+    	/* initiate plugin */
+    	var lis=$(".showhide");
+    	for (var i = 1; i <=lis.length; i++) {
+    		pageFun(i);
+    	};
+	    
+	    function pageFun(index){
+	    	$("div.myPages_"+index).jPages({
+		      containerID: "itemContainer_"+index,
+		      perPage:2
+		    });
+	    }
+
+
+    	$('#myPage div a').live('click',function(){
+    		// alert($(this).attr('href'));
+    		// return false;
+    	});
+    });
+
+    //ajax
+       function getDate(url){
+        $.ajax({
+          type: 'GET',
+          url: url,
+          dataType: 'json',
+          contentType: "application/x-www-form-urlencoded; charset=utf-8",
+          //data: {'pages':1},
+          beforeSend: function () {              
+          },
+          success: function (data) {
+            //alert(data);
+            $("#list").empty();
+            $("#pages").empty();
+            var lis="";
+            var lists=data.list;
+            $.each(lists,function (index,array){
+               lis +="<tr><td>"+array['id']+"</td><td>"+array['title']+"</td><td>"+array['pic']+"</td></tr>"
+            });
+            $("#list").append(lis);
+            $("#pages").append(data.pages);
+          },
+          complete: function () {
+          },
+          error: function () {
+            alert("数据加载失败......")
+          }
+        });
+      }
+</script>
+</html>

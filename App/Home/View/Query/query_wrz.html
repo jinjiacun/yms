@@ -1,0 +1,509 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>查询结果--搜黑</title>
+<link type="text/css" rel="stylesheet" href="__PUBLIC__/Home/css/main.css"/>
+<link type="text/css" rel="stylesheet" href="__PUBLIC__/Home/css/lightbox.css"/>
+<script type="text/javascript" src="__PUBLIC__/js/jquery-1.8.3.min.js" ></script>
+<script type="text/javascript" src="__PUBLIC__/Home/js/main.js" ></script>
+<script type="text/javascript" src="__PUBLIC__/Home/js/lightbox.js" ></script>
+</head>
+
+<body>
+<!--Begin--登陆-->   
+<include file="Public:login" />
+<!--End--登陆--> 
+<div id="wrap">
+
+<!--头部--Begin-->   
+  <include file="Public:top" />
+<!--头部--End-->
+
+<!--内容--Begin-->     
+   <div id="content">
+     <iterate name="wrz_list" id="vo">
+     <div class="hptbox1 wrzbox1">
+       <div class="dibubj">
+              <h2><span>{$vo.company_name}</span>的查询结果：</h2>
+              <div class="hpt_box">
+                  <dl>
+                      <dt><a class="jh" id="{$vo.id}" href="javascript:void(0)">加黑</a></dt>
+                      <dd>
+                          <p class="wsr1">该机构未通过合规认证</p>
+                          <p class="wsr2">提醒各位投资者请谨慎投资入金！</p>
+                      </dd>
+                  </dl>
+                  <div class="wsr3"><span><em>500</em>位用户已加黑</span>|<span><em>500</em>位网友已评论</span></div>
+             </div>
+        </div>
+     </div>
+     
+     <div class="hptbox2 wrzbox2">
+        <dl>
+        	<dt><img src="__PUBLIC__/Home/images/pic10.jpg" /></dt>
+            <dd>
+            	<h3><a href="{$vo.website}">{$vo.company_name}</a></h3>
+                <p><span>其他名称</span><a href="#">环融贵金属</a>、<a href="#">环融</a></p>
+            </dd>
+        </dl>
+        <div class="gongsijs">
+           <table width="100%" border="0" cellspacing="0" cellpadding="0">
+           
+              <tr>
+                <td width="76"><span>公司资质</span></td>
+                <td width="320"><em>{$vo.agent_platform}-{$vo.mem_sn}</em></td>
+                <td width="76"><span>代理平台</span></td>
+                <td width="230">{$vo.agent_platform}</td>
+                <td width="76"><span>联系电话</span></td>
+                <td>{$vo.telephone}</td>
+              </tr>
+              <tr>
+                <td><span>营业执照</span></td>
+                <td>
+                  <a href="{$vo.busin_license_url}" rel="lightbox[plants]">
+                    <img src="{$vo.busin_license_url}"/>
+                  </a>
+                </td>
+                <td><span>机构代码证</span></td>
+                <td><a href="{$vo.code_certificate_url}" rel="lightbox[plants]">
+                    <img src="{$vo.code_certificate_url}"/></a></td>
+                <td><span>资质证明</span></td>
+                <td><a href="{$vo.certificate_url}" rel="lightbox[plants]">
+                    <img src="{$vo.certificate_url}"/></a></td>
+              </tr>
+              <tr>
+              </tr>
+              <tr>
+                <td><span>企业类型</span></td>
+                <td>{$vo.company_type}</td>
+                <td><span>官方网站</span></td>
+                <td><a href="{$vo.website}" target="_blank">{$vo.website}</a></td>
+                <td><span>官网备案</span></td>
+                <td>{$vo.record}</td>
+              </tr>
+              <tr>
+                <td><span>注册地址</span></td>
+                <td colspan="5">{$vo.reg_address}</td>
+              </tr>
+            
+       </table>
+        </div>
+     </div>
+     </iterate>
+     <div class="wybgbox_lt">
+     <!--媒体报道状态-->
+       <div class="mtbaod">
+             <if condition = "$record_count gt 0 " >
+             <h3 class="titltes"><span>媒体报道</span>
+                <if condition = "$record_count gt 5 " >
+                 <a href="#">换一换</a>
+                </if>
+             </h3> 
+             </if>
+          <if condition = "$record_count gt 2 " >
+          <ul>
+              <volist name="new_list" id="new_list">
+               <li>
+                  <a href="__APP__/Home/Article/article/id/{$new_list.id}/company_id/{$new_list.company_id}/p/1/">{$new_list.title}</a>
+                  <span>{$new_list.add_time|date='Y-m-d H:i',###}</span>
+               </li>
+              </volist>
+          </ul>
+          <else />
+          <volist name="new_list" id="new_list">
+          <dl>
+                <dt><a href="__APP__/Home/Article/article/id/{$new_list.id}/company_id/{$new_list.company_id}/p/1/"><img src="{$new_list.pic_url}" width="175" height="130" /></a></dt>
+                <dd>
+                  <h4><a href="__APP__/Home/Article/article/id/{$new_list.id}/company_id/{$new_list.company_id}/p/1/">{$new_list.title}</a></h4>
+                    <p>{$new_list.content|htmlspecialchars_decode|stripslashes}</p>
+                    <span>{$new_list.add_time|date='Y-m-d H:i',###}</span>
+                </dd>
+          </dl>
+          </volist>
+          </if>
+        </div>
+        <div class="baoguan_pl">
+            <div class="baoguan_pl1 bgbox_tit">
+               <a href="javascript:void(0)">网友评论<span>(999+)</span></a><em>|</em><a href="javascript:void(0)" class="bian">网友曝光<span>(325)</span></a>
+            </div>
+            <div class="baoguan_pl2 hide">
+                 <dl class="pinglubox">
+                     <dt class="pinglubox_lt"><a href="#"><img src="__PUBLIC__/Home/images/pic04.jpg" /></a></dt>
+                     <dd class="pinglubox_rt">
+                       <h3 class="lmwy">匿名网友687</h3>
+                          
+                       <p class="pinglubox_xs"><em class="dinzan1">点赞</em>这公司的客户大部分都是赔钱的，我都赔了好几万，千万别信，业务员会不停打电话骚扰，恶心死了</p>
+                          
+                           <div class="hfpl_chd">
+                             <div class="timens"><span>2014-07-10  08:57:05</span><p><a href="#">顶 <em>(256)</em></a>|<a href="#"> 分享</a>|<a href="#">回复<em>(1)</em></a></p></div>
+                           </div>
+                     </dd>
+                 </dl>
+                 <dl class="pinglubox">
+                     <dt class="pinglubox_lt"><a href="#"><img src="__PUBLIC__/Home/images/pic04.jpg" /></a></dt>
+                     <dd class="pinglubox_rt">
+                       <h3>西红柿炒番茄</h3>
+                          
+                          <p class="pinglubox_xs"><em class="tiwen">提问</em>这公司的客户大部分都是赔钱的，我都赔了好几万，千万别信，业务员会不停打电话骚扰，恶心死了</p>
+                          <div class="tubox"><a href="#"><img src="__PUBLIC__/Home/images/pic11.jpg"/></a><a href="#"><img src="__PUBLIC__/Home/images/pic12.jpg"/></a></div>
+                           <div class="hfpl_chd">
+                             <div class="timens"><span>2014-07-10  08:57:05</span><p><a href="#">顶 <em>(256)</em></a>|<a href="#"> 分享</a>|<a href="#">回复<em>(1)</em></a></p></div>
+                           </div>
+                     </dd>
+                 </dl>
+                 <dl class="pinglubox">
+                     <dt class="pinglubox_lt"><a href="#"><img src="images/pic04.jpg" /></a></dt>
+                     <dd class="pinglubox_rt">
+                       <h3>西红柿炒番茄</h3>
+                          
+                          <p class="pinglubox_xs"><em class="jiahei">加黑</em>这公司的客户大部分都是赔钱的，我都赔了好几万，千万别信，业务员会不停打电话骚扰，恶心死了</p>
+                          <div class="tubox"><a href="#"><img src="images/pic11.jpg"/></a><a href="#"><img src="images/pic12.jpg"/></a></div>
+                       <div class="hfpl_chd">
+                         <div class="timens"><span>2014-07-10  08:57:05</span><p><a href="#">顶 <em>(256)</em></a>|<a href="#"> 分享</a>|<a href="#" class="hfusd">收起回复</a></p></div>
+                         <div class="showhide">
+                           <dl>
+                                 <dt><a href="#"><img src="images/pic04.jpg" /></a></dt>
+                                 <dd>
+                                    <p><a href="#">炒番茄：</a>这公司的客户大部分都是赔钱的，我都赔了好几万，千万别信，业务员会不停打电话骚扰，恶心死了</p>
+                                    <p class="timen"><span>2014-12-30 16:35</span><a href="#">回复</a></p>
+                                 </dd>
+                             </dl>
+                           <dl>
+                                 <dt><a href="#"><img src="images/pic04.jpg" /></a></dt>
+                                 <dd>
+                                    <p><a href="#">炒番茄：</a>这公司的客户大部分都是赔钱的，我都赔了好几万，千万别信，业务员会不停打电话骚扰，恶心死了</p>
+                                    <p class="timen"><span>2014-12-30 16:35</span><a href="#">回复</a></p>
+                                 </dd>
+                             </dl>
+                           <div class="wysyij"><ul class="pages">
+                                        <li><a href="#" class="on">1</a></li>
+                                        <li><a href="#">2</a></li>
+                                        <li><a href="#">下一页</a></li>
+                                        <li><a href="#">尾页</a></li>
+                                    </ul><a href="#" class="wzsyiju">我也说一句</a></div>
+                           <div class="fanbiaob">
+                             <textarea name=""></textarea>
+                             <div class="tisbox">
+                                     <input name="" type="button" value="发表" />
+                                     <a href="#">&nbsp;</a>
+                             </div>
+                           </div>
+                         </div>
+                         </div>
+                     </dd>
+                 </dl> 
+                 <dl class="pinglubox">
+                     <dt class="pinglubox_lt"><a href="#"><img src="__PUBLIC__/Home/images/pic04.jpg" /></a></dt>
+                     <dd class="pinglubox_rt">
+                       <h3>西红柿炒番茄</h3>
+                          
+                       <p class="pinglubox_xs">这公司的客户大部分都是赔钱的，我都赔了好几万，千万别信，业务员会不停打电话骚扰，恶心死了</p>
+                          
+                           <div class="hfpl_chd">
+                             <div class="timens"><span>2014-07-10  08:57:05</span><p><a href="#">顶 <em>(256)</em></a>|<a href="#"> 分享</a>|<a href="#">回复<em>(1)</em></a></p></div>
+                           </div>
+                     </dd>
+                 </dl>
+                 <dl class="pinglubox">
+                     <dt class="pinglubox_lt"><a href="#"><img src="__PUBLIC__/Home/images/pic04.jpg" /></a></dt>
+                     <dd class="pinglubox_rt">
+                       <h3>西红柿炒番茄</h3>
+                          
+                          <p class="pinglubox_xs">这公司的客户大部分都是赔钱的，我都赔了好几万，千万别信，业务员会不停打电话骚扰，恶心死了</p>
+                          <div class="tubox"><a href="#"><img src="__PUBLIC__/Home/images/pic11.jpg"/></a><a href="#"><img src="__PUBLIC__/Home/images/pic12.jpg"/></a></div>
+                           <div class="hfpl_chd">
+                             <div class="timens"><span>2014-07-10  08:57:05</span><p><a href="#">顶 <em>(256)</em></a>|<a href="#"> 分享</a>|<a href="#">回复<em>(1)</em></a></p></div>
+                           </div>
+                     </dd>
+                 </dl>
+                 <dl class="pinglubox">
+                     <dt class="pinglubox_lt"><a href="#"><img src="images/pic04.jpg" /></a></dt>
+                     <dd class="pinglubox_rt">
+                       <h3>西红柿炒番茄</h3>
+                          
+                          <p class="pinglubox_xs">这公司的客户大部分都是赔钱的，我都赔了好几万，千万别信，业务员会不停打电话骚扰，恶心死了</p>
+                          <div class="tubox"><a href="#"><img src="images/pic11.jpg"/></a><a href="#"><img src="images/pic12.jpg"/></a></div>
+                       <div class="hfpl_chd">
+                         <div class="timens"><span>2014-07-10  08:57:05</span><p><a href="#">顶 <em>(256)</em></a>|<a href="#"> 分享</a>|<a href="#" class="hfusd">收起回复</a></p></div>
+                         <div class="showhide">
+                           <dl>
+                                 <dt><a href="#"><img src="images/pic04.jpg" /></a></dt>
+                                 <dd>
+                                    <p><a href="#">炒番茄：</a>这公司的客户大部分都是赔钱的，我都赔了好几万，千万别信，业务员会不停打电话骚扰，恶心死了</p>
+                                    <p class="timen"><span>2014-12-30 16:35</span><a href="#">回复</a></p>
+                                 </dd>
+                             </dl>
+                           <dl>
+                                 <dt><a href="#"><img src="images/pic04.jpg" /></a></dt>
+                                 <dd>
+                                    <p><a href="#">炒番茄：</a>这公司的客户大部分都是赔钱的，我都赔了好几万，千万别信，业务员会不停打电话骚扰，恶心死了</p>
+                                    <p class="timen"><span>2014-12-30 16:35</span><a href="#">回复</a></p>
+                                 </dd>
+                             </dl>
+                           <dl>
+                                 <dt><a href="#"><img src="images/pic04.jpg" /></a></dt>
+                                 <dd>
+                                    <p><a href="#">炒番茄：</a>这公司的客户大部分都是赔钱的，我都赔了好几万，千万别信，业务员会不停打电话骚扰，恶心死了</p>
+                                    <p class="timen"><span>2014-12-30 16:35</span><a href="#">回复</a></p>
+                                 </dd>
+                             </dl>
+                           <dl>
+                                 <dt><a href="#"><img src="images/pic04.jpg" /></a></dt>
+                                 <dd>
+                                    <p><a href="#">炒番茄：</a>这公司的客户大部分都是赔钱的，我都赔了好几万，千万别信，业务员会不停打电话骚扰，恶心死了</p>
+                                    <p class="timen"><span>2014-12-30 16:35</span><a href="#">回复</a></p>
+                                 </dd>
+                             </dl>
+                           <dl>
+                                 <dt><a href="#"><img src="images/pic04.jpg" /></a></dt>
+                                 <dd>
+                                    <p><a href="#">炒番茄：</a>这公司的客户大部分都是赔钱的，我都赔了好几万，千万别信，业务员会不停打电话骚扰，恶心死了</p>
+                                    <p class="timen"><span>2014-12-30 16:35</span><a href="#">回复</a></p>
+                                 </dd>
+                             </dl>
+                           <div class="wysyij"><div class="chakquanb">还有<span>10</span>条回复，<a href="#">点击查看</a></div><a href="#" class="wzsyiju">我也说一句</a></div>
+                           
+                         </div>
+                         </div>
+                     </dd>
+                 </dl> 
+          <ul class="page">
+              <li><a href="#" class="on">1</a></li>
+              <li><a href="#">2</a></li>
+              <li><a href="#">3</a></li>
+              <li><a href="#">下一页</a></li>
+                <li><a href="#">尾页</a></li>
+            </ul>
+            </div>
+            <div class="baoguan_pl2 show">
+                  <dl class="pinglubox">
+                     <dt class="pinglubox_lt"><a href="#"><img src="__PUBLIC__/Home/images/pic04.jpg" /></a></dt>
+                     <dd class="pinglubox_rt">
+                       <h3>西红柿炒番茄</h3>
+                          <div class="bggs">
+                              <div class="bggs_lt"><span>被曝光公司：</span><a href="#">融金汇银</a></div>
+                                <div class="bggs_rt"><span>官方网址：</span><a href="#">www.baidu.com</a></div>
+                          </div>
+                       <p class="pinglubox_xs">这公司的客户大部分都是赔钱的，我都赔了好几万，千万别信，业务员会不停打电话骚扰，恶心死了</p>
+                          
+                           <div class="hfpl_chd">
+                             <div class="timens"><span>2014-07-10  08:57:05</span><p><a href="#">顶 <em>(256)</em></a>|<a href="#"> 分享</a>|<a href="#">回复<em>(1)</em></a></p></div>
+                           </div>
+                     </dd>
+                 </dl>
+                 <dl class="pinglubox">
+                     <dt class="pinglubox_lt"><a href="#"><img src="__PUBLIC__/Home/images/pic04.jpg" /></a></dt>
+                     <dd class="pinglubox_rt">
+                       <h3>西红柿炒番茄</h3>
+                          <div class="bggs">
+                              <div class="bggs_lt"><span>被曝光公司：</span><a href="#">融金汇银</a></div>
+                                <div class="bggs_rt"><span>官方网址：</span><a href="#">www.baidu.com</a></div>
+                          </div>
+                          <p class="pinglubox_xs">这公司的客户大部分都是赔钱的，我都赔了好几万，千万别信，业务员会不停打电话骚扰，恶心死了</p>
+                          <div class="tubox"><a href="__PUBLIC__/Home/images/pic11.jpg" rel="lightbox[plants]"><img src="__PUBLIC__/Home/images/pic11.jpg"/></a><a href="__PUBLIC__/Home/images/pic12.jpg" rel="lightbox[plants]"><img src="__PUBLIC__/Home/images/pic12.jpg"/></a></div>
+                           <div class="hfpl_chd">
+                             <div class="timens"><span>2014-07-10  08:57:05</span><p><a href="#">顶 <em>(256)</em></a>|<a href="#"> 分享</a>|<a href="#">回复<em>(1)</em></a></p></div>
+                           </div>
+                     </dd>
+                 </dl>
+                 <dl class="pinglubox">
+                     <dt class="pinglubox_lt"><a href="#"><img src="images/pic04.jpg" /></a></dt>
+                     <dd class="pinglubox_rt">
+                       <h3>西红柿炒番茄</h3>
+                          <div class="bggs">
+                              <div class="bggs_lt"><span>被曝光公司：</span><a href="#">融金汇银</a></div>
+                                <div class="bggs_rt"><span>官方网址：</span><a href="#">www.baidu.com</a></div>
+                          </div>
+                          <p class="pinglubox_xs">这公司的客户大部分都是赔钱的，我都赔了好几万，千万别信，业务员会不停打电话骚扰，恶心死了</p>
+                          <div class="tubox"><a href="#"><img src="images/pic11.jpg"/></a><a href="#"><img src="images/pic12.jpg"/></a></div>
+                       <div class="hfpl_chd">
+                         <div class="timens"><span>2014-07-10  08:57:05</span><p><a href="#">顶 <em>(256)</em></a>|<a href="#"> 分享</a>|<a href="#" class="hfusd">收起回复</a></p></div>
+                         <div class="showhide">
+                           <dl>
+                                 <dt><a href="#"><img src="images/pic04.jpg" /></a></dt>
+                                 <dd>
+                                    <p><a href="#">炒番茄：</a>这公司的客户大部分都是赔钱的，我都赔了好几万，千万别信，业务员会不停打电话骚扰，恶心死了</p>
+                                    <p class="timen"><span>2014-12-30 16:35</span><a href="#">回复</a></p>
+                                 </dd>
+                             </dl>
+                           <dl>
+                                 <dt><a href="#"><img src="images/pic04.jpg" /></a></dt>
+                                 <dd>
+                                    <p><a href="#">炒番茄：</a>这公司的客户大部分都是赔钱的，我都赔了好几万，千万别信，业务员会不停打电话骚扰，恶心死了</p>
+                                    <p class="timen"><span>2014-12-30 16:35</span><a href="#">回复</a></p>
+                                 </dd>
+                             </dl>
+                           <div class="wysyij"><a href="#" class="wzsyiju">我也说一句</a></div>
+                           <div class="fanbiaob">
+                             <textarea name="" class="saytext"></textarea>
+                             <div class="tisbox">
+                                     <input name="" type="button" value="发表" />
+                                     <a href="javascript:void(0)" class="emotion">&nbsp;</a>
+                             </div>
+                           </div>
+                         </div>
+                         </div>
+                     </dd>
+                 </dl> 
+                 <dl class="pinglubox">
+                     <dt class="pinglubox_lt"><a href="#"><img src="images/pic04.jpg" /></a></dt>
+                     <dd class="pinglubox_rt">
+                       <h3>西红柿炒番茄</h3>
+                          <div class="bggs">
+                              <div class="bggs_lt"><span>被曝光公司：</span><a href="#">融金汇银</a></div>
+                                <div class="bggs_rt"><span>官方网址：</span><a href="#">www.baidu.com</a></div>
+                          </div>
+                       <p class="pinglubox_xs">这公司的客户大部分都是赔钱的，我都赔了好几万，千万别信，业务员会不停打电话骚扰，恶心死了</p>
+                          
+                           <div class="hfpl_chd">
+                             <div class="timens"><span>2014-07-10  08:57:05</span><p><a href="#">顶 <em>(256)</em></a>|<a href="#"> 分享</a>|<a href="#">回复<em>(1)</em></a></p></div>
+                           </div>
+                     </dd>
+                 </dl>
+                 <dl class="pinglubox">
+                     <dt class="pinglubox_lt"><a href="#"><img src="images/pic04.jpg" /></a></dt>
+                     <dd class="pinglubox_rt">
+                       <h3>西红柿炒番茄</h3>
+                          <div class="bggs">
+                              <div class="bggs_lt"><span>被曝光公司：</span><a href="#">融金汇银</a></div>
+                                <div class="bggs_rt"><span>官方网址：</span><a href="#">www.baidu.com</a></div>
+                          </div>
+                          <p class="pinglubox_xs">这公司的客户大部分都是赔钱的，我都赔了好几万，千万别信，业务员会不停打电话骚扰，恶心死了</p>
+                          <div class="tubox"><a href="#"><img src="images/pic11.jpg"/></a><a href="#"><img src="images/pic12.jpg"/></a></div>
+                           <div class="hfpl_chd">
+                             <div class="timens"><span>2014-07-10  08:57:05</span><p><a href="#">顶 <em>(256)</em></a>|<a href="#"> 分享</a>|<a href="#">回复<em>(1)</em></a></p></div>
+                           </div>
+                     </dd>
+                 </dl>
+                 <dl class="pinglubox">
+                     <dt class="pinglubox_lt"><a href="#"><img src="images/pic04.jpg" /></a></dt>
+                     <dd class="pinglubox_rt">
+                       <h3>西红柿炒番茄</h3>
+                          <div class="bggs">
+                              <div class="bggs_lt"><span>被曝光公司：</span><a href="#">融金汇银</a></div>
+                                <div class="bggs_rt"><span>官方网址：</span><a href="#">www.baidu.com</a></div>
+                          </div>
+                          <p class="pinglubox_xs">这公司的客户大部分都是赔钱的，我都赔了好几万，千万别信，业务员会不停打电话骚扰，恶心死了</p>
+                          <div class="tubox"><a href="#"><img src="images/pic11.jpg"/></a><a href="#"><img src="images/pic12.jpg"/></a></div>
+                       <div class="hfpl_chd">
+                         <div class="timens"><span>2014-07-10  08:57:05</span><p><a href="#">顶 <em>(256)</em></a>|<a href="#"> 分享</a>|<a href="#" class="hfusd">收起回复</a></p></div>
+                         <div class="showhide">
+                           <dl>
+                                 <dt><a href="#"><img src="images/pic04.jpg" /></a></dt>
+                                 <dd>
+                                    <p><a href="#">炒番茄：</a>这公司的客户大部分都是赔钱的，我都赔了好几万，千万别信，业务员会不停打电话骚扰，恶心死了</p>
+                                    <p class="timen"><span>2014-12-30 16:35</span><a href="#">回复</a></p>
+                                 </dd>
+                             </dl>
+                           <dl>
+                                 <dt><a href="#"><img src="images/pic04.jpg" /></a></dt>
+                                 <dd>
+                                    <p><a href="#">炒番茄：</a>这公司的客户大部分都是赔钱的，我都赔了好几万，千万别信，业务员会不停打电话骚扰，恶心死了</p>
+                                    <p class="timen"><span>2014-12-30 16:35</span><a href="#">回复</a></p>
+                                 </dd>
+                             </dl>
+                           <div class="wysyij"><a href="#" class="wzsyiju">我也说一句</a></div>
+                           <div class="fanbiaob">
+                             <textarea name=""></textarea>
+                             <div class="tisbox">
+                                     <input name="" type="button" value="发表" />
+                                     <a href="#">&nbsp;</a>
+                             </div>
+                           </div>
+                         </div>
+                         </div>
+                     </dd>
+                 </dl> 
+          <ul class="page">
+              <li><a href="#" class="on">1</a></li>
+              <li><a href="#">2</a></li>
+              <li><a href="#">3</a></li>
+              <li><a href="#">下一页</a></li>
+                <li><a href="#">尾页</a></li>
+            </ul>
+            </div>
+        </div>
+     </div>
+     <div class="textbox_rt">
+      <div  id="fixeds">
+       <div class="rzpttj">
+       <h3 class="titltes">我要评论</h3>
+         <p class="wypl_wypl1"><span><input name="wypl" type="radio" value="" checked="checked" />点赞</span><span><input name="wypl" type="radio" value="" />提问</span><span><input name="wypl" type="radio" value="" />加黑</span></p>
+         <p class="wypl_wypl2">
+            <textarea name="saytext" id="saytext" class="saytext"></textarea>
+         </p>
+         <p class="wypl_wypl3"><a href="javascript:void(0)"  class="touxin emotion">&nbsp;</a><a href="javascript:void(0)" class="tupian">&nbsp;</a><span><input name="" type="checkbox" value="" />匿名评论</span></p>
+         <p class="wypl_wypl4"><input name="" type="button" value="发表评论" class="sub_btn" /></p>
+       </div>
+       <div class="hgrzs"><a href="__APP__/home/Inexposure/authentication">合规认证</a></div>
+       </div>
+     </div>
+     <div class="clear"></div>
+  </div>
+<!--内容--End--> 
+
+<!--底部--Begin-->     
+<include file="Public:footer" />
+<!--底部--End--> 
+
+</div>
+</body>
+<script type="text/javascript" src="__PUBLIC__/Home/js/jquery.qqFace.js" ></script>
+<script>
+    $(function(){
+      //切换
+      $(".bgbox_tit a").click(function(){
+        $(this).parents("div.bgbox_tit").children("a").removeClass("bian");
+        $(this).addClass("bian");
+        for(var i = 0; i < $(this).parents("div.bgbox_tit").children("a").length; i++)
+        {
+          if($(this).parents("div.bgbox_tit").children("a").eq(i).attr("class") == "bian")
+          {
+            $(this).parents("div.baoguan_pl").children("div.baoguan_pl2").removeClass("show").addClass("hide");
+            $(this).parents("div.baoguan_pl").children("div.baoguan_pl2").eq(i).removeClass("hide").addClass("show");
+          }
+        }
+      });
+      //表情
+      $('.emotion').qqFace({
+        id : 'facebox', 
+        assign:'saytext', 
+        path:'__PUBLIC__/Home/arclist/' //表情存放的路径
+      });
+      //加黑
+      $('.jh').click(function(){
+              var id        = $(this).attr('id');//获取id属性
+              var userid    = '{$userid}';
+              if (userid == "") {
+                 alert("请登录后在点赞！"); 
+                 return false; 
+              }
+              jQuery.ajax({  
+                  type:"post",  
+                  url:"{$call_url}",
+                  timeout: 5000,  
+                  dataType:"json",  
+                  data:{"method":"Addblack.add","type":"text","content":{"company_id":id,"user_id":userid}},
+                  success: function aa(data) {  
+                       if (200 == data.status_code) {
+                          if (0 == data.content.is_success) {
+                            alert('加黑+1');//模拟异步数据加1
+                            window.location.reload();
+                          }else if(-1 == data.content.is_success){
+                            alert('操作失败！');
+                            return false;
+                          }else if(-2 == data.content.is_success){
+                            alert('您已经操作过，不能重复！');
+                            return false;
+                          } 
+                       }else{
+                          alert('您已经操作过，不能重复！');
+                          return false;
+                       }
+                  }  
+              })  
+      })
+    });       
+</script>
+</html>

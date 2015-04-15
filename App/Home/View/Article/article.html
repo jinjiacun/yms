@@ -1,0 +1,224 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>正文--搜黑</title>
+<link type="text/css" rel="stylesheet" href="__PUBLIC__/Home/css/main.css"/>
+<script type="text/javascript" src="__PUBLIC__/js/jquery-1.8.3.min.js" ></script>
+<script type="text/javascript" src="__PUBLIC__/Home/js/main.js" ></script>
+<script type="text/javascript" src="__PUBLIC__/Home/js/jquery.cookie.js" ></script>
+</head>
+
+<body>
+<!--Begin--登陆-->   
+<include file="Public:login" />
+<!--End--登陆--> 
+<div id="wrap">
+
+<!--头部--Begin-->   
+  <include file="Public:top" />
+<!--头部--End-->
+
+<!--内容--Begin-->     
+   <div id="content">
+     <div class="textbox_lt">
+         <h2>{$new_list.title}</h2>
+         <p class="xinxis"><a>作者：{$new_list.author}</a><a>来源：{$new_list.source}</a><span>{$add_time}</span><em>{$record_count}</em></p>
+         <div class="text_nrbox">
+            {$content|htmlspecialchars_decode|stripslashes}
+           <div class="fenxbox">
+               <div class="fenxbox_rt">
+                 <div style="margin:auto;" class="bdsharebuttonbox">
+                   <span class="chare" style="float: left;" >分享到：</span>
+                   <a href="#" class="bds_more" data-cmd="more"></a>
+                   <a href="#" class="bds_qzone" data-cmd="qzone" title="分享到QQ空间"></a>
+                   <a href="#" class="bds_tsina" data-cmd="tsina" title="分享到新浪微博"></a>
+                   <a href="#" class="bds_tqq" data-cmd="tqq" title="分享到腾讯微博"></a>
+                   <a href="#" class="bds_renren" data-cmd="renren" title="分享到人人网"></a>
+                   <a href="#" class="bds_weixin" data-cmd="weixin" title="分享到微信"></a>
+                 </div>
+               </div>
+               <script>
+                  window._bd_share_config={"common":{"bdSnsKey":{},"bdText":"","bdMini":"2","bdMiniList":false,"bdPic":"","bdStyle":"0","bdSize":"16"},"share":{}};with(document)0[(getElementsByTagName('head')[0]||body).appendChild(createElement('script')).src='http://bdimg.share.baidu.com/static/api/js/share.js?v=89860593.js?cdnversion='+~(-new Date()/36e5)];
+               </script>
+               <div class="dianzan">
+                   <a class='z' id="{$new_list.id}">点赞</a>
+                   <span>{$new_list.assist_num}</span>
+               </div>
+
+           </div>
+         </div>
+       <div class="hfubox">
+         <h3>已有<span>{$record_count}</span>人回复</h3>
+         <!-- <form class="registerform" name="theForm" method="post" enctype="multipart/form-data" onsubmit="return ValidateFile()"> -->
+            <textarea name="saytext" id="saytext0" class="saytext" autocomplete="off"></textarea>
+            <div class="huifub">
+               <div class="huifub_lt">
+                  <img data-id="0" class="emotion" src="__PUBLIC__/Home/images/btn17.png"/>
+               </div>
+               <input type="hidden" class="news_id" name="news_id" value="{$new_list.id}"> 
+               <input type="hidden" class="company_id" name="company_id" value="{$new_list.company_id}"> 
+               <input name="submit" type="submit" id="huifub_rt" class="huifub_rt" value="回  复"/>
+            </div>
+         <!-- </form> -->
+       </div>
+       <div class="hufunrbox" id="user">
+          <volist id='comnews' name='comnews'>
+          <dl>
+              <dt><a href="#"><img src="{$comnews.user_id}"/></a></dt>
+              <dd>
+                  <h4><a href="#">{$comnews.nickname}</a>说：</h4>
+                  <p class="show" id="show">{$comnews.content}</p>
+                  <div class="dz_time">
+                       <span class="times">{$comnews.add_time}</span>
+                       <span class="dianzas">
+                       <a id="{$comnews.id}" href="javascript:void(0)">点赞</a><em>{$comnews.assist_num}</em>
+                       <input type="hidden" class="companyid" value="{$comnews.company_id}"> 
+                       <input type="hidden" class="newsid" value="{$comnews.news_id}">
+                       </span>
+                  </div>
+              </dd>
+          </dl>
+          </volist>
+          <ul class="page">
+              <li>{$page}</li>
+            </ul>
+       </div>
+     </div>
+     <div class="textbox_rt">
+       <div class="tex_gg"><a href="#"><img src="__PUBLIC__/Home/images/pic06.jpg" /></a></div>
+       <div class="rzpttj">
+       <h3 class="titltes"><span>认证平台推荐</span></h3>
+         <ul>
+          <volist id="list_tj" name="list_tj">
+           <li>
+               <a href="#"><img src="{$list_tj.logo_url}"/></a>
+               <h4><a href="#" title="{$list_tj.company_name}">{$list_tj.company_name|subtext=13}</a></h4>
+               <p><span>认证时间：</span>{$list_tj.add_time|date="Y-m-d",###}</p>
+               <p><span>公司资质：</span>{$list_tj.agent_platform}&nbsp{$list_tj.mem_sn}号会员</p>
+           </li>
+           </volist>
+         </ul>
+       </div>
+       <div class="hgrzs"><a href="__APP__/home/Inexposure/authentication">合规认证</a></div>
+       
+     </div>
+     <div class="clear"></div>
+  </div>
+<!--内容--End--> 
+
+<!--底部--Begin-->     
+<include file="Public:footer" />
+<!--底部--End--> 
+
+</div>
+</body>
+<script type="text/javascript" src="__PUBLIC__/Home/js/jquery.qqFace.js" ></script>
+<script type="text/javascript">
+$(function(){
+  //用户评论
+  $('.huifub_rt').click(function(){
+      var saytext    = urlencode($(this).parents('.hfubox').find('.saytext').val());
+      var newsid     = $(this).parents('.hfubox').find('.news_id').val();
+      var companyid  = $(this).parents('.hfubox').find('.company_id').val();
+      var userid     = '{$userid}';
+      if(saytext == ""){ 
+          alert("请输入评论内容！"); 
+          return false; 
+      }
+      if (userid == "") {
+         alert("请登录后在评论！"); 
+         return false; 
+      }
+      jQuery.ajax({  
+          type:"post",  
+          url:"{$call_url}",
+          timeout: 5000,  
+          dataType:"json",  
+          data:{"method":"Comnews.add","type":"text",
+                "content":{"news_id":newsid,"user_id":userid,"company_id":companyid,"content":saytext}},
+          success: function aa(data) {  
+               if (200 == data.status_code && 0 == data.content.is_success) {
+                alert('评论成功！');
+                window.location.reload();
+               }else{
+                alert('评论失败');
+               }
+          }  
+      })  
+  })
+  //表情
+  $('.emotion').qqFace({
+    id : 'facebox', 
+    assign:'saytext', 
+    path:'__PUBLIC__/Home/arclist/' //表情存放的路径
+  });
+
+  //文章点赞
+   $(".z").live('click',function(){
+          var Oa=$(this);
+          var id=Oa.attr('id');//获取id属性
+          var userid = '{$userid}';
+          if (userid == "") {
+             alert("请登录后在点赞！"); 
+             return false; 
+          }
+          jQuery.ajax({  
+              type:"post",  
+              url:"{$call_url}",
+              timeout: 5000,  
+              dataType:"json",  
+              data:{"method":"Newsassist.add","type":"text","content":{"news_id":id,"user_id":userid}},
+              success: function aa(data) {  
+                   if (200 == data.status_code && 0 == data.content.is_success) {
+                    alert('点赞+1');//模拟异步数据加1
+                    window.location.reload();
+                   }else{
+                    alert('您已经点过赞了,不要重复哦！');
+                   }
+              }  
+          })  
+  }) 
+  //用户评论点赞
+  $('div.hufunrbox dl a').click(function(){
+          var id        = $(this).attr('id');//获取id属性
+          var companyid = $(this).parents('dl').find('.companyid').val();
+          var newsid    = $(this).parents('dl').find('.newsid').val();
+          var userid    = '{$userid}';
+          if (userid == "") {
+             alert("请登录后在点赞！"); 
+             return false; 
+          }
+          jQuery.ajax({  
+              type:"post",  
+              url:"{$call_url}",
+              timeout: 5000,  
+              dataType:"json",  
+              data:{"method":"Comnewsassist.add","type":"text",
+              "content":{"comment_id":id,"user_id":userid,"company_id":companyid,"news_id":newsid}},
+              success: function aa(data) {  
+                   if (200 == data.status_code) {
+                      if (0 == data.content.is_success) {
+                        alert('点赞+1');//模拟异步数据加1
+                        window.location.reload();
+                      }else if(-1 == data.content.is_success){
+                        alert('您已经点过赞了,不要重复哦！');
+                      }else if(-2 == data.content.is_success){
+                        alert('您已经点过赞了,不要重复哦！');
+                      }
+                    
+                   }else{
+                    alert('您已经点过赞了,不要重复哦！');
+                   }
+              }  
+          })  
+  }) 
+});
+//urlencode数据转换
+function urlencode (str) {  
+    str = (str + '').toString();   
+    return encodeURIComponent(str).replace(/!/g, '%21').replace(/'/g, '%27').replace(/\(/g, '%28').  
+    replace(/\)/g, '%29').replace(/\*/g, '%2A').replace(/%20/g, '+');  
+} 
+</script>
+</html>

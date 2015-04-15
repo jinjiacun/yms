@@ -1,0 +1,62 @@
+<!--登录--Begin-->   
+<div class="bd_wd"></div> 
+<div class="tcwindows1" id="tcwindows1">
+  <div class="close"><a>关闭</a></div>
+    <h3 class="shwang">登录搜黑</h3>
+    <div class="tipbox1">
+         <span>账号：</span><input name="" type="text" class="input1" autocomplete="off" value="注册手机号" onblur="if (this.value =='') this.value='注册手机号'" onclick="if (this.value == '注册手机号') this.value = '' " />
+         <p class="clears"></p>   
+         <span>密码：</span>
+          <p style=" position:relative; overflow:hidden" class="posti">
+           <input type="password" value="" class="post2" autocomplete="off"></p>
+         <p class="clears"></p>   
+      <span style="height:1px; overflow:hidden">&nbsp;</span>
+      <input name="" type="checkbox" value="" class="check" />下次自动登录
+      <a class="wangji" href="__APP__/home/user/find_password">忘记密码</a>
+      <p class="clears"></p>   
+         <span>&nbsp;</span><input name="" type="button" value="登陆" class="but2"  />
+      <p class="clears"></p>           
+          <p class="mfzcs">什么！还没有搜黑网账号？<a href="__APP__/home/user/user_register">免费注册</a></p>
+    </div>
+</div>
+<!--登录--End-->
+<script>
+    //登录弹窗
+    $(function(){
+      //用户登录
+      $('.but2').click(function(){
+          var mobile     = $(this).parents('.tipbox1').find('.input1').val();
+          var password   = $(this).parents('.tipbox1').find('.post2').val();
+          if(mobile == ""){ 
+              alert("请输入登录账号！"); 
+              return false; 
+          }
+          if (password == "") {
+            alert('请输入登录密码');
+            return false;
+          }
+          jQuery.ajax({  
+              type:"post",  
+              url:"__URL__/login/mobile/"+mobile+"/password/"+password+"",
+              timeout: 5000,  
+              dataType:"json", 
+              contentType: "application/x-www-form-urlencoded; charset=utf-8",
+              data:{
+                  mobile:mobile,
+                  password:password,
+              },
+              success: function aa(data) { 
+                  if (data == 0) {
+                    window.location.href="__APP__/home/Index/index"; 
+                  }else if (data == -1) {
+                    alert("登录失败！");
+                    return false;
+                  }else if (data == -2) {
+                    alert('用户名不存在或密码错误!')
+                    return false;
+                  } 
+              }  
+          })  
+      });
+    });
+</script>
