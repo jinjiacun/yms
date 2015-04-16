@@ -6,9 +6,26 @@
 		   <table width="98%" border="0" align="center" cellpadding="0" cellspacing="0">
 		  <tr>
 			<td width="21"><img src="__PUBLIC__/Admin/images/ico07.gif" width="20" height="18" /></td>
-			<td width="550">查看内容：标题：
-			 <input name="title" type="text" size="12"/>
+			<td width="550">
+                        <span class="span_title">企业名称:</span>
+                        <span class="span_control">
+                        <input name="company_name" type="text" size="12" value="{$company_name}"/>
+                        </span>
+                        <span class="span_title">标题:</span>
+                        <span class="span_control">
+			 <input name="title" type="text" size="12" value="{$title}"/>
+                        </span><br/>
+                        <span class="span_title">正负面:</span>
+                        <span class="span_control">
+			 <select name="sign" style="width:130px;">
+                         <option value=-1>全部</option>
+                         <option value=0 <if condition="0 eq $sign">selected="selected"</if>>正面</option>
+                         <option value=1 <if condition="1 eq $sign">selected="selected"</if>>负面</option>
+                         </select>
+                        </span>
+                        <span class="span_control">
 			 <input name="submit" type="submit" class="right-button02" value="查 询" />
+                        </span>
 			 </td>
 			 <td width="132" align="left">
        <a href="#" onclick="sousuo()">			   

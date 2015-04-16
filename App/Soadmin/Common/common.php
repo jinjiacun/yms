@@ -152,4 +152,22 @@
         $length = strlen(trim($string));
         return (($length >= (int)$min) && ($length <= (int)$max)) ? true : false;
     }
-?>
+	function abslength($str){ 
+               $len=strlen($str); 
+               $i=0; 
+               $j=0;  
+               while($i<$len)  { 
+                 if(preg_match("/^[".chr(0xa1)."-".chr(0xf9)."]+$/",$str[$i]))  
+                 { 
+ 					$i+=3; //注意TP中的编码都是utf-8，所以+3;如果是GBK改为+2  
+                 } 
+                 else  
+                 { 
+                    $i+=1;  
+                 }  
+                 $j++; 
+              } 
+        return $j; 
+   }
+
+?>i

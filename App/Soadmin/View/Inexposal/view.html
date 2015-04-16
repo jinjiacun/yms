@@ -5,7 +5,10 @@
 <div class="MainDiv">
 <table width="99%" border="0" cellpadding="0" cellspacing="0" class="CContent">
   <tr>
-      <th class="tablestyle_title" >曝光企业详情页面</th>
+      <th class="tablestyle_title" >
+      <span>曝光企业详情页面</span>
+      <span style="float: right;color: #ffffff;cursor: pointer;margin-right: 10px;" onclick="window.history.go(-1);">《返回</span>
+      </th>
   </tr>
   <tr>
     <td class="CPanel">
@@ -13,7 +16,9 @@
 		<table border="0" cellpadding="0" cellspacing="0" style="width:100%">
 		
 		<tr align="center">
+		    <!--
 			<td class="TablePanel">&nbsp;</td>
+			-->
 	        </tr>
 			<TR>
 			<TD width="100%">
@@ -86,19 +91,19 @@
 					    <td nowrap align="right" width="10%"><b>图片:</b></td>
 					    <td width="30%">
                                             <if condition="0 neq $obj['pic_1']">
-                                            <a style="cursor: pointer;" onclick="view_pic('{$obj.pic_1_url}');"><img src="{$obj.pic_1_url}" width="25px" height="25px"/></a>
+                                            <a style="cursor: pointer;" onclick="view_pic('{$obj.pic_1_url}');"><img src="{$obj.pic_1_url}" width="100px"/></a>
                                             </if>
                                             <if condition="0 neq $obj['pic_2']">
-                                            <a style="cursor: pointer;" onclick="view_pic('{$obj.pic_2_url}');"><img src="{$obj.pic_2_url}" width="25px" height="25px"/></a>
+                                            <a style="cursor: pointer;" onclick="view_pic('{$obj.pic_2_url}');"><img src="{$obj.pic_2_url}"  width="100px"/></a>
                                             </if>
                                             <if condition="0 neq $obj['pic_3']">
-                                            <a style="cursor: pointer;" onclick="view_pic('{$obj.pic_3_url}');"><img src="{$obj.pic_3_url}" width="25px" height="25px"/></a>
+                                            <a style="cursor: pointer;" onclick="view_pic('{$obj.pic_3_url}');"><img src="{$obj.pic_3_url}"  width="100px"/></a>
                                             </if>
                                             <if condition="0 neq $obj['pic_4']">
-                                            <a style="cursor: pointer;" onclick="view_pic('{$obj.pic_4_url}');"><img src="{$obj.pic_4_url}" width="25px" height="25px"/></a>
+                                            <a style="cursor: pointer;" onclick="view_pic('{$obj.pic_4_url}');"><img src="{$obj.pic_4_url}"  width="100px"/></a>
                                             </if>
                                             <if condition="0 neq $obj['pic_5']">
-                                            <a style="cursor: pointer;" onclick="view_pic('{$obj.pic_5_url}');"><img src="{$obj.pic_5_url}" width="25px" height="25px"/></a>
+                                            <a style="cursor: pointer;" onclick="view_pic('{$obj.pic_5_url}');"><img src="{$obj.pic_5_url}"  width="100px"/></a>
                                             </if>
 				           </td>
 					   </tr>
@@ -120,7 +125,9 @@
 		
 		<TR>
 			<TD colspan="2" align="center" height="50px">
+                        <!--
 			<input type="button" name="Submit2" value="返回" class="button" onclick="window.history.go(-1);"/>
+                        -->
 			</TD>
 		</TR>
 		</TABLE>

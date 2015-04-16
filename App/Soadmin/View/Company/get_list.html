@@ -37,8 +37,8 @@
                   <volist name="list" id="item">
                   <tr align="center">
 		    <td bgcolor="#FFFFFF"><input type="checkbox" name="id[]" value="{$item.id}"/>{$item.id}</td>
-                    <td height="20" bgcolor="#FFFFFF">{$item.company_name}</td>
-                    <td height="20" bgcolor="#FFFFFF">{$item.alias_list}</td>
+                    <td height="20" bgcolor="#FFFFFF" style="text-align: left;">{$item.company_name}</td>
+                    <td height="20" bgcolor="#FFFFFF" style="text-align: left;">{$item.alias_list}</td>
                     <td height="20" bgcolor="#FFFFFF">
                     <if condition="'003001' eq $item['nature']">
                     公司

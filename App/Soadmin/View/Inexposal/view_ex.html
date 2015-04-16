@@ -5,7 +5,10 @@
 <div class="MainDiv">
 <table width="99%" border="0" cellpadding="0" cellspacing="0" class="CContent">
   <tr>
-      <th class="tablestyle_title" >可信企业</th>
+      <th class="tablestyle_title" >
+      <span>可信企业</span>
+      <span style="float: right;color: #ffffff;cursor: pointer;margin-right: 10px;" onclick="window.history.go(-1);">《返回</span>
+      </th>
   </tr>
   <tr>
     <td class="CPanel">
@@ -13,7 +16,9 @@
 		<table border="0" cellpadding="0" cellspacing="0" style="width:100%">
 		
 		<tr align="center">
+                 <!--
 			<td class="TablePanel">&nbsp;</td>
+                 -->
 	        </tr>
 			<TR>
 			<TD width="100%">
@@ -87,13 +92,13 @@
 					    <td nowrap align="right" width="10%"><b>营业执照:</b></td>
 					    <td width="30%">
                                             <a style="cursor: pointer;" onclick="view_pic('{$obj.busin_license_url}');">
-                                            <img src="{$obj.busin_license_url}" width="25px" height="25px"/>
+                                            <img src="{$obj.busin_license_url}" width="100px" />
                                             </a>                                            
 				           </td>
                                             <td nowrap align="right" width="10%"><b>机构代码证:</b></td>
 					    <td width="30%">
                                             <a style="cursor: pointer;" onclick="view_pic('{$obj.code_certificate_url}');">
-                                            <img src="{$obj.code_certificate_url}" width="25px" height="25px"/>
+                                            <img src="{$obj.code_certificate_url}" width="100px"/>
                                             </a>
 				           </td>
 					   </tr>
@@ -143,7 +148,7 @@
                                             </td>
 					    <td width="30%">
                                             <a style="cursor: pointer;" onclick="view_pic('{$obj.certificate_url}');">
-                                            <img src="{$obj.certificate_url}" width="25px" height="25px"/>
+                                            <img src="{$obj.certificate_url}" width="100px"/>
                                             </a>
                                             </if>
 				            </td>
@@ -181,7 +186,9 @@
 		
 		<TR>
 			<TD colspan="2" align="center" height="50px">
+                        <!--
 			<input type="button" name="Submit2" value="返回" class="button" onclick="window.history.go(-1);"/>
+                        -->
 			</TD>
 		</TR>
 		</TABLE>

@@ -129,12 +129,50 @@ class NewsController extends BaseController {
             $content['page_size'] = $page_size;
             $content['page_index'] = $page_index;
         }
-        if(I('post.submit'))
+        if(I('get.submit'))
         {
-             if('' != I('post.title'))
-                $content['where']['title'] = urlencode(I('post.title'));
-        }        
-        $content['where']['company_id'] = array("neq",0);
+             if('' != I('get.title'))
+             {
+                $content['where']['title'] = urlencode(I('get.title'));
+                $this->assign('title', I('get.title'));
+             }
+             if(0 == I('get.sign'))
+             {
+                $content['where']['sign'] = urlencode(I('get.sign'));
+                $this->assign('sign', I('get.sign'));
+             }
+             elseif(1 == I('get.sign'))
+             {
+                $content['where']['sign'] = urlencode(I('get.sign'));
+                $this->assign('sign', I('get.sign'));
+             }
+             if('' != I('get.company_name'))
+             {             
+                //企业名称
+                $company_name = urlencode(I('get.company_name'));
+                $this->assign('company_name',I('get.company_name'));
+                $tmp_result = $this->_call("Company.get_id_by_name", array("company_name"=>$company_name));
+                if($tmp_result
+                && 200 == $tmp_result['status_code']
+                )
+                {                
+                    $ids = '';
+                    $list = $tmp_result['content'];
+                    $tmp_list = array();
+                    foreach($list as $v)
+                    {
+                        $tmp_list[] = $v['id'];
+                    }
+                    $ids = implode(',', $tmp_list);
+                    if('' != $ids)
+                    {
+                        $content['where']['company_id'] = array("in", $ids);
+                    }
+                }
+             }
+        }
+        if(!isset($content['where']['company_id']))
+            $content['where']['company_id'] = array("neq",0);
         $res = A('Callapi')->call_api('News.get_list', 
                                     $content,
                                     'text',
