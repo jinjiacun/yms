@@ -1,0 +1,162 @@
+<include file="Public/header" />
+<body onload="on_load()">
+<form name="fom" id="fom" method="get">
+<table id="mainpage" width="100%" border="0" cellspacing="0" cellpadding="0">
+ <!--控制面板-->
+<include file="Inexposal/search" />
+ <!--控制面板-->  
+  <tr>
+    <td><table id="subtree1" style="DISPLAY: " width="100%" border="0" cellspacing="0" cellpadding="0">
+
+        <tr>
+          <td><table width="95%" border="0" align="center" cellpadding="0" cellspacing="0">
+
+          	 <tr>
+               <td height="20">
+                  <span class="newfont07">
+                    选择：<a id="selectAll" href="#" class="right-font08">全选</a>-
+                         <a id="unselectAll" href="#" class="right-font08">反选</a>
+                  </span>
+               <if condition="0 eq $status">
+                     <!--
+	             &nbsp<input type="button" name="delete_mul" value="批量删除"/>
+                     -->
+	             </if>
+               </td>
+          	 </tr>
+              <tr>
+                <td height="40" class="font42">
+                    <table width="100%" border="0" cellpadding="4" cellspacing="1" bgcolor="#464646" class="newfont03" style="table-layout:fixed;">
+                         <tr>
+                            <!--
+                            <td width="5%" align="center" bgcolor="#EEEEEE">选择</td>
+							-->
+                            <td width="8%" height="20" align="center" bgcolor="#EEEEEE" style="word-break:break-all;">会员昵称</td>
+                            <td width="15%" height="20" align="center" bgcolor="#EEEEEE">企业名称</td>
+                            <td width="3%" height="20" align="center" bgcolor="#EEEEEE">企业性质</td>
+                            <td width="5%" height="20" align="center" bgcolor="#EEEEEE">所属行业</td>
+                            <td width="20%" height="20" align="center" bgcolor="#EEEEEE" style="word-break:break-all">曝光内容</td>
+                            <td width="15%" height="20" align="center" bgcolor="#EEEEEE">附件</td>
+                            <td width="6%" height="20" align="center" bgcolor="#EEEEEE">曝光时间</td>
+                            <td width="4%" height="20" align="center" bgcolor="#EEEEEE">状态</td>
+                            <td width="10%" height="20" align="center" bgcolor="#EEEEEE">关联企业</td>
+                            <td width="10%" align="center" bgcolor="#EEEEEE">操作</td>
+                        </tr>
+
+                        <volist name="list" id="item">
+                        <tr align="center">
+                            <!--
+                            <td bgcolor="#FFFFFF" align="left"><input type="checkbox" name="delid" <if condition="0 neq $status">style="display:none"</if>/>{$item.id}</td>
+-->
+                            <td height="20" bgcolor="#FFFFFF" style="word-break;break-all;text-align:left;">{$item.nickname}</td>							
+                            <td height="20" bgcolor="#FFFFFF" style="text-align:left;">{$item.company_name}</td>
+                            <td height="20" bgcolor="#FFFFFF">
+                            <if condition="'003001' eq $item['nature']">公司<else />平台</if>
+                            </td>
+                            <td height="20" bgcolor="#FFFFFF">{$trade_list[$item['trade']]}</td>
+                            <td height="20" bgcolor="#FFFFFF" style="text-align:left;word-break:break-all;text-overflow:ellipsis;overflow:hidden;-moz-binding:url('ellipsis.xml#ellipsis');">
+                            <!--
+                            {$item.content|msubstr=###,0,20,'utf-8'}-->
+                            <div style="text-overflow:ellipsis;overflow:hidden;-o-text-overflow:ellipsis;-moz-binding:url('ellipsis.xml#ellipsis');width:225px;white-space:nowrap;">
+                            {$item.content}</div>
+                            </td>
+                            <td height="20" bgcolor="#FFFFFF" style="text-align:left;">
+                            <if condition="0 neq $item['pic_1']"><a style="cursor: pointer;" onclick="view_pic('{$item.pic_1_url}',1,'{$item.pic_1_url}','{$item.pic_2_url}','{$item.pic_3_url}','{$item.pic_4_url}','{$item.pic_5_url}');"><img src="{$item.pic_1_url}" style="width:50px;height:50px;"</a></if>
+                            <if condition="0 neq $item['pic_2']"><a style="cursor: pointer;" onclick="view_pic('{$item.pic_2_url}',2,'{$item.pic_1_url}','{$item.pic_2_url}','{$item.pic_3_url}','{$item.pic_4_url}','{$item.pic_5_url}');"><img src="{$item.pic_2_url}" style="width:50px;height:50px;"</a></if>
+                            <if condition="0 neq $item['pic_3']">...</if>
+                            </td>
+                            <td height="20" bgcolor="#FFFFFF">{$item.add_time|date="m-d",###}</td>
+                            <td height="20" bgcolor="#FFFFFF" >
+                            <if condition="0 eq $item.company_id">
+                            未审核
+                            <elseif condition="0 eq $item.is_delete" />
+                            已审核
+                            <else />
+                            已删除
+                            </if>
+                            </td>
+                            <td height="20" bgcolor="#FFFFFF" style="text-align:left;">
+                            <if condition="0 eq $item['company_id']">未关联<else />{$company_list[$item['company_id']]}</if>
+                            </td>
+                            <td bgcolor="#FFFFFF">
+                            <if condition="0 eq $item['company_id'] and 0 eq $item['is_delete']">
+                            <a href="__APP__/Soadmin/Inexposal/edit/id/{$item.id}/company_id/{$item.company_id}">关联企业</a>
+                            | 
+                            </if>
+                            <a href='__APP__/Soadmin/Inexposal/view/id/{$item.id}'>查看</a><br/>
+                            <a href='#' onclick='request_get("__APP__/Soadmin/Inexposal/save_as/id/{$item.id}/type/1")'>新增企业</a>
+                            <if condition="0 eq $item['is_delete']">|
+                            <a href='#' onclick='request_get("__APP__/Soadmin/Inexposal/delete/id/{$item.id}/company_id/{$item.company_id}")' onclick="return confirmdel('确定要删除吗')">删除</a>
+                            </if>
+                            </td>
+                        </tr>
+                        </volist>
+                    </table>
+                </td>
+              </tr>
+            </table></td>
+        </tr>
+      </table>
+      
+      <table width="95%" border="0" align="center" cellpadding="0" cellspacing="0">
+        <tr>
+          <td height="6"><img src="__PUBLIC__/Admin/images/spacer.gif" width="1" height="1" /></td>
+        </tr>
+        <tr>
+          <td colspan="5" align="right">{$page}</td>
+        </tr>
+</table>
+</form>
+
+<div id="loadingmsg" style="width:100px; height:18px; top:0px; display:none;">
+	<img src="file:///F|/项目管理相关资料/项目管理系统页面/images/loadon.gif" />
+</div>
+<include file="Public/pop_picture"/>
+</body>
+</html>
+<script type='text/javascript'>
+function del(url) {
+    if(!confirmdel('确定要删除吗'))
+        return false;
+    
+    // 传递至子窗口的参数
+    //var paramObj = param || { };
+    
+    /*
+    // 模态窗口高度和宽度
+    var whparamObj = { width: 500, height: 500 };
+    
+    // 相对于浏览器的居中位置
+    var bleft = ($(window).width() - whparamObj.width) / 2;
+    var btop = ($(window).height() - whparamObj.height) / 2;
+    
+    // 根据鼠标点击位置算出绝对位置
+    var tleft = e.screenX - e.clientX;
+    var ttop = e.screenY - e.clientY;
+    
+    // 最终模态窗口的位置
+    var left = bleft + tleft;
+    var top = btop + ttop;
+    
+    // 参数
+    var p = "help:no;status:no;center:yes;";
+        p += 'dialogWidth:'+(whparamObj.width)+'px;';
+        p += 'dialogHeight:'+(whparamObj.height)+'px;';
+        p += 'dialogLeft:' + left + 'px;';
+        p += 'dialogTop:' + top + 'px;';
+    */
+     var bleft = ($(window).width()) / 2;
+     var btop = ($(window).height()) / 2;
+    
+    var arr = showModalDialog('{:U("Public/pop_value")}', '',   
+    'dialogWidth:400px; dialogHeight:100px; help: no; scroll: yes; status: no;center:yes;dialogLeft:'+bleft+'px;dialogTop:'+btop+"px;");
+    
+            if (arr != null) {
+                url += '/reason/'+arr;
+                request_get(url);
+                //document.getElementById(ctlName).value = arr;  
+            }  
+        
+    //alert(url);
+}
+</script>
