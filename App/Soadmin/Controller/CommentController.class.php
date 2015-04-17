@@ -123,7 +123,7 @@ class CommentController extends BaseController {
                     'id'         => $tmp[0],
                     'company_id' => $tmp[1],
                 );
-                $result = $this->_call();
+                $result = $this->_call('Comment.validate', $content);
                 if($result
                 && 200 == $result['status_code']
                 && 0 == $result['content']['is_success']
