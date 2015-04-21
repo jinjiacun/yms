@@ -523,7 +523,16 @@ function validate_mul()
                     }
             }
     }
-    ajaxUrl+= "?check_mul=批量审核"+params;
+    if (ajaxUrl.indexOf('?')>0)
+    {
+        ajaxUrl+= "&check_mul=批量审核"+params;    
+    }
+    else
+    {
+        ajaxUrl+= "?check_mul=批量审核"+params;
+    }
+    
+    
     jQuery.ajax({  
                 type:"get",  
                 url:ajaxUrl,
@@ -603,7 +612,7 @@ $(function(){
             
             $treeTable.addChilds(html);
             */
-            
+            var status = document.getElementById('status').value;
             cur_obj = document.getElementById(id);;
             var pId = 0;
             pId = $("#"+id).attr("pId");
@@ -611,6 +620,7 @@ $(function(){
             //判定是否以get_list结尾,否则截断
             var off_last = cur_url.lastIndexOf("get_list");
             var off_last1 = cur_url.lastIndexOf("html");
+            var off_last2 = cur_url.lastIndexOf("查+询");            
             if(8 == cur_url.length- off_last) 
             {
                 cur_url += "?&parent_id="+id+"&s_p="+1;
@@ -619,9 +629,11 @@ $(function(){
             {
                 cur_url += "?&parent_id="+id+"&s_p="+1;
             }
+            
             else{
                 cur_url += "&parent_id="+id+"&s_p="+1;
             }
+            cur_url += "&status="+status;
             var next_obj = get_nextsibling(cur_obj);
             jQuery.ajax({  
                                     type:"get",  

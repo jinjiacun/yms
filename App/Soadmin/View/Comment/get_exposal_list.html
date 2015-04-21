@@ -59,7 +59,15 @@ function getDate(timestamp) {
           <td><table width="95%" border="0" align="center" cellpadding="0" cellspacing="0">
 
           	 <tr>
-               <td height="20"><span class="newfont07">选择：<a href="#" class="right-font08" onclick="selectAll();">全选</a>-<a href="#" class="right-font08" onclick="unselectAll();">反选</a></span>
+               <td height="20">
+               <span class="newfont07">选择：
+                  <a href="#" class="right-font08" onclick="selectAll();">全选</a>-
+                  <a href="#" class="right-font08" onclick="unselectAll();">反选</a>
+  				  <if condition="0 eq $status">
+               &nbsp<input type="button" name="check_mul" value="批量审核" onclick="validate_mul()"/>
+               </if>
+
+                  </span>
 	             
 	             </td>
           	 </tr>
@@ -67,6 +75,8 @@ function getDate(timestamp) {
                 <td height="40" class="font42"><table width="100%" border="0" cellpadding="4" cellspacing="1" bgcolor="#464646" class="newfont03">
 
                   <tr>
+					
+		            <td width="6%" align="center" bgcolor="#EEEEEE">选择</td>
                     <td width="3%" height="20" align="center" bgcolor="#EEEEEE">标记</td>
                     <td width="10%" height="20" align="center" bgcolor="#EEEEEE">会员昵称</td>
                     <td width="10%" height="20" align="center" bgcolor="#EEEEEE">曝光入库企业</td>
@@ -74,13 +84,16 @@ function getDate(timestamp) {
                     <td width="20%" height="20" align="center" bgcolor="#EEEEEE">主体</td>
                     <td width="20%" height="20" align="center" bgcolor="#EEEEEE">回复</td>
                     <td width="10%" height="20" align="center" bgcolor="#EEEEEE">评论日期</td>
-                    <td width="10%" height="20" align="center" bgcolor="#EEEEEE">是否审核</td>
+                    <td width="5%" height="20" align="center" bgcolor="#EEEEEE">是否审核</td>
                     <td width="10%" height="20" align="center" bgcolor="#EEEEEE">审核日期</td>
                     <td width="14%" align="center" bgcolor="#EEEEEE">操作</td>
                   </tr>
 
                   <volist name="list" id="item">
-                  <tr align="center" id="{$item.id}" <if condition="0 neq $item['re_sub']['record_count']">haschild="true"</if>>
+                  <tr align="center" id="{$item.id}" <if condition="0 neq $item['re_sub']['record_count']">haschild="true"</if>>                   
+					<td bgcolor="#FFFFFF">
+					<input type="checkbox" name="id[]" value="{$item.id}" onclick="select_master_comment(this);" />{$item.id}
+					</td>
                     <td bgcolor="#FFFFFF"></td>
                     <td height="20" bgcolor="#FFFFFF">{$item.nickname}</td>
                     <td height="20" bgcolor="#FFFFFF">{$exposal_list[$item['exposal_id']]}</td>
@@ -114,6 +127,7 @@ function getDate(timestamp) {
                   <volist name="item.sub.list" id="sub_item">
                   <tr id="{$sub_item.id}"
                         pId="{$sub_item.parent_id}">
+                    <td bgcolor="#FFFFFF" class="sub"><input type="checkbox" name="id[]" value="{$sub_item.id}"/>{$sub_item.id}</td>
                     <td bgcolor="#FFFFFF" class="sub"></td>    
                     <td height="20" bgcolor="#FFFFFF" class="sub">{$sub_item.nickname}</td>
                     <td height="20" bgcolor="#FFFFFF" class="sub">{$exposal_list[$sub_item['exposal_id']]}</td>
@@ -393,7 +407,7 @@ $(function(){
     var option = {
         //theme:'vsStyle',
         expandLevel : 1,
-        column:0,
+        column:1,
         beforeExpand : function($treeTable, id) {
             //判断id是否已经有了孩子节点，如果有了就不再加载，这样就可以起到缓存的作用
             if ($('.' + id, $treeTable).length) { return; }
@@ -499,4 +513,96 @@ $(function(){
     };
     $('#subtree1').treeTable(option);
 });
+//选择主评论,所有回复也选中
+function select_master_comment(cur_obj)
+{
+    var parent_tr = cur_obj.parentNode.parentNode;
+    //alert(parent_tr.getAttribute('haschild'));
+    if(parent_tr.getAttribute("haschild"))
+    {
+        if(true == cur_obj.checked)
+        {           
+            var next_obj = get_nextsibling(parent_tr);
+            var pId = parent_tr.id;
+            //alert(pId);
+            while(next_obj
+            && (2 == next_obj.getAttribute("depth") && pId == next_obj.getAttribute("pId"))
+            || (3 == next_obj.getAttribute("depth"))
+            )
+            {
+                var cur_id = next_obj.id;
+                var cur_checkbox = jQuery(next_obj).find("input[name='id[]']")[0];
+                if(cur_checkbox)
+                  cur_checkbox.checked = true;
+                next_obj = get_nextsibling(next_obj);
+                $('#'+cur_id).click();
+            }            
+        }
+        else
+        {
+            var next_obj = get_nextsibling(parent_tr);
+            var pId = parent_tr.id;
+            while(next_obj
+            && (2 == next_obj.getAttribute("depth")||pId == next_obj.getAttribute("pId"))
+            ||  3 == next_obj.getAttribute("depth")
+            )
+            {
+                var cur_id = next_obj.id;
+                var cur_checkbox = jQuery(next_obj).find("input[name='id[]']")[0];
+                cur_checkbox.checked = false;
+                next_obj = get_nextsibling(next_obj);
+            }       
+        }   
+    }
+}
+//multi check
+function validate_mul()
+{
+    var ajaxUrl = location.href;
+    var obj = document.fom.elements;
+    var params = '';
+    for (var i=0;i<obj.length;i++){
+            if (obj[i].name == "id[]"){
+                    //obj[i].checked = true;
+                    if (obj[i].checked) {
+                        params += "&id[]="+obj[i].value;
+                    }
+            }
+    }
+    if (ajaxUrl.indexOf('?')>0)
+    {
+        ajaxUrl+= "&check_mul=批量审核"+params;    
+    }
+    else
+    {
+        ajaxUrl+= "?check_mul=批量审核"+params;
+    }
+    
+    
+    jQuery.ajax({  
+                type:"get",  
+                url:ajaxUrl,
+                timeout: 5000,
+                dataType:"json",
+                success: function aa(data) {
+                    if (0 == data.status) {
+                       popStatus(1, data.message, 2);
+                       if ('' != data.jmp_url) {
+                        setTimeout("location.href= '"+data.jmp_url+"'; ",3000);//延时3秒 
+                        //location.href= data.jmp_url;
+                       }
+                    }
+                    else
+                    {
+                      popStatus(4, data.status+','+data.message, 2);
+                    }
+                },
+                error:function my_error(data){
+                    popStatus(4, data.status+','+data.message, 2);
+                }
+	    });
+}
+
+
 </script>
+

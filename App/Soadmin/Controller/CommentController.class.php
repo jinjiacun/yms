@@ -93,6 +93,20 @@ class CommentController extends BaseController {
             //回复查询
             $content['page_index'] = I('get.s_p');
             $content['where']['parent_id'] = I('get.parent_id');
+            if(0 == I('get.status'))
+            {
+                $content['where']['is_validate'] = 0;
+                $content['where']['is_delete'] = 0;
+            }
+            elseif(1 == I('get.status'))
+            {
+                $content['where']['is_validate'] = 1;
+                $content['where']['is_delete'] = 0;
+            }
+            else
+            {
+                $content['where']['is_delete'] = 1;
+            }
             $result = $this->_call("Comment.get_list", $content);
             if($result
             && 200 == $result['status_code']
@@ -545,7 +559,39 @@ class CommentController extends BaseController {
             }
             exit();
         }
-        
+        //批量审核
+        if(I('get.check_mul'))
+        {                
+            $tmp_list = I('get.id');
+            if(!is_array($tmp_list))
+            {
+                //$this->error('参数错误');
+                $this->echo_message(-100,'参数错误');
+                exit();
+            }
+
+            foreach($tmp_list as $v)
+            {
+                $content = array(
+                    'id'         => $v,
+                );
+                $result = $this->_call('Comexposal.validate', $content);
+                if($result
+                && 200 == $result['status_code']
+                && 0 == $result['content']['is_success']
+                )
+                {
+                }
+                else
+                {
+                    $this->echo_message(-1,"操作失败");
+                    exit();
+                }
+            }
+            $this->echo_message(0,'成功操作', C('Template_pre').'Comment/get_exposal_list');
+            exit();
+        }
+
         
         $res = A('Callapi')->call_api('Comexposal.get_list_com_ex', 
                                     $content,
