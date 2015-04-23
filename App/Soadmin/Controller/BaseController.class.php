@@ -204,9 +204,9 @@ class BaseController extends Controller {
 	public function _map_trade_list()
 	{
 		$_map =  array(
-			'004001'=>'贵金属',
+#			'004001'=>'贵金属',
 			'004002'=>'外汇',
-			'004003'=>'石油',
+#			'004003'=>'石油',
 			'004004'=>'大宗商品',
 			'004005'=>'其他',
 		);
