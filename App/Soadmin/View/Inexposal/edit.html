@@ -72,6 +72,7 @@ $(function(){
             'dataType':'json', //返回数据类型 
             'type':'POST', //请求类型 
             'success':function(data){ 
+                $autocomplete.empty();
                 if(data.length) { 
                     //遍历data，添加到自动完成区 
                     $.each(data, function(index,term) {

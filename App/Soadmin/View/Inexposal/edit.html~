@@ -7,7 +7,10 @@
 .autocomplete{ 
     border: 1px solid #9ACCFB; 
     background-color: white; 
-    text-align: left; 
+    text-align: left;
+    /*LINE-HEIGHT: 20px;*/
+    width: 150px;
+    OVERFLOW: auto; 
 } 
 .autocomplete li{ 
     list-style-type: none; 
@@ -69,6 +72,7 @@ $(function(){
             'dataType':'json', //返回数据类型 
             'type':'POST', //请求类型 
             'success':function(data){ 
+                autocomplete.empty();
                 if(data.length) { 
                     //遍历data，添加到自动完成区 
                     $.each(data, function(index,term) {
@@ -179,7 +183,10 @@ $(window).resize(function() {
 <div class="MainDiv">
 <table width="99%" border="0" cellpadding="0" cellspacing="0" class="CContent">
   <tr>
-      <th class="tablestyle_title" >关联企业</th>
+      <th class="tablestyle_title" >
+      <span>关联企业</span>
+      <span style="float: right;color: #ffffff;cursor: pointer;margin-right: 10px;" onclick="window.history.go(-1);">《返回</span>
+      </th>
   </tr>
   <tr>
     <td class="CPanel">
@@ -188,8 +195,10 @@ $(window).resize(function() {
 		
 		<tr align="center">
 			<td class="TablePanel" style="text-align:left;">
+			<!--
 			<input type="submit" name="submit" value="保存" class="button"/>			　
 			<input type="button" name="Submit2" value="返回" class="button" onclick="window.history.go(-1);"/>
+			-->
             </td>
 	        </tr>
 			<TR>
@@ -198,10 +207,10 @@ $(window).resize(function() {
 					  <table border="0" cellpadding="2" cellspacing="1" style="width:100%">
 					   <tr>
                           
-                           <td width="35%" nowrap align="left">
+                           <td width="50%" nowrap align="left">
                          	<div id = "search" style="text-align:left;"> 
-							企业:<input type="text" id="search-text" name="search-text" width="20px;"/> 
-							<input type="button" id="submit" value="搜索" style="display:none;" />
+							企业:<input type="text" id="search-text" name="search-text" width="40px;" style="width:250px;"/>&nbsp;<font style="color:red">*.通过搜索关键字查看所有关联企业</font>
+							<input type="button" id="submit" value="搜索" style="display:none;" size="20"/>
  <input type="hidden" name="id" value="{$id}"/>
                                                         <input type="hidden" id="company_id" name="company_id"/>
 						  </div> 
