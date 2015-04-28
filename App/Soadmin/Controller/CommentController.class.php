@@ -208,7 +208,12 @@ class CommentController extends BaseController {
                 exit();
             }
         }
-        
+        $content['order'] = array(
+					'last_time'=>'desc',
+					'last_cchild_time'=>'desc',
+           		    'last_child_time'=>'desc',
+	                'add_time'=>'desc',
+		);
         $content['where']['parent_id'] = array('eq',0);
         $res = A('Callapi')->call_api('Comment.get_list_ex', 
                                     $content,
@@ -591,7 +596,11 @@ class CommentController extends BaseController {
             $this->echo_message(0,'成功操作', C('Template_pre').'Comment/get_exposal_list');
             exit();
         }
-
+	    $content['order'] = array(
+			'last_time'=>'desc',
+			'last_child_time'=>'desc',
+			'add_time'=>'desc',
+		);
         
         $res = A('Callapi')->call_api('Comexposal.get_list_com_ex', 
                                     $content,

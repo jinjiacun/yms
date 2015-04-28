@@ -50,3 +50,12 @@ childs 未审核的回复数量
 2015-4-14
 so_attention表添加
 
+2015-4-28
+so_comment表添加
+last_child_time 最新回复评论时间
+last_cchild_time 最新再回复评论时间
+last_time 最新操作时间
+so_com_exposal表添加
+last_child_time 最新回复时间
+last_time 最新操作时间
+添加so_share_count分享计数表

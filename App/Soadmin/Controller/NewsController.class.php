@@ -146,6 +146,8 @@ class NewsController extends BaseController {
                 $content['where']['sign'] = urlencode(I('get.sign'));
                 $this->assign('sign', I('get.sign'));
              }
+             else
+				$this->assign('sign', I('get.sign'));
              if('' != I('get.company_name'))
              {             
                 //企业名称
@@ -171,6 +173,10 @@ class NewsController extends BaseController {
                 }
              }
         }
+        else
+		{
+			$this->assign('sign', -1);
+		}
         if(!isset($content['where']['company_id']))
             $content['where']['company_id'] = array("neq",0);
         $res = A('Callapi')->call_api('News.get_list', 
