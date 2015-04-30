@@ -612,6 +612,15 @@ $(function(){
             
             $treeTable.addChilds(html);
             */
+			
+			var is_check = $("#"+id).find("input[type=checkbox]").prop("checked");
+			var str_check = "";
+			if(is_check)
+			{
+				str_check = " checked='checked' ";
+			}
+            //.attr("checked");
+			//alert(is_check);
             var status = document.getElementById('status').value;
             cur_obj = document.getElementById(id);;
             var pId = 0;
@@ -651,7 +660,7 @@ $(function(){
                                           var tr = '<tr id="'+item.id+'" pId="'+item.parent_id+'"">';
                                           var td = ' \
                                             <td class="ssub"> \
-                                            <input type="checkbox" name="id[]" value="'+item.id+'|'+item.company_id+'"  \onclick="select_master_comment(this);" /> \
+                                            <input type="checkbox" name="id[]" '+str_checked+' value="'+item.id+'|'+item.company_id+'"  \onclick="select_master_comment(this);" /> \
                                             <span> \
                                             '+item.id+'</span> \
                                             </td> \

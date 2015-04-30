@@ -59,3 +59,7 @@ so_com_exposal表添加
 last_child_time 最新回复时间
 last_time 最新操作时间
 添加so_share_count分享计数表
+
+2015-4-29
+so_inexposal表添加
+auth_level企业等级字段
