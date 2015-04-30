@@ -1,0 +1,608 @@
+<include file="Public/header" />
+<body onload="on_load()">
+<style>
+.sub
+{
+    background:#C0C0C0;
+    text-align: center;
+}
+.ssub
+{
+    background:#EEDFCC;
+    text-align: center;
+}
+</style>
+<script>
+function get_nextsibling(n)
+{
+    var x=n.nextSibling;
+    while (x.nodeType!=1)
+    {
+        x=x.nextSibling;
+    }
+    return x;
+}
+function insertAfter(newElement, targetElement){
+    var parent = targetElement.parentNode;
+    if (parent.lastChild == targetElement) {
+        // 如果最后的节点是目标元素，则直接添加。因为默认是最后
+        parent.appendChild(newElement);
+    }
+    else {
+        parent.insertBefore(newElement, targetElement.nextSibling);
+        //如果不是，则插入在目标元素的下一个兄弟节点 的前面。也就是目标元素的后面
+    }
+}
+function getDate(timestamp) {
+  var d = new Date(timestamp * 1000),	// Convert the passed timestamp to milliseconds
+		yyyy = d.getFullYear(),
+		mm = ('0' + (d.getMonth() + 1)).slice(-2),	// Months are zero based. Add leading 0.
+		dd = ('0' + d.getDate()).slice(-2),			// Add leading 0.
+		hh = d.getHours(),
+		h = hh,
+		min = ('0' + d.getMinutes()).slice(-2),		// Add leading 0.
+		ampm = 'AM',
+		time;
+	var seconds = d.getSeconds();
+	time = yyyy + '-' + mm + '-' + dd + ' ' + h + ':' + min+':'+seconds;
+	return time;
+}
+</script>
+<script src="__PUBLIC__/Soadmin/js/treeTable/jquery.treeTable.js" type="text/javascript"></script>
+<form name="fom" id="fom" method="get">
+<table id="mainpage" width="100%" border="0" cellspacing="0" cellpadding="0">
+  <include file="Comment/search_exposal"/>
+  <tr>
+    <td><table id="subtree1" style="DISPLAY: " width="100%" border="0" cellspacing="0" cellpadding="0">
+
+        <tr>
+          <td><table width="95%" border="0" align="center" cellpadding="0" cellspacing="0">
+
+          	 <tr>
+               <td height="20">
+               <span class="newfont07">选择：
+                  <a href="#" class="right-font08" onclick="selectAll();">全选</a>-
+                  <a href="#" class="right-font08" onclick="unselectAll();">反选</a>
+  				  <if condition="0 eq $status">
+               &nbsp<input type="button" name="check_mul" value="批量审核" onclick="validate_mul()"/>
+               </if>
+
+                  </span>
+	             
+	             </td>
+          	 </tr>
+              <tr>
+                <td height="40" class="font42"><table width="100%" border="0" cellpadding="4" cellspacing="1" bgcolor="#464646" class="newfont03">
+
+                  <tr>
+					
+		            <td width="6%" align="center" bgcolor="#EEEEEE">选择</td>
+                    <td width="3%" height="20" align="center" bgcolor="#EEEEEE">标记</td>
+                    <td width="10%" height="20" align="center" bgcolor="#EEEEEE">会员昵称</td>
+                    <td width="10%" height="20" align="center" bgcolor="#EEEEEE">曝光入库企业</td>
+                    
+                    <td width="20%" height="20" align="center" bgcolor="#EEEEEE">主体</td>
+                    <td width="20%" height="20" align="center" bgcolor="#EEEEEE">回复</td>
+                    <td width="10%" height="20" align="center" bgcolor="#EEEEEE">评论日期</td>
+                    <td width="5%" height="20" align="center" bgcolor="#EEEEEE">是否审核</td>
+                    <td width="10%" height="20" align="center" bgcolor="#EEEEEE">审核日期</td>
+                    <td width="14%" align="center" bgcolor="#EEEEEE">操作</td>
+                  </tr>
+
+                  <volist name="list" id="item">
+                  <tr align="center" id="{$item.id}" <if condition="0 neq $item['re_sub']['record_count']">haschild="true"</if>>                   
+					<td bgcolor="#FFFFFF">
+					<input type="checkbox" name="id[]" value="{$item.id}" onclick="select_master_comment(this);" />{$item.id}
+					</td>
+                    <td bgcolor="#FFFFFF"></td>
+                    <td height="20" bgcolor="#FFFFFF">{$item.nickname}</td>
+                    <td height="20" bgcolor="#FFFFFF">{$exposal_list[$item['exposal_id']]}</td>
+                    <td height="20" bgcolor="#FFFFFF" style="word-break: break-all">
+                    {$item.content}                    
+                    </td>
+                    <td height="20" bgcolor="#FFFFFF" style="word-break: break-all">--</td>
+                    <td height="20" bgcolor="#FFFFFF">{$item.add_time|date="Y-m-d H:i:s",###}</td>
+                    <td height="20" bgcolor="#FFFFFF">
+                    <if condition="0 eq $item['is_validate']">
+                    未审核
+                    <else />
+                    已审核
+                    </if>
+                    </td>
+                    <td height="20" bgcolor="#FFFFFF">
+                    <if condition="0 eq $item['validate_time']">
+                    --
+                    <else />
+                    {$item.validate_time|date="Y-m-d H:i:s",###}
+                    </if>
+                    </td>
+                    <td bgcolor="#FFFFFF">
+                        <if condition="0 eq $item['is_validate']">
+                        <a href="javascript:request_get('__APP__/Soadmin/Comment/validate_exposal/id/{$item.id}');">审核</a
+                        </if>
+                     </td>
+                  </tr>
+                  <!--再回复-->
+                  <if condition="0 neq $item['sub']['record_count']">
+                  <volist name="item.sub.list" id="sub_item">
+                  <tr id="{$sub_item.id}"
+                        pId="{$sub_item.parent_id}">
+                    <td bgcolor="#FFFFFF" class="sub"><input type="checkbox" name="id[]" value="{$sub_item.id}"/>{$sub_item.id}</td>
+                    <td bgcolor="#FFFFFF" class="sub"></td>    
+                    <td height="20" bgcolor="#FFFFFF" class="sub">{$sub_item.nickname}</td>
+                    <td height="20" bgcolor="#FFFFFF" class="sub">{$exposal_list[$sub_item['exposal_id']]}</td>
+                    <td height="20" bgcolor="#FFFFFF" style="word-break: break-all" class="sub">
+                    --
+                    </td>
+                    <td height="20" bgcolor="#FFFFFF" style="word-break: break-all" class="sub">
+                    {$sub_item.content}
+                    </td>
+                    <td height="20" bgcolor="#FFFFFF" class="sub">{$sub_item.add_time|date="Y-m-d H:i:s",###}</td>
+                    <td height="20" bgcolor="#FFFFFF" class="sub">
+                    <if condition="0 eq $sub_item['is_validate']">
+                    未审核
+                    <else />
+                    已审核
+                    </if>
+                    </td>
+                    <td height="20" bgcolor="#FFFFFF" class="sub">
+                    <if condition="0 eq $sub_item['validate_time']">
+                    --
+                    <else />
+                    {$sub_item.validate_time|date="Y-m-d H:i:s",###}
+                    </if>
+                    </td>
+                    <td bgcolor="#FFFFFF" class="sub">
+                        <if condition="0 eq $sub_item['is_validate']">
+                        <a href="javascript:request_get('__APP__/Soadmin/Comment/validate_exposal/id/{$sub_item.id}');">审核</a
+                        </if>
+                     </td>
+                  </tr>
+                  </volist>
+                   <!--超过10条-->
+                  <if condition="10 lt $item['sub']['record_count']">
+                    <tr>
+                    <td id="page_{$item.id}" colspan="10" bgcolor="#FFFFFF" style="text-align:right;">
+                      
+                    </td>
+                    </tr>
+                    <style>
+                    .page
+                    {
+                    
+                    }
+                    .page_a {
+                        padding:2px 5px;
+                    }
+                    .sub_page_cur
+                    {
+                        margin-left:5px;
+                        text-align:center;
+                        display:inline-block;
+                        background:#e74c3c no-repeat;
+                        color:#fff;width:18px;
+                    }
+                    .sub_page
+                    {
+                        display:inline-block;
+                        width:18px;
+                        text-align:center;
+                        margin-left:5px;
+                    }
+                    </style>
+                    <script>                    
+                    var pId = {$item.id};
+                    var cur_obj = document.getElementById(pId);
+                    var record_count = {$item['sub']['record_count']};
+                    var page_control_id = "page_"+ {$item.id};
+                    var page_size = 10;
+                    var page_count = Math.ceil(record_count/page_size);
+                    var page_control = document.getElementById(page_control_id);
+                    var exposal_name = '{$exposal_list[$sub_item['exposal_id']]}';
+                    for(var i=1; i<=page_count; i++)
+                    {
+                        //if(1 == i)
+                        //{
+                           // var a = document.createElement('a');
+                           // a.innerHTML = i;
+                           // a.className = "sub_page_cur";
+                           // page_control.appendChild(a);
+                        //}
+                        //else
+                       // {
+                            var a = document.createElement("a");
+                            if (1 == i) {
+                                a.className = "sub_page_cur";
+                            }
+                            else{
+                                a.className = "sub_page";
+                            }
+                            a.href = 'javascript:void(0);';
+                            //a.className = "page_a";
+                            a.setAttribute("p", i);
+                            a.onclick = function(){
+                                if ("sub_page_cur" == this.className) {
+                                    return;
+                                }
+                                var cur_url = location.href;
+                                //判定是否以get_list结尾,否则截断
+                                var off_last = cur_url.lastIndexOf("html");
+                                cur_url += "?parent_id="+pId+"&s_p="+this.getAttribute('p');
+                                //alert(cur_url);
+                                var next_obj  = get_nextsibling(cur_obj);
+                                //清除当前的列表
+                                while(next_obj
+                                && next_obj.getAttribute('depth') == 2
+                                && next_obj.getAttribute('pId') == pId
+                                )
+                                {
+                                    var parent_node = next_obj.parentNode;
+                                    if(parent_node)
+                                    {
+                                        parent_node.removeChild(next_obj);
+                                        next_obj = get_nextsibling(cur_obj);
+                                    }
+                                }
+                                //清空分页样式
+                                var child_length = page_control.childNodes.length;
+                                var page_childs = page_control.childNodes;
+                                for(var j=0; j< child_length; j++)
+                                {
+                                    page_childs[j].className = "sub_page";
+                                }
+                                this.className = "sub_page_cur";
+                            
+                                jQuery.ajax({  
+                                    type:"get",  
+                                    url:cur_url,
+                                    timeout: 5000,
+                                    dataType:"json",
+                                    success: function aa(data) {
+                                        for(var i=0; i<data.record_count; i++)
+                                        {
+                                            var item = data.list[i];
+                                            var tr = document.createElement("tr");
+                                            if(null == item)
+                                                break;
+                                            tr.id = item.id;
+                                            tr.setAttribute("pId", pId);
+                                            tr.setAttribute("class", item.parent_id);
+                                            tr.setAttribute("depth", 2);
+                                            if (0 == item.has_child)
+                                            {
+                                                //alert(item.has_child);
+                                                //alert(item.id);
+                                                tr.setAttribute("has_child", true);
+                                            }
+                                            tr.style.display = "table-row";
+                                            if(0 == i)
+                                            {
+                                                tr.setAttribute("isfirstone", true);
+                                            }
+                                            else if(i == data.record_count-1)
+                                            {
+                                                tr.setAttribute("islastone", true);
+                                            }
+                                            else
+                                            {
+                                                var prevNode = jQuery(tr).prev();
+                                                tr.setAttribute("previd", prevNode.id);
+                                            }
+                                            
+                                        
+                                            //选择和id
+                                            var td = document.createElement("td");
+                                            td.className = "sub";
+                                            tr.appendChild(td);
+                                           
+                                            //会员昵称
+                                            td = document.createElement("td");
+                                            td.style.backgroundColor = '#C0C0C0';
+                                            td.style.textAlign = "center";
+                                            td.innerHTML = item.nickname;
+                                            tr.appendChild(td);
+                                        
+                                            //企业
+                                            td = document.createElement("td");
+                                            td.style.backgroundColor = "#C0C0C0";
+                                            td.style.textAlign = "center";
+                                            td.innerHTML = exposal_name;
+                                            tr.appendChild(td);
+                                        
+                                           
+                                        
+                                            //主体
+                                            td = document.createElement("td");
+                                            td.style.backgroundColor = "#C0C0C0";
+                                            td.style.textAlign = "center";
+                                            td.innerHTML = '';
+                                            tr.appendChild(td);
+                                        
+                                            //回复
+                                            td = document.createElement('td');
+                                            td.style.backgroundColor = "#C0C0C0";
+                                            td.style.textAlign = "center";
+                                            td.innerHTML = item.content;
+                                            tr.appendChild(td);
+                                        
+                                            //评论日期
+                                            td = document.createElement("td");
+                                            td.style.backgroundColor = "#C0C0C0";
+                                            td.style.textAlign = "center";
+                                            td.innerHTML = getDate(item.add_time);
+                                            tr.appendChild(td);
+                                            
+                                            //是否审核
+                                            td = document.createElement("td");
+                                            td.style.backgroundColor = "#C0C0C0";
+                                            td.style.textAlign = "center";
+                                            td.innerHTML = '已审核';
+                                            if (0 == item.is_validate) {
+                                                td.innerHTML = '未审核';    
+                                            }
+                                            tr.appendChild(td);
+                                            
+                                            //审核日期
+                                            td = document.createElement("td");
+                                            td.style.backgroundColor = "#C0C0C0";
+                                            td.style.textAlign = "center";                                            
+                                            td.innerHTML = item.validate_time;
+                                            if (0 == item.is_validate) {
+                                                td.innerHTML = '--';
+                                            }
+                                            tr.appendChild(td);
+                                        
+                                            //操作
+                                            td = document.createElement("td");
+                                            td.style.backgroundColor = "#C0C0C0";
+                                            td.style.textAlign = "center";
+                                            if(0 == item.is_validate){
+                                                td.innerHTML = '<a href="javascript:request_get(\'__APP__/Soadmin/Comment/validate_exposal/id/'+item.id+'\');">审核</a';   
+                                            }                                            
+                                            tr.appendChild(td);
+
+                                            insertAfter(tr, cur_obj);
+                                        
+                                        }
+                                    },
+                                    error:function my_error(data){
+                                       alert('失败');
+                                    }
+                                });
+                            };                        
+                            a.innerHTML = i;
+                            page_control.appendChild(a);
+                        //}
+                    }
+                    </script>
+                  </if>
+                  </if>
+                  
+                  <!--再回复-->
+                  </volist>
+
+                </table></td>
+              </tr>
+            </table></td>
+        </tr>
+      </table>
+      <table width="95%" border="0" align="center" cellpadding="0" cellspacing="0">
+        <tr>
+          <td height="6"><img src="__PUBLIC__/Admin/images/spacer.gif" width="1" height="1" /></td>
+        </tr>
+        <tr>
+          <td colspan="5" align="right">{$page}</td>
+        </tr>
+</table>
+</form>
+
+<div id="loadingmsg" style="width:100px; height:18px; top:0px; display:none;">
+	<img src="file:///F|/项目管理相关资料/项目管理系统页面/images/loadon.gif" />
+</div>
+
+</body>
+</html>
+<script type='text/javascript'>
+$(function(){
+    var option = {
+        //theme:'vsStyle',
+        expandLevel : 1,
+        column:1,
+        beforeExpand : function($treeTable, id) {
+            //判断id是否已经有了孩子节点，如果有了就不再加载，这样就可以起到缓存的作用
+            if ($('.' + id, $treeTable).length) { return; }
+            //这里的html可以是ajax请求
+            /*
+            var html = '<tr id="8" pId="'+id+'"><td>5.1</td><td>可以是ajax请求来的内容</td></tr>'
+                     + '<tr id="9" pId="'+id+'"><td>5.2</td><td>动态的内容</td></tr>';
+            
+            $treeTable.addChilds(html);
+            */
+
+            
+            cur_obj = document.getElementById(id);;
+            var pId = 0;
+            pId = $("#"+id).attr("pId");
+            var cur_url = location.href;
+            //判定是否以get_list结尾,否则截断
+            var off_last = cur_url.lastIndexOf("html");
+            if(4 == cur_url.length- off_last) 
+            {
+                cur_url += '?';
+            }
+            cur_url += "&parent_id="+id+"&s_p="+1;
+            var next_obj = get_nextsibling(cur_obj);
+            jQuery.ajax({  
+                                    type:"get",  
+                                    url:cur_url,
+                                    timeout: 5000,
+                                    dataType:"json",
+                                    success: function aa(data) {
+                                        var html = '';                                        
+                                        for(var i= 0; i< data.record_count; i++)
+                                        {
+                                          var item = data.list[i];
+                                          var tr = '<tr id="'+item.id+'" pId="'+item.parent_id+'"">';
+                                          var td = ' \
+                                            <td class="ssub"> \
+                                            <input type="checkbox" name="id[]" value="'+item.id+'|'+item.company_id+'"  \onclick="select_master_comment(this);" /> \
+                                            <span> \
+                                            '+item.id+'</span> \
+                                            </td> \
+                                            <td height="20" class="ssub">'+item.user_id+'</td> \
+                                            <td height="20" class="ssub">'+item.nickname+'</td> \
+                                            <td height="20" class="ssub"> \
+                                            ';
+                                            td += item.company_name;
+                                            td += '</td> \
+                                            <td height="20" class="ssub">';
+                                            if('005001' == item.type)
+                                            {
+                                              td += '<font style="color:#d53315">点赞</font>';
+                                            }
+                                            else if('005002' == item.type)
+                                            {
+                                              td += '<font style="color:#0086d2">提问</font>';
+                                            }
+                                            else
+                                            {
+                                              td += '<font style="color:#008000">加黑</font>';
+                                            }
+                                            td += '</td> \
+                                            <td height="20" class="ssub"> \
+                                            </td> \
+                                            <td height="20" class="ssub">'+item.content+'</td> \
+                                            <td height="20" class="ssub">'+item.add_time+'</td> \
+                                            <td height="20" class="ssub">';
+                                            if(0 == item.validate_time)
+                                            {
+                                              td += '--';
+                                            }
+                                            else
+                                            {
+                                              td += item.validate_time;
+                                            }
+                                            td += '</td><td class="ssub">';
+                                            if(0 == item.is_validate
+                                            && 0 == item.is_delete)
+                                            {
+                                              td += ' \
+                                                <a href="javascript:request_get(\'__APP__/Soadmin/Comment/validate/id/'+item.id+'/parent_id/'+item.parent_id+'/company_id/'+item.company_id+' \');">审核</a> \
+                                               ';
+                                            }
+                                            if(0 == item.is_delete)
+                                            {
+                                              td += '<a href="javascript:request_get(\'__APP__/Soadmin/Comment/delete/parentid/'+item.parent_id+'/id/'+item.id+'/company_id/'+item.company_id+'/is_validate/'+item.is_validate+'\');" onclick="return \confirmdel(\'确定要删除吗\')">删除</a></td>';
+                                            }
+                                          tr += td;
+                                          tr += '</tr>';
+                                          html += tr;
+                                        }
+                                        //alert(html);
+                                        $treeTable.addChilds(html);
+                                    },
+                                    error:function my_error(data){
+                                       alert('失败');
+                                    }
+            });
+        },
+        onSelect : function($treeTable, id) {
+            window.console && console.log('onSelect:' + id);
+        }
+
+    };
+    $('#subtree1').treeTable(option);
+});
+//选择主评论,所有回复也选中
+function select_master_comment(cur_obj)
+{
+    var parent_tr = cur_obj.parentNode.parentNode;
+    //alert(parent_tr.getAttribute('haschild'));
+    if(parent_tr.getAttribute("haschild"))
+    {
+        if(true == cur_obj.checked)
+        {           
+            var next_obj = get_nextsibling(parent_tr);
+            var pId = parent_tr.id;
+            //alert(pId);
+            while(next_obj
+            && (2 == next_obj.getAttribute("depth") && pId == next_obj.getAttribute("pId"))
+            || (3 == next_obj.getAttribute("depth"))
+            )
+            {
+                var cur_id = next_obj.id;
+                var cur_checkbox = jQuery(next_obj).find("input[name='id[]']")[0];
+                if(cur_checkbox)
+                  cur_checkbox.checked = true;
+                next_obj = get_nextsibling(next_obj);
+                $('#'+cur_id).click();
+            }            
+        }
+        else
+        {
+            var next_obj = get_nextsibling(parent_tr);
+            var pId = parent_tr.id;
+            while(next_obj
+            && (2 == next_obj.getAttribute("depth")||pId == next_obj.getAttribute("pId"))
+            ||  3 == next_obj.getAttribute("depth")
+            )
+            {
+                var cur_id = next_obj.id;
+                var cur_checkbox = jQuery(next_obj).find("input[name='id[]']")[0];
+                cur_checkbox.checked = false;
+                next_obj = get_nextsibling(next_obj);
+            }       
+        }   
+    }
+}
+//multi check
+function validate_mul()
+{
+    var ajaxUrl = location.href;
+    var obj = document.fom.elements;
+    var params = '';
+    for (var i=0;i<obj.length;i++){
+            if (obj[i].name == "id[]"){
+                    //obj[i].checked = true;
+                    if (obj[i].checked) {
+                        params += "&id[]="+obj[i].value;
+                    }
+            }
+    }
+    if (ajaxUrl.indexOf('?')>0)
+    {
+        ajaxUrl+= "&check_mul=批量审核"+params;    
+    }
+    else
+    {
+        ajaxUrl+= "?check_mul=批量审核"+params;
+    }
+    
+    
+    jQuery.ajax({  
+                type:"get",  
+                url:ajaxUrl,
+                timeout: 5000,
+                dataType:"json",
+                success: function aa(data) {
+                    if (0 == data.status) {
+                       popStatus(1, data.message, 2);
+                       if ('' != data.jmp_url) {
+                        setTimeout("location.href= '"+data.jmp_url+"'; ",3000);//延时3秒 
+                        //location.href= data.jmp_url;
+                       }
+                    }
+                    else
+                    {
+                      popStatus(4, data.status+','+data.message, 2);
+                    }
+                },
+                error:function my_error(data){
+                    popStatus(4, data.status+','+data.message, 2);
+                }
+	    });
+}
+
+
+</script>
+

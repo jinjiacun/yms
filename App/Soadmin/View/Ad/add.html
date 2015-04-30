@@ -1,0 +1,186 @@
+<include file="Public/header" />
+
+<body class="ContentBody">
+  <form method="post" enctype="multipart/form-data" name="myForm" id="myForm">
+<div class="MainDiv">
+<table width="99%" border="0" cellpadding="0" cellspacing="0" class="CContent">
+  <tr>
+      <th class="tablestyle_title" >添加广告</th>
+  </tr>
+  <tr>
+    <td class="CPanel">
+		
+		<table border="0" cellpadding="0" cellspacing="0" style="width:100%">
+		<!--
+		<tr align="center">
+			<td class="TablePanel">&nbsp;</td>
+	        </tr>
+		-->
+			<TR>
+			<TD width="100%">
+				<fieldset style="height:100%;">
+				<legend>添加广告</legend>
+					  <table border="0" cellpadding="2" cellspacing="1" style="width:100%">
+					  <tr>
+					    <td nowrap align="right" width="30%">标题:</td>
+					    <td width="35%">
+                             <input type="title" name="title" />                             
+  				             <span class="red">*</span></td>
+				        </td>
+					   </tr>
+                                         
+    					  <tr>
+					    <td nowrap align="right" width="30%">url:</td>
+					    <td width="35%">
+                           <input id="url" name='url' type="text" class="text" style="width:154px" value=""/>
+					   </tr>
+                                           
+                       <tr>
+					    <td nowrap align="right" width="30%">图片:</td>
+					    <td width="35%">							
+                           <input id="pic" name='pic' type="file"/>
+				        </td>
+					   </tr>
+                                          
+					  </table>
+			  <br />
+				</fieldset>			</TD>
+		</TR>
+		</TABLE>
+	 </td>
+  </tr>
+		
+		<TR>
+			<TD colspan="2" align="center" height="50px">
+			<input type="submit" name="submit" value="保存" class="button" onclick="return validate()"/>　
+			<input type="button" name="Submit2" value="返回" class="button" onclick="window.history.go(-1);"/>
+			</TD>
+		</TR>
+		</TABLE>
+	
+	
+	 </td>
+  </tr>
+  
+  
+  
+  </table>
+
+</div>
+</form>
+</body>
+</html>
+<script type="text/javascript">
+//检查企业名称是否存在
+function check_company_name() {
+    var company_name = $('#company_name').val();
+    company_name = encodeURI(company_name);
+    jQuery.ajax({  
+		        type:"post",  
+		        url:"{$call_url}",
+		        timeout: 5000,  
+		        dataType:"json",  
+		        data:{"method":"Company.exists_name","type":"text","content":{"company_name":company_name}},
+		        success: function aa(data) {
+                            if (200 == data.status_code
+                            &&  0 == data.content.is_exists) {
+                                $('#company_name').val("");
+                                $('#company_name').focus();
+                                alert('此企业名称已存在');
+                                return;
+                            }
+                        }
+    });
+}
+
+//auth_level change
+function auth_level_change()
+{
+	var nature_val = $('#nature').val();
+	var auth_level_val = $('#auth_level').val();
+	if('003001' == nature_val)
+	{
+		var is_limit = 0;
+		switch(auth_level_val)
+		{
+			case '006002':
+			case '006003':
+			{
+				is_limit = 1;
+			}
+			break;
+			case '006001'://all
+			{
+				is_limit = 0;
+			}
+			break;
+		}
+		var param_data = {};
+		if(is_limit)
+		{
+			param_data = {"method":"Company.get_id_name_map",
+			             "type":"text",
+			             "content":{"where":{"nature":"003002","auth_level":["in",["006002","006003"]]}}};
+		}
+		else
+		{
+			param_data = {"method":"Company.get_id_name_map","type":"text","content":{"where":{"nature":"003002"}}};
+		}
+		jQuery.ajax({  
+		        type:"post",  
+		        url:"{$call_url}",
+		        timeout: 5000,  
+		        dataType:"json",  
+		        data:param_data,
+		        success: function aa(data) {
+                            if (200 == data.status_code) {
+                                $('#agent_platform').empty();                                
+                                $('#agent_platform').append("<option value=0>暂无代理平台</option>");
+                                $.each(data.content, function(index, item){
+                                	$('#agent_platform').append("<option value="+index+">"+item+"</option>");
+                                });
+                            }
+                        }
+    	});
+	}
+}
+
+//企业性质改变
+function nature_change()
+{
+    var nature_val = $('#nature').val();
+    if('003002' == nature_val)//平台
+    {
+        $('#id_find_website').hide();
+        $('#id_agent_flatform').hide();
+        $('#id_mem_sn').hide();
+        $('#id_certificate').hide();
+    }
+    else
+    {
+        $('#id_agent_flatform').show();
+        $('#id_find_website').show()
+        $('#id_mem_sn').show();
+        $('#id_certificate').show();;
+    }
+}
+
+//提交审核
+function validate()
+{
+    var title = $('#title').val();
+
+    //标题
+    if ('' == title) {
+        alert('标题不为空');
+        return false;
+    }    
+    return true;
+}
+
+
+$(function(){
+
+});
+</script>
+

@@ -1,0 +1,89 @@
+<include file="Public/header" />
+
+<body class="ContentBody">
+  <form method="post" enctype="multipart/form-data" name="myForm" id="myForm">
+<div class="MainDiv">
+<table width="99%" border="0" cellpadding="0" cellspacing="0" class="CContent">
+  <tr>
+      <th class="tablestyle_title" >编辑广告</th>
+  </tr>
+  <tr>
+    <td class="CPanel">
+		
+		<table border="0" cellpadding="0" cellspacing="0" style="width:100%">
+		<!--
+		<tr align="center">
+			<td class="TablePanel">&nbsp;</td>
+	        </tr>
+                -->
+			<TR>
+			<TD width="100%">
+				<fieldset style="height:100%;">
+				<legend>编辑广告</legend>
+					  <table border="0" cellpadding="2" cellspacing="1" style="width:100%">
+					 
+					  <tr>
+					    <td nowrap align="right" width="30%">标题:</td>
+					    <td width="35%">
+                            <input type="text" id="title" name="title" value="{$obj.title}"/>
+				            <span class="red">*</span></td>
+					  </tr>
+					
+					  <tr>
+					    <td nowrap align="right" width="30%">url:</td>
+					    <td width="35%">
+                            <input type="text" id="url" name="url" value="{$obj.url}"/>
+                       </td>
+					  </tr>
+
+					  <tr>
+					    <td nowrap align="right" width="30%">图片:</td>
+					    <td width="35%">
+                            <input type="file" id="pic" name="pic" />
+				            <span class="red">*</span>
+							<img src="{$obj.pic_url}" style="width:50px;height:50px;"/>
+						</td>
+					  </tr>
+	
+					  </table>
+			  <br />
+				</fieldset>			</TD>
+		</TR>
+		</TABLE>
+	 </td>
+  </tr>
+		
+		<TR>
+			<TD colspan="2" align="center" height="50px">
+            <input type="hidden" name="id" value="{$obj.id}"/>
+			<input type="submit" name="submit" value="保存" class="button" onclick="return validate()"/>　
+			<input type="button" name="Submit2" value="返回" class="button" onclick="window.history.go(-1);"/>
+			</TD>
+		</TR>
+		</TABLE>
+	
+	
+	 </td>
+  </tr>
+  
+  
+  
+  </table>
+
+</div>
+</form>
+<include file="Public/pop_picture"/>
+</body>
+</html>
+<script>
+function validate()
+{
+    var company_name = $('#company_name').val();
+       
+    return true;
+}
+
+
+$(function(){
+});
+</script>

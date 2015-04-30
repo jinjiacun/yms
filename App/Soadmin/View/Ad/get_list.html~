@@ -1,0 +1,114 @@
+<include file="Public/header" />
+<body onload="on_load()">
+<form name="fom" id="fom" method="get">
+<table id="mainpage" width="100%" border="0" cellspacing="0" cellpadding="0">
+  <include file="Ad/search"/>
+  <tr>
+    <td><table id="subtree1" style="DISPLAY: " width="100%" border="0" cellspacing="0" cellpadding="0">
+
+        <tr>
+          <td><table width="95%" border="0" align="center" cellpadding="0" cellspacing="0">
+
+          	 <tr>
+               <td height="20">
+               <span class="newfont07">选择：
+                <a id="selectAll" href="#" class="right-font08">全选</a>-
+                <a id="unselectAll" href="#" class="right-font08">反选</a>
+               </span>
+	        </td>
+          	 </tr>
+              <tr>
+                <td height="40" class="font42"><table width="100%" border="0" cellpadding="4" cellspacing="1" bgcolor="#464646" class="newfont03">
+
+                  <tr>
+		    <td width="5%" align="center" bgcolor="#EEEEEE">选择</td>
+                    <td width="15%" height="20" align="center" bgcolor="#EEEEEE">标题</td>
+                    <td width="15%" height="20" align="center" bgcolor="#EEEEEE">图片</td>
+                    <td width="5%" height="20" align="center" bgcolor="#EEEEEE">url</td>
+                    <td width="14%" align="center" bgcolor="#EEEEEE">操作</td>
+                  </tr>
+
+                  <volist name="list" id="item">
+                  <tr align="center">
+				    <td bgcolor="#FFFFFF"><input type="checkbox" name="id[]" value="{$item.id}"/>{$item.id}</td>
+                    <td height="20" bgcolor="#FFFFFF" style="text-align: left;">{$item.title}</td>
+                    <td height="20" bgcolor="#FFFFFF" style="text-align: left;"><img src="{$item.pic_url}" style="width:50px;height:50px;"></td>
+                    <td height="20" bgcolor="#FFFFFF" style="text-align: left;">{$item.url}</td>
+                    <td bgcolor="#FFFFFF">
+                        <a href="__APP__/Soadmin/Ad/edit/id/{$item.id}">编辑</a>|
+                        <a href="javascript:request_get('__APP__/Soadmin/Ad/delete/id/{$item.id}');" onclick="return confirmdel('确定要删除吗')">删除</a>
+                    </td>
+                  </tr>
+                  </volist>
+
+                </table></td>
+              </tr>
+            </table></td>
+        </tr>
+      </table>
+      <table width="95%" border="0" align="center" cellpadding="0" cellspacing="0">
+        <tr>
+          <td height="6"><img src="__PUBLIC__/Admin/images/spacer.gif" width="1" height="1" /></td>
+        </tr>
+        <tr>
+          <td colspan="5" align="right">{$page}</td>
+        </tr>
+</table>
+</form>
+
+<div id="loadingmsg" style="width:100px; height:18px; top:0px; display:none;">
+	<img src="file:///F|/项目管理相关资料/项目管理系统页面/images/loadon.gif" />
+</div>
+
+</body>
+</html>
+<script type="text/javascript">
+function delete_mul()
+{
+    if(!confirmdel('确定要删除吗'))
+    {
+        return;
+    }
+
+    var ajaxUrl = location.href;
+    var obj = document.fom.elements;
+    var params = '';
+    for (var i=0;i<obj.length;i++){
+            if (obj[i].name == "id[]"){
+                    //obj[i].checked = true;
+                    if (obj[i].checked) {
+                        params += "&id[]="+obj[i].value;
+                    }
+            }
+    }
+    if ('' == params) {
+        alert('请选择要删除的对象');
+        return;
+    }
+    ajaxUrl+= "/del_mul/批量删除";
+    jQuery.ajax({  
+                type:"post",  
+                url:ajaxUrl,
+                timeout: 5000,
+                data:params,
+                dataType:"json",
+                success: function aa(data) {
+                    if (0 == data.status) {
+                       popStatus(1, data.message, 2);
+                       if ('' != data.jmp_url) {
+                        setTimeout("location.href= '"+data.jmp_url+"'; ",3000);//延时3秒 
+                        //location.href= data.jmp_url;
+                       }
+                    }
+                    else
+                    {
+                      popStatus(4, data.status+','+data.message, 2);
+                    }
+                },
+                error:function my_error(data){
+                    popStatus(4, data.status+','+data.message, 2);
+                }
+	    });
+}
+</script>
+
