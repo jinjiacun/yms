@@ -126,15 +126,19 @@ function check()
                 {
                     popStatus(1, res_json.message, 2);
                     $("#myForm")[0].reset();
-		    if ('' != res_json.jmp_url) {
-		      //location.href= res_json.jmp_url;
-		       setTimeout("location.href= '"+res_json.jmp_url+"'; ",3000);//延时3秒 
-		    }
+				    if ('' != res_json.jmp_url) {
+				      	//location.href= res_json.jmp_url;
+		   		    	setTimeout("location.href= '"+res_json.jmp_url+"'; ",3000);//延时3秒 
+		   			}
+					else
+					{
+		   		    	setTimeout("location.href= '"+location.href+"'; ",3000);//延时3秒 
+					}
                 }                
                 else
                 {
                     //popStatus(4, res_json.status+','+res_json.message, 2);
-		    popStatus(4, res_json.message, 2);
+		   			 popStatus(4, res_json.message, 2);
                 }
             },
             error: function()
@@ -158,6 +162,10 @@ function check()
 				//location.href= data.jmp_url;
 				 setTimeout("location.href= '"+data.jmp_url+"'; ",3000);//延时3秒 
 			       }
+				   else
+				   {
+						setTimeout("location.href= '"+location.href+"'; ",3000);//延时3秒 
+				   }
 			    }
 			    else
 			    {

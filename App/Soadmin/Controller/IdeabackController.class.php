@@ -71,7 +71,7 @@ class IdeabackController extends BaseController {
         && 0 == $result['content']['is_success']
         )
         {
-            $this->echo_message(0, "操作成功", C('Template_pre')."Ideaback/get_list");
+            $this->echo_message(0, "操作成功", '');
             //$this->success("操作成功", C('Template_pre')."Admin/get_list");
             exit();
         }

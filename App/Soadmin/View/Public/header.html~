@@ -2,9 +2,12 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=gb2312" />
-<title>搜黑管理</title>
+<title>搜黑管理-{$title}</title>
 <link rel="stylesheet" rev="stylesheet" href="__PUBLIC__/Admin/css/style.css" type="text/css" media="all" />
+<!--
 <script type="text/javascript" src="__PUBLIC__/js/jquery-1.9.1.min.js"></script>
+-->
+<script type="text/javascript" src="__PUBLIC__/Soadmin/js/jquery.1.9.1.min.js"></script>
 <script type="text/javascript" src="__PUBLIC__/js/comment.js"></script>
 <script type="text/javascript" src="__PUBLIC__/js/validate.js"></script>
 <script src="__PUBLIC__/Soadmin/js/common.js" type="text/javascript"></script>
@@ -41,20 +44,97 @@ function check()
     body .span { display:block; width:120px; height:34px; line-height:34px;  background:#390; margin:20px 0 0 100px; color:#fff; text-align:center; font-family:"微软雅黑"; font-size:14px; }
     body .span:hover { background:#360; cursor:pointer; }
     </style>
+    <style type="text/css"> 
+    .window{ 
+	width:auto; 
+	background-color:#d0def0; 
+	position:absolute; 
+	padding:2px; 
+	margin:5px; 
+	display:none; 
+	} 
+    .content{ 
+	height:auto;
+	background-color:#FFF; 
+	font-size:14px; 
+	overflow:auto; 
+	} 
+    .title{ 
+        padding:2px; 
+        color:#0CF; 
+        font-size:14px; 
+        } 
+    .title img{ 
+	    float:right;
+	    margin-top: 20px;
+	    } 
+    </style> 
+     <script type="text/javascript">
+     //
+     var pic_arr = new Array();
+     pic_arr[1] = '';
+     pic_arr[2] = '';
+     pic_arr[3] = '';
+     pic_arr[4] = '';
+     pic_arr[5] = '';
+     cur_index = 0;
+     //获取窗口的高度 
+     var windowHeight; 
+     //获取窗口的宽度 
+     var windowWidth; 
+     //获取弹窗的宽度 
+     var popWidth; 
+     //获取弹窗高度 
+     var popHeight; 
+    function init(){ 
+       windowHeight=$(window).height(); 
+       windowWidth=$(window).width(); 
+       popHeight=$(".window").height(); 
+       popWidth=$(".window").width();
+    } 
+    //关闭窗口的方法 
+    function closeWindow(){ 
+        $(".title img").click(function(){ 
+            $(this).parent().parent().hide("slow"); 
+            }); 
+    } 
+    //定义弹出居中窗口的方法 
+    function popCenterWindow(){ 
+        init(); 
+        //计算弹出窗口的左上角Y的偏移量 
+        var popY=(windowHeight-popHeight)/2; 
+        var popX=(windowWidth-popWidth)/2; 
+        //alert('jihua.cnblogs.com');	
+        //设定窗口的位置
+	//alert($("#center").html());
+        $("#center").css("top",popY).css("left",popX).slideToggle("slow");  
+        closeWindow(); 
+    }     
+    </script> 
     <script>
         $(document).ready(function()
         {
           var options = {
             success: function() 
             {
-                if(1 == response.responseText)
+                
+            },
+            complete: function(response) 
+            {
+		var res_json = $.parseJSON(response.responseText);
+                if(0 == res_json.status)
                 {
-                    popStatus(1, '操作成功', 2);
-                    $("#myForm")[0].reset();    
+                    popStatus(1, res_json.message, 2);
+                    $("#myForm")[0].reset();
+		    if ('' != res_json.jmp_url) {
+		      //location.href= res_json.jmp_url;
+		       setTimeout("location.href= '"+res_json.jmp_url+"'; ",3000);//延时3秒 
+		    }
                 }                
-                else if(0 == response.responseText)
+                else
                 {
-                    popStatus(4, '操作成功', 2);
+                    //popStatus(4, res_json.status+','+res_json.message, 2);
+		    popStatus(4, res_json.message, 2);
                 }
             },
             error: function()
@@ -64,5 +144,49 @@ function check()
           }; 
           $("#myForm").ajaxForm(options);
         });
+	
+	function request_get(url) {
+	    jQuery.ajax({  
+		        type:"get",  
+		        url:url,
+		        timeout: 5000,  
+		        dataType:"json",
+		        success: function aa(data) {
+                            if (0 == data.status) {
+			       popStatus(1, data.message, 2);
+			       if ('' != data.jmp_url) {
+				//location.href= data.jmp_url;
+				 setTimeout("location.href= '"+data.jmp_url+"'; ",3000);//延时3秒 
+			       }
+			    }
+			    else
+			    {
+			      //popStatus(4, data.status+','+data.message, 2);
+			      popStatus(4, data.message, 2);
+			    }
+                        },
+			error:function my_error(data){
+			    popStatus(4, data.status+','+data.message, 2);
+			}
+	    });
+      }
+      
+      function view_pic(pic_url,cur_i, pic_1, pic_2, pic_3, pic_4, pic_5)
+      {
+	       $('#center_pic').attr("src",pic_url);
+
+         cur_index = cur_i;
+         pic_arr[1] = pic_1;
+         pic_arr[2] = pic_2;
+         pic_arr[3] = pic_3; 
+         pic_arr[4] = pic_4; 
+         pic_arr[5] = pic_5;
+
+	       popCenterWindow();
+      }
+      function close_pic(obj)
+      {
+	       $(obj).parent().parent().hide("slow"); 
+      }
     </script>
 </head>

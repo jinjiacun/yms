@@ -328,7 +328,7 @@ class InexposalController extends BaseController {
         && 0 == $result['content']['is_success'])
         {
             //$this->success('成功删除', C('Template_pre').'Inexposal/get_list');
-            $this->echo_message(0,'成功删除',C('Template_pre').'Inexposal/get_list');
+            $this->echo_message(0,'成功删除','');
             exit();
         }
         else
@@ -352,7 +352,7 @@ class InexposalController extends BaseController {
         && 0 == $result['content']['is_success'])
         {
             //$this->success('成功删除', C('Template_pre').'Inexposal/get_list_ex');
-            $this->echo_message(0,'成功删除',C('Template_pre').'Inexposal/get_list_ex');
+            $this->echo_message(0,'成功删除','');
             exit();
         }
         else

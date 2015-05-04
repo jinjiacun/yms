@@ -41,7 +41,9 @@ class CompanyController extends BaseController {
         		'auth_level'      => I('post.auth_level'),
         		'reg_address'     => urlencode(I('post.reg_address')),
         		'busin_license'   => $this->upload('busin_license','001003'),
+                        'control_busin_license' => ''==I('post.control_busin_license')?0:1,
         		'code_certificate'=> $this->upload('code_certificate','001004'),
+                        'control_code_certificate' => ''==I('post.control_code_certificate')?0:1,
         		'telephone'       => I('post.telephone'),
         		'website'         => I('post.website'),
         		'record'          => urlencode(I('post.record')),
@@ -50,6 +52,7 @@ class CompanyController extends BaseController {
                         'agent_platform'  => I('post.agent_platform'),
                         'mem_sn'          => urlencode(I('post.mem_sn')),
                         'certificate'     => $this->upload('certificate','001005'),
+                        'control_certificate'=>'' == I('post.control_certificate')?0:1,
             );
             $result = $this->_call("Company.add",
                                    $content);
@@ -80,12 +83,19 @@ class CompanyController extends BaseController {
                             && 200 == $s_result['status_code']
                             && -1 == $s_result['content']['is_success'])
                             {
-                                $this->success("别名:($v)添加错误");
+                                //$this->success("别名:($v)添加错误");
+                                $this->echo_message(-1,"别名:($v)添加错误");
+                                exit();
                             }
                         }
                     }
                 }                
-                $this->success('成功添加',C('Template_pre')."Company/get_list", 3);
+                //$this->success('成功添加',C('Template_pre')."Company/get_list", 3);
+                $this->echo_message(0,'成功添加',C('Template_pre')."Company/get_list");    
+                exit();
+            }
+            else{
+                $this->echo_message(-2,'添加失败');    
                 exit();
             }
         }
@@ -155,11 +165,11 @@ class CompanyController extends BaseController {
         			&& 0 == $result['content']['is_exists']
         	)
         	{
-        		$this->error("企业名称已存在");
+        		//$this->error("企业名称已存在");
+                        $this->echo_message(-100,"企业名称已存在");
                         exit();
         	}
         	 
-        	
             $content = array(
                 'where'=>array(
                     'id'=>I('post.id'),
@@ -170,13 +180,16 @@ class CompanyController extends BaseController {
                     'company_name'    => urlencode(I('post.company_name')),
                     'auth_level'      => I('post.auth_level'),
                     'reg_address'     => urlencode(I('post.reg_address')),
+                    'control_busin_license' => '' == I('post.control_busin_license')?0:1,
+                    'control_code_certificate' => '' == I('post.control_code_certificate')?0:1,
                     'telephone'       => I('post.telephone'),
                     'website'         => urlencode(I('post.website')),
                     'record'          => urlencode(I('post.record')),
                     'regulators_id'   => I('post.regulators_id'),
                     'find_website'    => I('post.find_website'),
                     'agent_platform'  => I('post.agent_platform'),
-                    'mem_sn'          => urlencode(I('post.mem_sn')),                              
+                    'mem_sn'          => urlencode(I('post.mem_sn')),
+                    'control_certificate'=> '' == I('post.control_certificate')?0:1,
                 )
             );
             if($logo = $this->upload('logo','001008'))
@@ -229,13 +242,15 @@ class CompanyController extends BaseController {
                             && 200 == $s_result['status_code']
                             && -1 == $s_result['content']['is_success'])
                             {
-                                $this->success("别名:($v)添加错误");
+                                //$this->error("别名:($v)添加错误");
+                                $this->echo_message(-1, "别名:($v)添加错误");
+                                exit();
                             }
                         }
                     }
                 }
-                
-                $this->success("成功保存",C('Template_pre')."Company/get_list", 3);
+               
+                $this->echo_message(0,'成功保存', C('Template_pre')."Company/get_list");
                 exit();   
             }
         }
@@ -279,8 +294,8 @@ class CompanyController extends BaseController {
     
     public function get_list()
     {
-         $page_index = 1;
-        $page_size  = 10;
+        $page_index = 1;
+        $page_size  = 20;
         $content    = array();
         if(I('get.p'))
         {
@@ -288,8 +303,21 @@ class CompanyController extends BaseController {
             $content['page_size'] = $page_size;
             $content['page_index'] = $page_index;
         }
-        if(I('get.submit'))
+        else
         {
+            $content['page_size'] = $page_size;
+            $content['page_index'] = $page_index;
+        }
+        
+         //匹狼删除请求
+        if(I('get.del_mul'))
+        {
+            $this->del_mul();
+            exit();
+        }
+        
+        if(I('get.submit'))
+        {   
             $company_name = I('get.company_name');
             if('' != $company_name)
             {
@@ -334,7 +362,7 @@ class CompanyController extends BaseController {
                     $this->assign('list', $list);     
                     $record_count = $result['content']['record_count'];
                     $this->assign('record_count', $record_count);
-                    $this->get_page($record_count, 10);
+                    $this->get_page($record_count, $page_size);
                 }
             }
         }
@@ -342,6 +370,30 @@ class CompanyController extends BaseController {
         
         $this->_map_trade_list();
         $this->display();
+    }
+    
+    //批量删除企业
+    private function del_mul()
+    {
+        $id_list = I('post.id');
+        if(0<count($id_list))
+        {
+            foreach($id_list as $id)
+            {
+                $result = $this->_call("Company.delete",array('id'=>$id));
+                if($result
+                && 200 == $result['status_code']
+                && 0 == $result['content']['is_success']
+                )
+                {}
+                else
+                {
+                    $this->echo_message(-1,"删除失败");
+                    exit();
+                }
+            }
+        }
+        $this->echo_message(0,"成功删除",C('Template_pre')."Company/get_list/p/".I('get.p'));
     }
     
     public function get_list_ex()
@@ -388,24 +440,32 @@ class CompanyController extends BaseController {
     {
         $id = I('get.id');
         if(0>= $id)
-            $this->error("参数错误");
-            
-        $content = array(
-            'id'=> $id
-        );
-        $result = $this->_call('Company.delete',
-                               $content);
-        if($result
-        && 200 == $result['status_code']
-        && 0   == $result['content']['is_success'])
         {
-            //删除企业别名
-            $r_result = $this->_call('Companyalias.delete',array('company_id'=>$id));
-            //删除企业新闻
-            $this->_call('News.delete',array('company_id'=>$id));
-            $this->success("成功操作", C('Template_pre')."Company/get_list", 3);
+            //$this->error("参数错误");
+            $this->echo_message(-100,"参数错误");
+            exit();
+        }   
+          
+       // $result = $this->_call("Company.delete",array('id'=>$id));    
+       /*
+       if($result
+       && 200 == $result['status_code']
+       && 0 == $result['content']['is_success']
+       )
+       {*/
+            //$this->success("成功操作", C('Template_pre')."Company/get_list", 3);
+            $this->echo_message(0,"成功操作",'');
+            exit();
+        /*
         }
+        else
+        {
+            $this->echo_message(-1,"删除失败");
+            exit();
+        }
+		*/
     }
+    
     
     //删除企业别名
     public function delete_ex()

@@ -160,7 +160,7 @@ class CommentController extends BaseController {
             && 0 == $result['content']['is_success'])
             {
                 //$this->success('成功操作', C('Template_pre').'Comment/get_list');
-                $this->echo_message(0,'成功操作', C('Template_pre').'Comment/get_list');
+                $this->echo_message(0,'成功操作', '');
                 exit();
             }
             else{
@@ -169,7 +169,7 @@ class CommentController extends BaseController {
                 exit();
             }
             */
-            $this->echo_message(0,'成功操作', C('Template_pre').'Comment/get_list');
+            $this->echo_message(0,'成功操作', '');
             exit();
         }
         
@@ -199,7 +199,7 @@ class CommentController extends BaseController {
             && 0 == $result['content']['is_success'])
             {
                 //$this->success('成功操作', C('Template_pre').'Comment/get_list');
-                $this->echo_message(0,'成功操作', C('Template_pre').'Comment/get_list');
+                $this->echo_message(0,'成功操作', '');
                 exit();
             }
             else{
@@ -313,7 +313,7 @@ class CommentController extends BaseController {
         && 0 == $result['content']['is_success'])
         {
             //$this->success('成功删除', C('Template_pre').'Comment/get_list');
-            $this->echo_message(0, '成功删除', C('Template_pre').'Comment/get_list');
+            $this->echo_message(0, '成功删除', '');
             exit();
         }
         else

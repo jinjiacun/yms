@@ -23,7 +23,8 @@ class AdController extends BaseController {
             $content = array(
                 'pic'            => $this->upload('pic','001011'),
                 'title'          => urlencode(I('post.title')),
-        		'url'           => I('post.url'),
+        		'url'            => base64_encode(I('post.url')),
+				'intro'          => urlencode(I('post.intro')),
         	);
             $result = $this->_call("Ad.add",
                                    $content);
@@ -52,8 +53,9 @@ class AdController extends BaseController {
                     'id'=>I('post.id'),
                 ),    
                 'data' => array(                  
-                    'title'          => I('post.title'),
-                    'url'            => I('post.url'),
+                    'title'          => urlencode(I('post.title')),
+                    'url'            => base64_encode(I('post.url')),
+					'intro'          => urlencode(I('post.intro')),
                 )
             );
             if($pic = $this->upload('pic','001011'))
@@ -86,7 +88,9 @@ class AdController extends BaseController {
         if($result
         && 200 == $result['status_code'])
         {
-            $this->assign('obj', $result['content']);
+			$content = $result['content'];
+			$content['url'] = base64_decode($content['url']);
+            $this->assign('obj', $content);
         }
         
         $this->display();
@@ -151,7 +155,7 @@ class AdController extends BaseController {
         && 0 == $result['content']['is_success']
         )
         {
-            $this->echo_message(0,"成功操作", C('Template_pre')."Ad/get_list");
+            $this->echo_message(0,"成功操作", '');
             exit();
          }
          else

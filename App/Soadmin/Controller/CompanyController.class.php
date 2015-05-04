@@ -393,7 +393,7 @@ class CompanyController extends BaseController {
                 }
             }
         }
-        $this->echo_message(0,"成功删除",C('Template_pre')."Company/get_list");
+        $this->echo_message(0,"成功删除",'');
     }
     
     public function get_list_ex()
@@ -446,21 +446,21 @@ class CompanyController extends BaseController {
             exit();
         }   
           
-        $result = $this->_call("Company.delete",array('id'=>$id));    
+       $result = $this->_call("Company.delete",array('id'=>$id));           
        if($result
        && 200 == $result['status_code']
        && 0 == $result['content']['is_success']
        )
        {
             //$this->success("成功操作", C('Template_pre')."Company/get_list", 3);
-            $this->echo_message(0,"成功操作", C('Template_pre')."Company/get_list");
-            exit();
+            $this->echo_message(0,"成功操作",'');
+            exit();        
         }
         else
         {
             $this->echo_message(-1,"删除失败");
             exit();
-        }
+        }		
     }
     
     
