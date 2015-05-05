@@ -68,3 +68,8 @@ auth_level企业等级字段
 添加表so_ad
 表so_comment中添加auth_level
 ---------------------------------------------------------------
+2015-5-4
+表so_comment表添加last_user_id,v_last_time,v_last_user_id,v_last_is_anonymous
+表so_com_exposal表添加last_user_id
+表so_in_exposal表添加last_time,last_user_id,v_last_time,v_last_user_id,v_last_is_anonymous
+

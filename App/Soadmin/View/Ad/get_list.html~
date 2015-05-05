@@ -12,7 +12,7 @@
           	 <tr>
                <td height="20">
                <span class="newfont07">选择：
-                <a id="selectAll" href="#" class="right-font08">全选</a>-
+                <a id="selectAll" href="javascript:void();" class="right-font08">全选</a>-
                 <a id="unselectAll" href="#" class="right-font08">反选</a>                
                 <a href="__APP__/Soadmin/Ad/add" class="right-font08">添加</a>
                </span>
@@ -34,7 +34,7 @@
 				    <td bgcolor="#FFFFFF"><input type="checkbox" name="id[]" value="{$item.id}"/>{$item.id}</td>
                     <td height="20" bgcolor="#FFFFFF" style="text-align: left;">{$item.title}</td>
                     <td height="20" bgcolor="#FFFFFF" style="text-align: left;"><img src="{$item.pic_url}" style="width:50px;height:50px;"></td>
-                    <td height="20" bgcolor="#FFFFFF" style="text-align: left;">{$item.url}</td>
+                    <td height="20" bgcolor="#FFFFFF" style="text-align: left;">{$item.url|base64_decode=###}</td>
                     <td bgcolor="#FFFFFF">
                         <a href="__APP__/Soadmin/Ad/edit/id/{$item.id}">编辑</a>|
                         <a href="javascript:request_get('__APP__/Soadmin/Ad/delete/id/{$item.id}');" onclick="return confirmdel('确定要删除吗')">删除</a>
@@ -47,14 +47,7 @@
             </table></td>
         </tr>
       </table>
-      <table width="95%" border="0" align="center" cellpadding="0" cellspacing="0">
-        <tr>
-          <td height="6"><img src="__PUBLIC__/Admin/images/spacer.gif" width="1" height="1" /></td>
-        </tr>
-        <tr>
-          <td colspan="5" align="right">{$page}</td>
-        </tr>
-</table>
+    <include file="Public/page" />
 </form>
 
 <div id="loadingmsg" style="width:100px; height:18px; top:0px; display:none;">
