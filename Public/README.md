@@ -72,4 +72,10 @@ auth_level企业等级字段
 表so_comment表添加last_user_id,v_last_time,v_last_user_id,v_last_is_anonymous
 表so_com_exposal表添加last_user_id
 表so_in_exposal表添加last_time,last_user_id,v_last_time,v_last_user_id,v_last_is_anonymous
-
+--------------------------------------------------------------
+2015-5-7
+添加so_user_nickname用户昵称表
+--------------------------------------------------------------
+2015-5-11
+表so_in_exposal添加title
+表so_comment表添加title
