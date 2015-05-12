@@ -689,7 +689,7 @@ $(function(){
                                             }
                                             else
                                             {
-                                              td += item.validate_time;
+                                              td += getDate(item.validate_time);
                                             }
                                             td += '</td><td class="ssub">';
                                             if(0 == item.is_validate
@@ -727,7 +727,9 @@ $(function(){
 function select_master_comment(cur_obj)
 {
     var parent_tr = cur_obj.parentNode.parentNode;
+    var has_third = false;
     //alert(parent_tr.getAttribute('haschild'));
+    var is_first_level = parent_tr.getAttribute("depth");
     if(parent_tr.getAttribute("haschild"))
     {
         if(true == cur_obj.checked)
@@ -757,6 +759,19 @@ function select_master_comment(cur_obj)
             ||  3 == next_obj.getAttribute("depth")
             )
             {
+                if(1 != is_first_level)
+                {
+                   if(3 == next_obj.getAttribute("depth"))
+                  {
+                    has_third = true;
+                  }
+                  if(2 == next_obj.getAttribute("depth")
+                  && has_third)
+                  {
+                    break;
+                  } 
+                }               
+
                 var cur_id = next_obj.id;
                 var cur_checkbox = jQuery(next_obj).find("input[name='id[]']")[0];
                 cur_checkbox.checked = false;
