@@ -79,3 +79,7 @@ auth_level企业等级字段
 2015-5-11
 表so_in_exposal添加title
 表so_comment表添加title
+--------------------------------------------------------------
+2015-5-12
+表so_company添加user_1,user_2,user_3，前三个用户
+last_time,最新用户曝光时间
