@@ -83,3 +83,10 @@ auth_level企业等级字段
 2015-5-12
 表so_company添加user_1,user_2,user_3，前三个用户
 last_time,最新用户曝光时间
+2015-5-18
+表so_company_id添加logo_url,
+                   alias_list,
+                   busin_license_url,
+                   code_certificate_url,
+                   certificate_url,
+                   agent_platform_n
