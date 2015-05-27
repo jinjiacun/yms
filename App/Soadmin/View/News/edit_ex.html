@@ -60,13 +60,13 @@
 					 <tr>
 					    <td nowrap align="right" width="30%">来源:</td>
 					    <td width="35%"><input id="source" name='source' type="text" class="text" style="width:154px" value="{$news.source}" />
-				            <span class="red">*</span></td>
+				            </td>
 					  </tr>
 
                                         <tr>
 					    <td nowrap align="right" width="30%">作者:</td>
 					    <td width="35%"><input id="author" name='author' type="text" class="text" style="width:154px" value="{$news.author}" />
-				            <span class="red">*</span></td>
+				            </td>
 					  </tr>
                                           
                                         <tr>
@@ -120,8 +120,8 @@
 function validate()
 {
     var title      = $('#title').val();
-    var source     = $('#source').val();
-    var author     = $('#author').val();
+//    var source     = $('#source').val();
+//    var author     = $('#author').val();
     var content    = $('#content').val();
     
     if('' == title)
@@ -129,7 +129,7 @@ function validate()
     	alert('标题不为空');
     	return false;
     }
-    
+  /*  
     if('' == source)
     {
     	alert('来源不为空');
@@ -141,7 +141,7 @@ function validate()
     	alert('作者不为空');
     	return false;
     }
-    
+    */
     return true;
 }
 </script>
