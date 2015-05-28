@@ -90,6 +90,7 @@ class CommentController extends BaseController {
         }
          if(I('get.s_p'))
         {
+        		if(isset($content)) unset($content);
             //回复查询
             $content['page_index'] = I('get.s_p');
             $content['where']['parent_id'] = I('get.parent_id');

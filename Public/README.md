@@ -90,3 +90,6 @@ last_time,最新用户曝光时间
                    code_certificate_url,
                    certificate_url,
                    agent_platform_n
+
+2015-5-27
+表so_news添加show_time显示日期

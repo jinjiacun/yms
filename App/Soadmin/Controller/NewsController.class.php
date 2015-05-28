@@ -39,6 +39,7 @@ class NewsController extends BaseController {
                     'source'      => urlencode(I('post.source')),
                     'author'      => urlencode(I('post.author')),
                     'content'     => urlencode(base64_encode(I('post.content'))),
+                    'show_time'   => strtotime(I('post.show_time')),
                     'pic'         => $pic,
                 );
                 $result = $this->_call('News.add', $content);
@@ -55,6 +56,33 @@ class NewsController extends BaseController {
             unset($v);
             //$this->success("成功添加", C('Template_pre')."News/get_list",3);
             $this->echo_message(0,"成功添加", C('Template_pre')."News/get_list");
+            exit();
+        }
+        
+        if(I('get.search'))
+        {
+            $kword = I('post.search-text');
+            $content = array();
+            if('' != htmlspecialchars(trim($kword)))
+            {
+                $content['where']['company_name'] = array("like", "%".$kword."%");
+            }
+            $arr = array();
+            //select name of company
+            $result = $this->_call("Company.get_id_name_map", $content);
+            if($result
+            && 200 == $result['status_code'])
+            {
+                
+               foreach($result['content'] as $k=>$v)
+               {
+                $arr[] = $k.','.$v;
+               }
+               unset($k, $v);
+               //$arr = $result['content'];
+            }
+            $response = $arr;
+            echo json_encode($response);
             exit();
         }
         
@@ -77,6 +105,7 @@ class NewsController extends BaseController {
                 'source'  => urlencode(I('post.source')),
                 'author'  => urlencode(I('post.author')),
                 'content' => urlencode(base64_encode(I('post.content'))),
+                'show_time'   => strtotime(I('post.show_time')),
                 'pic'     => $pic,
             );
              $result = $this->_call('News.add', $content);
@@ -87,6 +116,10 @@ class NewsController extends BaseController {
                 //$this->success("成功添加", C('Template_pre')."News/get_list_ex",3);
                 $this->echo_message("成功添加", C('Template_pre')."News/get_list_ex");
                 exit();
+             }
+             else{
+                 $this->echo_message(-1,"添加失败");
+                 exit();  
              }
         }
         $this->display();
@@ -293,6 +326,7 @@ class NewsController extends BaseController {
 		                'source'      => urlencode(I('post.source')),
 		                'author'      => urlencode(I('post.author')),
 		                'content'     => urlencode(base64_encode(I('post.content'))),
+                                'show_time'   => strtotime(I('post.show_time')),
         	);	
         	if($pic = $this->upload('pic','001006'))
         	{
@@ -353,6 +387,7 @@ class NewsController extends BaseController {
         			'source'      => urlencode(I('post.source')),
         			'author'      => urlencode(I('post.author')),
         			'content'     => urlencode(base64_encode(I('post.content'))),
+                                'show_time'   => strtotime(I('post.show_time')),
         	);
         	if($pic = $this->upload('pic','001006'))
         	{

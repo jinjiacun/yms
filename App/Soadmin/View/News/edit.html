@@ -4,7 +4,7 @@
     <script type="text/javascript" charset="utf-8" src="__PUBLIC__/ueditor/ueditor.config.js"></script>
     <script type="text/javascript" charset="utf-8" src="__PUBLIC__/ueditor/ueditor.all.min.js"> </script>
     <script type="text/javascript" charset="utf-8" src="__PUBLIC__/ueditor/lang/zh-cn/zh-cn.js"></script>
-
+    <script src="__PUBLIC__/Soadmin/js/calendar.js" type="text/javascript" language="javascript"></script> 
     <style type="text/css">
         div{
             width:100%;
@@ -89,6 +89,13 @@
                                             </a>
 				            <span class="red">*</span></td>
 					  </tr>
+                                          
+                                          <tr>
+					    <td nowrap align="right" width="30%">显示日期:</td>
+					    <td width="35%">
+                                            <input name="show_time" type="text" value="{$news.show_time|default=time()|date='Y-m-d H:i:s',###}" style="padding-left:5px;width:143px;" id="txtDate" onclick="SetDate(this,'yyyy-MM-dd hh:mm:ss')" readonly="readonly" />                                            
+				            <span class="red">*</span></td>
+					</tr>
                                         
                                          <tr>
 					    <td width="35%" colspan="2">

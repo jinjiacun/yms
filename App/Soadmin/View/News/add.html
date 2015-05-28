@@ -4,7 +4,7 @@
     <script type="text/javascript" charset="utf-8" src="__PUBLIC__/ueditor/ueditor.config.js"></script>
     <script type="text/javascript" charset="utf-8" src="__PUBLIC__/ueditor/ueditor.all.min.js"> </script>
     <script type="text/javascript" charset="utf-8" src="__PUBLIC__/ueditor/lang/zh-cn/zh-cn.js"></script>
-
+     <script src="__PUBLIC__/Soadmin/js/calendar.js" type="text/javascript" language="javascript"></script>  
     <style type="text/css">
         div{
             width:100%;
@@ -40,7 +40,17 @@
 			<TD width="100%">
 				<fieldset style="height:100%;">
 				<legend>添加新闻</legend>
-					  <table border="0" cellpadding="2" cellspacing="1" style="width:100%">                                          
+					  <table border="0" cellpadding="2" cellspacing="1" style="width:100%">
+                                           <tr>
+                                            <td nowrap align="right" width="30%">
+                                            企业名称
+                                            </td>
+                                            <td  width="35%">
+                                            <input type="text" name="company_name" id="company_name"/>
+                                            <input type="button" value="搜索" onclick="search_company()"/>
+                                            </td>
+                                          </tr>   
+                                          
                                           <tr>
 					    <td nowrap align="right" width="30%">企业:</td>
 					    <td width="35%">
@@ -97,6 +107,17 @@
                                         <tr>
 					    <td nowrap align="right" width="30%">配图:</td>
 					    <td width="35%"><input id="pic" name='pic' type="file" class="file" style="width:154px" value="" />
+				            <span class="red">*</span></td>
+					</tr>
+                                         
+                                         <tr>
+					    <td nowrap align="right" width="30%">显示日期:</td>
+					    <td width="35%">
+                                            <input name="show_time" type="text" value="{$time|default=time()|date='Y-m-d H:i:s',###}" style="padding-left:5px;width:143px;" id="txtDate" onclick="SetDate(this,'yyyy-MM-dd hh:mm:ss')" readonly="readonly" />
+    
+                                            <!--
+                                            <input id="pic" name='pic' type="file" class="file" style="width:154px" value="" />
+                                            -->
 				            <span class="red">*</span></td>
 					</tr>
                                          
@@ -223,5 +244,33 @@ function check_exists(company_id)
 function remove_item(target_obj)
 {
    $(target_obj).parent().remove();
+}
+
+//搜索企业名称
+function search_company()
+{
+	var company_name = $('#company_name').val();
+    company_name = encodeURI(company_name);
+     var url = location.href;
+     url += '/search/abc';
+        //ajax服务端通信 
+        $.ajax({ 
+            'url':url, //服务器的地址 
+            'data':{'search-text':company_name}, //参数 
+            'dataType':'json', //返回数据类型 
+            'type':'POST', //请求类型 
+            'success':function(data){ 
+                $('#company_id').empty();
+                if(data.length) { 
+                    //遍历data，添加到自动完成区 
+                    $.each(data, function(index,term) {
+                        var str_term = term.split(",");
+                        var str_key  = str_term[0];
+                        var term = str_term[1];
+                           $('#company_id').append("<option value="+str_key+">"+term+"</option>");
+                        });
+                } 
+        } 
+    });
 }
 </script>

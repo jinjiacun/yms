@@ -4,10 +4,13 @@
 function get_nextsibling(n)
 {
     var x=n.nextSibling;
-    while (x.nodeType!=1)
+    if(x)
     {
+      while (x.nodeType!=1)
+      {
         x=x.nextSibling;
-    }
+      }
+    }    
     return x;
 }
 function insertAfter(newElement, targetElement){
@@ -69,7 +72,9 @@ function getDate(timestamp) {
                <a id="unselectAll" href="javascript:void();" class="right-font08">反选</a>
                <if condition="0 eq $status">
                &nbsp<input type="button" name="check_mul" value="批量审核" onclick="validate_mul()"/>
-               &nbsp<input type="button" name="delete_mul" value="批量删除" onclick="delete_mul()"/>
+               <!--
+               &nbsp<input type="button" name="delete_mul" value="批量删除" onclick="delete_mul_fun()"/>
+               -->
                </if>
                </span>
 	             
@@ -150,7 +155,9 @@ function getDate(timestamp) {
                         <a href="javascript:request_get('__APP__/Soadmin/Comment/validate/id/{$item.id}/parent_id/{$item.parent_id}/company_id/{$item.company_id}');">审核</a>
                         </if>
                         <if condition="0 eq $item['is_delete']">
+							<!--
                         <a href="javascript:request_get('__APP__/Soadmin/Comment/delete/parentid/{$item.parent_id}/id/{$item.id}/company_id/{$item.company_id}/is_validate/{$item.is_validate}');" onclick="return confirmdel('确定要删除吗')">删除</a>
+                        -->
                         <else />
                         <a href="javascript:request_get('__APP__/Soadmin/Comment/recover/parentid/{$item.parent_id}/id/{$item.id}/company_id/{$item.company_id}/is_validate/{$item.is_validate}');" onclick="return confirmdel('确定要恢复吗')">恢复</a>
                         </if>
@@ -218,7 +225,9 @@ function getDate(timestamp) {
                             <a href="javascript:request_get('__APP__/Soadmin/Comment/validate/id/{$sub_item.id}/parent_id/{$sub_item.parent_id}/company_id/{$sub_item.company_id}');">审核</a>
                             </if>
                             <if condition="0 eq $sub_item['is_delete']">
+								<!--
                             <a href="javascript:request_get('__APP__/Soadmin/Comment/delete/parentid/{$sub_item.parent_id}/id/{$sub_item.id}/company_id/{$sub_item.company_id}/is_validate/{$sub_item.is_validate}');" onclick="return confirmdel('确定要删除吗')">删除</a>
+                            -->
                             <else />
                             <a href="javascript:request_get('__APP__/Soadmin/Comment/recover/parentid/{$sub_item.parent_id}/id/{$sub_item.id}/company_id/{$sub_item.company_id}/is_validate/{$sub_item.is_validate}');" onclick="return confirmdel('确定要恢复吗')">恢复</a>
                             </if>
@@ -463,10 +472,12 @@ function getDate(timestamp) {
                                                 td.innerHTML = '<a href="javascript:request_get(\'__APP__/Soadmin/Comment/validate/id/'+
                                                                item.id+'/parent_id/'+item.parent_id+'/company_id/'+item.company_id
                                                                +');">审核</a> ';
-                                            }                                            
+                                            }            
+                                            /*                                
                                             td.innerHTML += '<a onclick="return confirmdel(\'确定要删除吗\')" \
                                                              href="javascript:request_get(\'/yms/index.php/Soadmin/Comment/delete/parentid/'+item.parent_id+'/id/'+item.id+'/company_id/'+item.company_id+'/is_validate/'+item.is_validate+'\');"> \
                                                             删除</a>';
+                                            */             
                                             tr.appendChild(td);
 
                                             insertAfter(tr, cur_obj);
@@ -538,6 +549,10 @@ function validate_mul()
                         setTimeout("location.href= '"+data.jmp_url+"'; ",3000);//延时3秒 
                         //location.href= data.jmp_url;
                        }
+                       else
+                       {
+                        setTimeout("location.href= '"+location.href+"'; ",3000);//延时3秒 
+                       }
                     }
                     else
                     {
@@ -551,7 +566,7 @@ function validate_mul()
 }
 
 //mul delete
-function delete_mul() {
+function delete_mul_fun() {
     var ajaxUrl = location.href;
     var obj = document.fom.elements;
     var params = '';
@@ -559,11 +574,19 @@ function delete_mul() {
             if (obj[i].name == "id[]"){
                     //obj[i].checked = true;
                     if (obj[i].checked) {
-                        params += "/id[]/"+obj[i].value;
+                        params += "&id[]="+obj[i].value;
                     }
             }
     }
-    ajaxUrl+= "/delete_mul/批量删除"+params;
+    if (ajaxUrl.indexOf('?')>0)
+    {
+        ajaxUrl+= "&delete_mul=批量删除"+params;    
+    }
+    else
+    {
+        ajaxUrl+= "?delete_mul=批量删除"+params;
+    }
+    //ajaxUrl+= "/delete_mul/批量删除"+params;
     jQuery.ajax({  
                 type:"get",  
                 url:ajaxUrl,
@@ -575,6 +598,10 @@ function delete_mul() {
                        if ('' != data.jmp_url) {
                         setTimeout("location.href= '"+data.jmp_url+"'; ",3000);//延时3秒 
                         //location.href= data.jmp_url;
+                       }
+                       else
+                       {
+                        setTimeout("location.href= '"+location.href+"'; ",3000);//延时3秒 
                        }
                     }
                     else
@@ -701,7 +728,9 @@ $(function(){
                                             }
                                             if(0 == item.is_delete)
                                             {
+												/*
                                               td += '<a href="javascript:request_get(\'__APP__/Soadmin/Comment/delete/parentid/'+item.parent_id+'/id/'+item.id+'/company_id/'+item.company_id+'/is_validate/'+item.is_validate+'\');" onclick="return \confirmdel(\'确定要删除吗\')">删除</a></td>';
+                                              */
                                             }
                                           tr += td;
                                           tr += '</tr>';
