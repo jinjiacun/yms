@@ -59,7 +59,8 @@ class CommentController extends BaseController {
                     }
                     break;
                 case 2:{
-                        $content['where']['is_delete'] = 1;
+                        $content['where']['_string'] = "is_delete=1 or id in(select distinct(parent_id) from so_comment where is_delete=1 and pparent_id=0) or id in(select distinct(pparent_id) from so_comment where is_delete=1)";
+						$content['where_ex']['_string'] = "is_delete=1 or id in(select distinct(parent_id) from so_comment where is_delete=1 and pparent_id not in(0))";
                         $this->assign('status', 2);
                     }
                     break;
@@ -90,6 +91,7 @@ class CommentController extends BaseController {
         }
          if(I('get.s_p'))
         {
+        		if(isset($content)) unset($content);
             //回复查询
             $content['page_index'] = I('get.s_p');
             $content['where']['parent_id'] = I('get.parent_id');
@@ -160,7 +162,7 @@ class CommentController extends BaseController {
             && 0 == $result['content']['is_success'])
             {
                 //$this->success('成功操作', C('Template_pre').'Comment/get_list');
-                $this->echo_message(0,'成功操作', C('Template_pre').'Comment/get_list');
+                $this->echo_message(0,'成功操作', '');
                 exit();
             }
             else{
@@ -169,7 +171,7 @@ class CommentController extends BaseController {
                 exit();
             }
             */
-            $this->echo_message(0,'成功操作', C('Template_pre').'Comment/get_list');
+            $this->echo_message(0,'成功操作', '');
             exit();
         }
         
@@ -199,7 +201,7 @@ class CommentController extends BaseController {
             && 0 == $result['content']['is_success'])
             {
                 //$this->success('成功操作', C('Template_pre').'Comment/get_list');
-                $this->echo_message(0,'成功操作', C('Template_pre').'Comment/get_list');
+                $this->echo_message(0,'成功操作', '');
                 exit();
             }
             else{
@@ -209,6 +211,7 @@ class CommentController extends BaseController {
             }
         }
         $content['order'] = array(
+					'last_time'=>'desc',
 					'last_cchild_time'=>'desc',
            		    'last_child_time'=>'desc',
 	                'add_time'=>'desc',
@@ -312,7 +315,7 @@ class CommentController extends BaseController {
         && 0 == $result['content']['is_success'])
         {
             //$this->success('成功删除', C('Template_pre').'Comment/get_list');
-            $this->echo_message(0, '成功删除', C('Template_pre').'Comment/get_list');
+            $this->echo_message(0, '成功删除', '');
             exit();
         }
         else

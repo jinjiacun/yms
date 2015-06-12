@@ -154,10 +154,8 @@ function getDate(timestamp) {
                         <if condition="0 eq $item['is_validate'] and 0 eq $item['is_delete']">
                         <a href="javascript:request_get('__APP__/Soadmin/Comment/validate/id/{$item.id}/parent_id/{$item.parent_id}/company_id/{$item.company_id}');">审核</a>
                         </if>
-                        <if condition="0 eq $item['is_delete']">
-							<!--
-                        <a href="javascript:request_get('__APP__/Soadmin/Comment/delete/parentid/{$item.parent_id}/id/{$item.id}/company_id/{$item.company_id}/is_validate/{$item.is_validate}');" onclick="return confirmdel('确定要删除吗')">删除</a>
-                        -->
+                        <if condition="0 eq $item['is_delete']">							
+                        <a href="javascript:request_get('__APP__/Soadmin/Comment/delete/parentid/{$item.parent_id}/id/{$item.id}/company_id/{$item.company_id}/is_validate/{$item.is_validate}');" onclick="return confirmdel('确定要删除吗')">删除</a>                        
                         <else />
                         <a href="javascript:request_get('__APP__/Soadmin/Comment/recover/parentid/{$item.parent_id}/id/{$item.id}/company_id/{$item.company_id}/is_validate/{$item.is_validate}');" onclick="return confirmdel('确定要恢复吗')">恢复</a>
                         </if>
@@ -169,12 +167,37 @@ function getDate(timestamp) {
                     <volist name="item.re_sub.list" id="sub_item">
                         <tr id="{$sub_item.id}"
                         pId="{$sub_item.parent_id}"
-                        <if condition="(0 eq $sub_item['has_child_ex']) AND (0 eq $_GET['status'])">
+                        <if condition="(0 neq $sub_item['childs']) AND (0 eq $_GET['status'])">
                         hasChild="true"
                         <elseif condition="(1 eq $_GET['status']) AND (0 neq $sub_item['has_child'])"/>
                         hasChild="true"
                         </if>
-                        >                            
+                        >                 
+						<script>
+						var level="{$_GET['status']}";
+						if(2 == level)
+						{
+							//查询是否存在第三层
+							var id={$sub_item.id};
+							var param_data = {"method":"Comment.get_list","type":"type","content":'{"page_size":1,"where":{"is_delete":1,"parent_id":'+id+'}}'}
+
+							jQuery.ajax({  
+                                    type:"get",  
+                                    url:"http://192.168.1.131/yms_api/index.php/Soapi",
+                                    timeout: 5000,
+									async:false,
+                                    dataType:"json",
+									data:param_data,
+ 									success: function aa(data) {
+										if(0<data.content.record_count)
+										{	
+											//alert(data.content.list[0].parent_id);
+											$('#'+data.content.list[0].parent_id).attr("hasChild", "true");
+										}			
+                        			}   
+							});    
+						}
+						</script>           
                           <td bgcolor="#C0C0C0">
                             <input type="checkbox" name="id[]" value="{$sub_item.id}|{$sub_item.company_id}" onclick="select_master_comment(this);"/>
                             <span>{$sub_item.id}</span>
@@ -225,9 +248,7 @@ function getDate(timestamp) {
                             <a href="javascript:request_get('__APP__/Soadmin/Comment/validate/id/{$sub_item.id}/parent_id/{$sub_item.parent_id}/company_id/{$sub_item.company_id}');">审核</a>
                             </if>
                             <if condition="0 eq $sub_item['is_delete']">
-								<!--
                             <a href="javascript:request_get('__APP__/Soadmin/Comment/delete/parentid/{$sub_item.parent_id}/id/{$sub_item.id}/company_id/{$sub_item.company_id}/is_validate/{$sub_item.is_validate}');" onclick="return confirmdel('确定要删除吗')">删除</a>
-                            -->
                             <else />
                             <a href="javascript:request_get('__APP__/Soadmin/Comment/recover/parentid/{$sub_item.parent_id}/id/{$sub_item.id}/company_id/{$sub_item.company_id}/is_validate/{$sub_item.is_validate}');" onclick="return confirmdel('确定要恢复吗')">恢复</a>
                             </if>
@@ -237,7 +258,7 @@ function getDate(timestamp) {
                     <!--超过10条-->
                   <if condition="10 lt $item['re_sub']['record_count']">
                     <tr>
-                    <td id="page_{$item.id}" colspan="11" bgcolor="#FFFFFF" style="text-align:right;">
+                    <td id="page_{$item.id}" parent_id="{$item.id}" colspan="11" bgcolor="#FFFFFF" style="text-align:right;">
                       
                     </td>
                     </tr>
@@ -294,6 +315,7 @@ function getDate(timestamp) {
                             a.href = 'javascript:void(0);';
                             //a.className = "page_a";
                             a.setAttribute("p", i);
+							a.setAttribute('parent_id', pId);							
                             a.onclick = function(){
                                 if ("sub_page_cur" == this.className) {
                                     return;
@@ -301,13 +323,19 @@ function getDate(timestamp) {
                                 var cur_url = location.href;
                                 //判定是否以get_list结尾,否则截断
                                 var off_last = cur_url.lastIndexOf("html");
-                                cur_url += "?parent_id="+pId+"&s_p="+this.getAttribute('p');
+                                cur_url += "?&parent_id="+this.getAttribute('parent_id')+"&s_p="+this.getAttribute('p');
                                 //alert(cur_url);
-                                var next_obj  = get_nextsibling(cur_obj);
+								var cur_obj_ex = document.getElementById(this.getAttribute('parent_id'));
+								var page_control_ex = document.getElementById('page_'+this.getAttribute('parent_id'));
+								//alert('page_'+this.getAttribute('parent_id'));
+								//alert(this.getAttribute('parent_id'));
+								//alert(page_control.innerHTML);
+								alert(cur_obj_ex.innerHTML);
+                                var next_obj  = get_nextsibling(cur_obj_ex);
                                 //清除当前的列表
                                 while((next_obj
                                 && next_obj.getAttribute('depth') == 2
-                                && next_obj.getAttribute('pId') == pId)
+                                && next_obj.getAttribute('pId') == this.getAttribute('parent_id'))
                                 || (
                                 next_obj
                                 && next_obj.getAttribute('depth') == 3
@@ -318,19 +346,19 @@ function getDate(timestamp) {
                                     if(parent_node)
                                     {
                                         parent_node.removeChild(next_obj);
-                                        next_obj = get_nextsibling(cur_obj);
+                                        next_obj = get_nextsibling(cur_obj_ex);
                                     }
                                 }
                             
                                 
                                 //清空分页样式
-                                var child_length = page_control.childNodes.length;
-                                var page_childs = page_control.childNodes;
-                                for(var j=0; j< child_length; j++)
+                                var child_length = page_control_ex.childNodes.length;
+                                var page_childs = page_control_ex.childNodes;
+                                for(var j=0; j< page_control_ex.childNodes.length; j++)
                                 {
-                                    page_childs[j].className = "sub_page";
+                                    page_control_ex.childNodes[j].className = "sub_page";
                                 }
-                                this.className = "sub_page_cur";
+                                this.className = "sub_page_cur";								
                             
                                 jQuery.ajax({  
                                     type:"get",  
@@ -344,8 +372,8 @@ function getDate(timestamp) {
                                             var tr = document.createElement("tr");
                                             if(null == item)
                                                 break;
-                                            tr.id = item.id;
-                                            tr.setAttribute("pId", pId);
+                                            tr.id = item.id;											
+                                            tr.setAttribute("pId", item.parent_id);
                                             tr.setAttribute("class", item.parent_id);
                                             tr.setAttribute("depth", 2);
                                             if (0 == item.has_child_ex)
@@ -473,14 +501,14 @@ function getDate(timestamp) {
                                                                item.id+'/parent_id/'+item.parent_id+'/company_id/'+item.company_id
                                                                +');">审核</a> ';
                                             }            
-                                            /*                                
+                                                                            
                                             td.innerHTML += '<a onclick="return confirmdel(\'确定要删除吗\')" \
                                                              href="javascript:request_get(\'/yms/index.php/Soadmin/Comment/delete/parentid/'+item.parent_id+'/id/'+item.id+'/company_id/'+item.company_id+'/is_validate/'+item.is_validate+'\');"> \
                                                             删除</a>';
-                                            */             
+                                                         
                                             tr.appendChild(td);
 
-                                            insertAfter(tr, cur_obj);
+                                            insertAfter(tr, cur_obj_ex);
                                         
                                         }
                                     },
@@ -728,10 +756,15 @@ $(function(){
                                             }
                                             if(0 == item.is_delete)
                                             {
-												/*
+												
                                               td += '<a href="javascript:request_get(\'__APP__/Soadmin/Comment/delete/parentid/'+item.parent_id+'/id/'+item.id+'/company_id/'+item.company_id+'/is_validate/'+item.is_validate+'\');" onclick="return \confirmdel(\'确定要删除吗\')">删除</a></td>';
-                                              */
+                                              
                                             }
+											
+											if(1 == item.is_delete)
+											{	
+												 td += '<a href="javascript:request_get(\'__APP__/Soadmin/Comment/recover/parentid/'+item.parent_id+'/id/'+item.id+'/company_id/'+item.company_id+'/is_validate/'+item.is_validate+'\');" onclick="return \confirmdel(\'确定要恢复吗\')">恢复</a></td>';                                            
+											}
                                           tr += td;
                                           tr += '</tr>';
                                           html += tr;

@@ -59,7 +59,8 @@ class CommentController extends BaseController {
                     }
                     break;
                 case 2:{
-                        $content['where']['is_delete'] = 1;
+                        $content['where']['_string'] = "is_delete=1 or id in(select distinct(parent_id) from so_comment where is_delete=1 and pparent_id=0) or id in(select distinct(pparent_id) from so_comment where is_delete=1)";
+						$content['where_ex']['_string'] = "is_delete=1 or id in(select distinct(parent_id) from so_comment where is_delete=1 and pparent_id not in(0))";
                         $this->assign('status', 2);
                     }
                     break;
