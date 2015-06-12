@@ -372,8 +372,8 @@ function getDate(timestamp) {
                                             var tr = document.createElement("tr");
                                             if(null == item)
                                                 break;
-                                            tr.id = item.id;
-                                            tr.setAttribute("pId", this.getAttribute('parent_id'));
+                                            tr.id = item.id;											
+                                            tr.setAttribute("pId", item.parent_id);
                                             tr.setAttribute("class", item.parent_id);
                                             tr.setAttribute("depth", 2);
                                             if (0 == item.has_child_ex)
