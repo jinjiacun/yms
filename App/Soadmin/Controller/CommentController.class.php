@@ -97,7 +97,9 @@ class CommentController extends BaseController {
             $content['where']['parent_id'] = I('get.parent_id');
             if(0 == I('get.status'))
             {
-                $content['where']['is_validate'] = 0;
+				$where['is_validate'] =0;
+				$where['childs'] = array('gt', 0);
+				$content['where']['_complex'] = $where;
                 $content['where']['is_delete'] = 0;
             }
             elseif(1 == I('get.status'))
