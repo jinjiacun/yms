@@ -53,7 +53,7 @@ class InexposalController extends BaseController {
             if('' != I('get.company_name'))
             {
                 $company_name = I('get.company_name');
-                $content['where']['company_name'] = array('like', '%'.urlencode($company_name).'%');
+                $content['where']['company_name'] = array('like', '$'.urlencode($company_name).'$');
                 $this->assign('company_name', I('get.company_name'));
             }
             $status = I('get.status');
@@ -147,7 +147,7 @@ class InexposalController extends BaseController {
             if('' != I('get.company_name'))
             {
                 $company_name = I('get.company_name');
-                $content['where']['company_name'] = array('like', '%'.urlencode($company_name).'%');
+                $content['where']['company_name'] = array('like', '$'.urlencode($company_name).'$');
                 $this->assign('company_name', I('get.company_name'));
             }
             $status = I('get.status');
@@ -241,7 +241,7 @@ class InexposalController extends BaseController {
             $content = array();
             if('' != htmlspecialchars(trim($kword)))
             {
-                $content['where']['company_name'] = array("like", "%".urlencode($kword)."%");
+                $content['where']['company_name'] = array("like", "$".urlencode($kword)."$");
             }
             $arr = array();
             //select name of company

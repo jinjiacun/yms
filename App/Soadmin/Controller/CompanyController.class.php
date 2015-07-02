@@ -322,7 +322,7 @@ class CompanyController extends BaseController {
             if('' != $company_name)
             {
                 $this->assign('company_name', $company_name);
-                $content['where']['company_name'] = array('like', '%'.urlencode($company_name).'%');
+                $content['where']['company_name'] = array('like', '$'.urlencode($company_name).'$');
                 $this->assign('company_name', $company_name);
             }
             if(0 != I('get.nature'))

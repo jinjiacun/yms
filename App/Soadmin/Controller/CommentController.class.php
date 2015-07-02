@@ -75,6 +75,12 @@ class CommentController extends BaseController {
                 $content['where']['type']= htmlspecialchars(I('get.type'));
                 $this->assign('type', I('get.type'));
             }
+            if(0 != I('get.company_id'))
+            {
+                $content['where']['company_id']= I('get.company_id');
+                $this->assign('company_id', I('get.company_id'));
+                $this->assign('company_name', I('get.company_name'));
+            }
         }
         else
         {
@@ -174,6 +180,33 @@ class CommentController extends BaseController {
             }
             */
             $this->echo_message(0,'成功操作', '');
+            exit();
+        }
+        
+         if(I('get.search'))
+        {
+            $kword = I('post.search-text');
+            $content = array();
+            if('' != htmlspecialchars(trim($kword)))
+            {
+                $content['where']['company_name'] = array("like", "$".urlencode($kword)."$");
+            }
+            $arr = array();
+            //select name of company
+            $result = $this->_call("Company.get_id_name_map", $content);
+            if($result
+            && 200 == $result['status_code'])
+            {
+                
+               foreach($result['content'] as $k=>$v)
+               {
+                $arr[] = $k.','.$v;
+               }
+               unset($k, $v);
+               //$arr = $result['content'];
+            }
+            $response = $arr;
+            echo json_encode($response);
             exit();
         }
         
