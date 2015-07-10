@@ -1,7 +1,6 @@
 <?php
 namespace Home\Controller;
 use Think\Controller;
-//include_once(dirname(__FILE__).'/BaseController.class.php');
 class CallapiController extends Controller {
 	#api接口回调统一函数
 	/**
@@ -11,11 +10,11 @@ class CallapiController extends Controller {
 	*@param $type    数据传输类型(text-文本数据,resource-资源文件)
 	*@param $handler 资源处理句柄
 	*/
-	public function call_api($method='', $content=array(), $type='text', $handler=null)
+	public function call_api($method, $content, $type='text', $handler=null, $is_get=false)
 	{
 		
         $url_post = C('url_api');
-        $url_post .= '/'.'yms_api'.'/'.'index.php';
+        $url_post .= '/'.'yms_api'.'/'.'index.php/Soapi';
 
         $buff = null;
         switch($type)
@@ -40,28 +39,60 @@ class CallapiController extends Controller {
         	break;
         	case 'text':#普通文本json传输
 			{
-				$data_arr = array(
+				if(is_array($method))
+				{
+					$data_arr = array(
+				            'type'   => $type,
+							'method' => json_encode($method),
+							'content'=> urldecode(json_encode($content)),
+							'handler'=> null,
+							'is_mul'=>true,
+				    );
+				}
+				else
+				{
+					$data_arr = array(
 				            'type'   => $type,
 							'method' => $method,
 							'content'=> urldecode(json_encode($content)),
 							'handler'=> null,
-				        );
+				    );
+				}
 			}
         	break;
         }
-		$data = $data_arr;
-		$res  = $this->post($url_post, $data, $header);
+		$data = $data_arr;	
+		$obj =  new \Org\Util\DES();
+		$data['token'] = $obj->encrypt($data['method'].date('Y-m-d')); 
+		//print_r($data['method']);
+		//print_r($data['token']);
+		if($is_get)
+		{
+			$res  = $this->get($url_post, $data);	
+		}
+		else
+		{
+			$res  = $this->post($url_post, $data, $header);		
+		}
 		return $res;
 		//echo $res;
 	}
-
-	public function ajax_call_api()
-	{
+    public function ajax_call_api()
+	{	
 		$method = I('post.method');
+		if(I('get.method'))$method = I('get.method');
 		$content = I('post.content');
+		if(I('get.content'))$content = I('get.content');
 		//$content = json_decode($content, true);
 		$type    = I('post.type');
-		echo $this->call_api($method, $content, $type, $handler);
+		if(I('get.type')) $type = I('get.type');
+		if(I('get.method'))
+		{
+			echo $this->call_api($method, $content, $type, $handler, true);
+			exit();
+		}
+		else			
+			echo $this->call_api($method, $content, $type, $handler);
 	}
 
 	function post($url, $params = false, $header = array()){
@@ -90,4 +121,28 @@ class CallapiController extends Controller {
 		 
 		return $result; 
 	}  
+
+	function get($url, $params= false)
+	{
+		//初始化
+		$ch = curl_init();
+		if($params)
+		{
+			$str_list = array();
+			foreach($params as $k=>$v)
+			{
+				$str_list[] = $k.'='.$v;
+			}
+			unset($params, $k, $v);
+			$url .= '?'.implode('&',$str_list);
+		}
+		curl_setopt($ch, CURLOPT_URL,$url);
+		curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
+	    curl_setopt($ch, CURLOPT_HEADER, 0);
+
+		$result = curl_exec($ch);
+		curl_close($ch); 
+
+		return $result;
+	}
 }

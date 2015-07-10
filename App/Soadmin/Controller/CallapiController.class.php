@@ -50,6 +50,8 @@ class CallapiController extends BaseController {
         	break;
         }
 		$data = $data_arr;
+		$obj =  new \Org\Util\DES();
+		$data['token'] = $obj->encrypt($data['method'].date('Y-m-d')); 
 		$res  = $this->post($url_post, $data, $header);
 		return $res;
 		//echo $res;
