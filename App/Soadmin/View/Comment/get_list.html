@@ -6,7 +6,7 @@ function get_nextsibling(n)
     var x=n.nextSibling;
     if(x)
     {
-      while (x.nodeType!=1)
+      while (x && x.nodeType!=1)
       {
         x=x.nextSibling;
       }
@@ -179,11 +179,11 @@ function getDate(timestamp) {
 						{
 							//查询是否存在第三层
 							var id={$sub_item.id};
-							var param_data = {"method":"Comment.get_list","type":"type","content":'{"page_size":1,"where":{"is_delete":1,"parent_id":'+id+'}}'}
+							var param_data = {"method":"Comment.get_list","type":"text","content":{"page_size":1,"where":{"is_delete":1,"parent_id":id}}}
 
 							jQuery.ajax({  
-                                    type:"get",  
-                                    url:"http://192.168.1.131/yms_api/index.php/Soapi",
+                                    type:"post",  
+                                    url:"{$call_url}",
                                     timeout: 5000,
 									async:false,
                                     dataType:"json",
