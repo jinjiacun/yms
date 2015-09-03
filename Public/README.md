@@ -93,3 +93,9 @@ last_time,最新用户曝光时间
 
 2015-5-27
 表so_news添加show_time显示日期
+2015-8-3
+添加表so_token
+添加表so_push_message
+2015-8-21
+so_comment表添加is_depth
+so_com_exposal表添加is_depth 
