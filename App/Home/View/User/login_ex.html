@@ -2,61 +2,93 @@
 <div class="bd_wd"></div> 
 <div class="tcwindows1" id="tcwindows1">
   <div class="close"><a>关闭</a></div>
-    <h3 class="shwang">登录搜黑</h3>
+    <h3 class="shwang">登录口碑</h3>
+    <div class="ts_div">
+    <span id='span_ex'></span></div>
     <div class="tipbox1">
-         <span>账号：</span><input name="" type="text" class="input1" autocomplete="off" value="注册手机号" onblur="if (this.value =='') this.value='注册手机号'" onclick="if (this.value == '注册手机号') this.value = '' " />
-         <p class="clears"></p>   
-         <span>密码：</span>
-          <p style=" position:relative; overflow:hidden" class="posti">
-           <input type="password" value="" class="post2" autocomplete="off"></p>
-         <p class="clears"></p>   
-      <span style="height:1px; overflow:hidden">&nbsp;</span>
-      <input name="" type="checkbox" value="" class="check" />下次自动登录
-      <a class="wangji" href="__APP__/home/user/find_password">忘记密码</a>
-      <p class="clears"></p>   
-         <span>&nbsp;</span><input name="" type="button" value="登陆" class="but2"  />
-      <p class="clears"></p>           
-          <p class="mfzcs">什么！还没有搜黑网账号？<a href="__APP__/home/user/user_register">免费注册</a></p>
+        <form action="__APP__/User/login" method="post" name="logForm" id="logForm" autocomplete="off">
+          <span>账号：</span>
+          <p class="posti">
+            <input name="mobile" type="text" class="input1" title="请输入手机号码" placeholder="请输入手机号码" onkeypress="submit1(event)"/>
+          </p>
+           <p class="clears"></p>   
+          <span>密码：</span>
+          <p class="posti">
+            <input type="password" name="password" title="请输入密码" placeholder="请输入密码" class="post2" onkeypress="submit1(event)" />
+          </p>
+          <p class="clears"></p>   
+          <span style="height:1px; overflow:hidden">&nbsp;</span>
+          <input name="" type="checkbox" value="" class="check" />下次自动登录
+          <a class="wangji" href="{:U('User/find_password')}">忘记密码</a>
+          <p class="clears"></p>   
+          <span>&nbsp;</span><input name="submit" type="submit" value="登录" class="but2"  />
+        </form>
+        <p class="clears"></p>           
+        <p class="mfzcs">什么！还没有口碑网账号？<a target='_blank' href="__APP__/register.html">免费注册</a></p>
+        <p class="dlxz">
+          <a class="weixin" href="{:U('log_oauth?type=weixin')}">微信登录</a>
+          <a class="tengxun" href="{:U('log_oauth?type=qq')}">QQ登录</a>
+          <a class="weibo" href="{:U('log_oauth?type=sina')}">微博登录</a>
+        </p>
     </div>
 </div>
 <!--登录--End-->
 <script>
-    //登录弹窗
-    $(function(){
+  //判断浏览器的内核，回车提交
+  function submit1(e){ 
+    var isie = (document.all) ? true : false;//判断是IE内核还是Mozilla 
+    var key; 
+    if (isie){ 
+    key = window.event.keyCode;//IE使用windows.event事件 
+    }else{ 
+    key = e.which;//3个按键函数有一个默认的隐藏变量，这里用e来传递。e.which给出一个索引值给Mo内核（注释1） 
+    } 
+    if(key==13){
+      $('.but2').click();//触发的事件，可自定义 
+    }
+  }
+  $(function(){ 
       //用户登录
       $('.but2').click(function(){
           var mobile     = $(this).parents('.tipbox1').find('.input1').val();
           var password   = $(this).parents('.tipbox1').find('.post2').val();
           if(mobile == ""){ 
-              alert("请输入登录账号！"); 
+              $('#span_ex').text("请输入登录账号！");
               return false; 
           }
           if (password == "") {
-            alert('请输入登录密码');
+            $('#span_ex').text("请输入登录密码");
             return false;
           }
-          jQuery.ajax({  
-              type:"post",  
-              url:"__URL__/login/mobile/"+mobile+"/password/"+password+"",
-              timeout: 5000,  
+          var options = {
               dataType:"json", 
-              contentType: "application/x-www-form-urlencoded; charset=utf-8",
-              data:{
-                  mobile:mobile,
-                  password:password,
+              beforeSend:function(){
+                $("#but2").val('登录').attr('disabled',true);
               },
-              success: function aa(data) { 
+              success:function(data){
                   if (data == 0) {
-                    window.location.href="__APP__/home/Index/index"; 
+                    window.location.href="__ROOT__/"; 
+                    return false;
                   }else if (data == -1) {
-                    alert("登录失败！");
+                    $('#span_ex').text("登录失败！");
+                    $("#but2").val('登录').attr('disabled',false);
                     return false;
                   }else if (data == -2) {
-                    alert('用户名不存在或密码错误!')
+                    $('#span_ex').text("用户名不存在或密码错误");
+                    $("#but2").val('登录').attr('disabled',false);
                     return false;
-                  } 
-              }  
-          })  
-      });
+                  }else if (data == -3) {
+                    $('#span_ex').text("用户被限制登录");
+                    $("#but2").val('登录').attr('disabled',false);
+                    return false;
+                  }else if (data == -4) {
+                    $('#span_ex').text("用户访问的IP被限制");
+                    $("#but2").val('登录').attr('disabled',false);
+                    return false;
+                  }  
+              }
+          };
+          $('#logForm').ajaxForm(options);
+      })
     });
 </script>

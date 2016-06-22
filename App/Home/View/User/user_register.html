@@ -2,11 +2,15 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-<title>注册--搜黑</title>
+<title>注册--口碑</title>
+<meta name="keywords" content="口碑，黑平台查询，黑平台曝光，贵金属黑平台，外汇黑平台"/>
+<meta name="description" content="口碑是全国性的交易市场曝光平台,携手每一位投资人共同揭开交易市场的层层黑幕,为您提供全方位的贵金属、外汇、黄金、石油等行业交易黑幕的查询、曝光。"/>
+<link rel="icon" href="__PUBLIC__/s.ico" type="image/x-icon" />
 <link type="text/css" rel="stylesheet" href="__PUBLIC__/Home/css/main.css"/>
 <script type="text/javascript" src="__PUBLIC__/js/jquery-1.8.3.min.js" ></script>
 <script type="text/javascript" src="__PUBLIC__/js/Validform_v5.3.2.js" ></script>
 <script type="text/javascript" src="__PUBLIC__/Home/js/main.js" ></script>
+<script type="text/javascript" src="__PUBLIC__/Home/js/jquery.form.js" ></script>
 </head>
 
 <body>
@@ -19,10 +23,10 @@
   <div class="header_zc">
     <div class="header_box">
       <div class="zhuce_logo">
-        <a href="__APP__/home" class="zhuce1"><img src="__PUBLIC__/Home/images/logo3.png"/></a>
+        <a href="__ROOT__/" class="zhuce1"><img src="__PUBLIC__/Home/images/logo3.png"/></a>
         <a class="zhuce2">用户注册</a>
        </div>
-      <div class="back_sy"><a href="__APP__/home">搜黑首页</a></div>
+      <div class="back_sy"><a href="__ROOT__/">口碑首页</a></div>
     </div>
   </div>
   
@@ -33,80 +37,81 @@
    <div id="content_ny">
     	 <div class="zhucebox">
              <div class="zhuce_lt">
-             <h2>欢迎注册搜黑</h2>
-             <form class="registerform" action="__URL__/user_register" name="theForm" method="post" enctype="multipart/form-data" onsubmit="return ValidateFile()" autocomplete="off">
+             <h2>欢迎注册口碑</h2>
+             <form class="registerform" action="__URL__/user_register" name="theForm" method="post" enctype="multipart/form-data" autocomplete="off">
                 <dl>
                   <dt>用户昵称：</dt>
                   <dd>
-                        <input name="nickname" type="text" class="text1" datatype="s6-16" errormsg="用户昵称6—16个字符" ignore="ignore"/>
+                        <input name="nickname" type="text" class="text1" autocomplete="off" datatype="s1-16" errormsg="用户昵称不能为特殊字符且不能大于16个字符" ignore="ignore"/>
                         <div class="Validform_checktip">用户昵称不输入系统会自动生成一个</div>
                   </dd>
                 </dl>
                 <dl>
                   <dt>手机号码：</dt>
                   <dd>
-                        <input name="mobile" id="mobile" type="text" class="text1" datatype="m" ajaxurl="./../user/check_mobile" nullmsg="请输入手机号码！" errormsg="输入的手机号码有误" />
+                        <input name="mobile" id="mobile" type="text" class="text1" autocomplete="off" datatype="m" ajaxurl="{:U('User/check_mobile')}" nullmsg="请输入手机号码！" errormsg="输入的手机号码有误" />
                         <span>*</span>
-                        <div class="Validform_checktip">输入您的11位有效手机号码</div>
+                        <div class="Validform_checktip" id="mobile_ex">仅作登陆和找回密码使用，不会公开</div>
                   </dd>
                 </dl>
                 <dl id="verify_but_y" style="display: none;">
                   <dt>&nbsp;</dt>
                   <dd>
-                        <input name="verify_but" id="verify_but" type="button" value="获取验证码" class="hqyzm" onclick="btn()" />
-                        <img id="verifyImg" class="verify" name="verify" src="__APP__/Home/User/verify_c" title="点击刷新" onclick="this.src=this.src+'?'" />
+                        <input name="verify_but" id="verify_but" type="button" value="获取验证码" class="hqyzm" />
+                        <img id="verifyImg" class="verify" name="verify" src="{:U('User/verify_c')}" title="点击刷新" onclick="this.src=this.src+'?'" />
                   </dd>
                 </dl>
                 <dl>
                   <dt>验证码：</dt>
                   <dd>
-                        <input name="verify" type="text" class="text1" datatype="s" ajaxurl="./../user/check_verify_ex" nullmsg="验证码不能为空" errormsg="请输入验证码" /><span>*</span>
+                        <input name="verify" type="text" class="text1" datatype="s" ajaxurl="{:U('User/check_verify_ex')}" nullmsg="验证码不能为空" errormsg="请输入验证码" autocomplete="off" /><span>*</span>
                         <div class="Validform_checktip">请输入验证码</div>
                   </dd>
                 </dl>
                 <dl>
                   <dt>登录密码：</dt>
                   <dd>
-                        <input type="password" name="pswd" class="text1" id="pswd" datatype="*6-16" nullmsg="请设置密码！" errormsg="密码范围在6~16位之间！" /><span>*</span>
+                        <input type="password" name="pswd" class="text1" id="pswd" datatype="*6-16" nullmsg="请设置密码！" errormsg="密码范围在6~16位之间！" autocomplete="off"/><span>*</span>
                         <div class="Validform_checktip">密码范围在6~16位之间</div>
                   </dd>
                 </dl>
                 <dl>
                   <dt>重复密码：</dt>
                   <dd>
-                        <input type="password" name="repassword" class="text1" id="repassword" datatype="s" recheck="pswd" nullmsg="请再输入一次密码！" errormsg="您两次输入的账号密码不一致！"/><span>*</span>
+                        <input type="password" name="repassword" class="text1" id="repassword" autocomplete="off" datatype="*" recheck="pswd" nullmsg="请再输入一次密码！" errormsg="您两次输入的账号密码不一致！"/><span>*</span>
                         <div class="Validform_checktip">两次输入密码需一致</div>
                   </dd>
                 </dl>
                 <dl>
                   <dt>&nbsp;</dt>
                   <dd>
-                        <input name="" type="checkbox" id="checkbox_ok" checked="checked" value="" class="tongyi" />同意&nbsp<a href="__APP__/Home/Public/xieyi" class="xieyi1">服务条款和保密协议</a></dd>
+                        <input type="checkbox" id="cbx" checked="checked" class="tongyi"/>同意&nbsp
+                        <a target='_blank' href="{:U('xieyi')}" class="xieyi1">服务条款和保密协议</a></dd>
                 </dl>
                 <dl>
                   <dt>&nbsp;</dt>
                   <dd>
-                        <input name="submit" type="submit" value="注 册" class="zhuce_bt" />
+                        <input name="submit" type="submit" id="btn" value="注 册" class="zhuce_bt" />
                   </dd>
                 </dl>
              </form>
              </div>
-             <div class="zhuce_rt"><p>已有搜黑账号，可直接：</p>
+             <div class="zhuce_rt"><p>已有口碑账号，可直接：</p>
              <a href="javascript:void(0)" class="yidel">登 录</a></div>
          </div>
   </div>
 <!--内容--End--> 
 
 <!--底部--Begin-->     
-   <div id="footer_zc">
-                 <p>Copyright © 2014 souhei.com 搜黑 版权所有 复制必究</p> 
-                 <p>沪ICP备13040259号-1</p>
-   </div>
+   <include file="footer" />
 <!--底部--End--> 
 
 </div>
 </body>
 <script type="text/javascript">
+    //获取分辨率
+    var screen = window.screen.width + "*" + window.screen.height;
+    document.cookie="screen="+screen;
     //表单验证
     $(function(){
       $(".registerform").Validform({
@@ -127,23 +132,25 @@
           $("#verify_but_y").hide()
         }
       });
+      //点击显示验证码
+      $('#verify_but').click(function(){
+        var mobile_ex = document.getElementById("mobile_ex").innerHTML;
+        if (mobile_ex == "可以注册") {
+          $("#verifyImg").show(); 
+        }else{
+          $("#verifyImg").hide(); 
+        }
+      });
+      //保密协议
+      $('#cbx').click(function(){
+        var objButton   = document.getElementById('btn');
+        var checkbox_ok = document.getElementById("cbx").checked;
+        if(checkbox_ok == false){
+          objButton.disabled = true;
+        }else{
+          objButton.disabled = false;
+        }
+      });
     });
-    //图片上传验证
-    function ValidateFile(){ 
-      var checkbox_ok  = document.getElementById("checkbox_ok").checked;
-      if(checkbox_ok == false){ 
-          alert("您还没有没有同意服务条款和保密协议！"); 
-          return false; 
-      }
-    }
-    //点击显示验证码
-    var btn1=document.getElementById('verify_but');
-    var box1=document.getElementById('verifyImg');
-    function btn(){ 
-      if(btn1.name=="verify_but")
-      {
-        box1.style.display='block';
-      }
-    }
 </script>
 </html>

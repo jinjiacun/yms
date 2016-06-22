@@ -2,19 +2,20 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-<title>我要曝光--搜黑</title>
+<title>监管机构-贵金属监管机构-外汇监管机构-口碑网</title>
+<meta name="keywords" content="贵金属监管机构,外汇监管机构"/>
+<meta name="description" content="关于贵金属和外汇行业的金融监管机构列表和介绍，让投资者详细了解本行业的监管规范。"/>
+<link rel="icon" href="__PUBLIC__/s.ico" type="image/x-icon" />
 <link type="text/css" rel="stylesheet" href="__PUBLIC__/Home/css/main.css"/>
 <script type="text/javascript" src="__PUBLIC__/js/jquery-1.8.3.min.js" ></script>
 <script type="text/javascript" src="__PUBLIC__/Home/js/main.js" ></script>
+<script type="text/javascript" src="__PUBLIC__/Home/js/jquery.form.js" ></script>
 </head>
 
 <body>
-
-<div id="wrap">
-
-<!--Begin--登陆-->   
+<!--Begin--登录-->   
 <include file="Public:login" />
-<!--End--登陆--> 
+<!--End--登录--> 
 <div id="wrap">
 
 <!--头部--Begin-->   
@@ -22,58 +23,29 @@
 <!--头部--End--> 
 
 <!--内容--Begin-->     
-   <div id="content_ny">
+  <div id="content_ny">
      <div class="cont_lt">
-              <div class="cont_lta">
-                <h2 class="titles"><a href="__APP__/home">首页</a></h2>
-                <ul>
-                   <li><a href="__APP__/home/Index/index">平台查询</a></li>
-                   <li><a href="__APP__/home/Inexposure/exposure">我要曝光</a></li>
-                   <li><a href="__APP__/home/Inexposure/authentication">合规认证</a></li>
-                   <li><a href="__APP__/home/Ranking/machine">曝光台</a></li>
-                   <li><a href="__APP__/home/Regulators/regulators">监管机构</a></li>
-                 </ul>
-                 <div class="ewm"><img src="__PUBLIC__/Home/images/pic01.jpg" width="104" height="140" /></div>
-                <div class="wybg"><a href="regulators.html">我要曝光</a></div>
-          </div>
-               
+        <div class="cont_lta">
+          <h2 class="titles"><a href="__ROOT__/">首页</a></h2>
+          <ul>
+             <li><a href="__ROOT__/">平台查询</a></li>
+             <li><a target="_blank" class="wybg_a" href="__APP__/exposure.html">我要曝光</a></li>
+             <li><a target="_blank" class="wybg_a" href="__APP__/auth.html">合规认证</a></li>
+             <li><a target="_blank" href="__APP__/ranking.html">曝光台</a></li>
+             <li><a href="__APP__/regulators.html">监管机构</a></li>
+           </ul>
+           <div class="ewm"><img src="__PUBLIC__/Home/images/pic01.jpg" width="104" height="140" /></div>
+          <div class="wybg wybg_a"><a href="__APP__/exposure.html">我要曝光</a></div>
+        </div>         
      </div>
      <div class="content_ny_lt">
        <div class="jigou">
          <ul class="tit">
-              <li class="activ">贵金属监管机构</li>
-              <li>外汇监管机构</li>
+              <li class="activ">国内监管机构</li>
+              <li>国外监管机构</li>
          </ul>
-         <div class="jg_nr yis1 show">
-           <ul>
-            <volist id='g_list' name='g_list'>
-             <li>
-               <div class="jq_nr_lt">
-                  <h4>{$g_list.title}</h4>
-                  <p>官网：<a href="#">{$g_list.website}</a></p>
-                  <p class="img_jq"><a href="#"><img src="{$g_list.pic_url}" width="232" height="60" /></a></p>
-               </div>
-               <div class="jq_nr_rt">
-               <p>{$g_list.content}</p></div>
-             </li>
-            </volist>
-           </ul>
-         </div>
-         <div class="jg_nr yis2 hide">
-           <ul>
-            <volist id='w_list' name='w_list'>
-             <li>
-               <div class="jq_nr_lt">
-                  <h4>{$w_list.title}</h4>
-                  <p>官网：<a href="#">{$w_list.website}</a></p>
-                  <p class="img_jq"><a href="#"><img src="{$w_list.pic_url}" width="232" height="60" /></a></p>
-               </div>
-               <div class="jq_nr_rt">
-               <p>{$w_list.content}</p></div>
-             </li>
-            </volist>
-           </ul>
-         </div>
+         <div class="jg_nr yis1 show"></div>
+         <div class="jg_nr yis2 hide"></div>
        </div>
      </div>
      <div class="clear"></div>
@@ -83,9 +55,188 @@
 <!--底部--Begin-->     
 <include file="Public:footer" />
 <!--底部--End--> 
-
 </div>
 
-</div>
 </body>
+<script type="text/javascript"> 
+  $(function(){
+    window.onload=function(){
+      //国内监管机构
+      $.ajax({  
+            type:"post",  
+            url:"{$call_url}",
+            timeout: 5000,  
+            dataType:"json",  
+            data:{"method":"Regulators.get_list","type":"text","content":{"page_size":5,"where":{"type":"002001"}}},
+            success: function aa(data) {
+                if (200 == data.status_code) {
+                  var list = data.content.list,length=list.length,i=0,k=0,company_name='',content='';
+                  str ='<ul id="ul1">';                                       
+                  for(; i< length; i++)
+                  {
+                    website = list[i].website;
+                    content      = list[i].content;
+                    str += '<li>';
+                      str += '<div class="jq_nr_lt">';
+                      str += '<h4>'+list[i].title+'</h4>';
+                          str += '<p>官网：';
+                          str += '<a href="'+website+'" target="_blank" title="'+website+'">';
+                          str += website.substring(0,26)+'</a></p>';
+                          str += '<p class="img_jq">';
+                          str += '<a href="#"><img src="'+list[i].pic_url+'" width="232" height="60" /></a>';
+                          str += '</p>';
+                      str += '</div>';
+                      str += '<div class="jq_nr_rt">';
+                      str += '<p>'+utf8to16(base64decode(content))+'</p>';
+                      str += '</div>';
+                    str += '</li>';
+                  }
+                  if(5< data.content.record_count){ 
+                    str += '</ul>';
+                    str += '<div id="btn-more">';
+                    str += '<input type="button" name="btn" id="btn" value="加载全部机构">';
+                    str += '</div>';
+                  }
+                  $('.yis1').prepend(str);
+                }
+            }
+      });
+      //国外监管机构
+      $.ajax({  
+            type:"post",  
+            url:"{$call_url}",
+            timeout: 5000,  
+            dataType:"json",  
+            data:{"method":"Regulators.get_list","type":"text","content":{"page_size":5,"where":{"type":"002002"}}},
+            success: function aa(data) {
+                if (200 == data.status_code) {
+                  var list = data.content.list,length=list.length,i=0,k=0,company_name='',content='';
+                  str ='<ul id="ul2">';                                       
+                  for(; i< length; i++)
+                  {
+                    website = list[i].website;
+                    content      = list[i].content;
+                    str += '<li>';
+                      str += '<div class="jq_nr_lt">';
+                      str += '<h4>'+list[i].title+'</h4>';
+                          str += '<p>官网：';
+                          str += '<a href="'+website+'" target="_blank" title="'+website+'">';
+                          if(26 < website.length )
+                            str += website.substring(0,26)+'...';
+                          else
+                            str += website;
+                          str += '</a></p>';
+                          str += '<p class="img_jq">';
+                          str += '<a href="#"><img src="'+list[i].pic_url+'" width="232" height="60" /></a>';
+                          str += '</p>';
+                      str += '</div>';
+                      str += '<div class="jq_nr_rt">';
+                      str += '<p>'+utf8to16(base64decode(content))+'</p>';
+                      str += '</div>';
+                    str += '</li>';
+                  }
+                  if(5< data.content.record_count){  
+                    str += '</ul>';
+                    str += '<div id="btn-more">';
+                    str += '<input type="button" name="btnn" id="btnn" value="加载全部机构">';
+                    str += '</div>';
+                  }
+                  $('.yis2').prepend(str);
+                }
+            }
+      });
+    }
+  })
+</script>
+<script type="text/javascript">
+  $(function(){
+      var p=2;// 初始化页面，点击事件从第二页开始
+      var flag=false;
+      $('input[name=btn]').live('click',function(){
+      //$("input[name=btn]").click(function(){
+          //初始状态，如果没数据return ,false;否则
+          if($("#ul1 li").size()<=0){
+            return false;
+          }else{
+            send();
+          }
+      })
+      function send(){
+          if(flag){
+            return false;
+          }
+          $.ajax({
+              type:'post',
+              url:"{:U('Regulators/gjs_send')}",
+              data:{k:p},
+              beforeSend:function(){
+                   //$("#ul1").append("<div id='load'>加载中……</div>");
+              },
+              success:function(data){
+                if(data!=null){
+                  $.each(data,function(i){
+                    var picContent = "<li><div class='jq_nr_lt'><h4>"+data[i]['title']+"</h4>";
+                        picContent += "<p>官网：<a href='"+data[i]['website']+"' target='_blank' title='"+data[i]['website']+"'>"+data[i]['website_ex']+"</a></p>";
+                        picContent += "<p class='img_jq'><a><img src='"+data[i]['pic_url']+"' width='232' height='60' /></a></p>";
+                        picContent += "</div><div class='jq_nr_rt'><p>"+data[i]['content']+"</p></div></li>";
+                    $("#ul1").append(picContent);
+                  })
+                }else{
+                    $("input[name=btn]").val('已无更多');
+                    flag=true;  
+                }
+              },
+              complete:function(){
+                     $("#load").remove();
+              },
+              dataType:'json'});
+            p++;
+      }
+  })
+</script>
+<script type="text/javascript">
+  $(function(){
+      var p=2;// 初始化页面，点击事件从第二页开始
+      var flag=false;
+      $('input[name=btnn]').live('click',function(){
+          //初始状态，如果没数据return ,false;否则
+          if($("#ul2 li").size()<=0){
+            return false;
+          }else{
+            send();
+          }
+      })
+      function send(){
+          if(flag){
+            return false;
+          }
+          $.ajax({
+              type:'post',
+              url:"{:U('Regulators/wh_send')}",
+              data:{k:p},
+              beforeSend:function(){
+                   //$("#ul1").append("<div id='load'>加载中……</div>");
+              },
+              success:function(data){
+                if(data!=null){
+                  $.each(data,function(i){
+                    var picContent = "<li><div class='jq_nr_lt'><h4>"+data[i]['title']+"</h4>";
+                        picContent += "<p>官网：<a href='"+data[i]['website']+"' target='_blank' title='"+data[i]['website']+"'>"+data[i]['website_ex']+"</a></p>";
+                        picContent += "<p class='img_jq'><a><img src='"+data[i]['pic_url']+"' width='232' height='60' /></a></p>";
+                        picContent += "</div><div class='jq_nr_rt'><p>"+data[i]['content']+"</p></div></li>";
+                    $("#ul2").append(picContent);
+                  })
+                }else{
+                    $("input[name=btnn]").val('已无更多');
+                    flag=true;  
+                }
+              },
+              complete:function(){
+                     $("#load").remove();
+              },
+              dataType:'json'});
+            p++;
+      }
+  });
+</script>
 </html>

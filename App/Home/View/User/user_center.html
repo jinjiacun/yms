@@ -2,174 +2,587 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-<title>个人中心--搜黑</title>
+<title>个人中心--口碑</title>
+<meta name="keywords" content="口碑，黑平台查询，黑平台曝光，贵金属黑平台，外汇黑平台"/>
+<meta name="description" content="口碑是全国性的交易市场曝光平台,携手每一位投资人共同揭开交易市场的层层黑幕,为您提供全方位的贵金属、外汇、黄金、石油等行业交易黑幕的查询、曝光。"/>
+<link rel="icon" href="__PUBLIC__/s.ico" type="image/x-icon" />
 <link type="text/css" rel="stylesheet" href="__PUBLIC__/Home/css/main.css"/>
+<link type="text/css" rel="stylesheet" href="__PUBLIC__/Home/css/lightbox.css"/>
 <script type="text/javascript" src="__PUBLIC__/js/jquery-1.8.3.min.js" ></script>
 <script type="text/javascript" src="__PUBLIC__/Home/js/main.js" ></script>
-<style type="text/css">
-  .sr{color: red;font-size: 13px;width: 30px;}
-</style>
+<script type="text/javascript" src="__PUBLIC__/Home/js/lightbox-2.6.min.js" ></script>
+<script type="text/javascript" src="__PUBLIC__/Home/js/jquery.form.js" ></script>
 </head>
 
 <body>
-
-<div class="tcwindows_grzx">
-<iterate name="us_list" id="vo">
-  <dl>
-     <dt>用户昵称：</dt>
-     <dd><input name="nickname" type="text" class="gr_txt1 gr_txt" value="{$vo.UI_NickName}" /></dd>
-  </dl>
-  <dl>
-    <dt>性别：</dt>
-    <dd>
-        <input name="sex" type="radio" id="checkbox-id" value="1" class="xinbie" <if condition="$vo.UI_Sex eq 1 ">checked="checked"</if> />男&nbsp;&nbsp;&nbsp;&nbsp;
-        <input name="sex" type="radio" id="checkbox-id" value="0"  class="xinbie" <if condition="$vo.UI_Sex eq 0 ">checked="checked"</if>/>女
-        <input name="sex" type="radio" id="checkbox-id" value="-1"  class="xinbie" <if condition="$vo.UI_Sex eq -1 ">checked="checked"</if>/>未知
-    </dd>
-  </dl>
-  <dl>
-    <dt>绑定手机：</dt>
-    <dd>{$vo.UI_LoginNames}</dd>
-  </dl>
-  <dl>
-    <dt>生日：</dt>
-    <dd><input type="text" name="birthday" class="gr_txt2 gr_txt" value="{$vo.UI_BirthDay}"><br>
-    <em class="sr">生日格式：1900-01-01</em>
-    </dd>
-  </dl>
-  <dl>
-    <dt>职业：</dt>
-    <dd><input name="job" type="text" class="gr_txt3 gr_txt"  value="{$vo.UI_Job}" /></dd>
-  </dl>
-  <dl>
-    <dt>所在地：</dt>
-    <dd><input type="text" name="address" class="gr_txt4 gr_txt" value="{$vo.UI_Address}"></dd>
-  </dl>
-  <dl>
-    <dt>&nbsp;</dt>
-    <dd>
-      <input name="button" type="button" id="{$vo.UI_Id}" value="修 改" class="xigs" />
-      <a href="javascript:void(0)" class="qvxiao">取 消</a>
-    </dd>
-  </dl>
-</iterate>
+<div class="bd_wd"></div>
+<!--成功-->  
+<div class="yzsbai1">
+    <p id="tishi1"></p>
+    <input name="" type="button" value="确 定" class="xigs1" />
 </div>
-
-
-
+<!--错误信息提示Begin-->
+<div class="yzsbai">
+    <p id="tishi"></p>
+    <input name="" type="button" value="确 定" class="xigs" />
+</div>
+<!--错误信息提示end-->
+<div class="tcwindows_grzx xg_gr">
+  <h2><span>修改资料</span><a href="#">关闭</a></h2>
+  <dl class="xgtx">
+      <dt><img src="{$us_list.UI_Avatar}" /></dt>
+      <form id="phForm" name="phForm" method="post" action="{:U('touxiang')}" enctype="multipart/form-data" autocomplete="off">
+        <dd>
+          <h4>更换头像</h4>
+            <p>支持jpg、png等图片格式，大小不超过100K</p>
+            <input name="N" id="N" type="file" />
+            <input name="submit" type="submit" value="上传" class="scs" />
+        </dd>
+      </form>
+  </dl>
+  <h3>基本信息</h3>
+  <form id="theForm" name="theForm" method="post" action="{:U('information_modify')}" enctype="multipart/form-data">
+    <dl>
+      <dt>用户昵称：</dt>
+      <dd><input name="nickname" id="nickname" type="text" class="gr_txt gr_txt1"  value="{$us_list.UI_NickName}"/></dd>
+    </dl>
+    <dl>
+      <dt>性别：</dt>
+      <dd>
+          <input name="sex" type="radio" value="1" class="xinbie" <if condition="$us_list.UI_Sex eq 1 ">checked="checked"</if> />男&nbsp;&nbsp;&nbsp;&nbsp;
+          <input name="sex" type="radio" value="0"  class="xinbie" <if condition="$us_list.UI_Sex eq 0 ">checked="checked"</if>/>女&nbsp;&nbsp;&nbsp;&nbsp;
+          <input name="sex" type="radio" value="-1"  class="xinbie" <if condition="$us_list.UI_Sex eq -1 ">checked="checked"</if>/>未知
+      </dd>
+    </dl>
+    <dl>
+       <dt>绑定手机：</dt>
+       <dd>{$us_mobile}</dd>
+    </dl>
+    <dl>
+       <dt>生日：</dt>
+       <dd><input type="text" name="birthday" class="gr_txt" value="{$us_list.UI_BirthDay}">
+       <p class="srgs">生日格式：1900-01-01</p></dd>
+    </dl>
+    <dl>
+       <dt>职业：</dt>
+       <dd><input name="job" type="text" class="gr_txt"  value="{$us_list.UI_Job}" /></dd>
+    </dl>
+    <dl>
+       <dt>所在地：</dt>
+       <dd><input type="text" name="address" class="gr_txt" value="{$us_list.UI_Address}"></dd>
+    </dl>
+    <div class="xgorqx">
+       <input name="submit" type="submit" value="修 改" class="xigs but2" />
+       <a href="javascript:void(0)" class="qvxiao">取 消</a>
+    </div>
+  </form>
+</div>
+<div class="tcwindows_xgdlmm">
+   <div class="close_xgdlmm"><a href="javascript:void(0)">关闭</a></div>
+   <dl><dt>原登录密码：</dt><dd><input name="old_pswd" type="password"  class="gr_txt old_pswd" /></dd></dl>
+   <dl><dt>新登录密码：</dt><dd><input name="new_pswd" type="password"  class="gr_txt new_pswd" /></dd></dl>
+   <dl><dt>新登录密码确认：</dt><dd><input name="new_pswd_ex" type="password"  class="gr_txt new_pswd_ex" /></dd></dl>
+   <dl><dt>&nbsp;</dt><dd><input name="but1" type="button" value="确认修改" class="xigs but1" /></dd></dl>
+</div>
 <div id="wrap">
 
 <!--头部--Begin-->   
   <div class="header_zc">
     <div class="header_box">
       <div class="zhuce_logo">
-        <a href="__APP__/Home/Index/index" class="zhuce1"><img src="__PUBLIC__/Home/images/logo3.png"/></a>
+        <a href="__ROOT__/" class="zhuce1"><img src="__PUBLIC__/Home/images/logo3.png"/></a>
         <a class="zhuce2">个人中心</a>
        </div>
-      <div class="back_sy"><a href="__APP__/Home/Index/index">搜黑首页</a></div>
+      <div class="back_sy"><a href="__ROOT__/">口碑首页</a></div>
     </div>
   </div>
-  
-  
   <!--头部--End--> 
 
 <!--内容--Begin-->     
    <div id="content_ny">
-    	 <div class="zhucebox">
-           <div class="center_gr">
-             <iterate name="us_list" id="vo">
-               <div class="center_gr_lt">
-                 <dl>
-                     <dt><img src="{$vo.UI_Avatar}"/></dt>
-                 </dl>
-               </div>
-               
-               <div class="center_gr_ct">
-                 <dl><dt>用户昵称：</dt><dd><span>{$vo.UI_NickName}</span><a href="javascript:void(0)" class="xggrxx">[ 修改个人信息 ]</a></dd></dl>
-                 <dl><dt>性别：</dt>
-                  <dd>
-                    <if condition="$vo.UI_Sex eq 1 "> 男
-                    <elseif condition="$vo.UI_Sex eq 0 "/>女
-                    <else /> 未知
-                    </if>
-                  </dd>
-                 </dl>
-                 <dl><dt>生日：</dt><dd>{$vo.UI_BirthDay}</dd></dl>
-                 <dl><dt>职业：</dt><dd>{$vo.UI_Job}</dd></dl>
-                 <dl><dt>所在地：</dt><dd>{$vo.UI_Address}</dd></dl>
-               </div>
-               <div class="center_gr_rt"><img src="__PUBLIC__/Home/images/pic02.jpg" width="274" height="179" /></div>
-               </iterate>
-           </div>
-    	 </div>
+      <div class="id_newbox">
+          <div class="id_newbox_lt">
+            <div id="grxx_id"></div>
+            <ul>
+                <li><a href="javascript:void(0)" class="btn_xgzl">修改资料</a></li>
+                <li class="nomg xgmm"><a href="javascript:void(0)">修改密码</a></li>
+            </ul>
+          </div>
+            <div class="id_newbox_rt">
+              <div class="new_tit">
+                  <ul>
+                        <li onclick="show_panel(this)" id="link_install_sql" class="activ">我的评论</li>
+                        <li onclick="show_panel(this)" id="link_basic_setting">我的曝光</li>
+                        <li onclick="show_panel(this)" id="link_basic_wdgz">我的关注</li>
+                  </ul>
+                </div>
+              <div class="new_box show" id="div_install_sql">
+                <div id="new_box_ex"></div>
+              </div>
+              <div class="new_box hide" id="div_basic_setting"></div>
+              <div class="new_box my_gz hide" id="div_basic_wdgz"></div>
+          </div>
+        </div>   
   </div>
 <!--内容--End--> 
 
 <!--底部--Begin-->     
-   <div id="footer_zc">
-                 <p>Copyright © 2014 souhei.com 搜黑 版权所有 复制必究</p> 
-                 <p>沪ICP备13040259号-1</p>
-   </div>
+   <include file="footer" />
+   <p id="back-to-top"><a href="#top"><span></span></a></p>
 <!--底部--End--> 
 
 </div>
 <script type="text/javascript">
   $(function(){
-    //用户信息修改
-    $('.xigs').click(function(){
-              var nickname = $(this).parents('.tcwindows_grzx').find('.gr_txt1').val();
-              var sex      = $('input[name="sex"]:checked').val();
-              var birthday = $(this).parents('.tcwindows_grzx').find('.gr_txt2').val();
-              var job      = urlencode($(this).parents('.tcwindows_grzx').find('.gr_txt3').val());
-              var address  = urlencode($(this).parents('.tcwindows_grzx').find('.gr_txt4').val());
-              var userid   = $(this).attr('id');
-              var regex    = /^[^_][A-Za-z]*[a-z0-9_]*$/ ;
-              var ret      = regex.test(nickname);
-              //alert(nickname+'/'+birthday+'/'+job+'/'+address+'/'+userid+'/'+sex);
-              //return false;
-              if (nickname == "") {
-                alert('昵称不能为空');
+    var usid = "{$usid}";
+    //用户信息查询
+    $.ajax({  
+        type:"post",  
+        url:"{$call_url}",
+        timeout: 5000,  
+        dataType:"json",  
+        data:{"method":"User.get_info","type":"text","content":{"uid":usid}},
+        success: function aa(data) {
+            if (200 == data.status_code) {
+              var data = data.content[0];
+              var rel = '<div class="touxiang"><img src="'+data.UI_Avatar+'" /></div>';
+                  rel += '<h1>'+data.UI_NickName+'</h1>';
+                  rel += '<dl><dt>性别：</dt>';
+                  rel += '<dd>';
+                  if(data.UI_Sex == 1){
+                    rel += '男';
+                  }
+                  else if(data.UI_Sex == 0){
+                    rel += '女';
+                  }
+                  else {
+                    rel += '未知';
+                  }
+                  rel += '</dd>';
+                  rel += '</dl>';
+                  rel += '<dl><dt>生日：</dt><dd>'+data.UI_BirthDay+'</dd></dl>';
+                  rel += '<dl><dt>职业：</dt><dd>'+data.UI_Job+'</dd></dl>';
+                  rel += '<dl><dt>所在地：</dt><dd>'+data.UI_Address+'</dd></dl>';
+                  $('#grxx_id').prepend(rel);
+            }
+        }
+    });
+    //我的评论
+    $.ajax({  
+        type:"get",  
+        url:"__URL__/user_pl",
+        timeout: 5000,  
+        dataType:"json",  
+        //data:{id:usid},
+        success: function aa(data) {
+            if(data.pl_count > 0){
+              var datas = data.list;
+              $.each(datas,function(i){ 
+                    var picContent = "<dl class='my_pl'>";
+                    if (datas[i]['parent_id'] == 0) {
+                      picContent += "<dt><img src='__PUBLIC__/Home/images/new_id03.png' /><h3>评论</h3></dt>";
+                    }else{
+                      picContent += "<dt><img src='__PUBLIC__/Home/images/new_id04.png' /><h3>回复</h3></dt>";
+                    }
+                      picContent += "<dd><h4>";
+                    if (datas[i]['parent_id'] != 0 && datas[i]['pparent_id'] == 0) {
+                      picContent += "<a target='_blank'";
+                      if(datas[i]['company_name'] != null){
+                      picContent += " href='__APP__/posts_pl?qy="+datas[i]['company_id']+"&pl="+datas[i]['parent_id']+"'";
+                      }
+                      picContent += ">"+datas[i]['content']+"</a>";
+                    }else if(datas[i]['parent_id'] == 0){
+                      picContent += "<a target='_blank'";
+                      if(datas[i]['company_name'] != null){
+                      picContent += " href='__APP__/posts_pl?qy="+datas[i]['company_id']+"&pl="+datas[i]['id']+"'";
+                      }
+                      picContent += ">"+datas[i]['content']+"</a>";
+                    }else{
+                      picContent += "<a target='_blank'";
+                      if(datas[i]['company_name'] != null){
+                      picContent += " href='__APP__/posts_pl?qy="+datas[i]['company_id']+"&pl="+datas[i]['pparent_id']+"'";
+                      }
+                      picContent += ">"+datas[i]['content']+"</a>";
+                    }
+                      picContent += "</h4><ul class='pic'>";
+                    if (datas[i]['pic_1'] != '') {
+                      picContent += "<li><a href='"+datas[i]['pic_1_url']+"' data-lightbox='example-set'><img src='"+datas[i]['pic_1_url']+"'/></a></li>"; 
+                    }
+                    if (datas[i]['pic_2'] != '') {
+                      picContent += "<li><a href='"+datas[i]['pic_2_url']+"' data-lightbox='example-set'><img src='"+datas[i]['pic_2_url']+"'/></a></li>"; 
+                    }
+                    if (datas[i]['pic_3'] != '') {
+                      picContent += "<li><a href='"+datas[i]['pic_3_url']+"' data-lightbox='example-set'><img src='"+datas[i]['pic_3_url']+"'/></a></li>"; 
+                    }
+                      picContent += "</ul><p class='laiyuan'>来自";
+                      if(datas[i]['company_name'] != null){
+                        picContent += "<a target='_blank' href='__URL__/tiao?id="+datas[i]['company_id']+"'>"+datas[i]['company_name']+"</a>|";
+                      }
+                      picContent += "<span>"+datas[i]['add_time']+"</span></p></dd>"; 
+                $("#new_box_ex").append(picContent); 
+              });
+              if (data.pl_count > 20) {
+                var str = '<div class="jzgd_n"><a class="jzgd_aa" href="javascript:void(0)">加载更多</a></div>';
+                $("#div_install_sql").append(str); 
+              }
+            }else{
+              $("#new_box_ex").append('<span>给用户暂时没有评论！</span>');
+              return false; 
+            }
+        }
+    });
+    //我的曝光
+    $.ajax({
+          type:"get",
+          url:"__URL__/user_bg",
+          timeout: 5000,  
+          dataType:"json",  
+          //data:{id:usid},
+          success: function aa(data) {
+              if (data.bg_count > 0) { 
+                var datas = data.list;
+                $.each(datas,function(i){
+                      var str = '';
+                      if(datas[i]['company_id'] != 0){
+                        str += '<a href="__APP__/posts_bg?qy='+datas[i]['company_id']+'&pl='+datas[i]['id']+'" target="_blank">';
+                      }
+                        str += '<div class="my_bg">';
+                        str += '<table width="100%" border="0" cellspacing="0" >';
+                        str += '<tr>';
+                        str += '<td width="288">公司名称：<span title="'+datas[i]['company_name']+'">'+datas[i]['company_name']+'</span></td>';
+                        str += '<td>涉及金额：<span>';
+                        if(datas[i]['amount'] != null){
+                          str += datas[i]['amount'];
+                        }else{
+                          str += '--';
+                        }
+                        str += '</span></td>';
+                        str += '</tr><tr>';
+                        str += '<td>公司网址：<a href="'+datas[i]['website']+'" target="_blank">'+datas[i]['website']+'</a></td>';
+                        str += '<td align="right"><p>'+datas[i]['add_time']+'</p></td>';
+                        str += '</tr></table>';
+                        str += '<div class="nr"><p>'+datas[i]['content']+'</p></div>';
+                        str += '<div class="hfshu">';
+                        str += '<p><span>'+datas[i]['sub_count']+'</span></p>';
+                        str += '</div></div>';
+                      if(datas[i]['company_id'] != 0){
+                        str += '</a>';
+                      }
+                    $("#div_basic_setting").append(str);
+                });  
+              }else{
+                $("#div_basic_setting").append("<span>该用户没有关注信息！</span>");
                 return false;
-              }else if(ret == false) {
-                 alert('只能输入字母和数字');
-                 return false;
-              }else if(nickname.length > 16){
-                alert('昵称长度最多为16位字符');
+              }
+          }
+    });
+    //我的关注
+    $.ajax({  
+          type:"get",  
+          url:"__URL__/user_gz",
+          timeout: 5000,  
+          dataType:"json",  
+          //data:{id:usid},
+          success: function aa(data) {
+              if (data.gz_count > 0) {
+                var datas = data.list;
+                var str  = '<table width="100%" border="0" cellspacing="0" cellpadding="0" id="table_gz">';
+                    str += '<tr><th width="88">序号</th><th width="305">公司名称</th><th width="145">关注时间</th><th>操作</th></tr>'  
+                $.each(datas,function(i){
+                    if(i != 'gz_count'){
+                      str += '<tr>';
+                      str += '<td>'+(i*1+1)+'</td>';
+                      str += '<td>'+datas[i]['company_name']+'</td>';
+                      str += '<td>'+datas[i]['add_time']+'</td>';
+                      str += '<td><a class="quxgz" id="'+datas[i]['id']+'" href="javascript:void(0)">取消关注</a></td>';
+                      str += '</tr>';
+                    }
+                });
+                str += '</table>';
+                $("#div_basic_wdgz").append(str);
+                return false;
+              }else{
+                $("#div_basic_wdgz").append("<span>该用户没有关注信息！</span>");
+                return false;
+              }
+          }
+    });
+  })
+</script>
+<script type="text/javascript">
+  $(function(){
+    //修改密码
+    $('.but1').click(function(){
+              var old_pswd = $(this).parents('.tcwindows_xgdlmm').find('.old_pswd').val();
+              var new_pswd = $(this).parents('.tcwindows_xgdlmm').find('.new_pswd').val();
+              var new_pswd_ex = $(this).parents('.tcwindows_xgdlmm').find('.new_pswd_ex').val();
+              var userid   = '$userid';
+              if (old_pswd == "") {
+                alert('原密码不能为空');
+                return false;
+              }else if (old_pswd.length < 6){
+                alert('原密码长度不能小于6位字符');
+                return false;
+              }
+              else if(old_pswd.length > 16){
+                alert('原密码长度最多为16位字符');
+                return false;
+              }
+              if (new_pswd == "") {
+                alert('新密码不能为空');
+                return false;
+              }else if (new_pswd.length < 6){
+                alert('新密码长度不能小于6位字符');
+                return false;
+              }
+              else if(new_pswd.length > 16){
+                alert('新密码长度最多为16位字符');
+                return false;
+              }
+              if (new_pswd_ex == "") {
+                alert('确认新密码不能为空！');
+                return false;
+              }else if(new_pswd_ex != new_pswd){
+                alert('新密码和确认新密码输入不一致！');
                 return false;
               }
               if (userid == "") {
                  alert("请登录后在修改！"); 
                  return false; 
               }
-              jQuery.ajax({  
+              $.ajax({  
                   type:"post",  
-                  url:"__URL__/information_modify/nickname/"+nickname+"/sex/"+sex+"/birthday/"+birthday+"/job/"+job+"/address/"+address+"/userid/"+userid+"",
+                  url:"__URL__/update_passwd",
                   timeout: 5000,  
                   dataType:"json",  
-                  data:{nickname:nickname,
-                        userid:userid,
-                        sex:sex,
-                        birthday:birthday,
-                        job:job,
-                        address:address},
+                  data:{old_pswd:old_pswd,
+                        new_pswd:new_pswd
+                        },
                   success: function aa(data) {  
                        if (0 == data) {
                             alert('修改成功！');
-                            window.location.reload();  
-                       }else{
+                            window.location.href="__ROOT__/"; 
+                            return false;
+                       }else if(-1 == data){
                           alert('修改失败！');
+                          return false;
+                       }else if(-2 == data){
+                          alert('用户不存在！');
+                          return false;
+                       }else if(-3 == data){
+                          alert('原密码不正确！');
+                          return false;
                        }
                   }  
               })  
-      });
-
-  });
-//urlencode数据转换
-  function urlencode (str) {  
-      str = (str + '').toString();   
-      return encodeURIComponent(str).replace(/!/g, '%21').replace(/'/g, '%27').replace(/\(/g, '%28').  
-      replace(/\)/g, '%29').replace(/\*/g, '%2A').replace(/%20/g, '+');  
-  } 
+    });
+    //用户信息修改
+    $('.but2').click(function(){
+        var nickname = document.getElementById("nickname").value;
+        var userid   = $(this).attr('id');
+        if (nickname == "") {
+          alert('昵称不能为空');
+          return false;
+        }else if(nickname.length > 16){
+          alert('昵称长度最多为16位字符');
+          return false;
+        }
+        if (userid == "") {
+           alert("请登录后在修改！"); 
+           return false; 
+        }
+        var options = {
+            success: function (data) {
+              if (data == 0) {
+                alert("修改成功！");
+                window.location.reload();
+                return false;
+              }else if (data == 1) {
+                alert("用户昵称不能为空！");
+                return false;
+              }else if (data == -1){
+                alert("修改失败！");
+                return false;
+              }else if (data == 2){
+                alert("职业不能为空！");
+                return false;
+              }else if (data == 3){
+                alert("所在地不能为空！");
+                return false;
+              }else if (data == 4){
+                alert("生日不能为空！");
+                return false;
+              }    
+            }
+        };
+        $("#theForm").ajaxForm(options);
+              
+    });
+    //用户头像修改
+    $('.scs').click(function(){
+        var pic = document.getElementById("N").value; 
+        if(pic != ""){
+          if(!/.(gif|jpg|jpeg|png|GIF|JPG|PNG)$/.test(pic)){
+            alert("图片类型必须是.gif,jpeg,jpg,png中的一种!");
+            return false;
+          }
+        }else{
+          alert("请添加图片！");
+          return false;
+        }
+        var options = {
+            success: function (data) {
+              if (data == 1) {
+                alert("头像更新成功！");
+                window.location.reload();
+                return false;
+              }else if(data == 0){
+                alert("头像更新失败！");
+                return false;
+              }else if(data == -1){
+                alert("输入的参数存在空值！");
+                return false;
+              }else if(data == -2){
+                alert("safekey参数不合法");
+                return false;
+              }else if(data == -3){
+                alert("用户不存在");
+                return false;
+              }else if(data == -4){
+                alert("头像文件保存失败");
+                return false;
+              }else if(data == -5){
+                alert("上传文件不能大于100kb！");
+                return false;
+              }
+            }
+        };
+        $("#phForm").ajaxForm(options);       
+    });
+    //取消关注
+    $('.quxgz').live('click',function(){
+       var id = $(this).attr('id');//获取id属性
+       $.ajax({  
+                type:"post",  
+                url:"{$call_url}",
+                timeout: 5000,  
+                dataType:"json",  
+                data:{"method":"Attention.delete","type":"text","content":{"id":id}},
+                success: function aa(data) {  
+                     if (200 == data.status_code) {
+                        if (0 == data.content.is_success) {
+                          $('#tishi1').text("取消成功!");
+                          $(".bd_wd").css("width", $(document).width());
+                          $(".bd_wd").css("height", $(document).height());
+                          $(".bd_wd").show();
+                          $(".yzsbai1").show();
+                          return false;
+                        }
+                        else if(-1 == data.content.is_success){
+                          $('#tishi').text("操作失败!");
+                          $(".bd_wd").css("width", $(document).width());
+                          $(".bd_wd").css("height", $(document).height());
+                          $(".bd_wd").show();
+                          $(".yzsbai").show();
+                          return false;
+                        }
+                     }else{
+                          $('#tishi').text("操作错误！");
+                          $(".bd_wd").css("width", $(document).width());
+                          $(".bd_wd").css("height", $(document).height());
+                          $(".bd_wd").show();
+                          $(".yzsbai").show();
+                          return false;
+                     }
+                }  
+            })  
+    });
+  })
 </script>
+<script type="text/javascript">
+  $(function(){
+      var usid = "{$usid}";
+      var p=2;// 初始化页面，点击事件从第二页开始
+      var flag=false;
+      $('.jzgd_aa').live('click',function(){
+          //初始状态，如果没数据return ,false;否则
+          if($("#new_box_ex .my_pl").size()<=0){
+            return false;
+          }else{
+            send();
+          }
+      })
+      function send(){
+          if(flag){
+            return false;
+          }
+          $.ajax({
+              type:'post',
+              url:"{:U('Usercenter/pl')}",
+              data:{k:p,
+                    user_id:usid},
+              beforeSend:function(){
+                   $("#new_box_ex").append("<div id='load'>加载中……</div>");
+              },
+              success:function(data){
+                if(data!=null){
+                  $.each(data,function(i){
+                    var picContent = "<dl class='my_pl'>";
+                        if (data[i]['parent_id'] == 0) {
+                          picContent += "<dt><img src='__PUBLIC__/Home/images/new_id03.png' /><h3>评论</h3></dt>";
+                        }else{
+                          picContent += "<dt><img src='__PUBLIC__/Home/images/new_id04.png' /><h3>评论</h3></dt>";
+                        }
+                          picContent += "<dd><h4>";
+                        if (data[i]['parent_id'] != 0 && data[i]['pparent_id'] == 0) {
+                          picContent += "<a target='_blank'";
+                          if(data[i]['company_name'] != null){
+                          picContent += " href='__APP__/posts_pl?qy="+data[i]['company_id']+"&pl="+data[i]['parent_id']+"'";
+                          }
+                          picContent += ">"+data[i]['content']+"</a>";
+                        }else if(data[i]['parent_id'] == 0){
+                          picContent += "<a target='_blank'";
+                          if(data[i]['company_name'] != null){
+                          picContent += " href='__APP__/posts_pl?qy="+data[i]['company_id']+"&pl="+data[i]['id']+"'";
+                          }
+                          picContent += ">"+data[i]['content']+"</a>";
+                        }else{
+                          picContent += "<a target='_blank'";
+                          if(data[i]['company_name'] != null){
+                          picContent += " href='__APP__/posts_pl?qy="+data[i]['company_id']+"&pl="+data[i]['pparent_id']+"'";
+                          }
+                          picContent += ">"+data[i]['content']+"</a>";
+                        }
+                          picContent += "</h4><ul class='pic'>";
+                        if (data[i]['pic_1'] != '') {
+                          picContent += "<li><a href='"+data[i]['pic_1_url']+"' data-lightbox='example-set'><img src='"+data[i]['pic_1_url']+"'/></a></li>"; 
+                        }
+                        if (data[i]['pic_2'] != '') {
+                          picContent += "<li><a href='"+data[i]['pic_2_url']+"' data-lightbox='example-set'><img src='"+data[i]['pic_2_url']+"'/></a></li>"; 
+                        }
+                        if (data[i]['pic_3'] != '') {
+                          picContent += "<li><a href='"+data[i]['pic_3_url']+"' data-lightbox='example-set'><img src='"+data[i]['pic_3_url']+"'/></a></li>"; 
+                        }
+                          picContent += "</ul><p class='laiyuan'>来自";
+                          if(data[i]['company_name'] != null){
+                            picContent += "<a target='_blank' href='__URL__/tiao?id="+data[i]['company_id']+"'>"+data[i]['company_name']+"</a>|";
+                          }
+                          picContent += "<span>"+data[i]['add_time']+"</span></p></dd>";
+                    $("#new_box_ex").append(picContent);
+                  })
+                }else{
+                    $(".jzgd_aa").text('已无更多数据');
+                    flag=true;  
+                }
+              },
+              complete:function(){
+                     $("#load").remove();
+              },
+              dataType:'json'});
+            p++;
+      }
+  })
+</script>
+<script type="text/javascript" src="__PUBLIC__/Home/js/switch_ex.js" ></script>
 </body>
 </html>

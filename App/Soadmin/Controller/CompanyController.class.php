@@ -169,7 +169,7 @@ class CompanyController extends BaseController {
                         $this->echo_message(-100,"企业名称已存在");
                         exit();
         	}
-        	 
+
             $content = array(
                 'where'=>array(
                     'id'=>I('post.id'),
@@ -210,12 +210,12 @@ class CompanyController extends BaseController {
             }
             
             $result = $this->_call("Company.update",
-                                    $content);
+                                    $content); 
             if($result
             &&  200 == $result['status_code']
             &&  0  == $result['content']['is_success']
             )
-            {
+            {               
                  //修改别名
                 if('' !=  trim(I('post.company_alias')))
                 {
@@ -248,11 +248,13 @@ class CompanyController extends BaseController {
                             }
                         }
                     }
-                }
-               
+                   
+                }               
                 $this->echo_message(0,'成功保存', C('Template_pre')."Company/get_list");
                 exit();   
             }
+              $this->echo_message(-100,'系统错误');
+              exit();   
         }
         
         $content = array(

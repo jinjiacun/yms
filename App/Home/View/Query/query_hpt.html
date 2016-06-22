@@ -2,436 +2,414 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-<title>查询结果--搜黑</title>
+<title>{$hpt_list.company_name}怎么样？{$hpt_list.company_name}的评价-口碑网</title>
+<meta name="keywords" content="{$hpt_list.company_name}"/>
+<meta name="description" content="{$hpt_list.company_name}怎么样？是不是安全可靠的交易平台，是不是黑平台，关于{$hpt_list.company_name}的评价。"/>
+<link rel="icon" href="__PUBLIC__/s.ico" type="image/x-icon" />
 <link type="text/css" rel="stylesheet" href="__PUBLIC__/Home/css/main.css"/>
 <link type="text/css" rel="stylesheet" href="__PUBLIC__/Home/css/lightbox.css"/>
 <script type="text/javascript" src="__PUBLIC__/js/jquery-1.8.3.min.js" ></script>
+<script type="text/javascript" src="__PUBLIC__/js/Validform_v5.3.2.js" ></script>
 <script type="text/javascript" src="__PUBLIC__/Home/js/main.js" ></script>
-<script type="text/javascript" src="__PUBLIC__/Home/js/lightbox.js" ></script>
+<script type="text/javascript" src="__PUBLIC__/Home/js/lightbox-2.6.min.js" ></script>
+<script type="text/javascript" src="__PUBLIC__/Home/js/jquery.form.js" ></script> 
+<style type="text/css">
+  .jiathis_counter_style span{
+    border: 0 none !important;
+    float: left !important;
+    height: 15px !important;
+    padding-left: 0 !important;
+   margin-right: -8px !important;}
+</style>
 </head>
-
 <body>
-<!--Begin--登陆-->   
+<!--成功-->  
+<div class="yzsbai1">
+    <p id="tishi1"></p>
+    <input name="" type="button" value="确 定" class="xigs1" />
+</div>
+<div class="yzsbai3">
+    <p id="tishi3"></p>
+    <input name="" type="button" value="确 定" class="xigs3" />
+</div>
+<!--Begin--登录-->   
 <include file="Public:login" />
-<!--End--登陆--> 
+<!--End--登录--> 
+<!--Begin--插入图片-->   
+<include file="Public:upload_pictures" />
+<!--End--插入图片-->   
 <div id="wrap">
-
+  
 <!--头部--Begin-->   
   <include file="Public:top" />
-<!--头部--End-->
+<!--头部--End--> 
 
 <!--内容--Begin-->     
    <div id="content">
-     <div class="hptbox1">
-      <iterate name="hpt_list" id="vo">
-       <div class="dibubj">
-              <h2><span>{$vo.company_name}</span>的查询结果：</h2>
-              <div class="hpt_box">
-                  <dl>
-                      <dt>                      
-                       <a class="jh" id="{$vo.id}" href="javascript:void(0)">加黑</a>
-                      </dt>
-                      <dd>
-                          <p class="wsr1">该公司为“黑平台”</p>
-                          <p class="wsr2">建议各位投资者远离！</p>
-                      </dd>
-                  </dl>
-                  <div class="wsr3"><span><em>{$count_j}</em>位用户已加黑</span>|<span><em>500</em>位网友已评论 </span>|<span><em>{$count_b}</em>位网友已曝光</span></div>
-             </div>
-        </div>
-      </iterate>
+   	 <div class="search_tits">
+        	<div class="search_tit_lt">
+            <img src="__PUBLIC__/Home/images/ss01.jpg"/>
+          </div>
+          <div class="search_tit_rt hpt_bj">
+                    <dl class="lg_gs">
+                        <if condition = "$hpt_list.logo_url neq '' " >
+                        <dt><img src="{$hpt_list.logo_url}" /></dt>
+                        </if>
+                        <dd class="gs_xx">
+                            <h3><a title="{$hpt_list.company_name}">{$hpt_list.company_name|subtext=18}</a></h3>
+                            <p><span>其他名称</span>
+                              <a>{$hpt_list.alias_list}</a>
+                            </p>
+                        </dd>
+                        <dd class="dz_jh">
+                        	<span class="noborder">
+                            <div class="jiathis_style_24x24">
+                            <a href="http://www.jiathis.com/share" class="jiathis jiathis_txt jtico jtico_jiathis" target="_blank" style="background: url('__PUBLIC__/Home/images/ss03a.png') no-repeat"></a>
+                            </div>  
+                            <br/>
+                            <em id='fx'>
+                            <if condition="$fx_times eq ''">0
+                            <else />{$fx_times}
+                            </if>
+                            </em>次
+                          </span>
+                          <script type="text/javascript" src="http://v3.jiathis.com/code/jia.js" charset="utf-8"></script>
+                          <span><a class="jh bj_b" id="{$hpt_list.id}" href="javascript:void(0)"></a><br/>
+                          <em id='emth'>{$hpt_list.add_blk_amount}</em>次
+                          <b id="bb">+1</b></span>
+                        </dd>
+                    </dl>
+                    
+                    <ul class="hqgsdexx">
+                        <if condition = "$hpt_list.agent_platform_n neq '' " >
+                      	<li>
+                            <dl>
+                            	<dt>代理平台</dt>
+                                <dd><a href="__APP__/{$rzjb_url}" target="_blank" class="gs_tit" title="{$hpt_list.agent_platform_n}">{$hpt_list.agent_platform_n|subtext=19}</a></dd>
+                            </dl>
+                        </li>
+                        </if>
+                        <if condition = "$hpt_list.mem_sn neq '' " >
+                        <li>
+                            <dl>
+                            	<dt>会员编号</dt>
+                                <dd>{$hpt_list.mem_sn}</dd>
+                            </dl>
+                        </li>
+                        </if>
+                        <if condition = "$hpt_list.regulators_id_n neq '' " >
+                      	<li>
+                            <dl>
+                            	<dt>监管机构</dt>
+                                <dd>冒充{$hpt_list.regulators_id_n}监管</dd>
+                            </dl>
+                        </li>
+                        </if>
+                        <li>
+                            <dl>
+                            	<dt>营业执照</dt>
+                                <dd>
+                                <if condition="$hpt_list.control_busin_license eq 1 ">
+                                  <img src="__PUBLIC__/Home/images/pic20b.png" width="35" height="28"/>
+                                <else />
+                                  <img src="__PUBLIC__/Home/images/pic20a.png" width="35" height="28"/>
+                                </if>
+                                </dd>
+                            </dl>
+                        </li>
+                      	<li>
+                            <dl>
+                            	<dt>机构代码证</dt>
+                                <dd>
+                                <if condition="$hpt_list.control_code_certificate eq 1 ">
+                                  <img src="__PUBLIC__/Home/images/pic20b.png" width="35" height="28"/>
+                                <else />
+                                  <img src="__PUBLIC__/Home/images/pic20a.png" width="35" height="28"/>
+                                </if>
+                                </dd>
+                            </dl>
+                        </li>
+                        <if condition = "$hpt_list.website neq '' " >
+                        <li>
+                            <dl>
+                            	<dt>官方网站</dt>
+                                <dd><a href="{$hpt_list.website}" class="gs_gw" target="_blank">{$hpt_list.website}</a></dd>
+                            </dl>
+                        </li>
+                        </if>
+                        <if condition = "$hpt_list.record neq '' " >
+                      	<li>
+                            <dl>
+                            	<dt>官网备案</dt>
+                                <dd>{$hpt_list.record}</dd>
+                            </dl>
+                        </li>
+                        </if>
+                        <if condition = "$hpt_list.telephone neq '' " >
+                        <li>
+                            <dl>
+                            	<dt>联系电话</dt>
+                                <dd>{$hpt_list.telephone}</dd>
+                            </dl>
+                        </li>
+                        </if>
+                        <if condition = "$hpt_list.reg_address neq '' " >
+                      	<li style="width:790px;">
+                            <dl style="width:790px;">
+                            	<dt>联系地址</dt>
+                                <dd style="width:612px;" title="{$hpt_list.reg_address}">{$hpt_list.reg_address}</dd>
+                            </dl>
+                        </li>
+                        </if>
+                    </ul>
+          </div>
      </div>
-     <iterate name="hpt_list" id="vo">
-     <div class="hptbox2">
-        <dl>
-        	<dt><img src="__PUBLIC__/Home/images/pic10.jpg" /></dt>
-            <dd>
-            	<h3><a href="{$vo.website}">{$vo.company_name}</a></h3>
-                <p><span>其他名称</span>
-                <volist id="bm_list" name="bm_list">
-                <a href="http://{$vo.website}">{$bm_list.name}</a>&nbsp
-                </volist>
-                </p>
-            </dd>
-        </dl>
-        <div class="gongsijs">
-            <table width="100%" border="0" cellspacing="0" cellpadding="0">
-              <tr>
-                <td width="76"><span>公司资质</span></td>
-                <td width="320"><em>虚假信息</em></td>
-                <td width="76"><span>交易软件</span></td>
-                <td width="230">{$vo.agent_platform}</td>
-                <td width="76"><span>联系电话</span></td>
-                <td>{$vo.telephone}</td>
-              </tr>
-              <tr>
-                <td><span>企业类型</span></td>
-                <td>{$vo.company_type}</td>
-                <td><span>官方网站</span></td>
-                <td><a href="http://{$vo.website}" target="_blank">{$vo.website}</a></td>
-                <td><span>官网备案</span></td>
-                <td>{$vo.record}</td>
-              </tr>
-              <tr>
-                <td><span>注册地址</span></td>
-                <td colspan="5">{$vo.reg_address}</td>
-              </tr>
-            </table>
-        </div>
-     </div>
-     </iterate>
-     <div class="wybgbox_lt">
-        <div class="mtbaod">
-             <if condition = "$record_count gt 0 " >
-             <h3 class="titltes"><span>媒体报道</span>
-                <if condition = "$record_count gt 5 " >
-                 <a href="#">换一换</a>
-                </if>
-             </h3> 
-             </if>
-          <if condition = "$record_count gt 2 " >
-          <ul>
+     <if condition = "$record_count gt 0 " >
+     <div class="ss_mtbg">
+     		<div class="ss_mtbg_tit">
+              <ul>
+                <li class="mtbd_li">媒体报道</li>
+              </ul>
+                  <p>共有媒体报道<span>{$record_count}</span>篇</p>
+              <if condition = "$record_count gt 2 " >
+                 <a class="hyh" href="javascript:void(0)">换一换</a>
+                 <input type="hidden" id="hidden_hyh" name="hidden_hyh" autocomplete="off" value="1">
+              </if>
+     		</div>
+     		<div class="ss_mtbg_nr" id="yhy_ul">
               <volist name="new_list" id="new_list">
-               <li>
-                  <a href="__APP__/Home/Article/article/id/{$new_list.id}/company_id/{$new_list.company_id}/p/1/">{$new_list.title}</a>
-                  <span>{$new_list.add_time|date='Y-m-d H:i',###}</span>
-               </li>
+            	<dl>
+                	<dt><a href="__APP__/article?id={$new_list.id}&company_id={$new_list.company_id}" target="_blank"><img src="{$new_list.pic_url}" /></a></dt>
+                    <dd>
+                    	<h4><a href="__APP__/article?id={$new_list.id}&company_id={$new_list.company_id}" target="_blank">{$new_list.title}</a></h4>
+                        <p>{$new_list.content|subtext=35}</p>
+                        <span>{$new_list.show_time|date='Y-m-d H:i',###}</span>
+                    </dd>
+              </dl>
               </volist>
-          </ul>
-          <else />
-          <volist name="new_list" id="new_list">
-          <dl>
-                <dt><a href="__APP__/Home/Article/article/id/{$new_list.id}/company_id/{$new_list.company_id}/p/1/"><img src="{$new_list.pic_url}" width="175" height="130" /></a></dt>
+            </div>
+     </div>
+     </if>
+     <div class="ss_mtbg">
+     	<div class="ss_mtbg_tit">
+              <ul>
+                <li onclick="show_panel(this)" id="link_install_sql" class="activ">网友评论</li>|
+                <li onclick="show_panel(this)" id="link_basic_setting">网友曝光</li>
+              </ul>
+              <p class="p_pl">共有主题评论<span>{$record_count_p}</span>个</p>
+              <p class="p_bg" style="display:none;">共<span>{$record_count_b}</span>位网友曝光</p>
+              <a href="javascript:void(0)" class="wypll">我要评论</a>
+              <a href="__APP__/exposure.html" style="display:none;" class="wybg_a wdbgg" target="_blank">我要曝光</a>
+        </div>
+   	    <div class="wybg_boxs" id="div_install_sql">
+            <volist id="con_p" name="con_p" key="k" empty="还没有人评论过此公司哦，赶紧去吐槽吧！">
+             <dl class="bg_shbox">
+             	 <dt class="bgshu"><span>{$con_p['re_sub']['record_count']}</span></dt>	
+                 <dt class="bgshu_lt"><a href="__APP__/Usercenter?id={$con_p.user_id}" target="_blank"><img src="{$con_p.user_photo}" /></a></dt>
+                 <dd class="bgshu_rt">
+                     <h3 class="names">
+                     <a href="__APP__/Usercenter?id={$con_p.user_id}" target="_blank">
+                        <if condition="$con_p.is_anonymous eq 0 ">{$con_p.nickname}
+                        <else />{$con_p.nickname|sudtext}
+                        </if>
+                     </a>
+                     </h3>
+                     <a href="__APP__/posts_pl?qy={$con_p.company_id}&pl={$con_p.id}" target="_blank">
+                     <p class="bg_jss">
+                     <if condition="$con_p.type eq '005001'">
+                        <em class="dianzan2"></em>
+                     <elseif condition="$con_p.type eq '005002'"/>
+                        <em class="tiwen2"></em>
+                     <else />
+                        <em class="jiahei2"></em>
+                     </if>
+                     {$con_p.content}</p>
+                     </a>
+                     <div class="tubox">
+                        <if condition="$con_p.pic_1_url neq ''">
+                        <a href="{$con_p.pic_1_url}" data-lightbox='example-set'><img src="{$con_p.pic_1_url}"/></a>
+                        </if>
+                        <if condition="$con_p.pic_2_url neq ''">
+                        <a href="{$con_p.pic_2_url}" data-lightbox='example-set'><img src="{$con_p.pic_2_url}"/></a>
+                        </if>
+                        <if condition="$con_p.pic_3_url neq ''">
+                        <a href="{$con_p.pic_3_url}" data-lightbox='example-set'><img src="{$con_p.pic_3_url}"/></a>
+                        </if>
+                        <if condition="$con_p.pic_4_url neq ''">
+                        <a href="{$con_p.pic_4_url}" data-lightbox='example-set'><img src="{$con_p.pic_4_url}"/></a>
+                        </if>
+                        <if condition="$con_p.pic_5_url neq ''">
+                        <a href="{$con_p.pic_5_url}" data-lightbox='example-set'><img src="{$con_p.pic_5_url}"/></a>
+                        </if>
+                    </div>
+                 </dd>
+                 <dd class="name_time">
+                  <if condition="$con_p.v_last_user_id eq 0 ">
+                    <span>【最后回复人】<br/>
+                        <em>
+                            <if condition="$con_p.is_anonymous eq 0 ">
+                            {$con_p.nickname|subtext=7}
+                            <else />
+                            {$con_p.nickname|sudtext}
+                            </if>
+                        </em>
+                    </span>
+                    <span>【最后回复时间】<br/>
+                        <em>
+                            <if condition="$con_p.add_time gt $news ">
+                            {$con_p.add_time|date='H:i:s',###}
+                            <else />
+                            {$con_p.add_time|date='Y-m-d',###}
+                            </if>
+                        </em>
+                    </span>
+                  <else />
+                    <span>【最后回复人】<br/>
+                        <em>
+                            <if condition="$con_p.v_last_is_anonymous eq 0 ">
+                            {$con_p.v_last_nickname|subtext=7}
+                            <else />
+                            {$con_p.v_last_nickname|sudtext}
+                            </if>
+                        </em>
+                    </span>
+                    <span>【最后回复时间】<br/>
+                        <em>
+                            <if condition="$con_p.v_last_time gt $news ">
+                            {$con_p.v_last_time|date='H:i:s',###}
+                            <else />
+                            {$con_p.v_last_time|date='Y-m-d',###}
+                            </if>
+                        </em>
+                    </span>
+                  </if>
+                 </dd>
+             </dl>
+            </volist>
+            <div class="pagees">
+            	<p class="nas">共有主题评论<em>{$record_count_p}</em>个</p>
+                {$page}
+            </div>
+        </div>	
+        <div class="wybg_boxs hide" id="div_basic_setting">
+            <volist id="con_b" name="con_b" key="k" empty="还没有用户曝光过此公司那，我要去曝光一个！">
+             <dl class="bg_shbox">
+               <dt class="bgshu"><span>{$con_b['sub']['record_count']}</span></dt> 
+                 <dt class="bgshu_lt"><a href="__APP__/Usercenter?id={$con_b.user_id}" target="_blank"><img src="{$con_b.user_photo}" /></a></dt>
+                 <dd class="bgshu_rt">
+                     <h3 class="names">
+                     <a href="__APP__/Usercenter?id={$con_b.user_id}" target="_blank">{$con_b.nickname}</a>
+                     </h3>
+                     <a href="__APP__/posts_bg?qy={$con_b.company_id}&pl={$con_b.id}" target="_blank">
+                     <p class="bg_jss">
+                        <em class="bgs"></em>
+                     {$con_b.content|subtext=100}</p>
+                     </a>
+                     <div class="tubox">
+                        <if condition="$con_b.pic_1_url neq ''">
+                        <a href="{$con_b.pic_1_url}" data-lightbox='example-set'><img src="{$con_b.pic_1_url}"/></a>
+                        </if>
+                        <if condition="$con_b.pic_2_url neq ''">
+                        <a href="{$con_b.pic_2_url}" data-lightbox='example-set'><img src="{$con_b.pic_2_url}"/></a>
+                        </if>
+                        <if condition="$con_b.pic_3_url neq ''">
+                        <a href="{$con_b.pic_3_url}" data-lightbox='example-set'><img src="{$con_b.pic_3_url}"/></a>
+                        </if>
+                        <if condition="$con_b.pic_4_url neq ''">
+                        <a href="{$con_b.pic_4_url}" data-lightbox='example-set'><img src="{$con_b.pic_4_url}"/></a>
+                        </if>
+                        <if condition="$con_b.pic_5_url neq ''">
+                        <a href="{$con_b.pic_5_url}" data-lightbox='example-set'><img src="{$con_b.pic_5_url}"/></a>
+                        </if>
+                    </div>
+                 </dd>
+                 <dd class="name_time">
+                  <if condition="$con_b.v_last_user_id eq 0 ">
+                    <span>【最后回复人】<br/>
+                        <em>
+                            {$con_b.nickname|subtext=7}
+                        </em>
+                    </span>
+                    <span>【最后回复时间】<br/>
+                        <em>
+                            <if condition="$con_b.add_time gt $news ">
+                            {$con_b.add_time|date='H:i:s',###}
+                            <else />
+                            {$con_b.add_time|date='Y-m-d',###}
+                            </if>
+                        </em>
+                    </span>
+                  <else />
+                    <span>【最后回复人】<br/>
+                        <em>
+                            <if condition="$con_b.v_last_is_anonymous eq 0 ">
+                            {$con_b.v_last_nickname|subtext=7}
+                            <else />
+                            {$con_b.v_last_nickname|sudtext}
+                            </if>
+                        </em>
+                    </span>
+                    <span>【最后回复时间】<br/>
+                        <em>
+                            <if condition="$con_b.v_last_time gt $news ">
+                            {$con_b.v_last_time|date='H:i:s',###}
+                            <else />
+                            {$con_b.v_last_time|date='Y-m-d',###}
+                            </if>
+                        </em>
+                    </span>
+                  </if>
+                 </dd>
+             </dl>
+            </volist>
+            <div class="pagees">
+              <p class="nas">共有网友曝光<em>{$record_count_b}</em>个</p>
+                {$pages}
+            </div>
+        </div>
+     </div>
+     <div class="ss_mtbg" id="ss_mtbg">
+  	     <div class="ss_mtbg_tit">
+            <ul><li>发表主题评论</li></ul>
+     	  </div>
+	      <div class="fb_plbox">
+       		<dl>
+            	<dt>
+                  <if condition="$userid neq '' ">
+                  <a href="#"><img src="{$photo_url}" /></a>
+                  <else />
+                  <a><img src="__PUBLIC__/Home/images/avatar.jpg" /></a>
+                  </if>
+                </dt>
                 <dd>
-                  <h4><a href="__APP__/Home/Article/article/id/{$new_list.id}/company_id/{$new_list.company_id}/p/1/">{$new_list.title}</a></h4>
-                    <p>{$new_list.content|htmlspecialchars_decode|stripslashes}</p>
-                    <span>{$new_list.add_time|date='Y-m-d H:i',###}</span>
+                    <div class="plbox1">在这里输入评论内容</div>
+                    <div class="plbox2">
+                        <form id="theForm" name="theForm" method="post" action="{:U('comment_add')}" enctype="multipart/form-data" autocomplete="off">
+                             <p class="wypl_wypl1">观点：
+                               <span class="isspan"><input name="wypl" type="radio" value="005001" />点赞</span>
+                               <span class="isspan"><input name="wypl" type="radio" value="005003" checked="checked" />加黑</span>
+                             </p>
+                             <p class="wypl_wypl2">
+                               <textarea name="saytext" id="saytext0"></textarea>
+                             </p>
+                             <p class="wypl_wypl3">
+                                <a data-id="0" href="javascript:void(0)"  class="touxin emotion">&nbsp;</a>
+                                <a href="javascript:void(0)" class="tupian ch_tu" >&nbsp;</a>
+                                <span><input name="is_anonymous" id="checkbox-id" type="checkbox" value="1" />匿名评论</span>
+                             </p>
+                             <div class="wypl_wypl4">
+                                <ul class="pic_id">
+                                </ul>
+                                <input type="hidden" id="hidden_id" name="company_id" value="{$hpt_list.id}">
+                                <input name="submit" type="submit" value="发表评论" class="sub_btn" />
+                            </div>
+                        </form>
+                    </div>
                 </dd>
-          </dl>
-          </volist>
-          </if>
-        </div>
-        <div class="baoguan_pl">
-            <div class="baoguan_pl1 bgbox_tit">
-               <a href="javascript:void(0)">网友评论<span>(999+)</span></a><em>|</em><a href="javascript:void(0)" class="bian">网友曝光<span>(325)</span></a>
-            </div>
-            <div class="baoguan_pl2 hide">
-                 <dl class="pinglubox">
-                     <dt class="pinglubox_lt"><a href="#"><img src="__PUBLIC__/Home/images/pic04.jpg" /></a></dt>
-                     <dd class="pinglubox_rt">
-                       <h3 class="lmwy">匿名网友687</h3>
-                          
-                       <p class="pinglubox_xs"><em class="dinzan1">点赞</em>这公司的客户大部分都是赔钱的，我都赔了好几万，千万别信，业务员会不停打电话骚扰，恶心死了</p>
-                          
-                           <div class="hfpl_chd">
-                             <div class="timens"><span>2014-07-10  08:57:05</span><p><a href="#">顶 <em>(256)</em></a>|<a href="#"> 分享</a>|<a href="#">回复<em>(1)</em></a></p></div>
-                           </div>
-                     </dd>
-                 </dl>
-                 <dl class="pinglubox">
-                     <dt class="pinglubox_lt"><a href="#"><img src="__PUBLIC__/Home/images/pic04.jpg" /></a></dt>
-                     <dd class="pinglubox_rt">
-                       <h3>西红柿炒番茄</h3>
-                          
-                          <p class="pinglubox_xs"><em class="tiwen">提问</em>这公司的客户大部分都是赔钱的，我都赔了好几万，千万别信，业务员会不停打电话骚扰，恶心死了</p>
-                          <div class="tubox"><a href="#"><img src="__PUBLIC__/Home/images/pic11.jpg"/></a><a href="#"><img src="__PUBLIC__/Home/images/pic12.jpg"/></a></div>
-                           <div class="hfpl_chd">
-                             <div class="timens"><span>2014-07-10  08:57:05</span><p><a href="#">顶 <em>(256)</em></a>|<a href="#"> 分享</a>|<a href="#">回复<em>(1)</em></a></p></div>
-                           </div>
-                     </dd>
-                 </dl>
-                 <dl class="pinglubox">
-                     <dt class="pinglubox_lt"><a href="#"><img src="images/pic04.jpg" /></a></dt>
-                     <dd class="pinglubox_rt">
-                       <h3>西红柿炒番茄</h3>
-                          
-                          <p class="pinglubox_xs"><em class="jiahei">加黑</em>这公司的客户大部分都是赔钱的，我都赔了好几万，千万别信，业务员会不停打电话骚扰，恶心死了</p>
-                          <div class="tubox"><a href="#"><img src="images/pic11.jpg"/></a><a href="#"><img src="images/pic12.jpg"/></a></div>
-                       <div class="hfpl_chd">
-                         <div class="timens"><span>2014-07-10  08:57:05</span><p><a href="#">顶 <em>(256)</em></a>|<a href="#"> 分享</a>|<a href="#" class="hfusd">收起回复</a></p></div>
-                         <div class="showhide">
-                           <dl>
-                                 <dt><a href="#"><img src="images/pic04.jpg" /></a></dt>
-                                 <dd>
-                                    <p><a href="#">炒番茄：</a>这公司的客户大部分都是赔钱的，我都赔了好几万，千万别信，业务员会不停打电话骚扰，恶心死了</p>
-                                    <p class="timen"><span>2014-12-30 16:35</span><a href="#">回复</a></p>
-                                 </dd>
-                             </dl>
-                           <dl>
-                                 <dt><a href="#"><img src="images/pic04.jpg" /></a></dt>
-                                 <dd>
-                                    <p><a href="#">炒番茄：</a>这公司的客户大部分都是赔钱的，我都赔了好几万，千万别信，业务员会不停打电话骚扰，恶心死了</p>
-                                    <p class="timen"><span>2014-12-30 16:35</span><a href="#">回复</a></p>
-                                 </dd>
-                             </dl>
-                           <div class="wysyij"><ul class="pages">
-                                        <li><a href="#" class="on">1</a></li>
-                                        <li><a href="#">2</a></li>
-                                        <li><a href="#">下一页</a></li>
-                                        <li><a href="#">尾页</a></li>
-                                    </ul><a href="#" class="wzsyiju">我也说一句</a></div>
-                           <div class="fanbiaob">
-                             <textarea name=""></textarea>
-                             <div class="tisbox">
-                                     <input name="" type="button" value="发表" />
-                                     <a href="#">&nbsp;</a>
-                             </div>
-                           </div>
-                         </div>
-                         </div>
-                     </dd>
-                 </dl> 
-                 <dl class="pinglubox">
-                     <dt class="pinglubox_lt"><a href="#"><img src="__PUBLIC__/Home/images/pic04.jpg" /></a></dt>
-                     <dd class="pinglubox_rt">
-                       <h3>西红柿炒番茄</h3>
-                          
-                       <p class="pinglubox_xs">这公司的客户大部分都是赔钱的，我都赔了好几万，千万别信，业务员会不停打电话骚扰，恶心死了</p>
-                          
-                           <div class="hfpl_chd">
-                             <div class="timens"><span>2014-07-10  08:57:05</span><p><a href="#">顶 <em>(256)</em></a>|<a href="#"> 分享</a>|<a href="#">回复<em>(1)</em></a></p></div>
-                           </div>
-                     </dd>
-                 </dl>
-                 <dl class="pinglubox">
-                     <dt class="pinglubox_lt"><a href="#"><img src="__PUBLIC__/Home/images/pic04.jpg" /></a></dt>
-                     <dd class="pinglubox_rt">
-                       <h3>西红柿炒番茄</h3>
-                          
-                          <p class="pinglubox_xs">这公司的客户大部分都是赔钱的，我都赔了好几万，千万别信，业务员会不停打电话骚扰，恶心死了</p>
-                          <div class="tubox"><a href="#"><img src="__PUBLIC__/Home/images/pic11.jpg"/></a><a href="#"><img src="__PUBLIC__/Home/images/pic12.jpg"/></a></div>
-                           <div class="hfpl_chd">
-                             <div class="timens"><span>2014-07-10  08:57:05</span><p><a href="#">顶 <em>(256)</em></a>|<a href="#"> 分享</a>|<a href="#">回复<em>(1)</em></a></p></div>
-                           </div>
-                     </dd>
-                 </dl>
-                 <dl class="pinglubox">
-                     <dt class="pinglubox_lt"><a href="#"><img src="images/pic04.jpg" /></a></dt>
-                     <dd class="pinglubox_rt">
-                       <h3>西红柿炒番茄</h3>
-                          
-                          <p class="pinglubox_xs">这公司的客户大部分都是赔钱的，我都赔了好几万，千万别信，业务员会不停打电话骚扰，恶心死了</p>
-                          <div class="tubox"><a href="#"><img src="images/pic11.jpg"/></a><a href="#"><img src="images/pic12.jpg"/></a></div>
-                       <div class="hfpl_chd">
-                         <div class="timens"><span>2014-07-10  08:57:05</span><p><a href="#">顶 <em>(256)</em></a>|<a href="#"> 分享</a>|<a href="#" class="hfusd">收起回复</a></p></div>
-                         <div class="showhide">
-                           <dl>
-                                 <dt><a href="#"><img src="images/pic04.jpg" /></a></dt>
-                                 <dd>
-                                    <p><a href="#">炒番茄：</a>这公司的客户大部分都是赔钱的，我都赔了好几万，千万别信，业务员会不停打电话骚扰，恶心死了</p>
-                                    <p class="timen"><span>2014-12-30 16:35</span><a href="#">回复</a></p>
-                                 </dd>
-                             </dl>
-                           <dl>
-                                 <dt><a href="#"><img src="images/pic04.jpg" /></a></dt>
-                                 <dd>
-                                    <p><a href="#">炒番茄：</a>这公司的客户大部分都是赔钱的，我都赔了好几万，千万别信，业务员会不停打电话骚扰，恶心死了</p>
-                                    <p class="timen"><span>2014-12-30 16:35</span><a href="#">回复</a></p>
-                                 </dd>
-                             </dl>
-                           <dl>
-                                 <dt><a href="#"><img src="images/pic04.jpg" /></a></dt>
-                                 <dd>
-                                    <p><a href="#">炒番茄：</a>这公司的客户大部分都是赔钱的，我都赔了好几万，千万别信，业务员会不停打电话骚扰，恶心死了</p>
-                                    <p class="timen"><span>2014-12-30 16:35</span><a href="#">回复</a></p>
-                                 </dd>
-                             </dl>
-                           <dl>
-                                 <dt><a href="#"><img src="images/pic04.jpg" /></a></dt>
-                                 <dd>
-                                    <p><a href="#">炒番茄：</a>这公司的客户大部分都是赔钱的，我都赔了好几万，千万别信，业务员会不停打电话骚扰，恶心死了</p>
-                                    <p class="timen"><span>2014-12-30 16:35</span><a href="#">回复</a></p>
-                                 </dd>
-                             </dl>
-                           <dl>
-                                 <dt><a href="#"><img src="images/pic04.jpg" /></a></dt>
-                                 <dd>
-                                    <p><a href="#">炒番茄：</a>这公司的客户大部分都是赔钱的，我都赔了好几万，千万别信，业务员会不停打电话骚扰，恶心死了</p>
-                                    <p class="timen"><span>2014-12-30 16:35</span><a href="#">回复</a></p>
-                                 </dd>
-                             </dl>
-                           <div class="wysyij"><div class="chakquanb">还有<span>10</span>条回复，<a href="#">点击查看</a></div><a href="#" class="wzsyiju">我也说一句</a></div>
-                           
-                         </div>
-                         </div>
-                     </dd>
-                 </dl> 
-          <ul class="page">
-              <li><a href="#" class="on">1</a></li>
-              <li><a href="#">2</a></li>
-              <li><a href="#">3</a></li>
-              <li><a href="#">下一页</a></li>
-                <li><a href="#">尾页</a></li>
-            </ul>
-            </div>
-            <div class="baoguan_pl2 show">
-                  <dl class="pinglubox">
-                     <dt class="pinglubox_lt"><a href="#"><img src="__PUBLIC__/Home/images/pic04.jpg" /></a></dt>
-                     <dd class="pinglubox_rt">
-                       <h3>西红柿炒番茄</h3>
-                          <div class="bggs">
-                              <div class="bggs_lt"><span>被曝光公司：</span><a href="#">融金汇银</a></div>
-                                <div class="bggs_rt"><span>官方网址：</span><a href="#">www.baidu.com</a></div>
-                          </div>
-                       <p class="pinglubox_xs">这公司的客户大部分都是赔钱的，我都赔了好几万，千万别信，业务员会不停打电话骚扰，恶心死了</p>
-                          
-                           <div class="hfpl_chd">
-                             <div class="timens"><span>2014-07-10  08:57:05</span><p><a href="#">顶 <em>(256)</em></a>|<a href="#"> 分享</a>|<a href="#">回复<em>(1)</em></a></p></div>
-                           </div>
-                     </dd>
-                 </dl>
-                 <dl class="pinglubox">
-                     <dt class="pinglubox_lt"><a href="#"><img src="__PUBLIC__/Home/images/pic04.jpg" /></a></dt>
-                     <dd class="pinglubox_rt">
-                       <h3>西红柿炒番茄</h3>
-                          <div class="bggs">
-                              <div class="bggs_lt"><span>被曝光公司：</span><a href="#">融金汇银</a></div>
-                                <div class="bggs_rt"><span>官方网址：</span><a href="#">www.baidu.com</a></div>
-                          </div>
-                          <p class="pinglubox_xs">这公司的客户大部分都是赔钱的，我都赔了好几万，千万别信，业务员会不停打电话骚扰，恶心死了</p>
-                          <div class="tubox"><a href="__PUBLIC__/Home/images/pic11.jpg" rel="lightbox[plants]"><img src="__PUBLIC__/Home/images/pic11.jpg"/></a><a href="__PUBLIC__/Home/images/pic12.jpg" rel="lightbox[plants]"><img src="__PUBLIC__/Home/images/pic12.jpg"/></a></div>
-                           <div class="hfpl_chd">
-                             <div class="timens"><span>2014-07-10  08:57:05</span><p><a href="#">顶 <em>(256)</em></a>|<a href="#"> 分享</a>|<a href="#">回复<em>(1)</em></a></p></div>
-                           </div>
-                     </dd>
-                 </dl>
-                 <dl class="pinglubox">
-                     <dt class="pinglubox_lt"><a href="#"><img src="images/pic04.jpg" /></a></dt>
-                     <dd class="pinglubox_rt">
-                       <h3>西红柿炒番茄</h3>
-                          <div class="bggs">
-                              <div class="bggs_lt"><span>被曝光公司：</span><a href="#">融金汇银</a></div>
-                                <div class="bggs_rt"><span>官方网址：</span><a href="#">www.baidu.com</a></div>
-                          </div>
-                          <p class="pinglubox_xs">这公司的客户大部分都是赔钱的，我都赔了好几万，千万别信，业务员会不停打电话骚扰，恶心死了</p>
-                          <div class="tubox"><a href="#"><img src="images/pic11.jpg"/></a><a href="#"><img src="images/pic12.jpg"/></a></div>
-                       <div class="hfpl_chd">
-                         <div class="timens"><span>2014-07-10  08:57:05</span><p><a href="#">顶 <em>(256)</em></a>|<a href="#"> 分享</a>|<a href="#" class="hfusd">收起回复</a></p></div>
-                         <div class="showhide">
-                           <dl>
-                                 <dt><a href="#"><img src="images/pic04.jpg" /></a></dt>
-                                 <dd>
-                                    <p><a href="#">炒番茄：</a>这公司的客户大部分都是赔钱的，我都赔了好几万，千万别信，业务员会不停打电话骚扰，恶心死了</p>
-                                    <p class="timen"><span>2014-12-30 16:35</span><a href="#">回复</a></p>
-                                 </dd>
-                             </dl>
-                           <dl>
-                                 <dt><a href="#"><img src="images/pic04.jpg" /></a></dt>
-                                 <dd>
-                                    <p><a href="#">炒番茄：</a>这公司的客户大部分都是赔钱的，我都赔了好几万，千万别信，业务员会不停打电话骚扰，恶心死了</p>
-                                    <p class="timen"><span>2014-12-30 16:35</span><a href="#">回复</a></p>
-                                 </dd>
-                             </dl>
-                           <div class="wysyij"><a href="#" class="wzsyiju">我也说一句</a></div>
-                           <div class="fanbiaob">
-                             <textarea name="" class="saytext"></textarea>
-                             <div class="tisbox">
-                                     <input name="" type="button" value="发表" />
-                                     <a href="javascript:void(0)" class="emotion">&nbsp;</a>
-                             </div>
-                           </div>
-                         </div>
-                         </div>
-                     </dd>
-                 </dl> 
-                 <dl class="pinglubox">
-                     <dt class="pinglubox_lt"><a href="#"><img src="images/pic04.jpg" /></a></dt>
-                     <dd class="pinglubox_rt">
-                       <h3>西红柿炒番茄</h3>
-                          <div class="bggs">
-                              <div class="bggs_lt"><span>被曝光公司：</span><a href="#">融金汇银</a></div>
-                                <div class="bggs_rt"><span>官方网址：</span><a href="#">www.baidu.com</a></div>
-                          </div>
-                       <p class="pinglubox_xs">这公司的客户大部分都是赔钱的，我都赔了好几万，千万别信，业务员会不停打电话骚扰，恶心死了</p>
-                          
-                           <div class="hfpl_chd">
-                             <div class="timens"><span>2014-07-10  08:57:05</span><p><a href="#">顶 <em>(256)</em></a>|<a href="#"> 分享</a>|<a href="#">回复<em>(1)</em></a></p></div>
-                           </div>
-                     </dd>
-                 </dl>
-                 <dl class="pinglubox">
-                     <dt class="pinglubox_lt"><a href="#"><img src="images/pic04.jpg" /></a></dt>
-                     <dd class="pinglubox_rt">
-                       <h3>西红柿炒番茄</h3>
-                          <div class="bggs">
-                              <div class="bggs_lt"><span>被曝光公司：</span><a href="#">融金汇银</a></div>
-                                <div class="bggs_rt"><span>官方网址：</span><a href="#">www.baidu.com</a></div>
-                          </div>
-                          <p class="pinglubox_xs">这公司的客户大部分都是赔钱的，我都赔了好几万，千万别信，业务员会不停打电话骚扰，恶心死了</p>
-                          <div class="tubox"><a href="#"><img src="images/pic11.jpg"/></a><a href="#"><img src="images/pic12.jpg"/></a></div>
-                           <div class="hfpl_chd">
-                             <div class="timens"><span>2014-07-10  08:57:05</span><p><a href="#">顶 <em>(256)</em></a>|<a href="#"> 分享</a>|<a href="#">回复<em>(1)</em></a></p></div>
-                           </div>
-                     </dd>
-                 </dl>
-                 <dl class="pinglubox">
-                     <dt class="pinglubox_lt"><a href="#"><img src="images/pic04.jpg" /></a></dt>
-                     <dd class="pinglubox_rt">
-                       <h3>西红柿炒番茄</h3>
-                          <div class="bggs">
-                              <div class="bggs_lt"><span>被曝光公司：</span><a href="#">融金汇银</a></div>
-                                <div class="bggs_rt"><span>官方网址：</span><a href="#">www.baidu.com</a></div>
-                          </div>
-                          <p class="pinglubox_xs">这公司的客户大部分都是赔钱的，我都赔了好几万，千万别信，业务员会不停打电话骚扰，恶心死了</p>
-                          <div class="tubox"><a href="#"><img src="images/pic11.jpg"/></a><a href="#"><img src="images/pic12.jpg"/></a></div>
-                       <div class="hfpl_chd">
-                         <div class="timens"><span>2014-07-10  08:57:05</span><p><a href="#">顶 <em>(256)</em></a>|<a href="#"> 分享</a>|<a href="#" class="hfusd">收起回复</a></p></div>
-                         <div class="showhide">
-                           <dl>
-                                 <dt><a href="#"><img src="images/pic04.jpg" /></a></dt>
-                                 <dd>
-                                    <p><a href="#">炒番茄：</a>这公司的客户大部分都是赔钱的，我都赔了好几万，千万别信，业务员会不停打电话骚扰，恶心死了</p>
-                                    <p class="timen"><span>2014-12-30 16:35</span><a href="#">回复</a></p>
-                                 </dd>
-                             </dl>
-                           <dl>
-                                 <dt><a href="#"><img src="images/pic04.jpg" /></a></dt>
-                                 <dd>
-                                    <p><a href="#">炒番茄：</a>这公司的客户大部分都是赔钱的，我都赔了好几万，千万别信，业务员会不停打电话骚扰，恶心死了</p>
-                                    <p class="timen"><span>2014-12-30 16:35</span><a href="#">回复</a></p>
-                                 </dd>
-                             </dl>
-                           <div class="wysyij"><a href="#" class="wzsyiju">我也说一句</a></div>
-                           <div class="fanbiaob">
-                             <textarea name=""></textarea>
-                             <div class="tisbox">
-                                     <input name="" type="button" value="发表" />
-                                     <a href="#">&nbsp;</a>
-                             </div>
-                           </div>
-                         </div>
-                         </div>
-                     </dd>
-                 </dl> 
-          <ul class="page">
-              <li><a href="#" class="on">1</a></li>
-              <li><a href="#">2</a></li>
-              <li><a href="#">3</a></li>
-              <li><a href="#">下一页</a></li>
-                <li><a href="#">尾页</a></li>
-            </ul>
-            </div>
-        </div>
+            </dl>
+          </div>
      </div>
-     <div class="textbox_rt">
-      <div  id="fixeds">
-       <div class="rzpttj">
-       <h3 class="titltes">我要评论</h3>
-         <p class="wypl_wypl1">
-         <span><input name="wypl" type="radio" value="005001" checked="checked" />点赞</span>
-         <span><input name="wypl" type="radio" value="005002" />提问</span>
-         <span><input name="wypl" type="radio" value="005003" />加黑</span></p>
-         <p class="wypl_wypl2">
-            <textarea name="saytext" id="saytext" class="saytext"></textarea>
-         </p>
-         <p class="wypl_wypl3"><a href="javascript:void(0)"  class="touxin emotion">&nbsp;</a><a href="javascript:void(0)" class="tupian">&nbsp;</a><span><input name="" type="checkbox" value="" />匿名评论</span></p>
-         <p class="wypl_wypl4"><input name="" type="button" value="发表评论" class="sub_btn" /></p>
-       </div>
-       <div class="hgrzs_wybg"><a href="__APP__/home/Inexposure/exposure">我要曝光</a></div>
-       </div>
-     </div>
-     <div class="clear"></div>
-  </div>
+   </div>
 <!--内容--End--> 
 
 <!--底部--Begin-->     
@@ -440,37 +418,179 @@
 
 </div>
 </body>
+<script type="text/javascript" src="__PUBLIC__/Home/js/main_ex.js" ></script>
 <script type="text/javascript" src="__PUBLIC__/Home/js/jquery.qqFace.js" ></script>
-<script>
-$(function(){
-    //切换
-    $(".bgbox_tit a").click(function(){
-      $(this).parents("div.bgbox_tit").children("a").removeClass("bian");
-      $(this).addClass("bian");
-      for(var i = 0; i < $(this).parents("div.bgbox_tit").children("a").length; i++)
-      {
-        if($(this).parents("div.bgbox_tit").children("a").eq(i).attr("class") == "bian")
-        {
-          $(this).parents("div.baoguan_pl").children("div.baoguan_pl2").removeClass("show").addClass("hide");
-          $(this).parents("div.baoguan_pl").children("div.baoguan_pl2").eq(i).removeClass("hide").addClass("show");
-        }
-      }
-    });
+<script type="text/javascript">
+$(function(){ 
     //表情
     $('.emotion').qqFace({
       id : 'facebox', 
       assign:'saytext', 
       path:'__PUBLIC__/Home/arclist/' //表情存放的路径
     });
+    //企业不存在，跳转首页
+    $('.xigs3').live('click',function(){
+        location.href='__ROOT__/';
+    });
+    //分享次数
+    $('.jiatitle').live('click',function(){
+            var id   = "{$hpt_list.id}";//获取id属性
+            var type = "007001";
+            $.ajax({  
+                type:"post",  
+                url:"{$call_url}",
+                timeout: 5000,  
+                dataType:"json",  
+                data:{"method":"Sharecount.add","type":"text","content":{"value_id":id,"type":type}},
+                success: function aa(data) {  
+                        if (200 == data.status_code && 0 == data.content.is_success) {
+                            $('#fx').text(data.content.amount); 
+                            return false;
+                        }else{
+                            return false;
+                        }
+                }  
+            })  
+    });
+    //评论表单提交
+    $(".sub_btn").click(function(){
+      var objButton  = $(this);
+      var content = document.getElementById("saytext0").value;
+      var userid = '{$userid}';
+      if (content == "") {
+          $('#tishi').text("评论内容不能为空！");
+          $(".bd_wd").css("width", $(document).width());
+          $(".bd_wd").css("height", $(document).height());
+          $(".bd_wd").show();
+          $(".yzsbai").show();
+          return false;
+      }else if(content.length > 400){
+          $('#tishi').text("评论内容最多为400字符");
+          $(".bd_wd").css("width", $(document).width());
+          $(".bd_wd").css("height", $(document).height());
+          $(".bd_wd").show();
+          $(".yzsbai").show();
+          return false;
+      }
+      if (userid == "") {
+          $(".bd_wd").css("width", $(document).width());
+          $(".bd_wd").css("height", $(document).height());
+          $(".bd_wd").show();
+          $("#tcwindows1").show();
+          return false;
+      }
+      var options = {
+            //beforeSubmit: ValidateFile,
+            //resetForm: true,
+            beforeSend:function(){
+                objButton.val('发表评论').attr('disabled',true);
+            },
+            success: function (data) {
+              if (data) {
+                $(".bd_wd").css("width", $(document).width());
+                $(".bd_wd").css("height", $(document).height());
+                $(".bd_wd").show();
+                if (data == 0) {
+                  $('#tishi1').text("评论成功！");
+                  $(".yzsbai1").show();          
+                  return false;
+                }else if(data == -1){
+                  $('#tishi').text("评论失败！");
+                  $(".yzsbai").show();
+                  return false;
+                }else if(data == 6){
+                  $('#tishi').text("评论内容不能为空！");
+                  $(".yzsbai").show();
+                  return false;
+                }else if(data == -6){
+                  $('#tishi3').text("评论失败,该企业已被删除！");
+                  $(".yzsbai3").show();
+                  return false;
+                }else if(data == -2){
+                  $('#tishi3').text("评论失败！");
+                  $(".yzsbai3").show();
+                  return false;
+                }
+              }
+            },
+            complete:function(){
+                objButton.val('发表评论').attr('disabled',false);
+            } 
+        };
+        $("#theForm").ajaxForm(options);
+    });
+    //上传插图
+    $(".ch_tu").click(function(){
+      var userid = "{$userid}";
+      $(".bd_wd").css("width", $(document).width());
+          $(".bd_wd").css("height", $(document).height());
+          $(".bd_wd").show();
+      if (userid == "") {
+          $("#tcwindows1").show();
+          return false;
+      }else{
+          $("#windows_ct").show();
+      }
+    });
+    //添加图片
+    $("#upload-file").change(function(){ 
+      if($("#msg li").size()>5){
+        alert("最多只能添加5张图片！");
+        return false;
+      }else{
+        upload();
+      }
+     });  
+    function upload(){
+      $("#uploadFrom").ajaxSubmit({
+         url:"__URL__/uploadImg",  
+         dataType: 'json',
+         contentType: "application/x-www-form-urlencoded; charset=utf-8",
+         success:function(data){
+          if(data){
+            if(data == 1){
+              alert("图片上传失败！");
+              return false;
+            }else if(data == 2){
+              alert("没有文件上传！");
+              return false;
+            }else if(data == 3){
+              alert("文件上传错误！");
+              return false;
+            }else if(data == 4){
+              alert("上传文件不能大于350kb！");
+              return false;
+            }else if(data == 5){
+              alert("图片格式错误！");
+              return false;
+            }else if(data == 6){
+              alert("请登录后操作！");
+              return false;
+            }else{
+              $("#msg").append("<li id='li_"+data.id+"' class='sx'><div class='ct_tubox'><img src='"+data.img+"'/></div><span class='delete' id='"+data.id+"'></span></li>");
+              $(".pic_id").append("<li id='inp_"+data.id+"' class='qc'><input type='hidden' id='"+data.id+"' name='pic[]' value='"+data.id+"'></li>");
+            }
+          }else{
+            return false;
+          }
+         },
+         error:function(msg){
+          return false;
+         }
+      });
+    }
     //加黑
     $('.jh').click(function(){
             var id        = $(this).attr('id');//获取id属性
             var userid    = '{$userid}';
             if (userid == "") {
-               alert("请登录后在点赞！"); 
-               return false; 
+              $(".bd_wd").css("width", $(document).width());
+              $(".bd_wd").css("height", $(document).height());
+              $(".bd_wd").show();
+              $("#tcwindows1").show();
+              return false; 
             }
-            jQuery.ajax({  
+            $.ajax({  
                 type:"post",  
                 url:"{$call_url}",
                 timeout: 5000,  
@@ -479,56 +599,115 @@ $(function(){
                 success: function aa(data) {  
                      if (200 == data.status_code) {
                         if (0 == data.content.is_success) {
-                          alert('加黑+1');//模拟异步数据加1
-                          window.location.reload();
+                          if(!$('#bb').is(':visible')){ 
+                            $('#bb').css({display:'block', top:'115px'}).animate({top: '+115px'}, 400, 
+                            function(){ 
+                              setTimeout(out, 500); 
+                            }); 
+                          }
+                          $('#emth').text(data.content.amount); 
+                          return false;
                         }
                         else if(-1 == data.content.is_success){
-                          alert('操作失败！');
+                          $('#tishi_ex').text("操作失败!");
+                          $(".bd_wd_ex").css("width", $(document).width());
+                          $(".bd_wd_ex").css("height", $(document).height());
+                          $(".bd_wd_ex").show();
+                          $(".yzsbai_ex").show();
+                          setTimeout('$(".bd_wd_ex").hide("fast")',3000); 
+                          setTimeout('$(".yzsbai_ex").hide("fast")',3000); 
                           return false;
                         }
                         else if(-2 == data.content.is_success){
-                          alert('您已经操作过，不能重复！');
+                          $('#tishi_ex').text("您已经操作过，不能重复！");
+                          $(".bd_wd_ex").css("width", $(document).width());
+                          $(".bd_wd_ex").css("height", $(document).height());
+                          $(".bd_wd_ex").show();
+                          $(".yzsbai_ex").show();
+                          setTimeout('$(".bd_wd_ex").hide("fast")',3000); 
+                          setTimeout('$(".yzsbai_ex").hide("fast")',3000); 
                           return false;
+                        }else if(-3 == data.content.is_success){
+                          $('#tishi3').text("操作失败，该企业已被删除！");
+                          $(".bd_wd_ex").css("width", $(document).width());
+                          $(".bd_wd_ex").css("height", $(document).height());
+                          $(".bd_wd_ex").show();
+                          $(".yzsbai3").show();
+                          return false; 
                         } 
                      }else{
-                        alert('操作错误');
-                        return false;
+                          $('#tishi_ex').text("操作错误！");
+                          $(".bd_wd_ex").css("width", $(document).width());
+                          $(".bd_wd_ex").css("height", $(document).height());
+                          $(".bd_wd_ex").show();
+                          $(".yzsbai_ex").show();
+                          setTimeout('$(".bd_wd_ex").hide("fast")',3000); 
+                          setTimeout('$(".yzsbai_ex").hide("fast")',3000); 
+                          return false;
                      }
                 }  
             })  
     });
-    //评论
-    // $('.jh').click(function(){
-    //         var id        = $(this).attr('id');//获取id属性
-    //         var userid    = '{$userid}';
-    //         if (userid == "") {
-    //            alert("请登录后在点赞！"); 
-    //            return false; 
-    //         }
-    //         jQuery.ajax({  
-    //             type:"post",  
-    //             url:"{$call_url}",
-    //             timeout: 5000,  
-    //             dataType:"json",  
-    //             data:{"method":"Addblack.add","type":"text","content":{"company_id":id,"user_id":userid}},
-    //             success: function aa(data) {  
-    //                  if (200 == data.status_code) {
-    //                     if (0 == data.content.is_success) {
-    //                       alert('加黑+1');//模拟异步数据加1
-    //                       window.location.reload();
-    //                     }
-    //                     else if(-1 == data.content.is_success){
-    //                       alert('操作失败！');
-    //                     }
-    //                     else if(-2 == data.content.is_success){
-    //                       alert('您已经操作过，不能重复！');
-    //                     } 
-    //                  }else{
-    //                     alert('您已经操作过，不能重复！');
-    //                  }
-    //             }  
-    //         })  
-    // })
-});       
+})
 </script>
+<script type="text/javascript">
+/**************新闻换一换*****************/
+$(function(){
+      //var p         = 1;// 初始化页面，点击事件从第二页开始
+      var companyid = '{$hpt_list.id}';
+      var sign      = 1;
+      var flag      = false;
+      var num       = '{$record_count}';
+      var num_count = Math.ceil(num/2);
+      $('.hyh').live('click',function(){
+          var i = Number(document.getElementById("hidden_hyh").value);
+          if (i >= num_count) {
+             var p = 1;
+             $("#hidden_hyh").val(p);
+          }else{
+             p = i+1;
+             $("#hidden_hyh").val(p);
+          }
+          send(p);
+      })
+      function send(p){
+          if(flag){
+            return false;
+          }
+          $.ajax({
+              type:'post',
+              url:"__URL__/news_hyh",
+              dataType:"json", 
+              contentType: "application/x-www-form-urlencoded; charset=utf-8",
+              data:{
+                k:p,
+                comment_id:companyid,
+                sign:sign},
+              beforeSend:function(){
+                   //$("#yhy_ul").append("<div id='load'></div>");
+              },
+              success:function(data){
+                $("#yhy_ul").empty();
+                if(data!=null){
+                  $.each(data,function(i){
+                    $("#yhy_ul").append("<dl><dt><a href='__APP__/article?id="+data[i]['id']+"&company_id="+data[i]['company_id']+"' target='_blank'><img src='"+data[i]['pic_url']+"' /></a></dt><dd><h4><a href='__APP__/article?id="+data[i]['id']+"&company_id="+data[i]['company_id']+"' target='_blank'>"+data[i]['title']+"</a></h4><p>"+data[i]['content']+"</p><span>"+data[i]['add_time']+"</span></dd></dl>");
+                  })
+                }else{
+                    $("#yhy_ul").text('已无更多数据');
+                    window.location.reload(); 
+                    flag=true;  
+                }
+              },
+              complete:function(){
+                     $("#load").remove();
+              },
+              dataType:'json'});
+              //    p++;
+
+            
+      }
+})
+</script>
+<script type="text/javascript" src="__PUBLIC__/Home/js/switch.js" ></script>
+
 </html>

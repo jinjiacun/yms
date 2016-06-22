@@ -2,18 +2,26 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-<title>曝光台--搜黑</title>
+<title>黄金,外汇,贵金属虚假交易曝光台_口碑</title>
+<meta name="keywords" content="曝光台,虚假交易曝光台"/>
+<meta name="description" content="口碑,全国性的交易市场曝光平台，携手每一位投资人共同揭开交易市场的层层黑幕，为投资者甄选安全可靠的交易平台，营造国内绿色透明的交易环境。"/>
+<link rel="icon" href="__PUBLIC__/s.ico" type="image/x-icon" />
 <link type="text/css" rel="stylesheet" href="__PUBLIC__/Home/css/main.css"/>
 <script type="text/javascript" src="__PUBLIC__/js/jquery-1.8.3.min.js" ></script>
 <script type="text/javascript" src="__PUBLIC__/Home/js/main.js" ></script>
+<script type="text/javascript" src="__PUBLIC__/Home/js/jquery.form.js" ></script>
 <script type="text/javascript" id="bdshare_js" data="type=button&amp;uid=0" ></script>
+<style type="text/css">
+  .bdsharebuttonbox{ display:inline-block; *display:inline; float:right; margin-top:9px;}
+  .bdsharebuttonbox .chare{ display:inline-block; *display:inline;font-size:14px; height: 24px; line-height: 24px; }
+</style>
 </head>
 
 <body>
 
-<!--Begin--登陆-->   
+<!--Begin--登录-->   
 <include file="Public:login" />
-<!--End--登陆--> 
+<!--End--登录--> 
 <div id="wrap">
 
 <!--头部--Begin-->   
@@ -39,50 +47,16 @@
           </script>
        </div>
        <div class="dongtop">
-               <ol>
-                 <volist id='get_list' name='get_list' key="k">
-                 <li class="to{$k}">
-                     <dl>
-                         <dt>{$k}</dt>
-                         <dd>
-                           <div class="txt">
-                              <h4><p>被曝平台：<span>{$get_list.company_name}</span></p></h4>
-                           </div>
-                           <div class="neirong"><p class="bordera">加黑人数：<em>{$get_list.amount}</em></p><p>最早曝光时间：<span>{$get_list.last_time}</span></p></div>
-                           <p class="bgdyh">曝光用户：<a href="#">西红柿炒番茄</a>、<a href="#">西红柿炒番茄</a>、<a href="#">西红柿炒番茄</a>、<a href="#">abcd</a>等35位用户</p>
-                         </dd>
-                     </dl>
-                 </li>
-                 </volist>
-               </ol>
-             <if condition="$record_count gt 5 ">
-             <div class="djjzgd"><a href="#">点击加载更多</a></div>
-             </if>
        </div>
        </div>
        <div class="baoguant_rt">
             <div class="baoguant_rt1">
-                  <a href="__APP__/home/Inexposure/exposure" class="wybgs">我要曝光</a>
-                  <p>已有<span>{$record_count}</span>名网友曝光了<span>{$user_amout}</span>个平台</p>
+                  <a href="__APP__/exposure.html" class="wybgs wybg_a">我要曝光</a>
+                  <p>已有<span id="user_amount">{$user_amout}</span>名网友曝光了<span id="record_count_ex">{$record_count_ex}</span>次</p>
             </div>
          <div class="baoguant_rt2">
            <h3>最新曝光</h3>
            <div class="zxbaog">
-             <ol>
-             <volist id="list_zx" name="list_zx">
-               <li>
-                     <dl>
-                         <dt>{$list_zx.add_time|date="H:i:s",###}</dt>
-                         <dd>
-                           <div class="txt">
-                               <h4>{$list_zx.nickname}</h4>
-                           </div>
-                           <p class="ybaogle">曝光了<a href="#">{$list_zx.company_name}</a></p>
-                         </dd>
-                     </dl>
-                 </li>
-                </volist>
-             </ol>
            </div>
            </div>
        
@@ -98,23 +72,218 @@
 </div>
 <script type="text/javascript">
   $(function(){
-    var num='';
-      var rel=$('.dongtop ol li').size();
-      $('.dongtop ol li:gt(4)').hide();
-      $('.djjzgd a').click(function(){
-          num=$('.dongtop ol li:hidden').first().prev().index();
-          if($('.dongtop ol li').is(':hidden'))
-          {
-              $('.dongtop ol li:lt('+(num+5)+')').show();
+    
+      var multiple=3;
+      window.onload=function(){
+         //统计曝光人数
+         $.ajax({  
+          type:"post",  
+          url:"{$call_url}",
+          timeout: 5000,  
+          dataType:"json",  
+          data:{"method":"Inexposal.stat_user_amount","type":"text","content":{}},
+          success: function aa(data) {
+              if (200 == data.status_code) {
+                $('#user_amount').html(data.content*multiple);
+              }
           }
-          else
-          {
-             $(this).text('没有更多！');
-                  return false;
+        });
+        //曝光平台总数
+        $.ajax({  
+          type:"post",  
+          url:"{$call_url}",
+          timeout: 5000,  
+          dataType:"json",  
+          data:{"method":"Inexposal.dynamic","type":"text","content":{"_tag":"flat_form_count"}},
+          success: function aa(data) {
+              if (200 == data.status_code) {
+                $('#record_count_ex').html(data.content.flat_form_count*multiple);
+              }
           }
-       
-        return false;
-       });
+        });
+        //曝光信息查询
+        $.ajax({  
+          type:"post",  
+          url:"{$call_url}",
+          timeout: 5000,  
+          dataType:"json",  
+          data:{"method":"Company.black_sort","type":"text","content":{"page_size":5,"where":{"auth_level":"006001"},"order":{"add_blk_amount":"desc","exp_amount":"desc"}}},
+          success: function aa(data) {
+              if (200 == data.status_code) {
+                var list = data.content.list,length=list.length,i=0,k=0,j=0,str='',user_list,user_list_length=0;
+                str ='<ol>';
+                 for(; i< length; i++)
+                 {
+                    user_list = list[i].user_list;
+                    user_list_length = user_list.length;
+                    k = i+1;
+                    str += '<li class="to'+k+'" id="'+k+'">';
+                    str += '<dl>';
+                    str += '<dt>'+k+'</dt>';
+                    str += '<dd>';
+                    str += '<div class="txt">';
+                    str += '<h4><p>被曝平台：';
+                    str += '<a target="_blank" href="__APP__/hpt?resid='+list[i].id+'">';
+                    str += '<span>'+list[i].company_name+'</span>';
+                    str += '</a></p></h4></div>';
+                    str += '<div class="neirong"><p class="bordera">加黑人数：<em>';
+                    str += list[i].add_blk_amount+'</em></p><p>最早曝光时间：<span>';
+                    str += getTime(list[i].last_time)+'</span></p></div>';
+                    str += '<p class="bgdyh">曝光用户：';
+                    for(j=0; j< user_list.length; j++)
+                    {
+                      str += '<a href="__APP__/Usercenter?id='+user_list[j].user_id+'" target="_blank">';
+                      str += '<span>'+user_list[j].nickname+'</span>';
+                      str += '</a>';
+                      str += '<span';
+                      if(j == user_list_length-1)
+                      {
+                        str += ' class="last"';
+                      }
+                      str += '>、</span>';
+                    }
+                    str += '<a target="_blank" href="__APP__/hpt?resid='+list[i].id+'#basic_setting">('+list[i].exp_amount+')</a></p>';
+                    str += '</dd></dl></li>';
+                }
+              str += '</ol>';
+              if(5< data.content.record_count)
+                str += '<div class="djjzgd"><a href="javascript:void(0)" id="jzgd">点击加载更多</a></div>';
+
+            $('.dongtop').html(str);
+            //加载更多
+            // var num='';
+            // var rel=$('.dongtop ol li').size();
+            // $('.dongtop ol li:gt(4)').hide();
+            // $('.djjzgd a').click(function(){
+            //     num=$('.dongtop ol li:hidden').first().prev().index();
+            //     if($('.dongtop ol li').is(':hidden'))
+            //     {
+            //         $('.dongtop ol li:lt('+(num+5)+')').show();
+            //     }
+            //     else
+            //     {
+            //        $(this).text('没有更多！');
+            //             return false;
+            //     }
+            //   return false;
+            // });   
+          }
+          }
+        });
+        //最新曝光
+         $.ajax({  
+          type:"post",  
+          url:"{$call_url}",
+          timeout: 5000,  
+          dataType:"json",  
+          data:{"method":"Inexposal.last_exposal","type":"text","content":{}},
+          success: function aa(data) {
+              if (200 == data.status_code) {
+                var list = data.content,length=list.length,i=0,k=0,j=0,str='',company_name='';
+                str ='<ol>';
+                for(; i<length; i++)
+                {
+                   company_name = list[i].company_name;
+                   str += '<li>';
+                   str += '<dl>';
+                   str += '<dt>'+getTimeExx(list[i].add_time)+'</dt>';
+                   str += '<dd>';
+                   str += '<div class="txt">';
+                   str += '   <a href="__APP__/Usercenter?id='+list[i].user_id+'" target="_blank"><h4>'+list[i].nickname+'</h4></a>';
+                   str += '</div>';
+                   str += '<p class="ybaogle">曝光了';
+                   str += '<a target="_blank" href="__APP__/';
+                   if('006001' == list[i].auth_level)
+                   {
+                      str += 'hpt';
+                   }                   
+                   else if('006002')
+                   {
+                      str += 'wrz';
+                   }
+                   else
+                   {
+                      str += 'yrz';
+                   }
+                   str += '?resid='+list[i].company_id+'" title="'+company_name+'">';
+                   str += company_name.substring(0,12);
+                   str += '</a></p></dd></dl></li>';
+                }
+                str +='</ol>';
+                $('.zxbaog').html(str);
+              }
+          }
+        });
+
+      };
+  });
+</script>
+<script type="text/javascript">
+  $(function(){
+      var p=2;// 初始化页面，点击事件从第二页开始
+      var flag=false;
+      $('#jzgd').live('click',function(){
+          //初始状态，如果没数据return ,false;否则
+          if($(".dongtop li").size()<=0){
+            return false;
+          }else{
+            var num = Number($(".dongtop ol li:last-child").attr('id'));
+            send(num);
+          }
+      })
+      function send(num){
+          if(flag){
+            return false;
+          }
+          $.ajax({
+              type:'post',
+              url:"{:U('back_list')}",
+              data:{k:p},
+              beforeSend:function(){
+                   //$(".dongtop").append("<div id='load'>加载中……</div>");
+              },
+              success:function(data){
+                if(data!=null){
+                  $.each(data,function(i){
+                    var k = i*1+1;
+                    var str = '<li class="to'+(k+num)+'" id="'+(k+num)+'">';
+                    str += '<dl>';
+                    str += '<dt>'+(k+num)+'</dt>';
+                    str += '<dd>';
+                    str += '<div class="txt">';
+                    str += '<h4><p>被曝平台：';
+                    str += '<a target="_blank" href="__APP__/hpt?resid='+data[i].id+'">';
+                    str += '<span>'+data[i].company_name+'</span>';
+                    str += '</a></p></h4></div>';
+                    str += '<div class="neirong"><p class="bordera">加黑人数：<em>';
+                    str += data[i].add_blk_amount+'</em></p><p>最早曝光时间：<span>';
+                    str += data[i].last_time+'</span></p></div>';
+                    str += '<p class="bgdyh">曝光用户：';
+                    $.each(data[i]['user_list'],function(j,items){
+                      str += '<a href="__APP__/Usercenter?id='+items.user_id+'" target="_blank">';
+                      str += '<span>'+items.nickname+'</span>';
+                      str += '</a>';
+                      str += '<span';
+                      if(j == data[i].exp_amount-1){
+                        str += ' class="last"';
+                      }
+                      str += '>、</span>';
+                    })
+                    str += '<a target="_blank" href="__APP__/hpt?resid='+data[i].id+'#basic_setting">('+data[i].exp_amount+')</a></p>';
+                    str += '</dd></dl></li>';
+                    $(".dongtop ol").append(str);
+                  })        
+                }else{
+                    $("#jzgd").text('已无更多数据');
+                    flag=true;  
+                }
+              },
+              complete:function(){
+                     $("#load").remove();
+              },
+              dataType:'json'});
+            p++;
+      }
   })
 </script>
 </body>

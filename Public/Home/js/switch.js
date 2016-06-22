@@ -45,7 +45,7 @@ function show_panel(link) {
     for (var i = 0; i < links.length; i++) {
         var n = links[i];
         if (n == link) {
-            jQuery("link_" + n).setAttribute("class", "bian");
+            jQuery("link_" + n).setAttribute("class", "activ");
             jQuery("div_" + n).style.display = "block";
         }
         else {

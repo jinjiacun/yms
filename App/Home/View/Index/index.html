@@ -2,202 +2,283 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-<title>首页--搜黑</title>
-<link type="text/css" rel="stylesheet" href="__PUBLIC__/Home/css/main.css"/>
+<title>口碑—全国最大的查询曝光平台</title>
+<meta name="keywords" content="口碑，黑平台查询，黑平台曝光，贵金属黑平台，外汇黑平台"/>
+<meta name="description" content="口碑是全国性的交易市场曝光平台,携手每一位投资人共同揭开交易市场的层层黑幕,为您提供全方位的贵金属、外汇、黄金、石油等行业交易黑幕的查询、曝光。"/>
+<meta property="wb:webmaster" content="3a329171ece5137b" />
+<meta property="qc:admins" content="2141765714637525136563756367" />
+<link rel="icon" href="__PUBLIC__/s.ico" type="image/x-icon" />
+<link type="text/css" rel="stylesheet" href="__PUBLIC__/Home/css/index.css"/>
 <script type="text/javascript" src="__PUBLIC__/js/jquery-1.8.3.min.js" ></script>
-<script type="text/javascript" src="__PUBLIC__/js/Validform_v5.3.2.js" ></script>
+<script type="text/javascript" src="__PUBLIC__/Home/js/jquery.form.js" ></script>
+<script type="text/javascript" src="__PUBLIC__/Home/js/index.js" ></script>
 <script type="text/javascript" src="__PUBLIC__/Home/js/main.js" ></script>
-<script src="__PUBLIC__/Home/js/scrolling.js" type="text/javascript"></script> 
 </head>
 
-<body style="overflow-x:hidden;">
-<!--Begin--登陆-->   
+<body>
+<!--Begin--登录-->   
 <include file="Public:login" />
+<!--End--登录-->
 <div id="wrap">
 
 <!--头部--Begin-->   
-  <include file="Public:top" />
-  <div class="sy_headerbox">
-    <div class="sy_header">
-              <div class="sy_header_logo"><a href="#"><img src="__PUBLIC__/Home/images/logo1.png" /></a></div>
-              <div class="searchbox">
-                    <ul>
-                      <li class="active">全部</li>
-                      <li>公司</li>
-                      <li>平台</li>
-                      <li>网址</li>
-                    </ul>
-                    <div class="chaxun">
-                      <form class="registerform" action="__URL__/search" name="theForm" method="post" onsubmit="return ValidateFile()">
-                       <input name="search_name" id="search_name_ex" type="text" class="chuax1" value="请输入公司名称、平台名称或网址" onblur="if (this.value =='') this.value='请输入公司名称、平台名称或网址'" onclick="if (this.value == '请输入公司名称、平台名称或网址') this.value = '' " />
-                       <input name="submit" type="submit" class="chuax2" value="立即查询" />
-                      </form>
-                    </div>
-              </div>
-      </div>
+   <div id="header">
+   		<div class="top1">
+      	  <div class="new_logo"><a href="__ROOT__/"><img src="__PUBLIC__/Home/index_img/logo.png"></a></div>
+        	  <div class="new_rt">
+              <if condition="$userid neq '' ">
+                <p class="jingru">您好，
+                   <a target='_blank' href="__APP__/user_center.html">{$nickname}&nbsp</a>
+                   <a href="{:U('User/logout')}">退出</a>
+                </p>
+              <else /> 
+                <a href="__APP__/register.html" class="hd_rt1" >注册</a>
+                <a href="javascript:void(0)" class="hd_rt2 hd_fix_rt2" >登录</a>
+              </if>
+            </div>
+        </div>
+     <div class="search_new">
+          
+          <div class="chaxun_new">
+          <img src="__PUBLIC__/Home/index_img/bg01.png" style=" margin-bottom:52px;" />
+          <form class="registerform" action="__URL__/search" name="theForm" method="post" onsubmit="return ValidateFile()">
+            <input name="search_name" id="search_name_ex" autocomplete="off" type="text" class="chaxun_new1" placeholder="请输入企业名称" value="">
+            <input name="submit" type="submit" class="chaxun_new2" value="立即查询">
+          </form>
+          </div>
+          <p>本站共收录企业 <span id="zd_count"></span> 家&nbsp;&nbsp;&nbsp;&nbsp;为用户识别 <span id="cx_count_ex"></span> 次</p>
+        </div>
   </div>
-  
-  <!--头部--End--> 
+<!--头部--End--> 
 
 <!--内容--Begin-->     
    <div id="content">
-     <div class="cont_lt">
-              <div class="cont_lta">
-                <h2 class="titles"><a href="__APP__/home">首页</a></h2>
-                <ul>
-                   <li><a href="javascript:void(0)" class="ptcx">平台查询</a></li>
-                   <li><a class="wybg_a" href="__APP__/home/Inexposure/exposure" target='_blank'>我要曝光</a></li>
-                   <li><a class="wybg_a" href="__APP__/home/Inexposure/authentication" target='_blank'>合规认证</a></li>
-                   <li><a href="__APP__/home/Ranking/machine" tassrget='_blank'>曝光台</a></li>
-                   <li><a href="__APP__/home/Regulators/regulators" target='_blank'>监管机构</a></li>
-                 </ul>
-                 <div class="ewm"><img src="__PUBLIC__/Home/images/pic01.jpg" width="104" height="140" /></div>
-                <div class="wybg"><a href="__APP__/home/Inexposure/exposure">我要曝光</a></div>
+   		<ul class="cont1">
+        	<li><a class="mlgb" href="__APP__/ranking.html" target="_blank"><img src="__PUBLIC__/Home/index_img/pic01.jpg" /></a></li>
+          <li><a class="mlgb" href="__APP__/explist.html" target="_blank"><img src="__PUBLIC__/Home/index_img/pic02.jpg" /></a></li>
+          <li class="last"><a class="mlgb" href="__APP__/download.html" target="_blank"><img src="__PUBLIC__/Home/index_img/pic03.jpg" /></a></li>
+      </ul>
+   		<div class="cont2">
+        	<div class="titbox">
+       		  	<h3>最新曝光<span>网友已曝光<em id="record_count_ex"></em>次</span></h3>
+              <p id="zuiduo"></p>
+        	</div>
+        	<div class="listbox">	
           </div>
-              <div class="cont_ltb">
-                 <h3>支持机构</h3>
-                <ul>
-                     <li><a href="http://www.cngold.com.cn" target='_blank'><img src="__PUBLIC__/Home/images/lg05.jpg"/></a></li>
-                     <li><a href="http://www.fx678.com" target='_blank'><img src="__PUBLIC__/Home/images/lg06.jpg"/></a></li>
-                     <li><a href="http://www.eastmoney.com" target='_blank'><img src="__PUBLIC__/Home/images/lg07.jpg"/></a></li>
-                     <li><a href="http://www.xinhuanet.com" target='_blank'><img src="__PUBLIC__/Home/images/lg08.jpg"/></a></li>
-                </ul>
-           </div> 
-     </div>
-     <div class="cont_rt">
-         
-         
-       <div class="centbox">
-           <div class="centbox_lt">
-             <div class="bgls">
-                <h3>曝光动态</h3>
-                <p>已有<span>{$user_amout}</span>名网友曝光了<span>{$record_count|subtext=15}</span>个平台</p>
-             </div>
-             <div class="dongtaibox">
-             <div class="room_show">
-                <div class="room_shadow">
-              <div class="room_hide_all">
-                <div class="room_hide" id="room_hide1">
-                  <volist id='bgdt' name='bgdt' key="k">
-                    <div class="room_show_item">
-                     <dl>
-                         <dt>{$bgdt.add_time|date="H:i:s",###}</dt>
-                         <dd>
-                           <div class="txt">
-                               <h4>{$bgdt.nickname}</h4>
-                               <p>被曝平台：<span>{$bgdt.company_name}</span></p>
-                           </div>
-                           <div class="neirong"><em class="em1"></em><p>{$bgdt.content|subtext=55}<em class="em2"></em></p></div>
-                         </dd>
-                     </dl>
-                    </div>
-                 </volist> 
-                </div>
-                <div class="room_hide" id="room_hide2"></div>
-              </div>
-             </div>
-             </div>
-           </div>
-           </div>
-           <div class="centbox_rt">
-             <ul class="zuiduo">
-               <li class="zuiduoa"><a href="#"><img src="__PUBLIC__/Home/images/btn10.png"/></a></li>
-               <li class="zuiduob"><a href="__APP__/Home/Query/query_hpt/resid/{$bg_max}/p/1"><img src="__PUBLIC__/Home/images/btn11.png"/></a></li>
-               <li class="zuiduoc"><a href="__APP__/Home/Query/query_hpt/resid/{$jh_max}/p/1"><img src="__PUBLIC__/Home/images/btn12.png"/></a></li>
-             </ul>
-             <div class="jgous">
-               <h3>查询动态</h3>
-                   <div id="demo">
-                    <ol>
-                    <volist id='cx_list' name='cx_list'>
-                      <li>
-                        <p><span>{$cx_list.add_time|date="H:i:s",###}</span>{$cx_list.nickname}</p>
-                        <p>查询了<a href="#" title="{$cx_list.keyword}">{$cx_list.keyword|subtext=10}</a></p>
-                      </li>
-                    </volist>
-                    </ol>
-                </div>
-               <h3>监管机构<span>正规来自有效合法的监管</span></h3>
-               <ul class="jgjg">
-                 <li><a href="#" target='_blank'><img src="__PUBLIC__/Home/images/lg01.jpg" /></a></li>
-                 <li><a href="#" target='_blank'><img src="__PUBLIC__/Home/images/lg02.jpg" /></a></li>
-                 <li><a href="#" target='_blank'><img src="__PUBLIC__/Home/images/lg03.jpg" /></a></li>
-                 <li><a href="#" target='_blank'><img src="__PUBLIC__/Home/images/lg04.jpg" /></a></li>
-                 <li><a href="#" target='_blank'><img src="__PUBLIC__/Home/images/lg09.jpg" /></a></li>
-                 <li><a href="#" target='_blank'><img src="__PUBLIC__/Home/images/lg10.jpg" /></a></li>
-                 <li><a href="#" target='_blank'><img src="__PUBLIC__/Home/images/lg11.jpg" /></a></li>
-                 <li><a href="#" target='_blank'><img src="__PUBLIC__/Home/images/lg12.jpg" /></a></li>
-               </ul>
-             </div>
-           </div>
-       </div>
-     </div>
-     <div class="clear"></div>
-  </div>
+      </div>
+   </div>
 <!--内容--End--> 
 
 <!--底部--Begin-->     
-   <include file="Public:footer" />
+   <div id="footer">
+       <div class="bottom1">
+            <div class="zcjg">
+               <a class="mlgb" target='_blank' href="__APP__/about_us.html">关于我们</a>|
+               <a class="mlgb" target='_blank' href="__APP__/contact_us.html">联系我们</a>|
+               <a class="mlgb" target='_blank' href="__APP__/help.html">帮助中心</a>
+            </div>
+        </div>
+        <div class="hzhbbox">
+        	<ul>
+            	<li><a href="http://trust.360.cn/" target="_blank" class="hz1 mlgb" ></a></li>
+              <li><a href="http://www.ctws.com.cn/" target="_blank" class="hz2 mlgb"></a></li>
+              <li><a href="http://net.china.com.cn/" target="_blank" class="hz3 mlgb"></a></li>
+              <li><a href="http://www.isc.org.cn/" target="_blank" class="hz4 mlgb"></a></li>
+              <li><a href="http://www.cngjs.org.cn/" target="_blank" class="hz5 mlgb"></a></li>
+              <li><a href="http://v.cngold.com.cn/" target="_blank" class="hz6 mlgb"></a></li>
+            </ul>
+            <p>版权所有：上海夕晏网络科技服务中心 Copyright © 2015 沪ICP备15004957号-2
+            <script type="text/javascript">var cnzz_protocol = (("https:" == document.location.protocol) ? " https://" : " http://");document.write(unescape("%3Cspan id='cnzz_stat_icon_1254396040'%3E%3C/span%3E%3Cscript src='" + cnzz_protocol + "s11.cnzz.com/stat.php%3Fid%3D1254396040%26show%3Dpic' type='text/javascript'%3E%3C/script%3E"));</script></p>
+        </div>
+   </div>
 <!--底部--End--> 
 
 </div>
+<div class="news_wx">
+       <div class="news_wx_ex">
+       <span class="close"></span>
+         <a id="baog" href="__APP__/exposure.html" class="new_bgs1" target="_blank">我要曝光</a>
+         <a id="hegui" href="__APP__/auth.html" class="new_bgs2" target="_blank">合规认证</a>
+         <p><img src="__PUBLIC__/Home/images/new_list05.png"></p>
+         <p><img src="__PUBLIC__/Home/images/new_list06.png"></p>
+       </div>
+    </div>
 </body>
 <script type="text/javascript">
+  $(function(){
+    //判断是否登录
+    // $('.mlgb').live('click',function(){
+    //    var usaa = '{$userid}';
+    //    if (usaa == "") {
+    //         $(".bd_wd").css("width", $(document).width());
+    //         $(".bd_wd").css("height", $(document).height());
+    //         $(".bd_wd").show();
+    //         $("#tcwindows1").show();
+    //         return false;
+    //     }
+    // });
+    $('#baog, #hegui').live('click',function(){
+         var usaa = '{$userid}';
+         if (usaa == "") {
+              $(".bd_wd").css("width", $(document).width());
+              $(".bd_wd").css("height", $(document).height());
+              $(".bd_wd").show();
+              $("#tcwindows1").show();
+              return false;
+          }
+      });
+    window.onload=function(){
+       //为用户识别公司 
+      $.ajax({  
+          type:"post",  
+          url:"{$call_url}",
+          timeout: 5000,  
+          dataType:"json",  
+          data:{"method":"Querylog._amount","type":"text"},
+          success: function aa(data) {
+              if (200 == data.status_code) {
+                  $("#cx_count_ex").html(data.content.record_count*3);
+              }
+          }
+      });
+      //查询最多,查询曝光最多,加黑最多
+      $.ajax({  
+          type:"post",  
+          url:"{$call_url}",
+          timeout: 5000,  
+          dataType:"json",  
+          data:{"method":["Company.get_list","Company.get_list","Company.get_list"],"type":"text","content":[{"page_size":1},{"page_size":1,"where":{"auth_level":["in","006001,006002"]},"order":{"exp_amount":"DESC"}},{"page_size":1,"where":{"auth_level":["in","006001,006002"]},"order":{"add_blk_amount":"DESC"}}]},
+          success: function aa(data) {
+              //查询最多
+              if (200 == data.status_code[0]) {
+                var data_info = data.content[0].list[0];
+                var str = '';
+                str = '<a class="mlgb" href="__APP__/';
+                if('006001' == data_info['auth_level'])
+                  str += 'hpt';
+                else if('006002' == data_info['auth_level'])
+                  str += 'wrz';
+                else
+                  str += 'yrz';
+                str += '?resid='+data_info['id']+'" target="_blank">查询最多</a>|';
+               $('#zuiduo').append(str);
+               $('#zd_count').html(data.content[0].record_count*3);
+              }
+             //查询曝光最多
+             if (200 == data.status_code[1]) {
+                var data_info = data.content[1].list[0];
+                var str = '';
+                str = '<a class="mlgb" target="_blank" href="__APP__/';
+                if('006001' == data_info['auth_level'])
+                  str += 'hpt';
+                else
+                  str += 'wrz';
+                str += '?resid='+data_info['id']+'#basic_setting">曝光最多</a>|';
+
+               $('#zuiduo').append(str);
+              }
+              //加黑最多
+              if (200 == data.status_code[2]) {
+                var data_info = data.content[2].list[0];
+                var str = '';
+                str = '<a class="mlgb" href="__APP__/';
+                if('006001' == data_info['auth_level'])
+                  str += 'hpt';
+                else
+                  str += 'wrz';
+                str += '?resid='+data_info['id']+'" target="_blank">加黑最多</a>';
+
+               $('#zuiduo').append(str);
+              }
+          }
+      });
+      //最新曝光
+      $.ajax({  
+          type:"post",  
+          url:"{$call_url}",
+          timeout: 5000,  
+          dataType:"json",  
+          data:{"method":"Inexposal.dynamic","type":"text","content":{"page_size":6}},
+          success: function aa(data) {
+              if (200 == data.status_code) {
+                var list = data.content.list,length=list.length,i=0,k=0,company_name='',content='';
+                str ='<ul>';                                       
+                for(; i< length; i++)
+                {
+                  company_name = list[i].company_name;
+                  content      = list[i].content;
+                  str += '<li class="li_'+i+'">';
+                  if(0 != list[i].pic_1){
+                    str += '<div class="tu"><a class="mlgb" target="_blank" href="__APP__/';
+                    if('006001' == list[i].auth_level)
+                      str += 'hpt';
+                    else
+                      str += 'wrz';
+                    str += '?resid='+list[i].company_id+'#basic_setting"><img src="'+list[i].pic_1_url+'" /></a></div>';
+                    str += '<h4><a class="mlgb" target="_blank" href="__APP__/';
+                    if('006001' == list[i].auth_level)
+                      str += 'hpt';
+                    else
+                      str += 'wrz';
+                    str += '?resid='+list[i].company_id+'#basic_setting" title="'+list[i].company_name+'">'+company_name.substring(0,13)+'</a><img src="__PUBLIC__/Home/index_img/bg02.png"/></h4>';
+                    str += '<p class="js1">'+content.substring(0,40)+'</p>';
+                    str += '<div class="mcs"><a class="mlgb" target="_blank" href="__APP__/Usercenter?id='+list[i].user_id+'">'+list[i].nickname+'</a><span>'+getTimeEx(list[i].add_time)+'</span></div>';
+                  }else{
+                    str += '<dl>';
+                    if (list[i].logo_url != '') {
+                      str += '<dt><a class="mlgb" target="_blank" href="__APP__/';
+                      if('006001' == list[i].auth_level)
+                         str += 'hpt';
+                      else
+                         str += 'wrz';
+                      str += '?resid='+list[i].company_id+'#basic_setting"><img src="'+list[i].logo_url+'"/></a></dt>';
+                    }
+                    str += '<dd';
+                    if (list[i].logo_url == '') {
+                      str += ' style="width:310px;"';
+                    }
+                    str += '>';
+                    str += '<h4><a class="mlgb" target="_blank" href="__APP__/';
+                    if('006001' == list[i].auth_level)
+                      str += 'hpt';
+                    else
+                      str += 'wrz';
+                    str += '?resid='+list[i].company_id+'#basic_setting" title="'+list[i].company_name+'">'+company_name.substring(0,25)+'</a><img src="__PUBLIC__/Home/index_img/bg02.png"/></h4>';
+                    str += '<p>其他名称<a>'+list[i].alias_list+'</a></p>';
+                    str += '</dd></dl><span class="yh1"><img src="__PUBLIC__/Home/index_img/bg03a.png"/></span>';
+                    str += '<p class="js2">'+content.substring(0,70)+'</p>';    
+                    str += '<span class="yh2"><img src="__PUBLIC__/Home/index_img/bg03b.png"/></span>';    
+                    str += '<div class="mcs"><a class="mlgb" target="_blank" href="__APP__/Usercenter?id='+list[i].user_id+'">'+list[i].nickname+'</a><span>'+getTimeEx(list[i].add_time)+'</span></div>';
+                  }
+                  str += '</li>';            
+                }
+                str += '</ul>';
+                $('#record_count_ex').html(data.content.record_count*3);
+                $('.listbox').prepend(str);
+              }
+          }
+      });
+    }
+  });
   function ValidateFile(){ 
       var checkbox_ok = document.getElementById("search_name_ex").value;
-      var userid      = '{$userid}'; 
+      // var usaa = '{$userid}';
+      // if (usaa == "") {
+      //     $(".bd_wd").css("width", $(document).width());
+      //     $(".bd_wd").css("height", $(document).height());
+      //     $(".bd_wd").show();
+      //     $("#tcwindows1").show();
+      //     return false;
+      // }
       if(checkbox_ok == "请输入公司名称、平台名称或网址" 
          || checkbox_ok == ""){ 
-          alert("请输入搜索内容！"); 
-          return false; 
-      }
-      if (userid == "") {
-      	  //alert('请登录后搜索！');
-      	  $(".bd_wd").css("width", $(document).width());
+          $('#tishi').text("请输入搜索内容！");
+          $(".bd_wd").css("width", $(document).width());
           $(".bd_wd").css("height", $(document).height());
           $(".bd_wd").show();
-          $("#tcwindows1").show();
-      	  return false;
+          $(".yzsbai").show();
+          return false;
       }
-    }
-</script>  
-<script>         
-        $(function(){
-          
-          var z = setInterval("auto_scroll()",2000);
-          $(".room_show").hover(function(){
-            clearInterval(z);
-          },function(){
-            z = setInterval("auto_scroll()",2000);
-          }); 
-  
-          
-          })
-          var le_height = $("#room_hide1").height();
-             if(le_height > 685){
-          //room scroll
-          var room_cout = 0;
-          var h = 0;
-          var tab1=document.getElementById("room_hide1");
-          var tab2=document.getElementById("room_hide2");
-            tab2.innerHTML=tab1.innerHTML;
-             
-          function auto_scroll()
-          {   
-            var room_num = $("#room_hide1").children(".room_show_item").length;
-            if(room_cout < room_num)
-            {
-              h = h - ($("#room_hide1").children(".room_show_item").eq(room_cout).height() );
-              $(".room_hide_all").animate({top:""+h+""});
-              room_cout++;
-            }
-            else
-            {
-              room_cout = 0;
-              h = 0;
-              $(".room_hide_all").css({top:""+h+""});
-            }
-          }
-          }
+  }
 </script>
 </html>

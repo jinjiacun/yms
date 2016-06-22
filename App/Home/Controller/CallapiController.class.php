@@ -73,6 +73,7 @@ class CallapiController extends Controller {
 		else
 		{
 			$res  = $this->post($url_post, $data, $header);		
+			//$this->mul_post($url_post, $data);
 		}
 		return $res;
 		//echo $res;
@@ -86,6 +87,12 @@ class CallapiController extends Controller {
 		//$content = json_decode($content, true);
 		$type    = I('post.type');
 		if(I('get.type')) $type = I('get.type');
+		
+		$header = array(
+				    'Connection: Keep-Alive',
+				    'Keep-Alive: 300'
+				);
+		
 		if(I('get.method'))
 		{
 			echo $this->call_api($method, $content, $type, $handler, true);
@@ -94,7 +101,6 @@ class CallapiController extends Controller {
 		else			
 			echo $this->call_api($method, $content, $type, $handler);
 	}
-
 	function post($url, $params = false, $header = array()){
 		//$cookie_file = tempnam(dirname(__FILE__),'cookie');
 		$cookie_file = __PUBLIC__.'cookies.tmp';
@@ -109,18 +115,44 @@ class CallapiController extends Controller {
 		curl_setopt($ch, CURLOPT_FOLLOWLOCATION, 1); 
 		curl_setopt($ch, CURLOPT_SSL_VERIFYPEER,FALSE); 
 		curl_setopt($ch, CURLOPT_HTTPGET, true); 
-		curl_setopt($ch, CURLOPT_TIMEOUT, 30); 
+		curl_setopt($ch, CURLOPT_TIMEOUT, 1); 
+		curl_setopt($ch, CURLOPT_TIMEOUT, 3600); 
 		if($params !== false){
-		 	curl_setopt($ch, CURLOPT_POSTFIELDS , $params);
+		 	curl_setopt($ch, CURLOPT_POSTFIELDS , $params);    
 		} 
 		curl_setopt($ch, CURLOPT_USERAGENT,'Mozilla/5.0 (Windows NT 5.1; rv:21.0) Gecko/20100101 Firefox/21.0'); 
 		curl_setopt($ch, CURLOPT_URL,$url); 
 		curl_setopt($ch, CURLOPT_HTTPHEADER, $header); 
 		$result = curl_exec($ch); 
+		file_put_contents("./txt.txt", $result);
 		curl_close($ch); 
 		 
 		return $result; 
 	}  
+
+	function mul_post($url, $params)
+	{
+		//require("class/RollingCurl.php");
+		/*
+	   function callback($response, $info, $request) {
+	      print_r($response);
+	      print_r($info);
+	      print_r($request);
+	   }
+	   */
+	   $rc = new \Org\Util\RollingCurl();
+	   $rc->window_size = 2;
+	   for ($i = 1; $i < 2; $i++) {
+	      //$url = "http://www.baidu.com/";
+	      $request = new \Org\Util\RollingCurlRequest($url);
+	      $request->options = array(CURLOPT_POSTFIELDS=>$params);
+	      //array(CURLOPT_COOKIEJAR => '/tmp/ck.cookie', CURLOPT_COOKIEFILE => '/tmp/ck.cookie');
+	      //$request->headers = array('Referer: http://www.haiyun.me');
+	      $request->callback = 'callback';
+	      $rc->add($request);
+	   }
+	   $res = $rc->execute();
+	}
 
 	function get($url, $params= false)
 	{

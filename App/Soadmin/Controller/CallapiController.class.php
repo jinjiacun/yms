@@ -71,7 +71,7 @@ class CallapiController extends BaseController {
 		$cookie_file = __PUBLIC__.'cookies.tmp';
 		$ch = curl_init();
 		curl_setopt($ch, CURLOPT_POST, 1); 
-		curl_setopt($ch, CURLOPT_CONNECTTIMEOUT, 60); 
+		curl_setopt($ch, CURLOPT_CONNECTTIMEOUT, 1800); 
 		//curl_setopt($ch, CURLOPT_COOKIEJAR, $cookieFile);
 		curl_setopt($ch, CURLOPT_COOKIEJAR, $cookie_file); 
 		//curl_setopt($ch, CURLOPT_COOKIEFILE,$cookieFile); 
@@ -80,7 +80,7 @@ class CallapiController extends BaseController {
 		curl_setopt($ch, CURLOPT_FOLLOWLOCATION, 1); 
 		curl_setopt($ch, CURLOPT_SSL_VERIFYPEER,FALSE); 
 		curl_setopt($ch, CURLOPT_HTTPGET, true); 
-		curl_setopt($ch, CURLOPT_TIMEOUT, 30); 
+		curl_setopt($ch, CURLOPT_TIMEOUT, 1000); 
 		if($params !== false){
 		 	curl_setopt($ch, CURLOPT_POSTFIELDS , $params);
 		} 

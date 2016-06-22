@@ -2,15 +2,24 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-<title>企业认证--搜黑</title>
+<title>合规认证平台--口碑</title>
+<meta name="keywords" content="合规认证平台,口碑,贵金属机构合规认证"/>
+<meta name="description" content="口碑,黄金、外汇、贵金属合规认证平台，为投资者甄选安全可靠的交易平台。"/>
+<link rel="icon" href="__PUBLIC__/s.ico" type="image/x-icon" />
 <link type="text/css" rel="stylesheet" href="__PUBLIC__/Home/css/main.css"/>
+<link type="text/css" rel="stylesheet" href="__PUBLIC__/Home/css/jquery.editable-select.min.css"/>
 <script type="text/javascript" src="__PUBLIC__/js/jquery-1.8.3.min.js" ></script>
 <script type="text/javascript" src="__PUBLIC__/js/Validform_v5.3.2.js" ></script>
 <script type="text/javascript" src="__PUBLIC__/Home/js/main.js" ></script>
+<script type="text/javascript" src="__PUBLIC__/Home/js/jquery.form.js" ></script>
 </head>
 
 <body>
-
+<!--成功-->  
+<div class="yzsbai3">
+    <p id="tishi3"></p>
+    <input name="" type="button" value="确 定" class="xigs3" />
+</div>
 <!--提交成功-->
 <div class="tj_box" style="display:none; top:45%">
   <div class="tj_box_close"><a href="javascript:void(0)">关闭</a></div>
@@ -29,9 +38,9 @@
   </div>
 </div>
 
-<!--Begin--登陆-->   
+<!--Begin--登录-->   
 <include file="Public:login" />
-<!--End--登陆--> 
+<!--End--登录--> 
 <div id="wrap">
 
 <!--头部--Begin-->   
@@ -41,29 +50,40 @@
 <!--内容--Begin-->     
    <div id="content">
      <div class="renzheng">
-       <h2>申请搜黑可信企业认证</h2>
+       <h2>申请口碑可信企业认证</h2>
        <div class="txneirong">
    		 <p class="txnr_ts">请如实填写申请企业或机构的相关信息后，提交认证。</p>
-        <form class="registerform" name="theForm" method="post" enctype="multipart/form-data" onsubmit="return ValidateFile()">
+        <form class="registerform" name="theForm" id="theForm" action="__URL__/authentication_ex" method="post" enctype="multipart/form-data" onsubmit="return ValidateFile()">
          <div class="xzqyxz">
                 <span>企业性质：</span>
-                <select name="nature">
+                <select name="nature" id="nature" class="qyxzz" autocomplete="off">
                   <option value="003001">公司</option>
                   <option value="003002">平台</option>
                 </select>
                 <span>所属行业：</span>
                 <select name="trade" class="gjshu">
-                  <option value="004001">贵金属</option>
+                  <option value="004004">大宗商品(贵金属、石油)</option>
                   <option value="004002">外汇</option>
+                  <option value="004005">其他</option>
                 </select>
          </div>
          <div class="txkuang">
             <h3><span>基本信息</span></h3>
             <dl>
               <dt>公司全称：</dt>
-              <dd>
-                <input name="company_name" type="text" class="text1" datatype="s" nullmsg="不能为空！" /><span>*</span>
-                <em class="Validform_checktip"></em>
+              <dd id="gs">
+                <select id="editable-select" name="company_name1" class="gjshu form-control">
+                  <volist name="list_gs" id="list_gs">
+                    <option>{$list_gs}</option>
+                  </volist>
+                </select><span>*必填</span>
+              </dd>
+              <dd id="pt">
+                <select id="editable-selected" name="company_name2" class="gjshu form-control">
+                  <volist name="list_pt" id="list_pt">
+                    <option>{$list_pt}</option>
+                  </volist>
+                </select><span>*必填</span>
               </dd>
             </dl>
             <dl>
@@ -73,56 +93,67 @@
               </dd>
             </dl>
             <dl>
-              <dt>注册地址：</dt>
+              <dt>联系地址：</dt>
               <dd>
                 <input name="reg_address" type="text" class="text1" datatype="s" nullmsg="不能为空！" /><span>*</span>
                 <em class="Validform_checktip"></em>
               </dd>
             </dl>
             <dl>
-              <dt>企业类型：</dt>
-              <dd>
-                <input name="company_type" type="text" class="text1" datatype="s" nullmsg="不能为空！" /><span>*</span>
-                <em class="Validform_checktip"></em>
-              </dd>
-            </dl>
-            <dl>
               <dt>营业执照：</dt>
               <dd>
-                <input type="file" name="busin_license" id="busin_license" class="file" /><span>*</span>
+                <input type="file" name="busin_license" id="busin_license" class="file" />
                 <em class="Validform_checktip"></em>
               </dd>
             </dl>
             <dl>
               <dt>机构代码证：</dt>
               <dd>
-                <input type="file" name="code_certificate" id="code_certificate"  class="file" /><span>*</span>
+                <input type="file" name="code_certificate" id="code_certificate"  class="file" />
                 <em class="Validform_checktip"></em>
               </dd>
             </dl>
             <dl>
-              <dt>联系电话：</dt>
+              <dt>公司电话：</dt>
               <dd>
-                <input name="telephone" type="text" class="text1" datatype="n5-11" nullmsg="输入电话号码！" errormsg="输入的电话有误" /><span>*</span>
+                <input name="telephone" type="text" class="text1" datatype="n5-13" nullmsg="请输入公司电话！" errormsg="输入的电话有误" /><span>*</span>
                 <em class="Validform_checktip"></em>
               </dd>
             </dl>
             <dl>
               <dt>官方网站：</dt>
               <dd>
-                <input name="website" type="text" class="text1" datatype="url" nullmsg="不能为空" /><span>*</span>
+                <input name="website" type="text" class="text1" datatype="url"  ignore="ignore" />
                 <em class="Validform_checktip"></em>
               </dd>
             </dl>
             <dl>
               <dt>官网备案：</dt>
               <dd>
-                <input name="record" type="text" class="text1" datatype="s" nullmsg="不能为空" /><span>*</span>
+                <input name="record" type="text" class="text1" />
+                <em class="Validform_checktip"></em>
+              </dd>
+            </dl>
+         </div>
+         <div class="txkuang nobian" style="border-bottom: 1px dashed #d89393;">
+            <h3><span>联系人信息</span></h3> 
+            <dl>
+              <dt>联系人：</dt>
+              <dd>
+                <input name="contact" type="text" class="text1" datatype="*" nullmsg="输入联系人！" errormsg="输入的联系人有误" /><span>*</span>
+                <em class="Validform_checktip"></em>
+              </dd>
+            </dl>
+            <dl>
+              <dt>联系电话：</dt>
+              <dd>
+                <input name="mobile" type="text" class="text1" datatype="n5-13" nullmsg="输入电话号码！" errormsg="输入的电话有误" /><span>*</span>
                 <em class="Validform_checktip"></em>
               </dd>
             </dl>
          </div>
          <div class="txkuang nobian">
+          <div class="zixx">
             <h3><span>资质信息</span></h3>
             <dl>
               <dt>代理平台：</dt>
@@ -151,6 +182,7 @@
                 <em class="Validform_checktip"></em>
               </dd>
             </dl>
+          </div>
             <dl>
               <dt>&nbsp;</dt><dd><input name="submit" type="submit" value="提交认证" class="textn1" /></dd>
             </dl>     
@@ -169,6 +201,17 @@
 
 </div>
 </body>
+<script type="text/javascript" src="__PUBLIC__/Home/js/jquery.editable-select.min.js" ></script>
+<script type="text/javascript">
+    //公司
+    $('#editable-select').editableSelect({
+        effects: 'slide'
+    });
+    //平台
+    $('#editable-selected').editableSelect({
+        effects: 'slide'
+    });
+</script>
 <script type="text/javascript">
     //表单验证插件
     $(function(){
@@ -181,60 +224,146 @@
           }
         }
       });
-    })
+      //表单提交成功关闭
+      $(".yzsbai3 .xigs3").click(function(){
+        $(".yzsbai3").hide();
+        $(".bd_wd3").hide();  
+        window.location.href="__ROOT__/"; 
+      });
+      //根据公司性质显示
+      var bb = $("#nature").val(); 
+      if (bb == '003001') {
+          $(".zixx").show();
+          $('#gs').show();
+          $('#pt').hide();
+      }else{
+          $(".zixx").hide();         
+      }
+      //清空公司名称
+      $("#editable-select,#editable-selected").attr("value","");
+      //切换公司性质
+      $('#nature').change(function(){ 
+        var aa = $(this).val();
+        $("#editable-select,#editable-selected").attr("value","");
+        if (aa == '003001') {
+          $(".zixx").show();
+          $('#gs').show();
+          $('#pt').hide();
+        }else{
+          $(".zixx").hide();
+        } 
+        if (aa == '003002') {
+          $('#pt').show();
+          $('#gs').hide();
+        }
+      });
+    });
     //图片上传验证
     function ValidateFile(){ 
-      var tmp     = document.getElementById("busin_license").value; 
-      var tmp1    = document.getElementById("code_certificate").value;
-      var tmp2    = document.getElementById("certificate").value;
-      var tmpStr  = tmp.substring(tmp.lastIndexOf('.')+1,tmp.length).toLowerCase(); 
-      var tmpStr1 = tmp1.substring(tmp1.lastIndexOf('.')+1,tmp1.length).toLowerCase();
-      var tmpStr2 = tmp2.substring(tmp2.lastIndexOf('.')+1,tmp2.length).toLowerCase();
-      if(tmpStr == ""){ 
-          alert("请上传营业执照！"); 
-          return false; 
-      }else if(!/.(gif|jpg|jpeg|png|GIF|JPG|png)$/.test(tmp)){
-		  alert("营业执照类型必须是.gif,jpeg,jpg,png中的一种");
-		  return false;
-	  }else{
-	  	  var image = new Image();
-	      image.src = tmp;
-	      var filesize = image.filesize;
-	      if(filesize>358400){
-	        alert('请上传大小小于350k的图片');
-	        return false;
-	      }
-	  }
-      if (tmpStr1 == "") {
-          alert("请上传机构代码证！"); 
+        var tmp     = document.getElementById("busin_license").value; 
+        var tmp1    = document.getElementById("code_certificate").value;
+        var tmp2    = document.getElementById("certificate").value;
+        var tmpStr  = tmp.substring(tmp.lastIndexOf('.')+1,tmp.length).toLowerCase(); 
+        var tmpStr1 = tmp1.substring(tmp1.lastIndexOf('.')+1,tmp1.length).toLowerCase();
+        var tmpStr2 = tmp2.substring(tmp2.lastIndexOf('.')+1,tmp2.length).toLowerCase();
+        var userid  = '{$userid}';
+        if (userid == '') {
+          $(".bd_wd").css("width", $(document).width());
+          $(".bd_wd").css("height", $(document).height());
+          $(".bd_wd").show();
+          $("#tcwindows1").show();
           return false;
-      }else if(!/.(gif|jpg|jpeg|png|GIF|JPG|png)$/.test(tmp1)){
-		  alert("机构代码证类型必须是.gif,jpeg,jpg,png中的一种");
-		  return false;
-	  }else{
-	  	  var image = new Image();
-	      image.src = tmp1;
-	      var filesize = image.filesize;
-	      if(filesize>358400){
-	        alert('请上传大小小于350k的图片');
-	        return false;
-	      }
-	  }
-	  if(tmpStr2 != ""){
-		  if(!/.(gif|jpg|jpeg|png|GIF|JPG|png)$/.test(tmp2)){
-			  alert("资质证明类型必须是.gif,jpeg,jpg,png中的一种");
-			  return false;
-		  }else{
-		  	  var image = new Image();
-		      image.src = tmp2;
-		      var filesize = image.filesize;
-		      if(filesize>20480){
-		        alert('请上传大小小于20k的图片');
-		        return false;
-		      }
-	     }
-	  }
+        }
+        if(tmpStr != ""){
+            if(!/.(gif|jpg|jpeg|png|GIF|JPG|PNG|JPEG)$/.test(tmp)){
+              $('#tishi').text("营业执照类型必须是.gif,jpeg,jpg,png中的一种");
+              $(".bd_wd").css("width", $(document).width());
+              $(".bd_wd").css("height", $(document).height());
+              $(".bd_wd").show();
+              $(".yzsbai").show();  
+              return false; 
+            }
+    	  }
+        if (tmpStr1 != "") {
+            if(!/.(gif|jpg|jpeg|png|GIF|JPG|PNG|JPEG)$/.test(tmp1)){
+              $('#tishi').text("机构代码证类型必须是.gif,jpeg,jpg,png中的一种");
+              $(".bd_wd").css("width", $(document).width());
+              $(".bd_wd").css("height", $(document).height());
+              $(".bd_wd").show();
+              $(".yzsbai").show();  
+              return false; 
+            }
+    	  }
+    	  if(tmpStr2 != ""){
+    		  if(!/.(gif|jpg|jpeg|png|GIF|JPG|PNG|JPEG)$/.test(tmp2)){
+            $('#tishi').text("资质证明类型必须是.gif,jpeg,jpg,png中的一种");
+            $(".bd_wd").css("width", $(document).width());
+            $(".bd_wd").css("height", $(document).height());
+            $(".bd_wd").show();
+            $(".yzsbai").show();  
+            return false; 
+    		  }
+    	  }
     }
 </script>
+<script type="text/javascript">
+    $(function () {
+        var options = {
+            success: function (data) {
+              if(data){
+                $(".bd_wd").css("width", $(document).width());
+                $(".bd_wd").css("height", $(document).height());
+                $(".bd_wd").show();
+                if (data == 0) {
+                  $('#tishi3').text("合规认证添加成功！");
+                  $(".yzsbai3").show();
+                  return false;
+                }else if(data == -1){
+                  $('#tishi').text("合规认证添加失败！");
+                  $(".yzsbai").show();
+                  return false;
+                }else if(data == 1){
+                  $('#tishi').text("图片上传失败！");
+                  $(".yzsbai").show();
+                  return false;
+                }else if(data == 2){
+                  $('#tishi').text("没有文件上传！");
+                  $(".yzsbai").show();
+                  return false;
+                }else if(data == 3){
+                  $('#tishi').text("文件上传错误！");
+                  $(".yzsbai").show();
+                  return false;
+                }else if(data == 4){
+                  $('#tishi').text("上传文件不能大于400kb！");
+                  $(".yzsbai").show();
+                  return false;
+                }else if(data == 5){
+                  $('#tishi').text("图片格式错误！");
+                  $(".yzsbai").show();
+                  return false;
+                }else if(data == 6){
+                  $('#tishi').text("必填项没有填写！");
+                  $(".yzsbai").show();
+                  return false;
+                }else if(data == 7){
+                  $('#tishi').text("您还没有登录！");
+                  $(".yzsbai").show();
+                  return false;
+                }else if(data == 8){
+                  $('#tishi').text("公司全称不能为空！");
+                  $(".yzsbai").show();
+                  return false;
+                }else if(data == 9){
+                  $('#tishi').text("你填写的公司不存在！");
+                  $(".yzsbai").show();
+                  return false;
+                }
 
+              }
+            }
+        };
+        $("#theForm").ajaxForm(options);
+    });
+</script>
 </html>
