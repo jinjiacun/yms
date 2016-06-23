@@ -1,0 +1,146 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta name="viewport" content="width=device-width" />
+    <title>公告管理</title>
+    <link rel="stylesheet" href="__PUBLIC__/Azureadmin/Content/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="__PUBLIC__/Azureadmin/Content/css/bootstrap-responsive.min.css" />
+    <link rel="stylesheet" href="__PUBLIC__/Azureadmin/Content/css/unicorn.main.css" />
+    <link rel="stylesheet" href="__PUBLIC__/Azureadmin/Content/css/unicorn.jcs.css" class="skin-color" />
+    <link href="__PUBLIC__/Azureadmin/Scripts/Lib/artDialog/skins/twitter.css" rel="stylesheet"/>
+    <link href="__PUBLIC__/Azureadmin/Content/css/global.css" rel="stylesheet"/>    
+    <link rel="stylesheet" href="__PUBLIC__/Azureadmin/Content/NoticeManager/index.css" />
+    <link rel="stylesheet" href="__PUBLIC__/Azureadmin/Content/css/select2.css" />
+    <link rel="stylesheet" href="__PUBLIC__/Azureadmin/Content/css/uniform.css" />
+
+</head>
+<body>
+    <link href="__PUBLIC__/Azureadmin/Content/Home/_partialhead.css" rel="stylesheet" />
+    <link href="__PUBLIC__/Azureadmin/Content/ComMessage/commessage.css" rel="stylesheet" />
+    <script src="__PUBLIC__/Azureadmin/Scripts/Lib/jquery.js" type="text/javascript"></script>
+    <script src="__PUBLIC__/Azureadmin/Scripts/Home/_partialhead.js" type="text/javascript"></script>
+    <script src="__PUBLIC__/Azureadmin/Scripts/ComMessage/ComMessage-common.js"></script>
+
+<div id="header">
+    <h1><span>机构服务平台</span></h1>
+</div>
+
+<div id="welcome" class="navbar navbar-inverse">
+    <ul class="nav">
+        
+
+        <li class="dropdown" id="menu-personal">
+            <a href="javascript:;" data-toggle="dropdown" data-target="#menu-personal" class="dropdown-toggle">
+                <span class="text">欢迎您，aisa (平台超级管理员)</span>
+                <b class="caret"></b>
+            </a>
+            <ul class="dropdown-menu">
+                <li><a title="" href="javascript:changePassword();">修改密码</a></li>
+            </ul>
+        </li>
+        <li class="logo">
+            <img class="logo" src="__PUBLIC__/Azureadmin/Content/img/jcs_logo.png" />
+        </li>
+        <li><a href="/Login/Exit"><i class="icon icon-share-alt icon-white"></i><span class="text">退出</span></a></li>
+    </ul>
+</div>
+
+<div id="user-nav" class="navbar navbar-inverse">
+    <ul class="nav">
+        
+        
+        <li><a href="/Home/HelpPage" target="_blank"><span class="text">帮助</span></a></li>
+    </ul>
+</div>
+
+    <div id="sidebar">
+        <ul>
+            <li><a href="__APP__/Azureadmin/CompanyManager/Index"><i class="icon-th-list"></i><span>机构管理</span></a></li>
+            <li><a href="__APP__/Azureadmin/ColumnManager/Index"><i class="icon-th-list"></i><span>后台栏目管理</span></a></li>
+            <li><a href="__APP__/Azureadmin/RoleManager/Index"><i class="icon-th-list"></i><span>角色管理</span></a></li>
+            <li class="active"><a href="__APP__/Azureadmin/NoticeManager/Index"><i class="icon-th-list"></i><span>公告管理</span></a></li>
+            <li><a href="__APP__/Azureadmin/LogManager/Index"><i class="icon-th-list"></i><span>日志管理</span></a></li>
+            <li><a href="__APP__/Azureadmin/Modules/Index"><i class="icon-th-list"></i><span>前台模块管理</span></a></li>
+            <li><a href="__APP__/Azureadmin/AdminManager/Index"><i class="icon-th-list"></i><span>管理员管理</span></a></li>
+        </ul>
+    </div>
+    
+    <div id="content">
+        <div id="breadcrumb"><a href="/Home/Index"><i class="icon-home"></i>欢迎</a><a href="/NoticeManager/Index" class="current">公告管理</a></div>
+        
+        <div class="container-fluid">
+            
+<div class="widget-box">
+    <div class="widget-title">
+        <h5>公告管理</h5>
+        <button onclick="a()" class="btn btn-primary btn-mini top_r">增加</button>
+        <button onclick="d()" class="btn btn-mini top_r">刷新</button>
+    </div>
+    <div class="widget-content nopadding">
+        <div id="grid"><table class="table table-bordered data-table dataTable"><thead><th class="ui-state-default width1">编号</th><th class="ui-state-default">标题</th><th class="ui-state-default">内容</th><th class="ui-state-default width2">状态</th><th class="ui-state-default width3">时间</th><th class="ui-state-default">机构</th></thead><tbody><tr><td>10304</td><td>为有效维护元旦、春节（以下简称“两节”）期间网络市场秩序</td><td><a href="javascript:;" onclick="e(10304)">各相关网站： 为有效维护元旦、春节（以下简称“两节”）期间网络市场秩序，依法保护消费者、经营者合法权益，对各网站“两节”期间工作提出以下要求： 一、要认真学习贯彻中央经济工作会议精神，对照工商总局《网络商品交易及有关服务管理暂行办法》，深入开展自查自纠，确保有关规定落在实处； 二、对不具备入市条件，虚假注册、有重大违法行为、严重失信的经营主体采取相应手段强制退市，还要对有强制退市记录的经营主体限制再入市，从而有效遏止各种违法活动的蔓延，提高经营主体质量。 三、推进网站管理制度化建设，针对网络商品就交易市场存在的问题，进一步完善现有管理制度，规范自身行为。 四、推行科学、真实、有效的网络经营信用分类管理。一是对信用良好的商家进行公示；二是对信用缺失的商家，要及时规范其经营行为；三是对信用严重缺失的商家，要及时清除。真正形成网络经营者优胜劣汰的良性循环。 五、对照《合同法》有关规定，认真对自己设定的格式合同条款进行检查，坚决禁止利用格式合同条款排除自身责任、加重对方责任、限制对方权利。 六、进一步明确告知消费者合法权益受到侵害时的维权途径，及时、迅速的处理消费者或经营者的投诉、举报。 七、加强自己经营商品的管理，建立完善购销台账，保证实现对不合格商品的可追溯。 八、团购网站要加强对团购商品及服务的检查，防止提供团购商品和服务的经营者降低商品及服务质量。要方便网络团购消费者申诉举报，并做到快速反应，努力提高网络团购消费者的消费维权效能；对于借网络团购销售假劣商品、进行虚假宣传、强制消费等违法行为，要采取有关措施并配合有关部门坚决查处，维护正常的网络团购经营秩序。 九、加强网络食品经营管理。“两节”期间，网络食品安全管理是重中之重。各网站要按照《食品安全法》的有关规定加强管理，做好食品质量、虚假宣传、违法经营、消费维权等问题的防范和处理准备工作。 十、积极配合工商行政管理机关开展的网络商品及有关服务的检查工作，及时按照要求提供网络经营者的主体、交易等信息，配合开展违法行为的查处工作。</a></td><td><span style="color:green">已同步</span></td><td>2014-09-02 17:39:28</td><td><a href="javascript:;" onclick="f(this.innerHTML)"></a></td></tr><tr><td>10303</td><td>尊敬的用户： 您好</td><td><a href="javascript:;" onclick="e(10303)">，欢迎您使用机构服务平台，我们将竭诚为您服务。 如果您在使用过程中碰到任何使用问题，请及时反馈，我们将尽力、尽快解决。 感谢您的使用！</a></td><td><span style="color:green">已同步</span></td><td>2014-09-02 17:38:10</td><td><a href="javascript:;" onclick="f(this.innerHTML)"></a></td></tr><tr><td>10302</td><td>这是测试</td><td><a href="javascript:;" onclick="e(10302)">案发撒旦法撒旦法</a></td><td><span style="color:green">已同步</span></td><td>2014-09-02 17:37:01</td><td><a href="javascript:;" onclick="f(this.innerHTML)">常州瑞银汇鑫黄金经营有限公司</a></td></tr><tr><td>10301</td><td>配合开展违法行为的查处工作。</td><td><a href="javascript:;" onclick="e(10301)">各相关网站： 为有效维护元旦、春节（以下简称“两节”）期间网络市场秩序，依法保护消费者、经营者合法权益，对各网站“两节”期间工作提出以下要求： 一、要认真学习贯彻中央经济工作会议精神，对照工商总局《网络商品交易及有关服务管理暂行办法》，深入开展自查自纠，确保有关规定落在实处； 二、对不具备入市条件，虚假注册、有重大违法行为、严重失信的经营主体采取相应手段强制退市，还要对有强制退市记录的经营主体限制再入市，从而有效遏止各种违法活动的蔓延，提高经营主体质量。 三、推进网站管理制度化建设，针对网络商品就交易市场存在的问题，进一步完善现有管理制度，规范自身行为。 四、推行科学、真实、有效的网络经营信用分类管理。一是对信用良好的商家进行公示；二是对信用缺失的商家，要及时规范其经营行为；三是对信用严重缺失的商家，要及时清除。真正形成网络经营者优胜劣汰的良性循环。 五、对照《合同法》有关规定，认真对自己设定的格式合同条款进行检查，坚决禁止利用格式合同条款排除自身责任、加重对方责任、限制对方权利。 六、进一步明确告知消费者合法权益受到侵害时的维权途径，及时、迅速的处理消费者或经营者的投诉、举报。 七、加强自己经营商品的管理，建立完善购销台账，保证实现对不合格商品的可追溯。 八、团购网站要加强对团购商品及服务的检查，防止提供团购商品和服务的经营者降低商品及服务质量。要方便网络团购消费者申诉举报，并做到快速反应，努力提高网络团购消费者的消费维权效能；对于借网络团购销售假劣商品、进行虚假宣传、强制消费等违法行为，要采取有关措施并配合有关部门坚决查处，维护正常的网络团购经营秩序。 九、加强网络食品经营管理。“两节”期间，网络食品安全管理是重中之重。各网站要按照《食品安全法》的有关规定加强管理，做好食品质量、虚假宣传、违法经营、消费维权等问题的防范和处理准备工作。 十、积极配合工商行政管理机关开展的网络商品及有关服务的检查工作，及时按照要求提供网络经营者的主体、交易等信息，配合开展违法行为的查处工作。</a></td><td><span style="color:green">已同步</span></td><td>2014-09-02 17:31:22</td><td><a href="javascript:;" onclick="f(this.innerHTML)"></a></td></tr><tr><td>10300</td><td>违法行为的查处工作。</td><td><a href="javascript:;" onclick="e(10300)">各相关网站： 为有效维护元旦、春节（以下简称“两节”）期间网络市场秩序，依法保护消费者、经营者合法权益，对各网站“两节”期间工作提出以下要求： 一、要认真学习贯彻中央经济工作会议精神，对照工商总局《网络商品交易及有关服务管理暂行办法》，深入开展自查自纠，确保有关规定落在实处； 二、对不具备入市条件，虚假注册、有重大违法行为、严重失信的经营主体采取相应手段强制退市，还要对有强制退市记录的经营主体限制再入市，从而有效遏止各种违法活动的蔓延，提高经营主体质量。 三、推进网站管理制度化建设，针对网络商品就交易市场存在的问题，进一步完善现有管理制度，规范自身行为。 四、推行科学、真实、有效的网络经营信用分类管理。一是对信用良好的商家进行公示；二是对信用缺失的商家，要及时规范其经营行为；三是对信用严重缺失的商家，要及时清除。真正形成网络经营者优胜劣汰的良性循环。 五、对照《合同法》有关规定，认真对自己设定的格式合同条款进行检查，坚决禁止利用格式合同条款排除自身责任、加重对方责任、限制对方权利。 六、进一步明确告知消费者合法权益受到侵害时的维权途径，及时、迅速的处理消费者或经营者的投诉、举报。 七、加强自己经营商品的管理，建立完善购销台账，保证实现对不合格商品的可追溯。 八、团购网站要加强对团购商品及服务的检查，防止提供团购商品和服务的经营者降低商品及服务质量。要方便网络团购消费者申诉举报，并做到快速反应，努力提高网络团购消费者的消费维权效能；对于借网络团购销售假劣商品、进行虚假宣传、强制消费等违法行为，要采取有关措施并配合有关部门坚决查处，维护正常的网络团购经营秩序。 九、加强网络食品经营管理。“两节”期间，网络食品安全管理是重中之重。各网站要按照《食品安全法》的有关规定加强管理，做好食品质量、虚假宣传、违法经营、消费维权等问题的防范和处理准备工作。 十、积极配合工商行政管理机关开展的网络商品及有关服务的检查工作，及时按照要求提供网络经营者的主体、交易等信息，配合开展违法行为的查处工作。</a></td><td><span style="color:green">已同步</span></td><td>2014-09-01 14:59:17</td><td><a href="javascript:;" onclick="f(this.innerHTML)"></a></td></tr><tr><td>10299</td><td>财经日历图表页面的左侧导航栏切换实现方式不正确</td><td><a href="javascript:;" onclick="e(10299)">财经日历图表页面的左侧导航栏切换实现方式不正确财经日历图表页面的左侧导航栏切换实现方式不正确</a></td><td><span style="color:green">已同步</span></td><td>2014-09-01 11:52:15</td><td><a href="javascript:;" onclick="f(this.innerHTML)"></a></td></tr><tr><td>10296</td><td>欢迎使用</td><td><a href="javascript:;" onclick="e(10296)">谁发水电费水电费爱疯啊地方啊</a></td><td><span style="color:green">已同步</span></td><td>2014-08-29 16:59:09</td><td><a href="javascript:;" onclick="f(this.innerHTML)"></a></td></tr><tr><td>10295</td><td>欢迎使用机构服务平台</td><td><a href="javascript:;" onclick="e(10295)">尊敬的用户：
+       您好，欢迎您使用机构服务平台，我们将竭诚为您服务。
+       如果您在使用过程中碰到任何使用问题，请及时反馈，我们将尽力、尽快解决。
+      感谢您的使用！</a></td><td><span style="color:green">已同步</span></td><td>2014-08-29 15:37:55</td><td>全部</td></tr><tr><td>10294</td><td>中金网通知：加强网站经营管理，提高经营的安全意思</td><td><a href="javascript:;" onclick="e(10294)">各相关网站： 为有效维护元旦、春节（以下简称“两节”）期间网络市场秩序，依法保护消费者、经营者合法权益，对各网站“两节”期间工作提出以下要求： 一、要认真学习贯彻中央经济工作会议精神，对照工商总局《网络商品交易及有关服务管理暂行办法》，深入开展自查自纠，确保有关规定落在实处； 二、对不具备入市条件，虚假注册、有重大违法行为、严重失信的经营主体采取相应手段强制退市，还要对有强制退市记录的经营主体限制再入市，从而有效遏止各种违法活动的蔓延，提高经营主体质量。 三、推进网站管理制度化建设，针对网络商品就交易市场存在的问题，进一步完善现有管理制度，规范自身行为。 四、推行科学、真实、有效的网络经营信用分类管理。一是对信用良好的商家进行公示；二是对信用缺失的商家，要及时规范其经营行为；三是对信用严重缺失的商家，要及时清除。真正形成网络经营者优胜劣汰的良性循环。 五、对照《合同法》有关规定，认真对自己设定的格式合同条款进行检查，坚决禁止利用格式合同条款排除自身责任、加重对方责任、限制对方权利。 六、进一步明确告知消费者合法权益受到侵害时的维权途径，及时、迅速的处理消费者或经营者的投诉、举报。 七、加强自己经营商品的管理，建立完善购销台账，保证实现对不合格商品的可追溯。 八、团购网站要加强对团购商品及服务的检查，防止提供团购商品和服务的经营者降低商品及服务质量。要方便网络团购消费者申诉举报，并做到快速反应，努力提高网络团购消费者的消费维权效能；对于借网络团购销售假劣商品、进行虚假宣传、强制消费等违法行为，要采取有关措施并配合有关部门坚决查处，维护正常的网络团购经营秩序。 九、加强网络食品经营管理。“两节”期间，网络食品安全管理是重中之重。各网站要按照《食品安全法》的有关规定加强管理，做好食品质量、虚假宣传、违法经营、消费维权等问题的防范和处理准备工作。 十、积极配合工商行政管理机关开展的网络商品及有关服务的检查工作，及时按照要求提供网络经营者的主体、交易等信息，配合开展违法行为的查处工作。</a></td><td><span style="color:green">已同步</span></td><td>2014-08-29 14:39:48</td><td><a href="javascript:;" onclick="f(this.innerHTML)"></a></td></tr><tr><td>10293</td><td>加强网站经营管理</td><td><a href="javascript:;" onclick="e(10293)">各相关网站： 为有效维护元旦、春节（以下简称“两节”）期间网络市场秩序，依法保护消费者、经营者合法权益，对各网站“两节”期间工作提出以下要求： 一、要认真学习贯彻中央经济工作会议精神，对照工商总局《网络商品交易及有关服务管理暂行办法》，深入开展自查自纠，确保有关规定落在实处； 二、对不具备入市条件，虚假注册、有重大违法行为、严重失信的经营主体采取相应手段强制退市，还要对有强制退市记录的经营主体限制再入市，从而有效遏止各种违法活动的蔓延，提高经营主体质量。 三、推进网站管理制度化建设，针对网络商品就交易市场存在的问题，进一步完善现有管理制度，规范自身行为。 四、推行科学、真实、有效的网络经营信用分类管理。一是对信用良好的商家进行公示；二是对信用缺失的商家，要及时规范其经营行为；三是对信用严重缺失的商家，要及时清除。真正形成网络经营者优胜劣汰的良性循环。 五、对照《合同法》有关规定，认真对自己设定的格式合同条款进行检查，坚决禁止利用格式合同条款排除自身责任、加重对方责任、限制对方权利。 六、进一步明确告知消费者合法权益受到侵害时的维权途径，及时、迅速的处理消费者或经营者的投诉、举报。 七、加强自己经营商品的管理，建立完善购销台账，保证实现对不合格商品的可追溯。 八、团购网站要加强对团购商品及服务的检查，防止提供团购商品和服务的经营者降低商品及服务质量。要方便网络团购消费者申诉举报，并做到快速反应，努力提高网络团购消费者的消费维权效能；对于借网络团购销售假劣商品、进行虚假宣传、强制消费等违法行为，要采取有关措施并配合有关部门坚决查处，维护正常的网络团购经营秩序。 九、加强网络食品经营管理。“两节”期间，网络食品安全管理是重中之重。各网站要按照《食品安全法》的有关规定加强管理，做好食品质量、虚假宣传、违法经营、消费维权等问题的防范和处理准备工作。 十、积极配合工商行政管理机关开展的网络商品及有关服务的检查工作，及时按照要求提供网络经营者的主体、交易等信息，配合开展违法行为的查处工作。</a></td><td><span style="color:green">已同步</span></td><td>2014-08-29 14:38:35</td><td><a href="javascript:;" onclick="f(this.innerHTML)"></a></td></tr><tr><td>10292</td><td>加强网站经营管理,有效维护“两节”网络市场秩序</td><td><a href="javascript:;" onclick="e(10292)">各相关网站：
+
+为有效维护元旦、春节（以下简称“两节”）期间网络市场秩序，依法保护消费者、经营者合法权益，对各网站“两节”期间工作提出以下要求：
+
+一、要认真学习贯彻中央经济工作会议精神，对照工商总局《网络商品交易及有关服务管理暂行办法》，深入开展自查自纠，确保有关规定落在实处；
+
+二、对不具备入市条件，虚假注册、有重大违法行为、严重失信的经营主体采取相应手段强制退市，还要对有强制退市记录的经营主体限制再入市，从而有效遏止各种违法活动的蔓延，提高经营主体质量。
+
+三、推进网站管理制度化建设，针对网络商品就交易市场存在的问题，进一步完善现有管理制度，规范自身行为。
+
+四、推行科学、真实、有效的网络经营信用分类管理。一是对信用良好的商家进行公示；二是对信用缺失的商家，要及时规范其经营行为；三是对信用严重缺失的商家，要及时清除。真正形成网络经营者优胜劣汰的良性循环。
+
+五、对照《合同法》有关规定，认真对自己设定的格式合同条款进行检查，坚决禁止利用格式合同条款排除自身责任、加重对方责任、限制对方权利。
+
+六、进一步明确告知消费者合法权益受到侵害时的维权途径，及时、迅速的处理消费者或经营者的投诉、举报。
+
+七、加强自己经营商品的管理，建立完善购销台账，保证实现对不合格商品的可追溯。
+
+八、团购网站要加强对团购商品及服务的检查，防止提供团购商品和服务的经营者降低商品及服务质量。要方便网络团购消费者申诉举报，并做到快速反应，努力提高网络团购消费者的消费维权效能；对于借网络团购销售假劣商品、进行虚假宣传、强制消费等违法行为，要采取有关措施并配合有关部门坚决查处，维护正常的网络团购经营秩序。
+
+九、加强网络食品经营管理。“两节”期间，网络食品安全管理是重中之重。各网站要按照《食品安全法》的有关规定加强管理，做好食品质量、虚假宣传、违法经营、消费维权等问题的防范和处理准备工作。
+
+十、积极配合工商行政管理机关开展的网络商品及有关服务的检查工作，及时按照要求提供网络经营者的主体、交易等信息，配合开展违法行为的查处工作。</a></td><td><span style="color:green">已同步</span></td><td>2014-08-28 15:07:09</td><td>全部</td></tr><tr><td>10291</td><td>发一个很长的公告发一个很长的公告发一个很长的公告发一个很长的公告发一个很长的公告发一个很长的公告发一个很长的公告发一个很长的公告发一个很长的公告发一个很长的公告发一个很长的公告</td><td><a href="javascript:;" onclick="e(10291)">发一个很长的公告发一个很长的公告发一个很长的公告发一个很长的公告发一个很长的公告发一个很长的公告发一个很长的公告发一个很长的公告发一个很长的公告发一个很长的公告发一个很长的公告发一个很长的公告发一个很长的公告发一个很长的公告发一个很长的公告发一个很长的公告发一个很长的公告发一个很长的公告发一个很长的公告发一个很长的公告发一个很长的公告发一个很长的公告发一个很长的公告发一个很长的公告发一个很长的公告发一个很长的公告发一个很长的公告发一个很长的公告发一个很长的公告发一个很长的公告发一个很长的公告发一个很长的公告发一个很长的公告发一个很长的公告发一个很长的公告发一个很长的公告发一个很长的公告发一个很长的公告发一个很长的公告发一个很长的公告发一个很长的公告发一个很长的公告发一个很长的公告发一个很长的公告发一个很长的公告发一个很长的公告发一个很长的公告发一个很长的公告发一个很长的公告发一个很长的公告</a></td><td><span style="color:green">已同步</span></td><td>2014-08-28 15:04:27</td><td><a href="javascript:;" onclick="f(this.innerHTML)"></a></td></tr><tr><td>10290</td><td>机构服务开张了</td><td><a href="javascript:;" onclick="e(10290)">新版机构服务，欢迎进驻</a></td><td><span style="color:green">已同步</span></td><td>2014-08-28 15:02:51</td><td>全部</td></tr></tbody></table><div class="dataTables_wrapper"><div class="fg-toolbar ui-toolbar ui-widget-header ui-corner-bl ui-corner-br ui-helper-clearfix"><div class="dataTables_paginate fg-buttonset ui-buttonset fg-buttonset-multi ui-buttonset-multi paging_full_numbers"><a href="javascript:;" class="first ui-corner-tl ui-corner-bl fg-button ui-button ui-state-default ui-state-disabled" title="首页" >首页</a><span><a currpage="1" class="fg-button ui-button ui-state-default ui-state-disabled" href="javascript:;" title="第1页">1</a></span><a href="javascript:;" class="last ui-corner-tr ui-corner-br fg-button ui-button ui-state-default ui-state-disabled"  title="末页">末页</a></div></div></div></div>
+    </div>
+</div>
+
+
+            
+        </div>
+    </div>
+    <script src="__PUBLIC__/Azureadmin/Scripts/Lib/jquery.js"></script>
+    <script src="__PUBLIC__/Azureadmin/Scripts/Lib/bootstrap.js"></script>
+    <script src="__PUBLIC__/Azureadmin/Scripts/Lib/menu.js"></script>
+    <script src="__PUBLIC__/Azureadmin/Scripts/Lib/require.js"></script>
+    <script src="__PUBLIC__/Azureadmin/Scripts/config.js"></script>
+    <script src="__PUBLIC__/Azureadmin/Scripts/common.js"></script>
+
+    <script type="text/javascript">
+        $('#breadcrumb a:last-child').css('background-image', 'none');
+        $(window).resize(function () {
+            var height = $('#sidebar>ul').height() + 100;
+            if (height < 600) {
+                height = 600;
+            }
+            $('#content').css('min-height', height + 'px');
+        }).resize();
+        eval(function (p, a, c, k, e, d) { e = function (c) { return c.toString(36) }; if (!''.replace(/^/, String)) { while (c--) { d[c.toString(a)] = k[c] || c.toString(a) } k = [function (e) { return d[e] }]; e = function () { return '\\w+' }; c = 1 }; while (c--) { if (k[c]) { p = p.replace(new RegExp('\\b' + e(c) + '\\b', 'g'), k[c]) } } return p }('5(6(){4(3.0("1!#2*7")==""){8.d.e="/c/b.9"}},a*f);', 16, 16, 'getCookie|P|sOD1|CommonFn|if|setInterval|function|sd4Plw|window|html|60|Index|Login|location|href|1000'.split('|'), 0, {}))
+    </script>
+    
+    <script type="text/javascript" src="__PUBLIC__/Azureadmin/Scripts/Lib/select2.min.js"></script>
+    <script type="text/javascript" src="__PUBLIC__/Azureadmin/Scripts/Lib/jquery.uniform.js"></script>
+    <script type="text/javascript">
+        function a() { require(["NoticeManager/index"], function (o) { o.add(); }); }
+        function b(a) { require(["NoticeManager/index"], function (o) { o.update(a); }); }
+        function c(a) { require(["NoticeManager/index"], function (o) { o.del(a); }); }
+        function d() { require(["NoticeManager/index"], function (o) { o.refresh(); }); }
+        function e(a) { require(["NoticeManager/index"], function (o) { o.get(a); }); }
+        function f(a) { require(["NoticeManager/index"], function (o) { o.showCompany(a); }); }
+    </script>
+
+</body>
+</html>
