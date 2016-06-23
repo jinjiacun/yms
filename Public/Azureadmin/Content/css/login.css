@@ -1,0 +1,133 @@
+﻿html, body, div, h1, h2, h3, h4, h5, h6, ul, ol, dl, li, dt, dd, p, blockquote, pre, form, fieldset, input, table, th, td {
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    background: url(../../content/img/login_0.jpg) top center;
+}
+
+input {
+    float: left;
+    color: #fff;
+    width: 100%;
+    font-size: 14px;
+    font-family: "微软雅黑";
+}
+
+ul li {
+    list-style: none;
+}
+
+.login {
+    width: 346px;
+    margin: 200px auto 0 auto;
+}
+
+    .login h4 {
+        height: 72px;
+        text-align: center;
+    }
+
+    .login li {
+        height: 66px;
+    }
+
+.login_inp {
+    height: 39px;
+    line-height: 39px;
+    border-radius: 3px;
+    text-indent: 14px;
+    border: 1px solid #485356;
+    background: url(../../content/img/login_2.png) top left;
+}
+
+input.login_inp_yzm {
+    width: 133px;
+    margin-right: 17px;
+}
+
+input.login_but {
+    border: none;
+    height: 44px;
+    cursor: pointer;
+    background: url(../../content/img/login_3.png) top center;
+}
+
+.login_p {
+    font-size: 14px;
+    margin-top: 20px;
+    text-align: center;
+    font-family: "微软雅黑";
+}
+
+    .login_p a {
+        color: #fff;
+        text-decoration: underline;
+    }
+
+.login_span {
+    font-size: 18px;
+    margin-top: 20px;
+    text-align: center;
+    font-family: "微软雅黑";
+    color: #fff;
+}
+
+.field-validation-error {
+    color: red;
+    font-size: 14px;
+    line-height: 25px;
+}
+
+.login_yzm_txt {
+    width: 135px;
+    float: left;
+}
+
+.login_yzm_img {
+    float: left;
+    margin-left: 10px;
+}
+
+    .login_yzm_img .captcha {
+        cursor: pointer;
+    }
+
+    .login_yzm_img .change {
+        font-size: 14px;
+        color: white;
+        margin-left: 8px;
+        cursor:pointer;
+    }
+
+li.login_but_li {
+    height: 56px;
+}
+
+li.login_msg_li {
+    height: 26px;
+    line-height: 26px;
+    color: red;
+}
+
+.icon {
+    background-image: url("../img/login-logic-icons.png");
+    display: inline-block;
+    height: 16px;
+    margin: -4px 5px 0;
+    vertical-align: middle;
+    width: 16px;
+}
+
+.message {
+    color: #b74d46;
+    line-height: 26px;
+}
+
+input.update_but {
+    border: none;
+    height: 44px;
+    cursor: pointer;
+    background: url(/content/img/update_3.png) top center;
+}

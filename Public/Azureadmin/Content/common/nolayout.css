@@ -1,0 +1,79 @@
+﻿
+*
+{
+    margin: 0;
+    padding: 0;
+}
+
+div.widget-box
+{
+    background: none repeat scroll 0 0 #F9F9F9;
+    border-top: 1px solid #CDCDCD;
+    border-left: 1px solid #CDCDCD;
+    border-right: 1px solid #CDCDCD;
+    clear: both;
+    margin-top: 0;
+    margin-bottom: 0;
+    position: relative;
+}
+
+body
+{
+    overflow: hidden;
+    background-color: white;
+}
+
+span > label
+{
+    display: inline-block;
+    width: 130px;
+}
+
+.blockdiv input[type=text]
+{
+    width: 250px;
+}
+
+.blockdiv
+{
+    padding: 5px 20px;
+}
+
+span div
+{
+    display: inline;
+}
+
+.radiolabel
+{
+    width: 60px;
+}
+
+    .radiolabel input
+    {
+        vertical-align: sub;
+    }
+
+span.btn-group
+{
+    margin: 0 5px 5px 0;
+    margin-left: 0!important;
+}
+
+object
+{
+    margin: 2px 10px;
+}
+
+#teacherspan label
+{
+    width: 40px;
+    overflow: hidden;
+}
+
+.DeleteBtn
+{
+    border-top-right-radius: 4px;
+    padding-right: 8px;
+    padding-left: 8px;
+}
