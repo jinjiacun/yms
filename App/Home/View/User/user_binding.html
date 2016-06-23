@@ -1,0 +1,194 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>绑定--口碑</title>
+<link rel="icon" href="__PUBLIC__/s.ico" type="image/x-icon" />
+<link type="text/css" rel="stylesheet" href="__PUBLIC__/Home/css/main.css"/>
+<script type="text/javascript" src="__PUBLIC__/js/jquery-1.8.3.min.js" ></script>
+<script type="text/javascript" src="__PUBLIC__/js/Validform_v5.3.2.js" ></script>
+<script type="text/javascript" src="__PUBLIC__/Home/js/main.js" ></script>
+<script type="text/javascript" src="__PUBLIC__/Home/js/jquery.form.js" ></script>
+<style type="text/css">
+  .verify{
+    margin: 0 !important;;
+    position: relative !important;;
+    width: 200px !important;;
+  }
+</style>
+</head>
+
+<body>
+<div class="bd_wd"></div> 
+<!--成功-->  
+<div class="yzsbai1">
+    <p id="tishi1"></p>
+    <input name="" type="button" value="确 定" class="xigs1" />
+</div>
+<!--失败-->
+<div class="yzsbai">
+    <p id="tishi"></p>
+    <input name="" type="button" value="确 定" class="xigs" />
+</div>
+<div id="wrap">
+
+<!--头部--Begin-->   
+  <div class="header_zc">
+    <div class="header_box">
+      <div class="zhuce_logo">
+        <a href="__ROOT__/" class="zhuce1"><img src="__PUBLIC__/Home/images/logo3.png"/></a>
+        <a class="zhuce2">账号绑定</a>
+       </div>
+      <div class="back_sy"><a href="__ROOT__/">口碑首页</a></div>
+    </div>
+  </div>
+  
+  
+  <!--头部--End--> 
+
+<!--内容--Begin-->     
+   <div id="content_ny">
+    	 <div class="zhucebox">
+             <div class="zhuce_lt">
+             <form class="registerform" action="__URL__/user_binding_ex" name="theForm" id="theForm" method="post" enctype="multipart/form-data" autocomplete="off" onsubmit="return ValidateFile()">
+             <h2>您已通过{$user_info.type}登录口碑</h2>
+                <dl class="yonghu">
+                  <dt></dt>
+                  <dd>
+                    <img src="{$user_info.head}" width="60" height="60">
+                    <p>{$user_info.nick}</p>
+                  </dd>
+                </dl>
+                <dl>
+                  <dt>手机号码：</dt>
+                  <dd>
+                        <input name="mobile" id="mobile" type="text" class="text1" datatype="m" nullmsg="请输入手机号码！" errormsg="输入的手机号码有误" />
+                        <p class="Validform_checktip" id="mobile_ex">请填写真实有效的手机号</p>
+                  </dd>
+                </dl>
+                <dl>
+                  <dt>验证码：</dt>
+                  <dd>
+                        <input name="verify" type="text" class="text1 textt" datatype="s" ajaxurl="{:U('User/check_verify_ex')}" nullmsg="验证码不能为空" errormsg="请输入验证码" />
+                        <input name="verify_but" id="verify_but" type="button" value="获取验证码" class="hqyzm"/>
+                        <div class="clear"></div>
+                        <p class="Validform_checktip">请输入验证码</p>
+                  </dd>
+                </dl>
+                <dl id="verify_but_y" style="display: none;">
+                  <dt>&nbsp;</dt>
+                  <dd>
+                        <img id="verifyImg" class="verify" name="verify" src="{:U('User/verify_c')}" title="点击刷新" onclick="this.src=this.src+'?'" />
+                  </dd>
+                </dl>
+                <dl>
+                  <dt>登录密码：</dt>
+                  <dd>
+                        <input type="password" name="pswd" class="text1" id="pswd" datatype="*6-16" nullmsg="请设置密码！" errormsg="密码范围在6~16位之间！" />
+                        <p class="Validform_checktip">6-16个字符,区分大小写</p>
+                        <input type="hidden" name="openid" value="{$token.openid}">
+                        <input type="hidden" name="nickname" value="{$user_info.nick}">
+                        <input type="hidden" name="head_photo" value="{$user_info.head}">
+                        <input type="hidden" name="type" value="{$user_info.type}">
+                  </dd>
+                </dl>
+                
+                <dl>
+                  <dt>&nbsp;</dt>
+                  <dd>
+                        <input name="" type="checkbox" checked="checked" id="checkbox_ok" value="" class="tongyi" />同意
+                        <a href="{:U('Public/xieyi')}" target='_blank' class="xieyis">服务条款和保密协议</a></dd>
+                </dl>
+                <dl>
+                  <dt>&nbsp;</dt>
+                  <dd>
+                        <input name="submit" type="submit" value="绑定" class="bangding" />
+                        <!-- <a href="__URL__/skip/type/{$user_info.type}" class="tiaoguo">跳过</a> -->
+                  </dd>
+                </dl>
+             </form>
+         </div>
+  </div>
+<!--内容--End--> 
+
+<!--底部--Begin-->     
+   <include file="footer" />
+<!--底部--End--> 
+
+</div>
+</body>
+<script type="text/javascript">
+  //表单验证
+  $(function(){
+      $(".registerform").Validform({
+          tiptype:function(msg,o,cssctl){
+            if(!o.obj.is("form")){
+              var objtip=o.obj.siblings(".Validform_checktip");
+              cssctl(objtip,o.type);
+              objtip.text(msg);
+            }
+          }
+      });
+      //点击显示验证码
+      $('#verify_but').click(function(){
+          var mobile_ex = document.getElementById("mobile_ex").innerHTML;
+          if (mobile_ex == "验证通过！") {
+            $("#verify_but_y").show()
+            $("#verifyImg").show(); 
+          }else{
+            $("#verify_but_y").hide()
+            $("#verifyImg").hide(); 
+          }
+      });
+      var options = {
+            //dataType:"json",
+            success: function (data) {
+              if (data) {
+                $(".bd_wd").css("width", $(document).width());
+                $(".bd_wd").css("height", $(document).height());
+                $(".bd_wd").show();
+                if (data == 0) {
+                  window.location.href="__ROOT__/";      
+                  return false;
+                }
+                else if(data == -1){
+                  $('#tishi').text("绑定失败！");
+                  $(".yzsbai").show();
+                  return false;
+                }else if(data == -2){
+                  $('#tishi').text("密码错误！");
+                  $(".yzsbai").show();
+                  return false;
+                }else if(data == 1){
+                  $('#tishi').text("手机号码不能为空！");
+                  $(".yzsbai").show();
+                  return false;
+                }else if(data == 2){
+                  $('#tishi').text("密码不能为空！");
+                  $(".yzsbai").show();
+                  return false;
+                }else if(data == 3){
+                  $('#tishi').text("密码不能小于6位！");
+                  $(".yzsbai").show();
+                  return false;
+                }else if(data == 4){
+                  $('#tishi').text("密码不能大于16位！");
+                  $(".yzsbai").show();
+                  return false;
+                }
+              }
+            }
+        };
+        $("#theForm").ajaxForm(options);
+
+  })
+
+  function ValidateFile(){ 
+    var checkbox_ok  = document.getElementById("checkbox_ok").checked;
+    if(checkbox_ok == false){ 
+        alert("您还没有没有同意服务条款和保密协议！"); 
+        return false; 
+    }
+  }
+</script>
+</html>

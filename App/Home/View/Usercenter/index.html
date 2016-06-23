@@ -1,0 +1,322 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>{$us_nickname}的个人中心_{$us_nickname}曝光的黑平台信息-口碑网</title>
+<meta name="keywords" content="{$us_nickname}"/>
+<meta name="description" content="{$us_nickname}在口碑网的个人中心，{$us_nickname}的相关评论，{$us_nickname}关注的黑平台。"/>
+<link rel="icon" href="__PUBLIC__/s.ico" type="image/x-icon" />
+<link type="text/css" rel="stylesheet" href="__PUBLIC__/Home/css/main.css"/>
+<link type="text/css" rel="stylesheet" href="__PUBLIC__/Home/css/lightbox.css"/>
+<script type="text/javascript" src="__PUBLIC__/js/jquery-1.8.3.min.js" ></script>
+<script type="text/javascript" src="__PUBLIC__/Home/js/main.js" ></script>
+<script type="text/javascript" src="__PUBLIC__/Home/js/lightbox-2.6.min.js" ></script>
+</head>
+
+<body>
+
+<div id="wrap">
+
+<!--头部--Begin-->   
+  <div class="header_zc">
+    <div class="header_box">
+      <div class="zhuce_logo">
+        <a href="__ROOT__/" class="zhuce1"><img src="__PUBLIC__/Home/images/logo3.png"/></a>
+        <a class="zhuce2">个人中心</a>
+       </div>
+      <div class="back_sy"><a href="__ROOT__/">口碑首页</a></div>
+    </div>
+  </div>
+  <!--头部--End--> 
+
+<!--内容--Begin-->     
+   <div id="content_ny">
+    	<div class="id_newbox">
+        	<div class="id_newbox_lt">
+          </div>
+            <div class="id_newbox_rt">
+            	<div class="new_tit">
+                  <ul>
+                        <li class="activ">TA的评论</li>
+                        <li>TA的曝光</li>
+                        <li>TA的关注</li>
+                  </ul>
+                </div>
+            	<div class="new_box show" id="pl">
+                <div id="new_box_ex"></div>
+              </div>
+              <div class="new_box hide" id="bg"></div>
+              <div class="new_box my_gz hide" id="gz"></div>
+            
+          </div>
+        </div>	 
+  </div>
+<!--内容--End--> 
+
+<!--底部--Begin-->     
+   <include file="User:footer" />
+   <p id="back-to-top"><a href="#top"><span></span></a></p>
+<!--底部--End--> 
+
+</div>
+<script type="text/javascript">
+  $(function(){
+    var usid = "{$usid}";
+    //用户信息查询
+    $.ajax({  
+        type:"get",  
+        url:"__URL__/user_info",
+        timeout: 5000,  
+        dataType:"json",  
+        data:{id:usid},
+        success: function aa(data) {
+            if (data) {
+              var rel = '<div class="touxiang"><img src="'+data.UI_Avatar+'" /></div>';
+                  rel += '<h1>'+data.UI_NickName+'</h1>';
+                  rel += '<dl><dt>性别：</dt>';
+                  rel += '<dd>';
+                  if(data.UI_Sex == 1){
+                    rel += '男';
+                  }
+                  else if(data.UI_Sex == 0){
+                    rel += '女';
+                  }
+                  else {
+                    rel += '未知';
+                  }
+                  rel += '</dd>';
+                  rel += '</dl>';
+                  rel += '<dl><dt>生日：</dt><dd>'+data.UI_BirthDay+'</dd></dl>';
+                  rel += '<dl><dt>职业：</dt><dd>'+data.UI_Job+'</dd></dl>';
+                  rel += '<dl><dt>所在地：</dt><dd>'+data.UI_Address+'</dd></dl>';
+                  $('.id_newbox_lt').prepend(rel);
+            }
+        }
+    });
+    //Ta的评论
+    $.ajax({  
+        type:"get",  
+        url:"__URL__/user_pl",
+        timeout: 5000,  
+        dataType:"json",  
+        data:{id:usid},
+        success: function aa(data) {
+            if(data.pl_count > 0){
+              var datas = data.list;
+              $.each(datas,function(i){ 
+                    var picContent = "<dl class='my_pl'>";
+                    if (datas[i]['parent_id'] == 0) {
+                      picContent += "<dt><img src='__PUBLIC__/Home/images/new_id03.png' /><h3>评论</h3></dt>";
+                    }else{
+                      picContent += "<dt><img src='__PUBLIC__/Home/images/new_id04.png' /><h3>回复</h3></dt>";
+                    }
+                      picContent += "<dd><h4>";
+                    if (datas[i]['parent_id'] != 0 && datas[i]['pparent_id'] == 0) {
+                      picContent += "<a target='_blank'";
+                      if(datas[i]['company_name'] != null){
+                      picContent += " href='__APP__/posts_pl?qy="+datas[i]['company_id']+"&pl="+datas[i]['parent_id']+"'";
+                      }
+                      picContent += ">"+datas[i]['content']+"</a>";
+                    }else if(datas[i]['parent_id'] == 0){
+                      picContent += "<a target='_blank'";
+                      if(datas[i]['company_name'] != null){
+                      picContent += " href='__APP__/posts_pl?qy="+datas[i]['company_id']+"&pl="+datas[i]['id']+"'";
+                      }
+                      picContent += ">"+datas[i]['content']+"</a>";
+                    }else{
+                      picContent += "<a target='_blank'";
+                      if(datas[i]['company_name'] != null){
+                      picContent += " href='__APP__/posts_pl?qy="+datas[i]['company_id']+"&pl="+datas[i]['pparent_id']+"'";
+                      }
+                      picContent += ">"+datas[i]['content']+"</a>";
+                    }
+                      picContent += "</h4><ul class='pic'>";
+                    if (datas[i]['pic_1'] != '') {
+                      picContent += "<li><a href='"+datas[i]['pic_1_url']+"' data-lightbox='example-set'><img src='"+datas[i]['pic_1_url']+"'/></a></li>"; 
+                    }
+                    if (datas[i]['pic_2'] != '') {
+                      picContent += "<li><a href='"+datas[i]['pic_2_url']+"' data-lightbox='example-set'><img src='"+datas[i]['pic_2_url']+"'/></a></li>"; 
+                    }
+                    if (datas[i]['pic_3'] != '') {
+                      picContent += "<li><a href='"+datas[i]['pic_3_url']+"' data-lightbox='example-set'><img src='"+datas[i]['pic_3_url']+"'/></a></li>"; 
+                    }
+                      picContent += "</ul><p class='laiyuan'>来自";
+                      if(datas[i]['company_name'] != null){
+                        picContent += "<a target='_blank' href='__URL__/tiao?id="+datas[i]['company_id']+"'>"+datas[i]['company_name']+"</a>|";
+                      }
+                      picContent += "<span>"+datas[i]['add_time']+"</span></p></dd>"; 
+                $("#new_box_ex").append(picContent); 
+              });
+              if (data.pl_count > 20) {
+                var str = '<div class="jzgd_n"><a class="jzgd_aa" href="javascript:void(0)">加载更多</a></div>';
+                $("#pl").append(str); 
+              }
+            }else{
+              $("#new_box_ex").append('<span>给用户暂时没有评论！</span>');
+              return false; 
+            }
+        }
+    });
+    //ta的曝光
+    $.ajax({
+          type:"get",
+          url:"__URL__/user_bg",
+          timeout: 5000,  
+          dataType:"json",  
+          data:{id:usid},
+          success: function aa(data) {
+              if (data.bg_count > 0) { 
+                var datas = data.list;
+                $.each(datas,function(i){
+                      var str = '';
+                      if(datas[i]['company_id'] != 0){
+                        str += '<a href="__APP__/posts_bg?qy='+datas[i]['company_id']+'&pl='+datas[i]['id']+'" target="_blank">';
+                      }
+                        str += '<div class="my_bg">';
+                        str += '<table width="100%" border="0" cellspacing="0" >';
+                        str += '<tr>';
+                        str += '<td width="288">公司名称：<span title="'+datas[i]['company_name']+'">'+datas[i]['company_name']+'</span></td>';
+                        str += '<td>涉及金额：<span>';
+                        if(datas[i]['amount'] != null){
+                          str += datas[i]['amount'];
+                        }else{
+                          str += '--';
+                        }
+                        str += '</span></td>';
+                        str += '</tr><tr>';
+                        str += '<td>公司网址：<a href="'+datas[i]['website']+'" target="_blank">'+datas[i]['website']+'</a></td>';
+                        str += '<td align="right"><p>'+datas[i]['add_time']+'</p></td>';
+                        str += '</tr></table>';
+                        str += '<div class="nr"><p>'+datas[i]['content']+'</p></div>';
+                        str += '<div class="hfshu">';
+                        str += '<p><span>'+datas[i]['sub_count']+'</span></p>';
+                        str += '</div></div>';
+                      if(datas[i]['company_id'] != 0){
+                        str += '</a>';
+                      }
+                    $("#bg").append(str);
+                });  
+              }else{
+                $("#bg").append("<span>该用户没有关注信息！</span>");
+                return false;
+              }
+          }
+    });
+    //ta的关注
+    $.ajax({  
+          type:"get",  
+          url:"__URL__/user_gz",
+          timeout: 5000,  
+          dataType:"json",  
+          data:{id:usid},
+          success: function aa(data) {
+              if (data.gz_count > 0) {
+                var datas = data.list;
+                var str  = '<table width="100%" border="0" cellspacing="0" cellpadding="0" id="table_gz">';
+                    str += '<tr><th width="88">序号</th><th width="305">公司名称</th><th width="145">关注时间</th></tr>'  
+                $.each(datas,function(i){
+                    if(i != 'gz_count'){
+                      str += '<tr>';
+                      str += '<td>'+(i*1+1)+'</td>';
+                      str += '<td>'+datas[i]['company_name']+'</td>';
+                      str += '<td>'+datas[i]['add_time']+'</td>';
+                      str += '</tr>';
+                    }
+                });
+                str += '</table>';
+                $("#gz").append(str);
+                return false;
+              }else{
+                $("#gz").append("<span>该用户没有关注信息！</span>");
+                return false;
+              }
+          }
+    });
+  })
+</script>
+<script type="text/javascript">
+  $(function(){
+      var usid = "{$usid}";
+      var p=2;// 初始化页面，点击事件从第二页开始
+      var flag=false;
+      $('.jzgd_aa').live('click',function(){
+          //初始状态，如果没数据return ,false;否则
+          if($("#new_box_ex .my_pl").size()<=0){
+            return false;
+          }else{
+            send();
+          }
+      })
+      function send(){
+          if(flag){
+            return false;
+          }
+          $.ajax({
+              type:'post',
+              url:"{:U('Usercenter/pl')}",
+              data:{k:p,
+                    user_id:usid},
+              beforeSend:function(){
+                   $("#new_box_ex").append("<div id='load'>加载中……</div>");
+              },
+              success:function(data){
+                if(data!=null){
+                  $.each(data,function(i){
+                    var picContent = "<dl class='my_pl'>";
+                        if (data[i]['parent_id'] == 0) {
+                          picContent += "<dt><img src='__PUBLIC__/Home/images/new_id03.png' /><h3>评论</h3></dt>";
+                        }else{
+                          picContent += "<dt><img src='__PUBLIC__/Home/images/new_id04.png' /><h3>回复</h3></dt>";
+                        }
+                          picContent += "<dd><h4>";
+                        if (data[i]['parent_id'] != 0 && data[i]['pparent_id'] == 0) {
+                          picContent += "<a target='_blank'";
+                          if(data[i]['company_name'] != null){
+                          picContent += " href='__APP__/posts_pl?qy="+data[i]['company_id']+"&pl="+data[i]['parent_id']+"'";
+                          }
+                          picContent += ">"+data[i]['content']+"</a>";
+                        }else if(data[i]['parent_id'] == 0){
+                          picContent += "<a target='_blank'";
+                          if(data[i]['company_name'] != null){
+                          picContent += " href='__APP__/posts_pl?qy="+data[i]['company_id']+"&pl="+data[i]['id']+"'";
+                          }
+                          picContent += ">"+data[i]['content']+"</a>";
+                        }else{
+                          picContent += "<a target='_blank'";
+                          if(data[i]['company_name'] != null){
+                          picContent += " href='__APP__/posts_pl?qy="+data[i]['company_id']+"&pl="+data[i]['pparent_id']+"'";
+                          }
+                          picContent += ">"+data[i]['content']+"</a>";
+                        }
+                          picContent += "</h4><ul class='pic'>";
+                        if (data[i]['pic_1'] != '') {
+                          picContent += "<li><a href='"+data[i]['pic_1_url']+"' data-lightbox='example-set'><img src='"+data[i]['pic_1_url']+"'/></a></li>"; 
+                        }
+                        if (data[i]['pic_2'] != '') {
+                          picContent += "<li><a href='"+data[i]['pic_2_url']+"' data-lightbox='example-set'><img src='"+data[i]['pic_2_url']+"'/></a></li>"; 
+                        }
+                        if (data[i]['pic_3'] != '') {
+                          picContent += "<li><a href='"+data[i]['pic_3_url']+"' data-lightbox='example-set'><img src='"+data[i]['pic_3_url']+"'/></a></li>"; 
+                        }
+                          picContent += "</ul><p class='laiyuan'>来自";
+                          if(data[i]['company_name'] != null){
+                            picContent += "<a target='_blank' href='__URL__/tiao?id="+data[i]['company_id']+"'>"+data[i]['company_name']+"</a>|";
+                          }
+                          picContent += "<span>"+data[i]['add_time']+"</span></p></dd>";
+                    $("#new_box_ex").append(picContent);
+                  })        
+                }else{
+                    $(".jzgd_aa").text('已无更多数据');
+                    flag=true;  
+                }
+              },
+              complete:function(){
+                     $("#load").remove();
+              },
+              dataType:'json'});
+            p++;
+      }
+  })
+</script>
+</body>
+</html>

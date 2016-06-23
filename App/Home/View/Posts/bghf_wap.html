@@ -1,0 +1,138 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no"/>
+<meta content="yes" name="apple-mobile-web-app-capable" />
+<meta content="black" name="apple-mobile-web-app-status-bar-style" />
+<meta content="telephone=no" name="format-detection" />
+<title>发表评论</title>
+<link rel="icon" href="__PUBLIC__/s.ico" type="image/x-icon" />
+<link type="text/css" rel="stylesheet" href="__PUBLIC__/Home/css/wap_main.css"/>
+<script type="text/javascript" src="__PUBLIC__/js/jquery-1.8.3.min.js" ></script>
+<script type="text/javascript" src="__PUBLIC__/Home/js/app_mian.js" ></script>
+<script type="text/javascript" src="__PUBLIC__/Home/js/mh_dialog.js" ></script>
+</head>
+
+<body>
+<div class="top">
+  <include file="Public:top_wap" />
+  <h3>发表评论</h3>
+  <include file="Public:fx_wap" />
+</div>
+<div class="send">
+<include file="Public:tc_wap" />
+  <div class="fanbiaob">
+    <textarea name="saytext" id="saytext0" class="saytext" autocomplete="off"></textarea>
+    <span>
+      <em>
+        <a data-id="0" href="javascript:void(0)"  class="touxin emotion"><img src="__PUBLIC__/Home/imag/send.jpg" /></a>
+      </em>
+      <input type="hidden" class="p3" name="p3" value="{$exposal_id}"> 
+      <input name="button" type="button" value="发表评论" class="fb" id="{$id}" />
+    </span>
+  </div>
+</div>
+<include file="Public:footer_wap" />
+</body>
+<script type="text/javascript" src="__PUBLIC__/Home/js/jquery.qqFace_wap.js" ></script>
+<script type="text/javascript">
+$(function(){
+  //表情
+    $('.emotion').qqFace({
+      id : 'facebox', 
+      assign:'saytext', 
+      path:'__PUBLIC__/Home/arclist/' //表情存放的路径
+  });
+  //评论回复
+    $('.fb').live('click',function(){
+          var objButton  = $(this);
+          var id         = $(this).attr('id');//获取企业id属性
+          var type       = '005001';
+          var content_ex = $(this).parents('.fanbiaob').find('.saytext').val().replace(/\ +/g,"");//去掉空格;
+          var content_ex = $(this).parents('.fanbiaob').find('.saytext').val().replace(/[ ]/g,"");//去掉空格;
+          var content_ex = $(this).parents('.fanbiaob').find('.saytext').val().replace(/[\r\n]/g,"");//去掉空格;
+          var content_ex = $(this).parents('.fanbiaob').find('.saytext').val().replace(/[~',.?;"{}!<>@#$%^&*()-+=:]/g,"");
+          var content    = urlencode(content_ex);
+          var exposal_id  = $(this).parents('.fanbiaob').find('.p3').val();
+          var userid     = '{$userid}';
+          if (content_ex == "") {
+            mh_dialogShow('mh_warning','评论内容不能为空！',2,true);
+            return false;
+          }else if(content_ex.length > 400){
+            mh_dialogShow('mh_warning','评论内容最多为400字符！',2,true);
+            return false;
+          }
+          if (userid == "") {
+            location.href='__APP__/login.html';
+            return false;
+          }
+          $.ajax({  
+              type:"post",  
+              url:"{$call_url}",
+              timeout: 5000,  
+              dataType:"json",  
+              data:{"method":"Comexposal.add","type":"text",
+              "content":{"exposal_id":exposal_id,
+                   "user_id":userid,
+                   "type":type,
+                   "content":content,
+                   "parent_id":id,
+                   "is_anonymous":0,
+                   "is_depth":1}},
+              beforeSend:function(){
+                objButton.val('发表评论').attr('disabled',true);
+              },
+              success: function aa(data) {  
+                   if (200 == data.status_code ){
+                      if(0 == data.content.is_success) {
+                        mh_dialogShow('mh_success','评论成功！',2,true,document.referrer); 
+                        return false;
+                      }else if(-1 == data.content.is_success) {
+                        mh_dialogShow('mh_warning','回复失败！',2,true);
+                        return false;
+                      }else if(-2 == data.content.is_success || -3 == data.content.is_success) {
+                        mh_dialogShow('mh_warning','回复失败,该曝光主贴已删除！',2,true);
+                        judge();
+                        return false;
+                      }else if(-4 == data.content.is_success) {
+                        mh_dialogShow('mh_warning','回复失败,该企业已被删除！',2,true,'__ROOT__/');
+                        return false;
+                      }else if(-5 == data.content.is_success || -6 == data.content.is_success) {
+                        mh_dialogShow('mh_warning','回复失败,该评论已删除！',2,true,document.referrer); 
+                        return false;
+                      }else{
+                        mh_dialogShow('mh_warning','回复失败！',2,true);
+                        return false;
+                      }
+                   }else{
+                        mh_dialogShow('mh_warning','回复失败！',2,true);
+                        return false; 
+                   }
+              },
+              complete:function(){
+                objButton.val('发表评论').attr('disabled',false);
+              }  
+          })  
+    });
+    //urlencode数据转换
+    function urlencode (str) {  
+        str = (str + '').toString();   
+        return encodeURIComponent(str).replace(/!/g, '%21').replace(/'/g, '%27').replace(/\(/g, '%28').  
+        replace(/\)/g, '%29').replace(/\*/g, '%2A').replace(/%20/g, '+');  
+    } 
+    //判断主贴是否存在
+    function judge(){
+      var auth_level = "{$list.auth_level}";
+      var c_id       = "{$list.id}";
+      if (auth_level == '006001') {
+        location.href='__APP__/hpt?resid='+c_id;
+      }else if(auth_level == '006002'){
+        location.href='__APP__/wrz?resid='+c_id;
+      }else if(auth_level == '006003'){
+        location.href='__APP__/yrz?resid='+c_id;
+      }
+    }
+})
+</script>
+</html>

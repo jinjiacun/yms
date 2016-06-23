@@ -1,0 +1,175 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no"/>
+<meta content="yes" name="apple-mobile-web-app-capable" />
+<meta content="black" name="apple-mobile-web-app-status-bar-style" />
+<meta content="telephone=no" name="format-detection" />
+<title>黄金,外汇,贵金属虚假交易曝光台_口碑</title>
+<meta name="keywords" content="曝光台,虚假交易曝光台"/>
+<meta name="description" content="口碑,全国性的交易市场曝光平台，携手每一位投资人共同揭开交易市场的层层黑幕，为投资者甄选安全可靠的交易平台，营造国内绿色透明的交易环境。"/>
+<link rel="icon" href="__PUBLIC__/s.ico" type="image/x-icon" />
+<link type="text/css" rel="stylesheet" href="__PUBLIC__/Home/css/wap_main.css"/>
+<script type="text/javascript" src="__PUBLIC__/js/jquery-1.8.3.min.js" ></script>
+<script type="text/javascript" src="__PUBLIC__/Home/js/app_mian.js" ></script>
+</head>
+
+<body>
+<div class="top">
+  <include file="Public:top_wap" />
+  <h3>黑榜排行</h3>
+  <include file="Public:fx_wap" />
+</div>
+<div class="line">
+ <include file="Public:tc_wap" />
+</div>
+<include file="Public:footer_wap" />
+</body>
+<script type="text/javascript">
+  $(function(){
+    
+      var multiple=3;
+      window.onload=function(){
+        //曝光信息查询
+        $.ajax({  
+          type:"post",  
+          url:"{$call_url}",
+          timeout: 5000,  
+          dataType:"json",  
+          data:{"method":"Company.black_sort","type":"text","content":{"page_size":5,"where":{"auth_level":"006001"},"order":{"add_blk_amount":"desc","exp_amount":"desc"}}},
+          success: function aa(data) {
+              if (200 == data.status_code) {
+                var list = data.content.list,length=list.length,i=0,k=0,j=0,str='',user_list,user_list_length=0;
+                str ='<div class="jszmd">';
+                 for(; i< length; i++)
+                 {
+                    user_list = list[i].user_list;
+                    user_list_length = user_list.length;
+                    k = i+1;
+                    str += '<dl id="'+k+'">';
+                    str += '<dt';
+                    if(k < 4)
+                      str += ' class="fril"';
+                    str += '>'+k+'</dt>';
+                    str += '<dd><span><p>';
+                    str += '<a href="__APP__/hpt?resid='+list[i].id+'">'+list[i].company_name.substring(0,10)+'...</a>';
+                    str += '</p>其他名称：'+list[i].alias_list+'</span>';
+                    str += '<em>加黑人数：'+list[i].add_blk_amount+'</em>';
+                    str += '<em>最早曝光：'+getTime(list[i].last_time)+'</em>';
+                    str += '<em>曝光用户：';
+                    var tag_last=0;
+                    for(j=0; j< 3; j++)
+                    {
+                      if(user_list[j]){
+                        str += '<a href="__APP__/Usercenter?id='+user_list[j].user_id+'">';
+                        str += '<font>'+user_list[j].nickname.substring(0,5)+'</font>';
+                        str += '</a>';
+                        str += '<font';
+                        if(3<list[i].exp_amount)
+                        {
+                          tag_last = 2;
+                        }
+                        else if(3>list[i].exp_amount)
+                        {
+                          tag_last = list[i].exp_amount-1;
+                        }
+                        if(j == tag_last)
+                        {
+                          str += ' class="last"';
+                        }
+                        str += '>、</font>';
+                      }
+                    }
+                    str += '<font><a href="__APP__/hpt?resid='+list[i].id+'#basic_setting">('+list[i].exp_amount+')</a></font>';
+                    str += '</em></dd></dl>';
+                }
+                str += '</div>'
+              if(5< data.content.record_count)
+                str += '<div class="djjzgd"><a class="jz_more" href="javascript:void(0)" id="jzgd">加载更多</a></div>';
+
+            $('.line').append(str);
+          }
+          }
+        });
+      };
+  });
+</script>
+<script type="text/javascript">
+  $(function(){
+      var p=2;// 初始化页面，点击事件从第二页开始
+      var flag=false;
+      $('#jzgd').live('click',function(){
+          //初始状态，如果没数据return ,false;否则
+          if($(".line dl").size()<=0){
+            return false;
+          }else{
+            var num = Number($(".line dl:last").attr('id'));
+            send(num);
+
+          }
+      })
+      function send(num){
+          if(flag){
+            return false;
+          }
+          $.ajax({
+              type:'post',
+              url:"{:U('back_list')}",
+              data:{k:p},
+              beforeSend:function(){
+                   //$(".dongtop").append("<div id='load'>加载中……</div>");
+              },
+              success:function(data){
+                if(data!=null){
+                  $.each(data,function(i){
+                    var k = i*1+1;
+                    var str = '<dl id="'+(k+num)+'"><dt>'+(k+num)+'</dt>';
+                    str += '<dd><span><p>';
+                    str += '<a href="__APP__/hpt?resid='+data[i].id+'">'
+                    str += data[i].company_name.substring(0,10)+'...</a></p>';
+                    str += '其他名称： '+data[i].alias_list+'</span>';
+                    str += '<em>加黑人数：'+data[i].add_blk_amount+'</em>';
+                    str += '<em>最早曝光：'+data[i].last_time+'</em>';
+                    str += '<em>曝光用户：';
+                    var tag_last=0;
+                    $.each(data[i]['user_list'],function(j,items){
+                      if(j < 3){
+                        str += '<a href="__APP__/Usercenter?id='+items.user_id+'">';
+                        str += '<font>'+items.nickname.substring(0,5)+'</font>';
+                        str += '</a>';
+                        str += '<font';
+                        if(3<data[i].exp_amount)
+                        {
+                          tag_last = 2;
+                        }
+                        else if(3>data[i].exp_amount)
+                        {
+                          tag_last = data[i].exp_amount-1;
+                        }
+                        if(j == tag_last){
+                          str += ' class="last"';
+                        }
+                        str += '>、</font>';
+                      }else{
+                        return;
+                      }
+                    });
+                    str += '<font><a href="__APP__/hpt?resid='+data[i].id+'#basic_setting">('+data[i].exp_amount+')</a></font></em>';
+                    str += '</dd></dl>';
+                    $(".line .jszmd").append(str);
+                  });        
+                }else{
+                    $("#jzgd").text('已无更多数据');
+                    flag=true;  
+                }
+              },
+              complete:function(){
+                     $("#load").remove();
+              },
+              dataType:'json'});
+            p++;
+      }
+  })
+</script>
+</html>

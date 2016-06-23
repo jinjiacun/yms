@@ -1,0 +1,227 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no"/>
+<meta content="yes" name="apple-mobile-web-app-capable" />
+<meta content="black" name="apple-mobile-web-app-status-bar-style" />
+<meta content="telephone=no" name="format-detection" />
+<title>最全的投资平台评价，小伙伴们都在围观-口碑</title>
+<link rel="icon" href="__PUBLIC__/s.ico" type="image/x-icon" />
+<link type="text/css" rel="stylesheet" href="__PUBLIC__/Home/css/wap_main.css"/>
+<link type="text/css" rel="stylesheet" href="__PUBLIC__/Home/css/lightbox.css"/>
+<script type="text/javascript" src="__PUBLIC__/js/jquery-1.8.3.min.js" ></script>
+<script type="text/javascript" src="__PUBLIC__/Home/js/app_mian.js" ></script>
+<script type="text/javascript" src="__PUBLIC__/Home/js/lightbox-2.6.min.js" ></script>
+<script type="text/javascript" src="__PUBLIC__/Home/js/mh_dialog.js" ></script>
+</head>
+
+<body>
+<div class="top">
+  <include file="Public:top_wap" />
+  <h3>网友跟帖</h3>
+  <include file="Public:fx_wap" />
+</div>
+<div class="Company_gt">
+<include file="Public:tc_wap" />
+  <dl>
+    <dt>
+      <if condition="$qy_list.logo_url neq '' "> 
+      <span><img src="{$qy_list.logo_url}" /></span>
+      </if>
+      <p>{$qy_list.company_name|subtext=20}<em>其他名称：{$qy_list.alias_list}</em></p>
+    </dt>
+    <dd>
+      <p>查询次数：{$qy_list.select_amount}</p>
+      <if condition="$qy_list.auth_level neq '006001' ">
+      <p>点赞次数：{$qy_list.assist_amount}</p>
+      </if>
+      <if condition="$qy_list.auth_level neq '006003' ">
+      <p>加黑次数：{$qy_list.add_blk_amount}</p>
+      </if>
+    </dd>
+  </dl>
+  <ul>
+    <li>
+      <span>
+      <a href="__APP__/Usercenter?id={$lz.user_id}" target="_blank"><img src="{$user_photo}" /></a>
+      </span>
+      <p>
+      <if condition="$lz.is_anonymous eq 0 ">
+        <a href="__APP__/Usercenter?id={$lz.user_id}" target="_blank">{$lz.nickname}</a>
+      <else />
+        <a href="__APP__/Usercenter?id={$lz.user_id}" target="_blank">{$lz.nickname|sudtext}</a>
+      </if>
+      </p>
+    </li>
+    <li>
+      <em>
+      <if condition="$lz.type eq '005001'">
+      <img src="__PUBLIC__/Home/imag/png04.png" />
+      <else />
+      <img src="__PUBLIC__/Home/imag/png06.png" />
+      </if>
+      </em>
+      <em>{$content}</em>
+      <div class="tubox">
+          <if condition="$lz.pic_1_url neq ''">
+          <a href="{$lz.pic_1_url}" data-lightbox="example-set"><img src="{$lz.pic_1_url}"/></a>
+          </if>
+          <if condition="$lz.pic_2_url neq ''">
+          <a href="{$lz.pic_2_url}" data-lightbox="example-set"><img src="{$lz.pic_2_url}"/></a>
+          </if>
+          <if condition="$lz.pic_3_url neq ''">
+          <a href="{$lz.pic_3_url}" data-lightbox="example-set"><img src="{$lz.pic_3_url}"/></a>
+          </if>
+          <if condition="$lz.pic_4_url neq ''">
+          <a href="{$lz.pic_4_url}" data-lightbox="example-set"><img src="{$lz.pic_4_url}"/></a>
+          </if>
+          <if condition="$lz.pic_5_url neq ''">
+          <a href="{$lz.pic_5_url}" data-lightbox="example-set"><img src="{$lz.pic_5_url}"/></a>
+          </if>
+      </div>
+    </li>
+    <li>
+      <i>{$add_time}</i>
+      <a class="dz" id="{$lz.id}" rel="{$lz.id}" href="javascript:void(0)">
+      <b>顶（<font class="em_{$lz.id}">{$lz.top_num}</font>）</b>
+      </a>
+    </li>
+  </ul>
+</div>
+<div class="Company_txt">
+  <volist id="hf" name="hf">
+  <dl>
+    <dt><img src="{$hf.user_photo}" /></dt>
+    <dd>
+      <p><em><font>{$hf.nickname}：</font>{$hf.content}</em><i>{$hf.add_time}</i></p><span><a class="mlgb" href="__APP__/bghf_wap?cn={$lz.id}&cm={$lz.exposal_id}&qy={$qy_list.id}">回复</a></span>
+    </dd>
+  </dl>
+  </volist>
+</div>
+<if condition="$record_count gt 10">
+<a id="ckgd_pl" class="jz_more" href="javascript:void(0)">加载更多</a>
+</if>
+<span class="main_hh">您已经看完了所有的回复，<a class="mlgb" href="__APP__/bghf_wap?cn={$lz.id}&cm={$lz.exposal_id}&qy={$qy_list.id}">有话说</a></span>
+<include file="Public:footer_wap" />
+</body>
+<script type="text/javascript">
+  $(function(){
+      //判断是否登录
+      $('.mlgb').live('click',function(){
+         var usaa = '{$userid}';
+         if (usaa == "") {
+              location.href='__APP__/login.html';
+              return false;
+          }
+      });
+      //评论顶
+      $('.dz').live('click',function(){
+            var id        = $(this).attr('id');
+            var companyid = "{$qy_list.id}";
+            var userid    = '{$userid}';
+            var exposal_id = '{$lz.exposal_id}';
+            var emm       = '.em_'+id;
+            var auth_level = "{$qy_list.auth_level}";
+            if (userid == "") {
+                location.href='__APP__/login.html';
+                return false;
+            }
+            $.ajax({  
+                type:"post",  
+                url:"{$call_url}",
+                timeout: 5000,  
+                dataType:"json",  
+                data:{"method":"Comexposaltop.add","type":"text",
+                "content":{"exposal_id":exposal_id,
+                   "user_id":userid,
+                   "comment_id":id,
+                   "company_id":companyid}},
+                success: function aa(data) {  
+                     if (200 == data.status_code) {
+                        if (0 == data.content.is_success) {
+                          mh_dialogShow('mh_success','点赞成功！',2,true);
+                          $(emm).text(data.content.amount); 
+                          return false;
+                        }else if(-1 == data.content.is_success){
+                          mh_dialogShow('mh_warning','点赞失败！',2,true);
+                          return false; 
+                        }else if(-2 == data.content.is_success){
+                          mh_dialogShow('mh_warning','明天再来吧！',2,true);
+                          return false; 
+                        }else if(-3 == data.content.is_success || -4 == data.content.is_success){
+                          mh_dialogShow('mh_warning','点赞失败,此评论已删除！',2,true);
+                          if (auth_level == '006001') {
+                            location.href='__APP__/hpt?resid='+companyid;
+                          }else if(auth_level == '006002'){
+                            location.href='__APP__/wrz?resid='+companyid;
+                          }else if(auth_level == '006003'){
+                            location.href='__APP__/yrz?resid='+companyid;
+                          }
+                          return false; 
+                        }else if(-5 == data.content.is_success){
+                          mh_dialogShow('mh_warning','点赞失败,此评论企业已删除或不存在！',2,true,'__ROOT__/'); 
+                          return false; 
+                        }else if(-6 == data.content.is_success || -7 == data.content.is_success){
+                          mh_dialogShow('mh_warning','点赞失败,此评论已删除！',2,true,window.location.href);
+                          return false; 
+                        }
+                     }else{
+                        mh_dialogShow('mh_warning','点赞失败！',2,true);
+                        return false; 
+                     }
+                }  
+            })  
+      });
+  })
+</script>
+<script type="text/javascript">
+  //评论加载更多
+  $(function(){
+      var p          = 2; // 初始化页面，点击事件从第二页开始
+      var parent_id = '{$lz.exposal_id}';
+      var uId       = "{$lz.id}";
+      var qy        = "{$qy_list.id}"
+      var flag      = false;
+      $('#ckgd_pl').live('click',function(){
+            send();
+      })
+      function send(){
+          if(flag){
+            return false;
+          }
+          $.ajax({
+              type:'post',
+              url:"{:U('bggt_wap_ex')}",
+              data:{k:p,
+                    parent_id:parent_id,
+                    uId:uId},
+              beforeSend:function(){
+                   $("#ul1").append("<div id='load'>加载中……</div>");
+              },
+              success:function(data){
+                if(data!=''){
+                  $.each(data,function(i){
+                  var rel = '<dl>';
+                      rel += '<dt><img src="'+data[i]['user_photo']+'" /></dt>';
+                      rel += '<dd>';
+                      rel += '<p><em><font>'+data[i]['nickname']+'：</font>'+data[i]['content']+'</em>';
+                      rel += '<i>'+data[i]['add_time']+'</i></p><span>';
+                      rel += '<a class="mlgb" href="__APP__/bghf_wap?cn='+uId+'&cm='+parent_id+'&qy='+qy+'">回复</a>';
+                      rel += '</span></dd></dl>'
+                    $(".Company_txt").append(rel);
+                  })
+                }else{
+                    $("#ckgd_pl").text('已无更多');
+                    flag=true;  
+                }
+              },
+              complete:function(){
+                     $("#load").remove();
+              },
+              dataType:'json'});
+            p++;
+      }
+  })
+</script>
+</html>

@@ -1,0 +1,106 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no"/>
+<meta content="yes" name="apple-mobile-web-app-capable" />
+<meta content="black" name="apple-mobile-web-app-status-bar-style" />
+<meta content="telephone=no" name="format-detection" />
+<title>会员单位</title>
+<link type="text/css" rel="stylesheet" href="__PUBLIC__/Home/css/wap_main.css"/>
+<script type="text/javascript" src="__PUBLIC__/js/jquery-1.8.3.min.js" ></script>
+<script type="text/javascript" src="__PUBLIC__/Home/js/app_mian.js" ></script>
+</head>
+
+<body>
+<div class="top">
+    <include file="Public:top_wap" />
+    <h3>会员单位</h3>
+    <include file="Public:fx_wap" />
+</div>
+<div class="vip_d">
+    <include file="Public:tc_wap" />
+    <div id="vip_ddd">
+        <volist id="list" name="list">
+        <dl>
+            <if condition="$list.logo_url neq ''">
+            <dt><img src="{$list.logo_url}" /></dt>
+            </if>
+            <dd>
+                <span>
+                    <em>会员号：<font>{$list.mem_sn}</font></em>
+                    <i>
+                    <if condition="$list.auth_level eq '006001'">
+                    <a href="__APP__/hpt?resid={$list.id}">{$list.company_name}</a>
+                    <elseif condition="$list.auth_level eq '006002'" />
+                    <a href="__APP__/wrz?resid={$list.id}">{$list.company_name}</a>
+                    <else />
+                    <a href="__APP__/yrz?resid={$list.id}">{$list.company_name}</a>
+                    </if>
+                    </i>
+                </span>
+            </dd>
+        </dl>
+        </volist>
+    </div>
+    <if condition="$record_count gt 10">
+    <a id="ckgd_bg" href="javascript:void(0)" class="jz_more">加载更多</a>
+    </if>
+</div>
+
+<include file="Public:footer_wap" />
+</body>
+<script type="text/javascript">
+  //评论加载更多
+  $(function(){
+      var p=2;// 初始化页面，点击事件从第二页开始
+      var qy_id = "{$qy_id}";
+      var flag=false;
+      $('#ckgd_bg').live('click',function(){
+            send();
+      })
+      function send(){
+          if(flag){
+            return false;
+          }
+          $.ajax({
+              type:'post',
+              url:"{:U('wap_member_ex')}",
+              data:{k:p,
+                    qy_id:qy_id},
+              beforeSend:function(){
+                   //$("#ul1").append("<div id='load'>加载中……</div>");
+              },
+              success:function(data){
+                if(data!=''){
+                  $.each(data,function(i){
+                    var rel = '<dl>';
+                    if (data[i]['logo_url'] != '') {
+                        rel += '<dt><img src="'+data[i]['logo_url']+'" /></dt>';
+                    }
+                    rel += '<dd><span>';
+                    rel += '<em>会员号：<font>'+data[i]['mem_sn']+'</font></em><i>';
+                    if (data[i]['auth_level'] == '006001') {
+                        rel += '<a href="__APP__/hpt?resid='+data[i]['id']+'">'+data[i]['company_name']+'</a>';
+                    }else if (data[i]['auth_level'] == '006002') {
+                        rel += '<a href="__APP__/wrz?resid='+data[i]['id']+'">'+data[i]['company_name']+'</a>';
+                    }else{
+                        rel += '<a href="__APP__/yrz?resid='+data[i]['id']+'">'+data[i]['company_name']+'</a>';
+                    }
+                    rel += '</i></span></dd></dl>';
+                    $("#vip_ddd").append(rel);
+                  })
+                }else{
+                    $("#ckgd_bg").text('已无更多');
+                    flag=true;  
+                }
+              },
+              complete:function(){
+                     $("#load").remove();
+              },
+              dataType:'json'});
+            p++;
+      }
+  })
+</script>
+</html>

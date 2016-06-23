@@ -1,0 +1,175 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no"/>
+<meta content="yes" name="apple-mobile-web-app-capable" />
+<meta content="black" name="apple-mobile-web-app-status-bar-style" />
+<meta content="telephone=no" name="format-detection" />
+<title>网友曝光-网友曝光的黑平台列表-口碑</title>
+<meta name="keywords" content="网友曝光,黑平台列表"/>
+<meta name="description" content="网友自发揭露的关于贵金属、外汇、黄金、石油等行业的交易黑幕，通过非法操作、黑幕交易等手段欺骗投资者的公司或者平台机构都将在这里被广大受骗的网友曝光。"/>
+<link rel="icon" href="__PUBLIC__/s.ico" type="image/x-icon" />
+<link type="text/css" rel="stylesheet" href="__PUBLIC__/Home/css/wap_main.css"/>
+<script type="text/javascript" src="__PUBLIC__/js/jquery-1.8.3.min.js" ></script>
+<script type="text/javascript" src="__PUBLIC__/Home/js/main.js" ></script>
+<script type="text/javascript" src="__PUBLIC__/Home/js/app_mian.js" ></script>
+</head>
+
+<body>
+<div class="top">
+	<include file="Public:top_wap" />
+  <h3>网友曝光</h3>
+  <include file="Public:fx_wap" />
+</div>
+<div class="hot">
+<include file="Public:tc_wap" />
+    <h3 class="public"><span>热门曝光</span></h3>
+</div>
+<div class="new">
+  <h3 class="public"><span>最新曝光</span></h3>
+</div>
+
+<include file="Public:footer_wap" />
+</body>
+<script type="text/javascript">
+$(function(){
+  window.onload=function(){
+	//#热门曝光
+    $.ajax({  
+        type:"post",  
+        url:"{$call_url}",
+        timeout: 5000,  
+        dataType:"json",  
+        async: false,
+        data:{"method":"Inexposal.dynamic","type":"text","content":{"page_size":4,"where":{"pic_1":["not in",[0]]}}},
+        success: function aa(data) {
+            if (200 == data.status_code) {
+              var list = data.content.list,length=list.length,i=0,k=0,j=0,str='',company_name='',content='';
+              str = '';
+              for(; i<length; i++)
+              {
+                   company_name = list[i].company_name;
+                   content      = list[i].content;
+                   str += '<dl><dt>被曝平台：';
+                   str += '<a href="__APP__/';
+                   if('006001' == list[i].auth_level)
+                      str += 'hpt';
+                    else
+                      str += 'wrz';
+                   str += '?resid='+list[i].company_id+'">'+company_name.substring(0,15)+'</a>';
+                   str += '</dt><dd><span>';
+                   str += '<em>曝光员：<font>';
+                   str += '<a href="__APP__/Usercenter?id='+list[i].user_id+'">'+list[i].nickname+'</a></font></em>';
+                   str += '<em>'+content.substring(0,99)+'...</em>';
+                   str += '</span><p>';
+                   str += '<em>回复数：<font>'+list[i].re_amount+'</font></em>';
+                   str += '<i>'+getTime(list[i].add_time)+'</i>';
+                   str += '</p></dd></dl>';
+              }                
+              $('.hot').append(str);
+            }
+        }
+    }); 
+    
+    //最新曝光
+    $.ajax({  
+        type:"post",  
+        url:"{$call_url}",
+        timeout: 5000,  
+        dataType:"json",  
+        async: false,
+        data:{"method":"Inexposal.dynamic","type":"text","content":{"page_size":10}},
+        success: function aa(data) {
+            if (200 == data.status_code) {
+              var list = data.content.list,length=list.length,i=0,k=0,j=0,str='',company_name='',content='';
+              str = '<div class="jszmd">';
+              for(; i<length; i++)
+              {
+                   company_name = list[i].company_name;
+                   content      = list[i].content;
+                   str += '<dl><dt>被曝平台：';
+                   str += '<a href="__APP__/';
+                   if('006001' == list[i].auth_level)
+                      str += 'hpt';
+                    else
+                      str += 'wrz';
+                   str += '?resid='+list[i].company_id+'">'+company_name.substring(0,15)+'</a>';
+                   str += '</dt><dd><span>';
+                   str += '<em>曝光员：<font>';
+                   str += '<a href="__APP__/Usercenter?id='+list[i].user_id+'">'+list[i].nickname+'</a></font></em>';
+                   str += '<em>'+content.substring(0,99)+'...</em>';
+                   str += '</span><p>';
+                   str += '<em>回复数：<font>'+list[i].re_amount+'</font></em>';
+                   str += '<i>'+getTime(list[i].add_time)+'</i>';
+                   str += '</p></dd></dl>';
+              }
+              str += '</div>'
+              if(10< data.content.record_count)
+                str += '<div class="pd"><a class="jz_more" href="javascript:void(0)" id="jzgd">加载更多</a></div>';                
+              $('.new').append(str);
+            }
+        }
+    }); 
+  };
+})
+</script>
+<script type="text/javascript">
+  $(function(){
+      var p=2;// 初始化页面，点击事件从第二页开始
+      var flag=false;
+      $('#jzgd').live('click',function(){
+          //初始状态，如果没数据return ,false;否则
+          if($(".new dl").size()<=0){
+            return false;
+          }else{
+            send();
+          }
+      })
+      function send(){
+          if(flag){
+            return false;
+          }
+          $.ajax({
+              type:'post',
+              url:"{:U('bg_list')}",
+              data:{k:p},
+              beforeSend:function(){
+                   //$(".dongtop").append("<div id='load'>加载中……</div>");
+              },
+              success:function(data){
+                if(data!=null){
+                  $.each(data,function(i){
+                    var company_name = data[i].company_name;
+                    var content      = data[i].content;
+                    var str = '<dl><dt>被曝平台：';
+                   str += '<a href="__APP__/';
+                   if('006001' == data[i].auth_level)
+                      str += 'hpt';
+                    else
+                      str += 'wrz';
+                   str += '?resid='+data[i].company_id+'">'+company_name.substring(0,15)+'</a>';
+                   str += '</dt><dd><span>';
+                   str += '<em>曝光员：<font>';
+                   str += '<a href="__APP__/Usercenter?id='+data[i].user_id+'">'+data[i].nickname+'</a></font></em>';
+                   str += '<em>'+content.substring(0,99)+'...</em>';
+                   str += '</span><p>';
+                   str += '<em>回复数：<font>'+data[i].re_amount+'</font></em>';
+                   str += '<i>'+data[i].add_time+'</i>';
+                   str += '</p></dd></dl>';
+                    $(".new .jszmd").append(str);
+                  });        
+                }else{
+                    $("#jzgd").text('已无更多数据');
+                    flag=true;  
+                }
+              },
+              complete:function(){
+                     $("#load").remove();
+              },
+              dataType:'json'});
+            p++;
+      }
+  })
+</script>
+</html>

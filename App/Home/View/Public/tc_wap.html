@@ -1,0 +1,16 @@
+<div class="disx disxx">
+  <a class="disx_ex" href="__APP__/exposure.html">我要曝光</a>
+  <a class="disx_ex" href="__APP__/auth.html">合规认证</a>
+</div>
+<script type="text/javascript"> 
+  $(function(){ 
+    //判断是否登录
+    $('.disx_ex').live('click',function(){
+       var usaa = '{$userid}';
+       if (usaa == "") {
+            location.href='__APP__/login.html';
+            return false;
+        }
+    });
+  })
+</script>

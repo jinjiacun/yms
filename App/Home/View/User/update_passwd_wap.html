@@ -1,0 +1,109 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no"/>
+<meta content="yes" name="apple-mobile-web-app-capable" />
+<meta content="black" name="apple-mobile-web-app-status-bar-style" />
+<meta content="telephone=no" name="format-detection" />
+<title>找回密码</title>
+<link rel="icon" href="__PUBLIC__/s.ico" type="image/x-icon" />
+<link type="text/css" rel="stylesheet" href="__PUBLIC__/Home/css/wap_main.css"/>
+<script type="text/javascript" src="__PUBLIC__/js/jquery-1.8.3.min.js" ></script>
+<script type="text/javascript" src="__PUBLIC__/Home/js/jquery.form.js" ></script>
+<script type="text/javascript" src="__PUBLIC__/Home/js/mh_dialog.js" ></script>
+<script type="text/javascript" src="__PUBLIC__/Home/js/app_mian.js" ></script>
+</head>
+
+<body>
+<div class="dowm_app"><a href="http://a.app.qq.com/o/simple.jsp?pkgname=com.huanrong.searchdarkvip"><img src="__PUBLIC__/Home/imag/dowm_app.jpg" /></a></div>
+<div class="top">
+  <span></span>
+  <h3>找回密码</h3>
+  <p><a href="javascript:history.go(-1);"><img src="__PUBLIC__/Home/imag/fkico.jpg" /></a></p>
+</div>
+<div class="sign_mm">
+  <form class="one">
+    <p><em>原密码:</em>
+      <input name="old_pswd" type="password" class="old_pswd" />
+    </p>
+    <p><em>新密码:</em>
+      <input name="new_pswd" type="password" class="new_pswd" />
+    </p>
+    <p><em>确认密码:</em>
+      <input name="new_pswd_ex" type="password"  class="new_pswd_ex" />
+    </p>
+  </form>
+  <span><a href="javascript:void(0)" class="but1">保  存</a></span>
+</div>
+<include file="Public:footer_wap" />
+</body>
+<script type="text/javascript">
+  $(function(){
+    //修改密码
+    $('.but1').click(function(){
+              var old_pswd = $(this).parents('.sign_mm').find('.old_pswd').val();
+              var new_pswd = $(this).parents('.sign_mm').find('.new_pswd').val();
+              var new_pswd_ex = $(this).parents('.sign_mm').find('.new_pswd_ex').val();
+              var userid   = '$userid';
+              if (old_pswd == "") {
+                mh_dialogShow('mh_warning','原密码不能为空！',2,true);
+                return false;
+              }else if (old_pswd.length < 6){
+                mh_dialogShow('mh_warning','原密码长度不能小于6位字符！',2,true);
+                return false;
+              }
+              else if(old_pswd.length > 16){
+                mh_dialogShow('mh_warning','原密码长度最多为16位字符！',2,true);
+                return false;
+              }
+              if (new_pswd == "") {
+                mh_dialogShow('mh_warning','新密码不能为空！',2,true);
+                return false;
+              }else if (new_pswd.length < 6){
+                mh_dialogShow('mh_warning','新密码长度不能小于6位字符！',2,true);
+                return false;
+              }
+              else if(new_pswd.length > 16){
+                mh_dialogShow('mh_warning','新密码长度最多为16位字符！',2,true);
+                return false;
+              }
+              if (new_pswd_ex == "") {
+                mh_dialogShow('mh_warning','确认新密码不能为空！',2,true);
+                return false;
+              }else if(new_pswd_ex != new_pswd){
+                mh_dialogShow('mh_warning','新密码和确认新密码输入不一致！',2,true);
+                return false;
+              }
+              if (userid == "") {
+                 mh_dialogShow('mh_warning','请登录后在修改！',2,true);
+                 return false; 
+              }
+              $.ajax({  
+                  type:"post",  
+                  url:"__URL__/update_passwd",
+                  timeout: 5000,  
+                  dataType:"json",  
+                  data:{old_pswd:old_pswd,
+                        new_pswd:new_pswd
+                        },
+                  success: function aa(data) {  
+                       if (0 == data) {
+                            mh_dialogShow('mh_success','密码修改成功！',2,true,'__ROOT__/');
+                            return false;
+                       }else if(-1 == data){
+                          mh_dialogShow('mh_warning','修改失败！',2,true);
+                          return false;
+                       }else if(-2 == data){
+                          mh_dialogShow('mh_warning','用户不存在！',2,true);
+                          return false;
+                       }else if(-3 == data){
+                          mh_dialogShow('mh_warning','原密码不正确！',2,true);
+                          return false;
+                       }
+                  }  
+              })  
+    });
+  })
+</script>
+</html>

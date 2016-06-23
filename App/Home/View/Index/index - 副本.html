@@ -1,0 +1,445 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>搜黑—全国最大的查询曝光平台</title>
+<meta name="keywords" content="搜黑，黑平台查询，黑平台曝光，贵金属黑平台，外汇黑平台"/>
+<meta name="description" content="搜黑是全国性的交易市场曝光平台,携手每一位投资人共同揭开交易市场的层层黑幕,为您提供全方位的贵金属、外汇、黄金、石油等行业交易黑幕的查询、曝光。"/>
+<meta property="wb:webmaster" content="3a329171ece5137b" />
+<meta property="qc:admins" content="214176571463750516375636" />
+<link rel="icon" href="__PUBLIC__/s.ico" type="image/x-icon" />
+<link type="text/css" rel="stylesheet" href="__PUBLIC__/Home/css/main.css"/>
+<link type="text/css" rel="stylesheet" href="__PUBLIC__/Home/css/slider.css"/>
+</head>
+
+<body>
+<!--Begin--登录-->   
+<include file="Public:login" />
+<!--End--登录--> 
+<div id="wrap">
+<!--头部--Begin-->   
+   <div id="header_new">
+      <div class="new_hd">
+        <div class="new_logo"><a href="__ROOT__/"><img src="__PUBLIC__/Home/images/new_logo.png"/></a></div>
+          <div class="new_nav">
+              <a class="activ" href="__ROOT__/" target="_blank">首页</a>
+                <a href="__APP__/ranking.html" target="_blank">黑榜排行</a>
+                <a href="__APP__/explist.html" target="_blank">网友曝光</a>
+                <a href="__APP__/download.html" target="_blank">软件中心</a>
+                <a href="__APP__/regulators.html" target="_blank">监管机构</a>
+            </div>
+            <div class="new_rt">
+              <if condition="$userid neq '' ">
+                <p class="jingru">您好，
+                   <a target='_blank' href="__APP__/user_center.html">{$nickname}&nbsp</a>
+                   <a href="{:U('User/logout')}">退出</a>
+                </p>
+              <else /> 
+                <a href="__APP__/register.html" class="hd_rt1" >注册</a>
+                <a href="javascript:void(0)" class="hd_rt2 hd_fix_rt2" >登录</a>
+              </if>
+            </div>
+        </div>
+   </div>
+<!--头部--End--> 
+
+<div class="search_new">
+  <p>本站共收录公司及平台 <span id="zd_count"></span> 家；为用户识别公司 <span id="cx_count_ex"></span> 次</p>
+  <div class="chaxun_new">
+  <form class="registerform" action="__URL__/search" name="theForm" method="post" onsubmit="return ValidateFile()">
+    <input name="search_name" id="search_name_ex" autocomplete="off" type="text" class="chaxun_new1" placeholder="请输入公司名称或平台名称" value=""  />
+    <input name="submit" type="submit" class="chaxun_new2" value="立即查询" />
+  </form>
+  </div>
+</div>
+
+<!--内容--Begin-->     
+   <div id="content">
+   <div class="cont_new_lt">
+       <div id="bannerbox">
+
+       <div  class="slider_box" id="slider_name"></div>
+          </div>
+              <div class="new_bgph">
+                  <div class="new_bgph_tit">
+                        <h3>最新曝光</h3>
+                        <p>网友已曝光 <span id="record_count_ex">{$record_count_ex}</span>次</p>
+                  </div>
+                  <div class="new_bgph_box">
+                    <!--最新曝光-->
+                    <div class="new_ckgd"><a href="__APP__/explist.html" target="_blank">查看更多&nbsp;&gt;</a></div>
+                  </div>  
+                </div>
+     </div>
+     <div class="centbox_rt cont_new_rt">
+             <ul class="zuiduo">
+               <li class="zuiduoa"></li>
+               <li class="zuiduob"></li>
+               <li class="zuiduoc"></li>
+             </ul>
+
+
+             <div class="new_rts">
+                   <!--黑榜排行-->
+
+                   <h3><span>监管机构</span><a href="__APP__/regulators.html" target="_blank">更多&gt;</a></h3>
+                   <dl class="new_jgjg_dl">
+                      <a href="http://www.sge.com.cn" target="_blank">
+                        <dt><img src="__PUBLIC__/Home/images/jg01.png" /></dt>
+                        <dd>
+                          <h4>上海黄金交易所</h4>
+                            <p>官网：<span>www.sge.com.cn</span></p>
+                        </dd>
+                      </a>
+                   </dl>
+                   <dl class="new_jgjg_dl">
+                      <a href="http://www.tjpme.com" target="_blank">
+                        <dt><img src="__PUBLIC__/Home/images/jg02.png" /></dt>
+                        <dd>
+                          <h4>天津贵金属交易所</h4>
+                            <p>官网：<span>www.tjpme.com</span></p>
+                        </dd>
+                      </a>
+                   </dl>                   
+                   <dl class="new_jgjg_dl">
+                      <a href="http://www.dce.com.cn" target="_blank">
+                        <dt><img src="__PUBLIC__/Home/images/jg03.png" /></dt>
+                        <dd>
+                          <h4>大连商品交易所</h4>
+                            <p>官网：<span>www.dce.com.cn</span></p>
+                        </dd>
+                      </a>
+                   </dl>
+                   <!-- <volist id="jg_list" name="jg_list">
+                   <dl class="new_jgjg_dl">
+                      <dt><img src="{$jg_list.pic_url}" /></dt>
+                        <dd>
+                          <h4 title="{$jg_list.title}">{$jg_list.title|subtext=13}</h4>
+                            <p>官网：<a href="{$jg_list.website}">{$jg_list.website|subtext=20}</a></p>
+                        </dd>
+                   </dl>
+                   </volist> -->
+                   <h3><span>支持机构</span></h3>
+                   <ul class="new_jgjg">
+                     <li><a href="http://www.eastmoney.com" target="_blank"><img src="__PUBLIC__/Home/images/new_lg04.jpg" /></a></li>
+                     <li><a href="http://www.fx678.com" target="_blank"><img src="__PUBLIC__/Home/images/new_lg05.jpg" /></a></li>
+                     <li><a href="http://www.xinhuanet.com" target="_blank"><img src="__PUBLIC__/Home/images/new_lg06.jpg" /></a></li>
+                   </ul>
+             </div>
+           </div>
+    <div class="clear"></div>
+  </div>
+<!--内容--End--> 
+
+
+<!--底部--Begin-->     
+<!--底部--Begin-->     
+  <div id="footer">
+    <div class="footerbox">
+        <div class="zcjg">
+           <a target='_blank' href="__APP__/about_us.html">关于我们</a>|
+           <a target='_blank' href="__APP__/contact_us.html">联系我们</a>|
+           <a target='_blank' href="__APP__/help.html">帮助中心</a>|
+           <a target='_blank' href="__APP__/feedback.html">意见反馈</a>
+        </div>
+        <div class="links">
+            <a href="http://trust.360.cn/" target="_blank">
+                <img src="__PUBLIC__/Home/images/link_01.png"></a>
+            <a href="http://www.ctws.com.cn/" target="_blank">
+                <img src="__PUBLIC__/Home/images/link_02.png"></a>
+            <a href="http://net.china.com.cn/" target="_blank">
+                <img src="__PUBLIC__/Home/images/link_03.png"></a>
+            <a href="http://www.isc.org.cn/" target="_blank">
+                <img src="__PUBLIC__/Home/images/link_04.png"></a>
+            <a href="http://www.cngjs.org.cn/" target="_blank">
+                <img src="__PUBLIC__/Home/images/link_05.png"></a>
+            <a href="http://v.cngold.com.cn/" target="_blank">
+                <img src="__PUBLIC__/Home/images/link_06.png"></a>
+        </div>
+    </div>
+    <div class="copy_new">
+        <p>Copyright © 2015 souhei.com.cn 搜黑 版权所有 复制必究   沪ICP备15004957号-1
+         <script type="text/javascript">var cnzz_protocol = (("https:" == document.location.protocol) ? " https://" : " http://");document.write(unescape("%3Cspan id='cnzz_stat_icon_1254396040'%3E%3C/span%3E%3Cscript src='" + cnzz_protocol + "s11.cnzz.com/stat.php%3Fid%3D1254396040%26show%3Dpic' type='text/javascript'%3E%3C/script%3E"));</script>
+        </p>
+    </div>  
+  </div>
+<!--底部--End--> 
+</div>
+
+   <!--Begin 首页浮动框-->
+    <div class="news_wx">
+       <div class="news_wx_ex">
+         <a id="baog" href="__APP__/exposure.html" class="new_bgs1" target="_blank">我要曝光</a>
+         <a id="hegui" href="__APP__/auth.html" class="new_bgs2" target="_blank">合规认证</a>
+         <p><img src="__PUBLIC__/Home/images/new_list05.png" width="95" height="100" /></p>
+         <p><img src="__PUBLIC__/Home/images/new_list06.png" width="95" height="100" /></p>
+       </div>
+       <a id="fanhui" onclick="pageScroll()">返回顶部</a>
+    </div>
+    <!--End 首页浮动框-->
+
+
+</body></html>
+
+<script type="text/javascript" src="__PUBLIC__/js/Validform_v5.3.2.js" ></script>
+<script type="text/javascript" src="__PUBLIC__/Home/js/main.js" ></script>
+<script type="text/javascript" src="__PUBLIC__/Home/js/scrolling.js" ></script> 
+<script type="text/javascript" src="__PUBLIC__/Home/js/jquery.form.min.js" ></script>
+<script type="text/javascript" src="__PUBLIC__/Home/js/jquery.slides.js" ></script>
+<script type="text/javascript" src="__PUBLIC__/Home/js/jquery.lazyload.js"></script>
+<script type="text/javascript">
+jQuery(document).ready(
+  function($){
+  $("img").lazyload({
+       placeholder : "__PUBLIC__/Home/images/grey.gif", //加载图片前的占位图片
+       effect      : "fadeIn" //加载图片使用的效果(淡入)
+  });
+});
+</script>
+<script type="text/javascript">
+function getTime(/** timestamp=0 **/) {  
+    var ts = arguments[0] || 0;  
+    var t,y,m,d,h,i,s;  
+    t = ts ? new Date(ts*1000) : new Date();  
+    y = t.getFullYear();  
+    m = t.getMonth()+1;  
+    d = t.getDate();  
+    h = t.getHours();  
+    i = t.getMinutes();  
+    s = t.getSeconds();  
+    // 可根据需要在这里定义时间格式  
+    return y+'-'+(m<10?'0'+m:m)+'-'+(d<10?'0'+d:d)+' '+(h<10?'0'+h:h)+':'+(i<10?'0'+i:i)+':'+(s<10?'0'+s:s);  
+}  
+function getTimeEx(/** timestamp=0 **/) {  
+    var ts = arguments[0] || 0;  
+    var t,y,m,d,h,i,s;  
+    t = ts ? new Date(ts*1000) : new Date();  
+    y = t.getFullYear();  
+    m = t.getMonth()+1;  
+    d = t.getDate();
+    // 可根据需要在这里定义时间格式  
+    return y+'-'+(m<10?'0'+m:m)+'-'+(d<10?'0'+d:d);  
+}  
+  $(function(){ 
+    window.onload=function(){
+      //查询最多,查询曝光最多,加黑最多
+       $.ajax({  
+          type:"post",  
+          url:"{$call_url}",
+          timeout: 5000,  
+          dataType:"json",  
+          data:{"method":["Company.get_list","Company.get_list","Company.get_list"],"type":"text","content":[{"page_size":1},{"page_size":1,"where":{"auth_level":["in","006001,006002"]},"order":{"exp_amount":"DESC"}},{"page_size":1,"where":{"auth_level":["in","006001,006002"]},"order":{"add_blk_amount":"DESC"}}]},
+          success: function aa(data) {
+              //查询最多
+              if (200 == data.status_code[0]) {
+                var data_info = data.content[0].list[0];
+                var str = '';
+                str = '<a href="__APP__/';
+                if('006001' == data_info['auth_level'])
+                  str += 'hpt';
+                else if('006002' == data_info['auth_level'])
+                  str += 'wrz';
+                else
+                  str += 'yrz';
+                str += '?resid='+data_info['id']+'" target="_blank"><img src="__PUBLIC__/Home/images/btn10.png"/></a>';
+               $('.zuiduoa').html(str);
+               $('#zd_count').html(data.content[0].record_count*3);
+              }
+             //查询曝光最多
+             if (200 == data.status_code[1]) {
+                var data_info = data.content[1].list[0];
+                var str = '';
+                str = '<a target="_blank" href="__APP__/';
+                if('006001' == data_info['auth_level'])
+                  str += 'hpt';
+                else
+                  str += 'wrz';
+                str += '?resid='+data_info['id']+'#basic_setting"><img src="__PUBLIC__/Home/images/btn11.png"/></a>';
+
+               $('.zuiduob').html(str);
+              }
+              //加黑最多
+              if (200 == data.status_code[2]) {
+                var data_info = data.content[2].list[0];
+                var str = '';
+                str = '<a href="__APP__/';
+                if('006001' == data_info['auth_level'])
+                  str += 'hpt';
+                else
+                  str += 'wrz';
+                str += '?resid='+data_info['id']+'" target="_blank"><img src="__PUBLIC__/Home/images/btn12.png"/></a>';
+
+               $('.zuiduoc').html(str);
+              }
+
+          }
+      });
+      //黑榜排行
+      $.ajax({  
+          type:"post",  
+          url:"{$call_url}",
+          timeout: 5000,  
+          dataType:"json",  
+          data:{"method":"Company.black_sort","type":"text","content":{"page_size":5,"where":{"auth_level":"006001"},"order":{"add_blk_amount":"DESC","exp_amount":"DESC"}}},
+          success: function aa(data) {
+              if (200 == data.status_code) {
+                var list = data.content.list,length=list.length,i=0,k=0,company_name='',alias_list='';
+                str = '<h3><span>黑榜排行</span><a href="__APP__/ranking.html" target="_blank">更多&gt;</a></h3>';
+                for(; i< length; i++)
+                {
+                  k = i+1;
+                  company_name = list[i].company_name;
+                  alias_list   = list[i].alias_list;
+                  str += '<dl class="new_hbph">';
+                  str += '<dt>';
+                  str += '<img src="__PUBLIC__/Home/images/new_sz0'+k+'.png"/>';
+                  str += '</dt><dd><h4>';
+                  str += '<a href="__APP__/hpt?resid='+list[i].id+'" target="_blank" title="'+list[i].company_name+'">';
+                  str += company_name.substring(0,20)+'</a></h4>';
+                  str += '<p>其他名称： '+alias_list.substring(0,20)+'</p></dd></dl>';
+                }
+                $('.new_rts').prepend(str);
+              }
+          }
+      });
+    //最新曝光
+    $.ajax({  
+          type:"post",  
+          url:"{$call_url}",
+          timeout: 5000,  
+          dataType:"json",  
+          data:{"method":"Inexposal.dynamic","type":"text","content":{"page_size":5}},
+          success: function aa(data) {
+              if (200 == data.status_code) {
+                var list = data.content.list,length=list.length,i=0,k=0,company_name='',content='';
+                str ='<ul>';                                       
+                for(; i< length; i++)
+                {
+                  company_name = list[i].company_name;
+                  content      = list[i].content;
+                  if(0 != list[i].pic_1){
+                    str += '<li>';
+                  }else{
+                    str += '<li class="bian">';
+                  }
+                  str += '  <dl>';
+                  if(0 != list[i].pic_1)
+                  {
+                    str += '<dt><a target="_blank" href="__APP__/';
+                    if('006001' == list[i].auth_level)
+                       str += 'hpt';
+                    else
+                       str += 'wrz';
+                    str += '?resid='+list[i].company_id+'"><img src="'+list[i].pic_1_url+'" /></a></dt>';
+                  }
+                  str += '<dd><h4><a target="_blank" href="__APP__/';
+                  if('006001' == list[i].auth_level)
+                    str += 'hpt';
+                  else
+                   str += 'wrz';
+                  str += '?resid='+list[i].company_id+'" title="'+list[i].company_name+'">'+company_name.substring(0,25)+'</a></h4><div class="new_sj">';
+                  str += '<span>时间：'+getTimeEx(list[i].add_time)+'</span><span>曝光员：<a target="_blank" href="__APP__/Usercenter?id='+list[i].user_id+'">'+list[i].nickname+'</a></span>';
+                  str += '</div><p>'+content.substring(0,70)+'</p></dd></dl></li>';                     
+                }
+                str += '</ul>';
+                $('#record_count_ex').html(data.content.record_count*3);
+                $('.new_bgph_box').prepend(str);
+              }
+          }
+      });
+};
+      //为用户识别公司 
+      $.ajax({  
+          type:"post",  
+          url:"{$call_url}",
+          timeout: 5000,  
+          dataType:"json",  
+          data:{"method":"Querylog.get_list","type":"text","content":{"page_size":1}},
+          success: function aa(data) {
+              if (200 == data.status_code) {
+                  $("#cx_count_ex").html(data.content.record_count*3);
+              }
+          }
+      });
+
+      $('#baog').live('click',function(){
+         var usaa = '{$userid}';
+         if (usaa == "") {
+              $(".bd_wd").css("width", $(document).width());
+              $(".bd_wd").css("height", $(document).height());
+              $(".bd_wd").show();
+              $("#tcwindows1").show();
+              return false;
+          }
+      });
+      $('#hegui').live('click',function(){
+         var usaa = '{$userid}';
+         if (usaa == "") {
+              $(".bd_wd").css("width", $(document).width());
+              $(".bd_wd").css("height", $(document).height());
+              $(".bd_wd").show();
+              $("#tcwindows1").show();
+              return false;
+          }
+      });
+  })
+  function ValidateFile(){ 
+      var checkbox_ok = document.getElementById("search_name_ex").value;
+      if(checkbox_ok == "请输入公司名称、平台名称或网址" 
+         || checkbox_ok == ""){ 
+          $('#tishi').text("请输入搜索内容！");
+          $(".bd_wd").css("width", $(document).width());
+          $(".bd_wd").css("height", $(document).height());
+          $(".bd_wd").show();
+          $(".yzsbai").show();
+          return false;
+      }
+  }
+  function pageScroll(){
+    //把内容滚动指定的像素数（第一个参数是向右滚动的像素数，第二个参数是向下滚动的像素数）
+    window.scrollBy(0,-100);
+    //延时递归调用，模拟滚动向上效果
+    scrolldelay = setTimeout('pageScroll()',100);
+    //获取scrollTop值，声明了DTD的标准网页取document.documentElement.scrollTop，否则取document.body.scrollTop；因为二者只有一个会生效，另一个就恒为0，所以取和值可以得到网页的真正的scrollTop值
+    var sTop=document.documentElement.scrollTop+document.body.scrollTop;
+    //判断当页面到达顶部，取消延时代码（否则页面滚动到顶部会无法再向下正常浏览页面）
+    if(sTop==0) clearTimeout(scrolldelay);
+  }
+</script>
+<script type="text/javascript">
+       //广告
+      $.ajax({  
+          type:"post",  
+          url:"{$call_url}",
+          timeout: 5000,  
+          dataType:"json",  
+          async: false,
+          data:{"method":"Ad.get_list","type":"text","content":{"page_size":4}},
+          success: function aa(data) {
+              if (200 == data.status_code) {
+                var str = '',list = data.content.list,length = list.length,i = 0,k = 0;
+                str = '<ul  class="silder_con">';
+                for(;i< length; i++){                  
+                  str += '<li class="silder_panel clearfix"><a href="'+base64decode(list[i].url)+'" target="_blank"><img width="740" eight="425" src="'+list[i].pic_url+'"/></a></li>';
+                }
+                str += '</ul><ul class="silder_nav clearfix">';
+                for(i=0; i< length; i++){
+                  k = i+1;
+                  str += '<li class="';
+                  if(0 == i) str += 'current';
+                  str += '"><a href="javascript:void(0)" >'+k+'</a></li>';
+                }
+                str += '</ul><ul class="silder_h3 clearfix">';
+                for(i=0; i< length; i++){
+                  var intro = list[i].intro;
+                  str += '<li class="';
+                  if(0 == i) str += 'current';
+                  str += '"><a href="'+list[i].url+'" target="_blank"><h3>'+list[i].title+'</h3><p>'+intro.substring(0,40)+'</p>';//{$lb_t.intro|subtext=40}
+                  str += '</a></li>';
+                }
+                str +='</ul><div class="bjwwws"></div>';
+                $('#slider_name').html(str);
+              }
+          }
+      });
+       </script>

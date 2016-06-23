@@ -1,0 +1,803 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>{$wrz_list.company_name}怎么样？{$wrz_list.company_name}的评价-口碑网</title>
+<meta name="keywords" content="{$wrz_list.company_name}"/>
+<meta name="description" content="{$wrz_list.company_name}怎么样？是不是安全可靠的交易平台，是不是黑平台，关于{$wrz_list.company_name}的评价。"/>
+<link rel="icon" href="__PUBLIC__/s.ico" type="image/x-icon" />
+<link type="text/css" rel="stylesheet" href="__PUBLIC__/Home/css/main.css"/>
+<link type="text/css" rel="stylesheet" href="__PUBLIC__/Home/css/lightbox.css"/>
+<script type="text/javascript" src="__PUBLIC__/js/jquery-1.8.3.min.js" ></script>
+<script type="text/javascript" src="__PUBLIC__/js/Validform_v5.3.2.js" ></script>
+<script type="text/javascript" src="__PUBLIC__/Home/js/main.js" ></script>
+<script type="text/javascript" src="__PUBLIC__/Home/js/lightbox-2.6.min.js" ></script>
+<script type="text/javascript" src="__PUBLIC__/Home/js/jquery.form.js" ></script>
+</head>
+
+<body>
+<!--Begin--登录-->   
+<!--成功-->  
+<div class="yzsbai1">
+    <p id="tishi1"></p>
+    <input name="" type="button" value="确 定" class="xigs1" />
+</div>
+<div class="yzsbai3">
+    <p id="tishi3"></p>
+    <input name="" type="button" value="确 定" class="xigs3" />
+</div>
+<!--Begin--登录-->   
+<include file="Public:login" />
+<!--End--登录-->
+
+<!--Begin--插入图片-->   
+<include file="Public:upload_pictures" />
+<!--End--插入图片--> 
+<div id="wrap"> 
+<!--头部--Begin-->   
+  <include file="Public:top" />
+<!--头部--End--> 
+<!--内容-->
+<div class="content cent">
+  <div class="left">
+    <div class="Exposure">
+      <dl class="lg_gs">
+        <if condition = "$wrz_list.logo_url neq '' " >
+        <dt><img src="{$wrz_list.logo_url}" /></dt>
+        </if>
+        <dd class="gs_xx">
+          <h3><a title="{$wrz_list.company_name}">{$wrz_list.company_name|subtext=18}</a></h3>
+          <p><span>其他名称</span> <a>{$wrz_list.alias_list}</a> </p>
+        </dd>
+        <dd class="dz_jh">
+          <span class="noborder">
+            <div class="jiathis_style_24x24"> <a href="http://www.jiathis.com/share" class="jiathis jtico_jiathis" target="_blank" style="background: url(__PUBLIC__/Home/images/ss03a.png) no-repeat;width:25px;height:22px;display:block;"></a> </div>
+            <em id='fx'>
+            <if condition="$fx_times eq ''">0
+            <else />{$fx_times}
+            </if></em>次
+          </span>
+          <script type="text/javascript" src="http://v3.jiathis.com/code/jia.js" charset="utf-8"></script>
+          <script type="text/javascript" src="http://v3.jiathis.com/code/plugin.client.js" charset="utf-8"></script>
+          <span>
+            <a class="jh bj_b" id="{$wrz_list.id}" href="javascript:void(0)"></a><br/>
+            <em id='jh_th'>{$wrz_list.add_blk_amount}</em>次
+            <b id="bb">+1</b></span>
+          </span>
+          <span> 
+            <a class="dz bj_a" id="{$wrz_list.id}" href="javascript:void(0)"></a><br>
+            <em id="dz_th">{$wrz_list.assist_amount}</em>次 
+            <b id="bb" style="margin-left: -50px;">+1</b>
+          </span>
+        </dd>
+      </dl>
+      <ul class="hqgsdexx ul_ex">
+        <li>
+          <dl>
+            <dt>营业执照</dt>
+            <dd>
+              <if condition="$wrz_list.control_busin_license eq 1 ">
+                <img src="__PUBLIC__/Home/images/pic20b.png" width="35" height="28"/>
+              <else />
+                <img src="__PUBLIC__/Home/images/pic20a.png" width="35" height="28"/>
+              </if>
+            </dd>
+          </dl>
+          <dl>
+            <dt>机构代码证</dt>
+            <dd>
+              <if condition="$wrz_list.control_code_certificate eq 1 ">
+                <img src="__PUBLIC__/Home/images/pic20b.png" width="35" height="28"/>
+              <else />
+                <img src="__PUBLIC__/Home/images/pic20a.png" width="35" height="28"/>
+              </if>
+            </dd>
+          </dl>
+        </li>
+        <!-- <li>
+          <dl>
+            <dt>员工数</dt>
+            <dd>1000</dd>
+          </dl>
+          <dl>
+            <dt>注册资本</dt>
+            <dd>1000万</dd>
+          </dl>
+        </li>
+        <li>
+          <dl>
+            <dt>公司性质</dt>
+            <dd>民营</dd>
+          </dl>
+          <dl>
+            <dt>成立时间</dt>
+            <dd>2010-10-11</dd>
+          </dl>
+        </li>
+        <li>
+          <dl>
+            <dt>交易产品</dt>
+            <dd>交易产品</dd>
+          </dl>
+          <dl>
+            <dt>经营范围</dt>
+            <dd>交易产品</dd>
+          </dl>
+        </li> -->
+        <li>
+          <if condition = "$wrz_list.website neq '' " >
+          <dl>
+            <dt>官方网站</dt>
+              <dd><a href="{$wrz_list.website}" class="gs_gw" target="_blank">{$wrz_list.website}</a></dd>
+          </dl>
+          </if>
+          <if condition = "$wrz_list.telephone neq '' " >
+          <dl>
+            <dt>联系电话</dt>
+            <dd>{$wrz_list.telephone}</dd>
+          </dl>
+          </if>
+        </li>
+        <if condition = "$wrz_list.reg_address neq '' " >
+        <li>
+          <dl class="dlwd">
+            <dt>联系地址</dt>
+            <dd class="ddwd">{$wrz_list.reg_address}</dd>
+          </dl>
+        </li>
+        </if>
+        <li>
+          <p>所有数据采集至公共信息或由该站人员提供，详情参见<font>官方资料！</font></p>
+        </li>
+      </ul>
+    </div>
+    <div class="blank20"></div>
+    <!--媒体报道-->
+    <if condition = "$record_count gt 0 " >
+    <div class="ss_mtbg">
+      <div class="ss_mtbg_tit">
+        <ul>
+          <li class="mtbd_li">媒体报道</li>
+        </ul>
+        <p>共有媒体报道<span>{$record_count}</span>篇</p>
+        <if condition = "$record_count gt 2 " >
+           <a class="hyh" href="javascript:void(0)">换一换</a>
+           <input type="hidden" id="hidden_hyh" name="hidden_hyh" autocomplete="off" value="1">
+        </if>
+      </div>
+      <div class="mtbdcnt">
+        <volist name="new_list" id="new_list">
+        <dl>
+          <dt><a href="__APP__/article?id={$new_list.id}&company_id={$new_list.company_id}" target="_blank"><img src="{$new_list.pic_url}" width="120" height="90"></a></dt>
+          <dd>
+            <h4><a href="__APP__/article?id={$new_list.id}&company_id={$new_list.company_id}" target="_blank" title="{$new_list.title}">{$new_list.title|subtext=8}</a></h4>
+            <p>{$new_list.content|subtext=35}</p>
+            <span>{$new_list.show_time|date='Y-m-d H:i',###}</span> </dd>
+        </dl>
+        </volist>
+      </div>
+    </div>
+    </if>
+    <!--媒体报道-->
+    <div class="ss_mtbg">
+      <div class="ss_mtbg_tit">
+        <ul>
+          <li onclick="show_panel(this)" id="link_install_sql" class="activ">网友评论</li>|
+          <li onclick="show_panel(this)" id="link_basic_setting">网友曝光</li>
+        </ul>
+        <p class="p_pl">共有主题评论<span>{$record_count_p}</span>个</p>
+        <p class="p_bg" style="display:none;">共<span>{$record_count_b}</span>位网友曝光</p>
+        <i><a href="javascript:void(0)" class="wypll">我要评论</a>
+        <a href="__APP__/exposure.html" style="display:none;" class="wybg_a wdbgg" target="_blank">我要曝光</a>
+        </i> 
+      </div>
+      <div class="comment_cnt" id="div_install_sql">
+        <volist id="con_p" name="con_p" key="k" empty="还没有人评论过此公司哦，赶紧去吐槽吧！">
+        <dl>
+          <dt>
+            <a href="__APP__/Usercenter?id={$con_p.user_id}" target="_blank">
+              <img src="{$con_p.user_photo}" />
+              <p>
+              <if condition="$con_p.is_anonymous eq 0 ">
+              {$con_p.nickname|subtext=5}
+              <else />{$con_p.nickname|sudtext}
+              </if>
+              </p>
+            </a>
+          </dt>
+          <dd>
+            <a href="__APP__/posts_pl?qy={$con_p.company_id}&pl={$con_p.id}" target="_blank">
+            <p class="bg_jss">
+            <if condition="$con_p.type eq '005001'">
+              <em class="dianzan2"></em>
+            <elseif condition="$con_p.type eq '005002'"/>
+              <em class="tiwen2"></em>
+            <else />
+              <em class="jiahei2"></em>
+            </if>
+            {$con_p.content}</p>
+            </a>
+            <span class="tubox">
+              <if condition="$con_p.pic_1_url neq ''">
+              <a href="{$con_p.pic_1_url}" data-lightbox='example-set'><img src="{$con_p.pic_1_url}"/></a>
+              </if>
+              <if condition="$con_p.pic_2_url neq ''">
+              <a href="{$con_p.pic_2_url}" data-lightbox='example-set'><img src="{$con_p.pic_2_url}"/></a>
+              </if>
+              <if condition="$con_p.pic_3_url neq ''">
+              <a href="{$con_p.pic_3_url}" data-lightbox='example-set'><img src="{$con_p.pic_3_url}"/></a>
+              </if>
+              <if condition="$con_p.pic_4_url neq ''">
+              <a href="{$con_p.pic_4_url}" data-lightbox='example-set'><img src="{$con_p.pic_4_url}"/></a>
+              </if>
+              <if condition="$con_p.pic_5_url neq ''">
+              <a href="{$con_p.pic_5_url}" data-lightbox='example-set'><img src="{$con_p.pic_5_url}"/></a>
+              </if>
+            </span>
+            <span>
+            <if condition="$con_p.zx_content neq '' ">
+            <i>最新回复：{$con_p.zx_content}</i>
+            </if>
+            <em><font>{$con_p['re_sub']['record_count']}</font> 人回复</em></span></dd>
+        </dl>
+        </volist>
+        <div class="pagees">
+          <p class="nas">共有主题评论<em>{$record_count_p}</em>个</p>
+            {$page}
+        </div>
+      </div>
+      <div class="comment_cnt hide" id="div_basic_setting">
+        <volist id="con_b" name="con_b" key="k" empty="还没有用户曝光过此公司那，我要去曝光一个！">
+        <dl>
+          <dt>
+          <a href="__APP__/Usercenter?id={$con_b.user_id}" target="_blank">
+          <img src="{$con_b.user_photo}" />
+            <p>
+              <if condition="$con_b.is_anonymous eq 0 ">{$con_b.nickname|subtext=5}
+              <else />{$con_b.nickname|sudtext}
+              </if>
+            </p>
+          </a>
+          </dt>
+          <dd>
+            <a href="__APP__/posts_bg?qy={$con_b.company_id}&pl={$con_b.id}" target="_blank">
+            <p class="bg_jss"><em class="bgs"></em>{$con_b.content|subtext=100}</p>
+            </a>
+            <span class="tubox">
+                <if condition="$con_b.pic_1_url neq ''">
+                <a href="{$con_b.pic_1_url}" data-lightbox='example-set'><img src="{$con_b.pic_1_url}"/></a>
+                </if>
+                <if condition="$con_b.pic_2_url neq ''">
+                <a href="{$con_b.pic_2_url}" data-lightbox='example-set'><img src="{$con_b.pic_2_url}"/></a>
+                </if>
+                <if condition="$con_b.pic_3_url neq ''">
+                <a href="{$con_b.pic_3_url}" data-lightbox='example-set'><img src="{$con_b.pic_3_url}"/></a>
+                </if>
+                <if condition="$con_b.pic_4_url neq ''">
+                <a href="{$con_b.pic_4_url}" data-lightbox='example-set'><img src="{$con_b.pic_4_url}"/></a>
+                </if>
+                <if condition="$con_b.pic_5_url neq ''">
+                <a href="{$con_b.pic_5_url}" data-lightbox='example-set'><img src="{$con_b.pic_5_url}"/></a>
+                </if>
+            </span>
+            <span>
+            <if condition="$con_b.zx_content neq '' ">
+            <i>最新回复：{$con_b.zx_content}</i>
+            </if>
+            <em><font>{$con_b['sub']['record_count']}</font> 人回复</em></span></dd>
+        </dl>
+        </volist>
+        <div class="pagees">
+          <p class="nas">共有网友曝光<em>{$record_count_b}</em>个</p>
+            {$pages}
+        </div>
+      </div>
+    </div>
+    <div class="ss_mtbg" id="ss_mtbg">
+      <div class="ss_mtbg_tit">
+        <ul>
+          <li>发表主题评论</li>
+        </ul>
+      </div>
+      <div class="fb_plbox">
+        <dl>
+          <dt>
+            <if condition="$userid neq '' ">
+            <a href="#"><img src="{$photo_url}" /></a>
+            <else />
+            <a><img src="__PUBLIC__/Home/images/avatar.jpg" /></a>
+            </if>
+          </dt>
+          <dd class="bgwd">
+            <div class="plbox1" style="display: block;">在这里输入评论内容</div>
+            <div class="plbox2" style="display: none;">
+              <form id="theForm" name="theForm" method="post" action="{:U('comment_add')}" enctype="multipart/form-data" autocomplete="off">
+                <p class="wypl_wypl1">观点：
+                  <span class="isspan">
+                    <input name="wypl" type="radio" value="005001" checked="checked" />点赞
+                  </span>
+                  <span class="isspan">
+                    <input name="wypl" type="radio" value="005003" />加黑
+                  </span> 
+                </p>
+                <p class="wypl_wypl2">
+                  <textarea name="saytext" id="saytext0" style="width:545px;"></textarea>
+                </p>
+                <p class="wypl_wypl3"> <a data-id="0" href="javascript:void(0)" class="touxin emotion">&nbsp;</a> <a href="javascript:void(0)" class="tupian ch_tu">&nbsp;</a> <span>
+                  <input name="is_anonymous" id="checkbox-id" type="checkbox" value="1">
+                  匿名评论</span> </p>
+                <div class="wypl_wypl4">
+                  <ul class="pic_id">
+                  </ul>
+                  <input type="hidden" id="hidden_id" name="company_id" value="{$wrz_list.id}">
+                  <input name="submit" type="submit" value="发表评论" class="sub_btn">
+                </div>
+              </form>
+            </div>
+          </dd>
+        </dl>
+      </div>
+    </div>
+  </div>
+  <div class="right">
+    <div class="submit_pt"><span>该平台未提交认证</span>
+      <p>
+        <i>我是运营者，我要认证该平台</i>
+        <a href="__APP__/auth.html" target="_blank"><em><img src="__PUBLIC__/Home/images/rzpt2.jpg" /></em></a>
+      </p>
+    </div>
+    <div class="Member">
+    </div>
+  </div>
+</div>
+<!--底部--Begin-->     
+<include file="Public:footer" />
+<!--底部--End--> 
+</div>
+</body>
+<script type="text/javascript" src="__PUBLIC__/Home/js/main_ex.js" ></script>
+<script type="text/javascript" src="__PUBLIC__/Home/js/jquery.qqFace.js" ></script>
+<script type="text/javascript">
+  //会员单位列表
+  $(function(){
+    var page_index = 1;
+    window.onload=function(){
+      exp_list(page_index);
+    };
+  });
+  function exp_list(page_index){
+         var qy_id = "{$wrz_list.id}";
+         //曝光列表
+         $.ajax({  
+            type:"post",  
+            url:"{$call_url}",
+            timeout: 5000,  
+            dataType:"json",  
+            data:{"method":"Company.get_list","type":"text","content":{"page_size":20,'page_index':page_index,"where":{"agent_platform":qy_id,"nature":"003001"}}},
+            success: function aa(data) {
+                if (200 == data.status_code) {
+                  var list = data.content.list,length=list.length,i=0,k=0,j=0,str='',company_name='',content='';
+                  str = '<div class="ss_mtbg_tit white">';
+                  str += '<ul><li class="mtbd_li">会员单位列表</li></ul>';
+                  str += '<p class="rg">共<span>'+data.content.record_count+'</span>家会员单位</p></div>';
+                  str += '<h4><p>会员号</p>';
+                  str += '<span>会员单位</span></h4>';
+                  str += '<ul class="pdd"><li><ol>';
+                  if (data.content.record_count != 0) {
+                    for(; i< length; i++)
+                    {
+                      company_name = list[i].company_name;
+                      mem_sn      = list[i].mem_sn;
+                      str += '<li>';
+                      str += '<p>'+mem_sn+'</p>';
+                      str += '<a target="_blank" href="__APP__/';
+                      if('006001' == list[i].auth_level)
+                        str += 'hpt';
+                      else if('006002' == list[i].auth_level)
+                        str += 'wrz';
+                      else
+                        str += 'yrz';
+                      str += '?resid='+list[i].id+'">';
+                      str += '<span title="'+company_name+'"';
+                      if("006001" == list[i].auth_level)
+                        str += ' class="no_hege"';
+                      else if("006003" == list[i].auth_level)
+                        str += ' class="hege"';
+                      str += '>'
+                      str += company_name.substring(0,14)+'</span></a></li>';
+                    }
+                  }else{
+                    str += '<span>暂无会员单位</span>';
+                  }
+                  str += '</ol></li></ul>';
+                  str += '<div class="Member_page">';
+                  //分页
+                  if(20 <data.content.record_count)
+                  {
+                    str += '<div>';
+                    var page_length = Math.ceil(data.content.record_count/20);
+                    if(20<page_index)
+                    {
+                      var pref = page_index -1;
+                      str += '<a class="next" href="javascript:void(0);" onclick="exp_list('+pref+')"><<</a>'; 
+                    }  
+                    for(var j=1; j<= page_length; j++)
+                    {
+                      if(page_index != j)
+                      {
+                        str += '<a class="num" href="javascript:void(0);" onclick="exp_list('+j+')">'+j+'</a>';  
+                      }
+                      else
+                      {
+                        str += '<span class="current">'+j+'</span>';
+                      }
+                    }
+                    if(1< page_length
+                    && page_index<page_length
+                    )
+                    {
+                      var next = page_index +1;
+                      str += '<a class="next" href="javascript:void(0);" onclick="exp_list('+next+')">>></a>';
+                    }
+
+                    str += '</div>';
+                  }
+                  str += '</div>';
+                  $(".Member").html(str);
+                }
+            }
+        });
+  }
+</script>
+<script type="text/javascript">
+$(function(){ 
+    //表情
+    $('.emotion').qqFace({
+      id : 'facebox', 
+      assign:'saytext', 
+      path:'__PUBLIC__/Home/arclist/' //表情存放的路径
+    });
+    //企业不存在，跳转首页
+    $('.xigs3').live('click',function(){
+        location.href='__ROOT__/';
+    });
+    //分享次数
+    $('.jiatitle').live('click',function(){
+            var id   = "{$wrz_list.id}";//获取id属性
+            var type = "007001";
+            $.ajax({  
+                type:"post",  
+                url:"{$call_url}",
+                timeout: 5000,  
+                dataType:"json",  
+                data:{"method":"Sharecount.add","type":"text","content":{"value_id":id,"type":type}},
+                success: function aa(data) {  
+                        if (200 == data.status_code && 0 == data.content.is_success) {
+                            $('#fx').text(data.content.amount); 
+                            return false;
+                        }else{
+                            return false;
+                        }
+                }  
+            })  
+    });
+    //评论表单提交
+    $(".sub_btn").click(function(){
+      var objButton  = $(this);
+      var content = document.getElementById("saytext0").value;
+      var userid = '{$userid}';
+      if (content == "") {
+          $('#tishi').text("评论内容不能为空！");
+          $(".bd_wd").css("width", $(document).width());
+          $(".bd_wd").css("height", $(document).height());
+          $(".bd_wd").show();
+          $(".yzsbai").show();
+          return false;
+      }else if(content.length > 400){
+          $('#tishi').text("评论内容最多为400字符");
+          $(".bd_wd").css("width", $(document).width());
+          $(".bd_wd").css("height", $(document).height());
+          $(".bd_wd").show();
+          $(".yzsbai").show();
+          return false;
+      }
+      if (userid == "") {
+          $(".bd_wd").css("width", $(document).width());
+          $(".bd_wd").css("height", $(document).height());
+          $(".bd_wd").show();
+          $("#tcwindows1").show();
+          return false;
+      }
+      var options = {
+            //beforeSubmit: ValidateFile,
+            //resetForm: true,
+            beforeSend:function(){
+                objButton.val('发表评论').attr('disabled',true);
+            },
+            success: function (data) {
+              if (data) {
+                $(".bd_wd").css("width", $(document).width());
+                $(".bd_wd").css("height", $(document).height());
+                $(".bd_wd").show();
+                if (data == 0) {
+                  $('#tishi1').text("评论成功！");
+                  $(".yzsbai1").show();          
+                  return false;
+                }else if(data == -1){
+                  $('#tishi').text("评论失败！");
+                  $(".yzsbai").show();
+                  return false;
+                }else if(data == 6){
+                  $('#tishi').text("评论内容不能为空！");
+                  $(".yzsbai").show();
+                  return false;
+                }else if(data == -6){
+                  $('#tishi3').text("评论失败,该企业已被删除！");
+                  $(".yzsbai3").show();
+                  return false;
+                }else if(data == -2){
+                  $('#tishi3').text("评论失败！");
+                  $(".yzsbai3").show();
+                  return false;
+                }
+              }
+            },
+            complete:function(){
+                objButton.val('发表评论').attr('disabled',false);
+            } 
+        };
+        $("#theForm").ajaxForm(options);
+    });
+    //上传插图
+    $(".ch_tu").click(function(){
+      var userid = "{$userid}";
+      $(".bd_wd").css("width", $(document).width());
+          $(".bd_wd").css("height", $(document).height());
+          $(".bd_wd").show();
+      if (userid == "") {
+          $("#tcwindows1").show();
+          return false;
+      }else{
+          $("#windows_ct").show();
+      }
+    });
+    //添加图片
+    $("#upload-file").change(function(){ 
+      if($("#msg li").size()>5){
+        alert("最多只能添加5张图片！");
+        return false;
+      }else{
+        upload();
+      }
+     });  
+    function upload(){
+      $("#uploadFrom").ajaxSubmit({
+         url:"__URL__/uploadImg",  
+         dataType: 'json',
+         contentType: "application/x-www-form-urlencoded; charset=utf-8",
+         success:function(data){
+          if(data){
+            if(data == 1){
+              alert("图片上传失败！");
+              return false;
+            }else if(data == 2){
+              alert("没有文件上传！");
+              return false;
+            }else if(data == 3){
+              alert("文件上传错误！");
+              return false;
+            }else if(data == 4){
+              alert("上传文件不能大于350kb！");
+              return false;
+            }else if(data == 5){
+              alert("图片格式错误！");
+              return false;
+            }else if(data == 6){
+              alert("请登录后操作！");
+              return false;
+            }else{
+              $("#msg").append("<li id='li_"+data.id+"' class='sx'><div class='ct_tubox'><img src='"+data.img+"'/></div><span class='delete' id='"+data.id+"'></span></li>");
+              $(".pic_id").append("<li id='inp_"+data.id+"' class='qc'><input type='hidden' id='"+data.id+"' name='pic[]' value='"+data.id+"'></li>");
+            }
+          }else{
+            return false;
+          }
+         },
+         error:function(msg){
+          return false;
+         }
+      });
+    }
+    //加黑
+    $('.jh').click(function(){
+            var id        = $(this).attr('id');//获取id属性
+            var userid    = '{$userid}';
+            if (userid == "") {
+              $(".bd_wd").css("width", $(document).width());
+              $(".bd_wd").css("height", $(document).height());
+              $(".bd_wd").show();
+              $("#tcwindows1").show();
+              return false; 
+            }
+            $.ajax({  
+                type:"post",  
+                url:"{$call_url}",
+                timeout: 5000,  
+                dataType:"json",  
+                data:{"method":"Addblack.add","type":"text","content":{"company_id":id,"user_id":userid}},
+                success: function aa(data) {  
+                     if (200 == data.status_code) {
+                        if (0 == data.content.is_success) {
+                          if(!$('#bb').is(':visible')){ 
+                            $('#bb').css({display:'block', top:'115px'}).animate({top: '+115px'}, 400, 
+                            function(){ 
+                              setTimeout(out, 500); 
+                            }); 
+                          }
+                          $('#jh_th').text(data.content.amount); 
+                          return false;
+                        }else if(-1 == data.content.is_success){
+                          $('#tishi_ex').text("操作失败!");
+                          $(".bd_wd_ex").css("width", $(document).width());
+                          $(".bd_wd_ex").css("height", $(document).height());
+                          $(".bd_wd_ex").show();
+                          $(".yzsbai_ex").show();
+                          setTimeout('$(".bd_wd_ex").hide("fast")',3000); 
+                          setTimeout('$(".yzsbai_ex").hide("fast")',3000); 
+                          return false;
+                        }else if(-2 == data.content.is_success){
+                          $('#tishi_ex').text("您已经操作过，不能重复！");
+                          $(".bd_wd_ex").css("width", $(document).width());
+                          $(".bd_wd_ex").css("height", $(document).height());
+                          $(".bd_wd_ex").show();
+                          $(".yzsbai_ex").show();
+                          setTimeout('$(".bd_wd_ex").hide("fast")',3000); 
+                          setTimeout('$(".yzsbai_ex").hide("fast")',3000); 
+                          return false;
+                        }else if(-3 == data.content.is_success){
+                          $('#tishi3').text("操作失败，该企业已被删除！");
+                          $(".bd_wd_ex").css("width", $(document).width());
+                          $(".bd_wd_ex").css("height", $(document).height());
+                          $(".bd_wd_ex").show();
+                          $(".yzsbai3").show();
+                          return false;
+                        } 
+                     }else{
+                          $('#tishi_ex').text("操作错误！");
+                          $(".bd_wd_ex").css("width", $(document).width());
+                          $(".bd_wd_ex").css("height", $(document).height());
+                          $(".bd_wd_ex").show();
+                          $(".yzsbai_ex").show();
+                          setTimeout('$(".bd_wd_ex").hide("fast")',3000); 
+                          setTimeout('$(".yzsbai_ex").hide("fast")',3000); 
+                          return false;
+                     }
+                }  
+            })  
+    });
+    //点赞
+    $('.dz').click(function(){
+            var id        = $(this).attr('id');//获取id属性
+            var userid    = '{$userid}';
+            if (userid == "") {
+              $(".bd_wd").css("width", $(document).width());
+              $(".bd_wd").css("height", $(document).height());
+              $(".bd_wd").show();
+              $("#tcwindows1").show();
+              return false; 
+            }
+            $.ajax({  
+                type:"post",  
+                url:"{$call_url}",
+                timeout: 5000,  
+                dataType:"json",  
+                data:{"method":"Companyassist.add","type":"text",
+                "content":{"company_id":id,"user_id":userid}},
+                success: function aa(data) {  
+                     if (200 == data.status_code) {
+                        if (0 == data.content.is_success) {
+                          if(!$('#bb').is(':visible')){ 
+                            $('#bb').css({display:'block', top:'115px'}).animate({top: '+115px'}, 400, 
+                            function(){ 
+                              setTimeout(out, 500); 
+                            }); 
+                          }
+                          $('#dz_th').text(data.content.amount); 
+                          return false;
+                        }else if(-1 == data.content.is_success){
+                          $('#tishi_ex').text("操作失败!");
+                          $(".bd_wd_ex").css("width", $(document).width());
+                          $(".bd_wd_ex").css("height", $(document).height());
+                          $(".bd_wd_ex").show();
+                          $(".yzsbai_ex").show();
+                          setTimeout('$(".bd_wd_ex").hide("fast")',3000); 
+                          setTimeout('$(".yzsbai_ex").hide("fast")',3000); 
+                          return false;
+                        }else if(-2 == data.content.is_success){
+                          $('#tishi_ex').text("您已经操作过，不能重复！");
+                          $(".bd_wd_ex").css("width", $(document).width());
+                          $(".bd_wd_ex").css("height", $(document).height());
+                          $(".bd_wd_ex").show();
+                          $(".yzsbai_ex").show();
+                          setTimeout('$(".bd_wd_ex").hide("fast")',3000); 
+                          setTimeout('$(".yzsbai_ex").hide("fast")',3000); 
+                          return false;
+                        }else if(-3 == data.content.is_success){
+                          $('#tishi3').text("操作失败，该企业已被删除！");
+                          $(".bd_wd_ex").css("width", $(document).width());
+                          $(".bd_wd_ex").css("height", $(document).height());
+                          $(".bd_wd_ex").show();
+                          $(".yzsbai3").show();
+                          return false;
+                        }  
+                     }else{
+                        $('#tishi_ex').text("操作错误！");
+                          $(".bd_wd_ex").css("width", $(document).width());
+                          $(".bd_wd_ex").css("height", $(document).height());
+                          $(".bd_wd_ex").show();
+                          $(".yzsbai_ex").show();
+                          setTimeout('$(".bd_wd_ex").hide("fast")',3000); 
+                          setTimeout('$(".yzsbai_ex").hide("fast")',3000); 
+                          return false;
+                     }
+                }  
+            })  
+    });
+})
+</script>
+<script type="text/javascript">
+/**************新闻换一换*****************/
+$(function(){
+      //var p         = 2;// 初始化页面，点击事件从第二页开始
+      var companyid = '{$wrz_list.id}';
+      var flag      = false;
+      var num       = '{$record_count}';
+      var num_count = Math.ceil(num/2);
+      $(".hyh").click(function(){
+          var i = Number(document.getElementById("hidden_hyh").value);
+          if (i >= num_count) {
+             var p = 1;
+             $("#hidden_hyh").val(p);
+          }else{
+             p = i+1;
+             $("#hidden_hyh").val(p);
+          }
+          send(p);
+      })
+      function send(p){
+          if(flag){
+            return false;
+          }
+          $.ajax({
+              type:'post',
+              url:"__URL__/news_hyh",
+              dataType:"json", 
+              contentType: "application/x-www-form-urlencoded; charset=utf-8",
+              data:{
+                k:p,
+                comment_id:companyid},
+              beforeSend:function(){
+                   //$("#yhy_ul").append("<div id='load'></div>");
+              },
+              success:function(data){
+                $("#yhy_ul").empty();
+                if(data!=null){
+                  $.each(data,function(i){
+                    $("#yhy_ul").append("<dl><dt><a href='__APP__/article?id="+data[i]['id']+"&company_id="+data[i]['company_id']+"' target='_blank'><img src='"+data[i]['pic_url']+"' /></a></dt><dd><h4><a href='__APP__/article?id="+data[i]['id']+"&company_id="+data[i]['company_id']+"' target='_blank'>"+data[i]['title']+"</a></h4><p>"+data[i]['content']+"</p><span>"+data[i]['add_time']+"</span></dd></dl>");
+                  })
+                }else{
+                    $("#yhy_ul").text('已无更多数据');
+                    window.location.reload(); 
+                    flag=true;  
+                }
+              },
+              complete:function(){
+                     $("#load").remove();
+              },
+              dataType:'json'});
+            //p++;
+      }
+})
+</script>
+<script type="text/javascript" src="__PUBLIC__/Home/js/switch.js" ></script>
+</html>

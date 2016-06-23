@@ -1,0 +1,281 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>口碑—全国最大的查询曝光平台</title>
+<meta name="keywords" content="口碑，黑平台查询，黑平台曝光，贵金属黑平台，外汇黑平台"/>
+<meta name="description" content="口碑是全国性的交易市场曝光平台,携手每一位投资人共同揭开交易市场的层层黑幕,为您提供全方位的贵金属、外汇、黄金、石油等行业交易黑幕的查询、曝光。"/>
+<link rel="icon" href="__PUBLIC__/s.ico" type="image/x-icon" />
+<link type="text/css" rel="stylesheet" href="__PUBLIC__/Home/css/main.css"/>
+<script type="text/javascript" src="__PUBLIC__/js/jquery-1.8.3.min.js" ></script>
+<script type="text/javascript" src="__PUBLIC__/Home/js/main.js" ></script>
+<script type="text/javascript" src="__PUBLIC__/Home/js/jquery.form.js" ></script>
+</head>
+
+<body>
+
+<!--Begin--登录-->   
+<include file="Public:login" />
+<!--End--登录--> 
+<div id="wrap">
+
+<!--头部--Begin-->   
+<include file="Public:top" />
+<!--头部--End--> 
+
+<!--内容--Begin-->     
+   <div id="content">
+	 <div class="search_list">
+         		<h2>口碑为您找到 {$record_count} 个含”<span>{$search_name}</span>“的结果</h2>
+             		<input type="hidden" autocomplete="off" id="nature" name="nature" value="">
+             		<input type="hidden" autocomplete="off" id="trade" name="trade" value="">
+                <input type="hidden" autocomplete="off" id="zz_p" name="zz_p" value="1">
+                <div class="search_tit">
+                	<span>分类：</span>
+                    <a href="javascript:void(0)" id="" class="active" >全部</a>
+                    <a href="javascript:void(0)" id="003001">公司</a>
+                    <a href="javascript:void(0)" id="003002">平台</a>
+                </div>
+                <div class="search_tit_ch">
+                	<span>行业：</span>
+                    <a href="javascript:void(0)" id="" class="active">全部</a>
+                    <a href="javascript:void(0)" id="004002">外汇</a>
+                    <a href="javascript:void(0)" id="004004">大宗商品(贵金属、石油)</a>
+                    <a href="javascript:void(0)" id="004005">其他</a>
+                </div>
+                <div class="search_box" id="search_box" style="margin-top: 15px; min-height:260px">
+                  <ul id="search_xh">
+                    <volist id='s_list' name='s_list' key="k">
+                    <li>
+                    <if condition = "$s_list.auth_level eq '006001' " >
+                    <a href="__APP__/hpt?resid={$s_list.id}" target='_blank'>
+                    <elseif condition="$s_list.auth_level eq '006002' "/>
+                    <a href="__APP__/wrz?resid={$s_list.id}" target='_blank'>
+                    <else /> 
+                    <a href="__APP__/yrz?resid={$s_list.id}" target='_blank'>
+                    </if>
+                    	<dl class="pt_xx">
+                            <if condition = "$s_list.logo_url neq '' " >
+                        	<dt><img src="{$s_list.logo_url}" width="70" height="70" /></dt>
+                            </if>
+                            <dd>
+                            	<h3>{$s_list.company_name}</h3>
+                                <p>分类：<span>{$s_list['nature']}</span></p>
+                                <p>所属行业：<span>{$s_list['trade']}</span></p>
+                            </dd>
+                        </dl>
+                   	  <p class="qtmc_sear"><span>其他名称</span>{$s_list.alias_list}</p>
+                        <div class="xx_tongj">
+                        	<dl>
+                            	<dt><img src="__PUBLIC__/Home/images/ico05a.png"/></dt>
+                                <dd><span>{$s_list.com_amount}</span>次</dd>
+                            </dl>
+                        	<dl class="last">
+                            	<dt><img src="__PUBLIC__/Home/images/ico02a.png"/></dt>
+                                <dd><span>{$s_list.select_amount}</span>次</dd>
+                            </dl>
+                        </div>
+                     </a>
+                    </li>
+                    </volist>
+                  </ul>
+                  <if condition="$record_count gt 10">
+                  <div class="jzgd_n" style="margin-top: 15px;">
+                    <a class="jzgd_aa" href="javascript:void(0)">加载更多</a>
+                  </div>
+                  </if>
+                </div>
+     </div>
+  </div>
+<!--内容--End--> 
+
+<!--底部--Begin-->     
+   <include file="Public:footer" />
+<!--底部--End--> 
+
+</div>
+</body>
+<script type="text/javascript">
+  $(function(){
+  	$(".search_tit a").click(function(){
+		$(".search_tit a").removeClass("active");
+		$(this).addClass("active");
+		var nature = $(this).attr('id');
+		$('#nature').val(nature);
+        $('#zz_p').val('1');
+		var search_name = "{$search_name}";
+		var nature1     = document.getElementById("nature").value; 
+		var trade1      = document.getElementById("trade").value;
+		$.ajax({  
+                type:'post',
+	            url:"__URL__/search_ex",
+	            dataType:"json", 
+	            contentType: "application/x-www-form-urlencoded; charset=utf-8",
+	            data:{
+	                search_name:search_name,
+	                nature1:nature1,
+	                trade1:trade1},
+                success: function (data) {  
+                    if (data.s_count > 0) {
+                    	$("#search_box").empty();
+                            var picContent = "<ul id='search_xh'>";
+                         	$.each(data,function(i){
+                                if(i != 's_count'){
+                         		picContent += "<li>";
+                                if(data[i]['auth_level'] == '006001'){
+                                    picContent += "<a href='__APP__/hpt?resid="+data[i]['id']+"' target='_blank'>";
+                                }else if (data[i]['auth_level'] == '006002') {
+                                    picContent += "<a target='_blank' href='__APP__/wrz?resid="+data[i]['id']+"'>"; 
+                                }else if(data[i]['auth_level'] == '006003'){
+                                    picContent += "<a target='_blank' href='__APP__/yrz?resid="+data[i]['id']+"'>";
+                                }
+                                    picContent += "<dl class='pt_xx'>";
+                                if (data[i]['logo_url'] != "") {
+                                    picContent += "<dt><img src='"+data[i]['logo_url']+"' width='70' height='70' /></dt>";
+                                }
+                                    picContent += "<dd><h3>"+data[i]['company_name']+"</h3>";
+    	                        	picContent += "<p>分类：<span>"+data[i]['nature']+"</span></p>";
+    	                    		picContent += "<p>所属行业：<span>"+data[i]['trade']+"</span></p>";
+    		                        picContent += "</dd></dl><p class='qtmc_sear'><span>其他名称</span>"+data[i]['alias_list']+"</p><div class='xx_tongj'>";
+    		                        picContent += "<dl><dt><img src='__PUBLIC__/Home/images/ico05a.png'/></dt><dd><span>"+data[i]['com_amount']+"</span>次</dd></dl>";
+    		                        picContent += "<dl class='last'><dt><img src='__PUBLIC__/Home/images/ico02a.png'/></dt><dd><span>"+data[i]['select_amount']+"</span>次</dd></dl></div></a></li>";
+                            }  
+	                    });
+                        picContent += "</ul>";
+                        $("#search_box").prepend(picContent);
+                        if (data.s_count > 10) {
+                            var str = '<div class="jzgd_n"><a class="jzgd_aa" href="javascript:void(0)">加载更多</a></div>';
+                            $("#search_box").append(str); 
+                        }
+                    }else{
+                    	$("#search_box").empty();
+                    	$("#search_box").append("<span>没有符合条件的数据！</span");
+                        return false;
+                    }
+                }  
+        })  
+	});
+
+	$(".search_tit_ch a").click(function(){
+		$(".search_tit_ch a").removeClass("active");
+		$(this).addClass("active");
+		var trade = $(this).attr('id');
+		$('#trade').val(trade);
+        $('#zz_p').val('1');
+		var search_name = "{$search_name}";
+		var nature1     = document.getElementById("nature").value; 
+		var trade1      = document.getElementById("trade").value;
+		$.ajax({  
+                type:'post',
+	            url:"__URL__/search_ex",
+	            dataType:"json", 
+	            contentType: "application/x-www-form-urlencoded; charset=utf-8",
+	            data:{
+	                search_name:search_name,
+	                nature1:nature1,
+	                trade1:trade1},
+                success: function (data) {  
+                    if (data.s_count > 0) {
+                        $("#search_box").empty();
+                            var picContent = "<ul id='search_xh'>";
+                            $.each(data,function(i){
+                                if(i != 's_count'){
+                                picContent += "<li>";
+                                if(data[i]['auth_level'] == '006001'){
+                                    picContent += "<a href='__APP__/hpt?resid="+data[i]['id']+"' target='_blank'>";
+                                }else if (data[i]['auth_level'] == '006002') {
+                                    picContent += "<a target='_blank' href='__APP__/wrz?resid="+data[i]['id']+"'>"; 
+                                }else if(data[i]['auth_level'] == '006003'){
+                                    picContent += "<a target='_blank' href='__APP__/yrz?resid="+data[i]['id']+"'>";
+                                }
+                                    picContent += "<dl class='pt_xx'>";
+                                if (data[i]['logo_url'] != "") {
+                                    picContent += "<dt><img src='"+data[i]['logo_url']+"' width='70' height='70' /></dt>";
+                                }
+                                    picContent += "<dd><h3>"+data[i]['company_name']+"</h3>";
+                                    picContent += "<p>分类：<span>"+data[i]['nature']+"</span></p>";
+                                    picContent += "<p>所属行业：<span>"+data[i]['trade']+"</span></p>";
+                                    picContent += "</dd></dl><p class='qtmc_sear'><span>其他名称</span>"+data[i]['alias_list']+"</p><div class='xx_tongj'>";
+                                    picContent += "<dl><dt><img src='__PUBLIC__/Home/images/ico05a.png'/></dt><dd><span>"+data[i]['com_amount']+"</span>次</dd></dl>";
+                                    picContent += "<dl class='last'><dt><img src='__PUBLIC__/Home/images/ico02a.png'/></dt><dd><span>"+data[i]['select_amount']+"</span>次</dd></dl></div></a></li>";
+                            } 
+                        });
+                        picContent += "</ul>";
+                        $("#search_box").prepend(picContent);
+                        if (data.s_count > 10) {
+                            var str = '<div class="jzgd_n"><a class="jzgd_aa" href="javascript:void(0)">加载更多</a></div>';
+                            $("#search_box").append(str); 
+                        }
+                    }else{
+                    	$("#search_box").empty();
+                    	$("#search_box").append("<span>没有符合条件的数据！</span");
+                        return false;
+                    }
+                }  
+        })  
+	});
+  })
+</script>
+<script type="text/javascript">
+  $(function(){
+      var search_name = "{$search_name}";
+      $('.jzgd_aa').live('click',function(){
+          var flag = $(this).text();
+          var i = Number(document.getElementById("zz_p").value);
+          var nature = document.getElementById("nature").value; 
+          var trade  = document.getElementById("trade").value;
+          p = i+1;
+          $("#zz_p").val(p);
+
+          send(p,nature,trade,flag);
+      })
+      function send(p,nature,trade,flag){
+          if(flag == '已无更多数据'){
+            return false;
+          }
+          $.ajax({
+              type:'post',
+              url:"__URL__/search_jz",
+              data:{k:p,
+                    search_name:search_name,
+                    nature:nature,
+                    trade:trade},
+              beforeSend:function(){
+                   $("#new_box_ex").append("<div id='load'>加载中……</div>");
+              },
+              success:function(data){
+                if(data && data.length > 0){
+                    $.each(data,function(i){
+                            var picContent = "<li>";
+                            if(data[i]['auth_level'] == '006001'){
+                                picContent += "<a href='__APP__/hpt?resid="+data[i]['id']+"' target='_blank'>";
+                            }else if (data[i]['auth_level'] == '006002') {
+                                picContent += "<a target='_blank' href='__APP__/wrz?resid="+data[i]['id']+"'>"; 
+                            }else if(data[i]['auth_level'] == '006003'){
+                                picContent += "<a target='_blank' href='__APP__/yrz?resid="+data[i]['id']+"'>";
+                            }
+                                picContent += "<dl class='pt_xx'>";
+                            if (data[i]['logo_url'] != "") {
+                                picContent += "<dt><img src='"+data[i]['logo_url']+"' width='70' height='70' /></dt>";
+                            }
+                                picContent += "<dd><h3>"+data[i]['company_name']+"</h3>";
+                                picContent += "<p>分类：<span>"+data[i]['nature']+"</span></p>";
+                                    picContent += "<p>所属行业：<span>"+data[i]['trade']+"</span></p>";
+                                picContent += "</dd></dl><p class='qtmc_sear'><span>其他名称</span>"+data[i]['alias_list']+"</p><div class='xx_tongj'>";
+                                picContent += "<dl><dt><img src='__PUBLIC__/Home/images/ico05a.png'/></dt><dd><span>"+data[i]['com_amount']+"</span>次</dd></dl>";
+                                picContent += "<dl class='last'><dt><img src='__PUBLIC__/Home/images/ico02a.png'/></dt><dd><span>"+data[i]['select_amount']+"</span>次</dd></dl></div></a></li>";
+                            $("#search_xh").append(picContent);
+                    });  
+                }else{
+                    $(".jzgd_aa").text('已无更多数据'); 
+                    return false;
+                }
+              },
+              complete:function(){
+                     $("#load").remove();
+              },
+              dataType:'json'});
+      }
+  })
+</script>
+</html>

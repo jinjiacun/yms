@@ -1,0 +1,195 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no"/>
+<meta content="yes" name="apple-mobile-web-app-capable" />
+<meta content="black" name="apple-mobile-web-app-status-bar-style" />
+<meta content="telephone=no" name="format-detection" />
+<title>黑平台曝光_贵金属交易市场黑幕曝光平台_口碑</title>
+<meta name="keywords" content="口碑，黑平台查询，黑平台曝光，贵金属黑平台，外汇黑平台"/>
+<meta name="description" content="口碑,全国性的交易市场曝光平台，携手每一位投资人共同揭开交易市场的层层黑幕，为投资者甄选安全可靠的交易平台，营造国内绿色透明的交易环境。"/>
+<link rel="icon" href="__PUBLIC__/s.ico" type="image/x-icon" />
+<link type="text/css" rel="stylesheet" href="__PUBLIC__/Home/css/wap_main.css"/>
+<link type="text/css" rel="stylesheet" href="__PUBLIC__/Home/css/jquery.editable-select.min.css"/>
+<script type="text/javascript" src="__PUBLIC__/js/jquery-1.8.3.min.js" ></script>
+<script type="text/javascript" src="__PUBLIC__/js/Validform_v5.3.2.js" ></script>
+<script type="text/javascript" src="__PUBLIC__/Home/js/jquery.form.js" ></script>
+<script type="text/javascript" src="__PUBLIC__/Home/js/app_mian.js" ></script>
+<script type="text/javascript" src="__PUBLIC__/Home/js/mh_dialog.js" ></script>
+</head>
+
+<body>
+<div class="top">
+  <include file="Public:top_wap" />
+  <h3>非法平台曝光台</h3>
+  <include file="Public:fx_wap" />
+</div>
+<div class="check">
+<include file="Public:tc_wap" />
+  <h3>请如实填写申请企业或机构的相关信息后,提交认证.</h3>
+  <form class="registerform" name="theForm" id="theForm" action="__URL__/exposure_ex" method="post" enctype="multipart/form-data" onsubmit="return ValidateFile()">
+    <p><em>企业性质：</em><i>
+      <label>
+        <input type="radio" class="nature" name="nature" value="003001" checked="checked" />
+        公司</label>
+      <label>
+        <input type="radio" class="nature" name="nature" value="003002" />
+        平台</label>
+    </i></p>
+    <p><em>所属行业：</em><i>
+      <label>
+        <input type="radio"  name="trade" value="004004" checked="checked" />
+        大宗商品（贵金属、石油）</label>
+      <label>
+        <input type="radio" name="trade" value="004002" />
+        外汇 </label>
+      <label>
+        <input type="radio"  name="trade" value="004005" />
+        其他 </label>
+    </i></p>
+    <div class="this_bg">
+      <p><em>公司全称：</em>
+        <!-- <input name="company_name" type="text" class="text1" datatype="s" nullmsg="不能为空！" />
+        <span class="Validform_checktip"></span> -->
+        <span id="gs">
+          <select id="editable-select" name="company_name1" class="gjshu form-control">
+            <volist name="list_gs" id="list_gs">
+              <option>{$list_gs}</option>
+            </volist>
+          </select>
+        </span>
+        <span id="pt">
+          <select id="editable-selected" name="company_name2" class="gjshu form-control">
+            <volist name="list_pt" id="list_pt">
+              <option>{$list_pt}</option>
+            </volist>
+          </select>
+        </span>
+      </p>
+      <p><em>涉及金额：</em>
+        <input name="amount" type="text" class="text1" datatype="s"  ignore="ignore"  />
+        <span class="Validform_checktip"></span>
+      </p>
+      <p><em>公司网址：</em>
+        <input name="website" type="text" class="text1" datatype="url" ignore="ignore" errormsg="请输入正确的网址！" />
+        <span class="Validform_checktip"></span>
+      </p>
+      <p><em>曝光内容：</em>
+        <textarea name="content" class="textn" nullmsg="不能为空！" datatype="*" ></textarea>
+        <span class="Validform_checktip"></span>
+      </p>
+      <p><em>附件上传：</em>
+         <input name="pic_1" type="file" id="pic_1" />
+      </p>
+      <span class="ljcz"><input name="submit" id="btnAjaxSubmit" type="submit" value="立即曝光" class="textn1" /></span>
+    </div>
+  </form>
+</div>
+  
+<include file="Public:footer_wap" />
+</body>
+<script type="text/javascript" src="__PUBLIC__/Home/js/jquery.editable-select.min.js" ></script>
+<script type="text/javascript">
+    //公司
+    $('#editable-select').editableSelect({
+        effects: 'slide'
+    });
+    //平台
+    $('#editable-selected').editableSelect({
+        effects: 'slide'
+    });
+</script>
+<script type="text/javascript">
+   $(function(){
+      var nature_ex = $("input[name='nature']:checked").val();
+      if (nature_ex == 003001) {
+          $('#gs').show();
+      }else{
+          $('#pt').hide();
+      }
+      //清空公司名称
+      $("#editable-select,#editable-selected").attr("value","");
+      //切换公司性质
+      $(".nature").change(function(){
+          var nature = $(this).val();
+          $("#editable-select,#editable-selected").attr("value","");
+          if (nature == "003001") {
+            $('#gs').show();
+            $('#pt').hide();
+          }
+          if (nature == "003002") {
+            $('#pt').show();
+            $('#gs').hide();
+          }
+      });
+  }); 
+</script>
+<script type="text/javascript">
+    $(function(){
+      $(".registerform").Validform({
+        tiptype:function(msg,o,cssctl){
+          if(!o.obj.is("form")){
+            var objtip=o.obj.siblings(".Validform_checktip");
+            cssctl(objtip,o.type);
+            objtip.text(msg);
+          }
+        }
+      });
+    })
+    //验证图片格式大小
+    function ValidateFile(){
+      var tmp     = document.getElementById("pic_1").value; 
+      var userid  = '{$userid}';
+      if (userid == "") {
+        window.location.href="__APP__/login.html";
+        return false;
+      } 
+      if(tmp != ""){
+        if(!/.(gif|jpg|jpeg|png|GIF|JPG|PNG|JPEG)$/.test(tmp)){
+          mh_dialogShow('mh_warning','附件类型必须是.gif,jpeg,jpg,png中的一种！',2,true);
+          return false;
+        }
+      }
+    }
+</script>
+<script type="text/javascript">
+    $(function () {
+        var options = {
+            success: function (data) {
+                if(data){
+                  if (data == 0) {
+                    mh_dialogShow('mh_success','添加成功!',2,true,'__APP__/user_center.html#basic_setting'); 
+                    return false;
+                  }else if(data == -1){
+                    mh_dialogShow('mh_warning','曝光失败！',2,true); 
+                    return false;
+                  }else if(data == 1){
+                    mh_dialogShow('mh_warning','图片上传失败！',2,true); 
+                    return false;
+                  }else if(data == 2){
+                    mh_dialogShow('mh_warning','没有文件上传！',2,true); 
+                    return false;
+                  }else if(data == 3){
+                    mh_dialogShow('mh_warning','文件上传错误！',2,true); 
+                    return false;
+                  }else if(data == 4){
+                    mh_dialogShow('mh_warning','上传文件不能大于400kb！',2,true); 
+                    return false;
+                  }else if(data == 5){
+                    mh_dialogShow('mh_warning','图片格式错误！',2,true); 
+                    return false;
+                  }else if(data == 6){
+                    mh_dialogShow('mh_warning','必填项没有填写！',2,true); 
+                    return false;
+                  }else if(data == 7){
+                    mh_dialogShow('mh_warning','您还没有登录！',2,true); 
+                    return false;
+                  } 
+                }
+            }
+        };
+        $("#theForm").ajaxForm(options);
+    });
+</script>
+</html>

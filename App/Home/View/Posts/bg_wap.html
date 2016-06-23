@@ -1,0 +1,183 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no"/>
+<meta content="yes" name="apple-mobile-web-app-capable" />
+<meta content="black" name="apple-mobile-web-app-status-bar-style" />
+<meta content="telephone=no" name="format-detection" />
+<title>发表评论</title>
+<link rel="icon" href="__PUBLIC__/s.ico" type="image/x-icon" />
+<link type="text/css" rel="stylesheet" href="__PUBLIC__/Home/css/wap_main.css"/>
+<script type="text/javascript" src="__PUBLIC__/js/jquery-1.8.3.min.js" ></script>
+<script type="text/javascript" src="__PUBLIC__/Home/js/app_mian.js" ></script>
+<script type="text/javascript" src="__PUBLIC__/Home/js/jquery.form.js" ></script> 
+<script type="text/javascript" src="__PUBLIC__/Home/js/mh_dialog.js" ></script>
+</head>
+
+<body>
+<div class="top">
+  <include file="Public:top_wap" />
+  <h3>发表评论</h3>
+  <include file="Public:fx_wap" />
+</div>
+<div class="send">
+  <include file="Public:tc_wap" />
+  <form id="theForm" name="theForm" method="post" action="{:U('comexposal_add')}" enctype="multipart/form-data" autocomplete="off">
+  <dl>
+    <dt>观点：
+      <input name="wypl" type="radio" value="005001" checked="checked" />点赞
+      <input name="wypl" type="radio" value="005003"/>加黑
+    </dt>
+      <dd><input name="is_anonymous" id="checkbox-id" type="checkbox" value="1" />匿名评论</dd>
+  </dl>
+  <textarea name="saytext" id="saytext0"></textarea>
+  <span>
+    <em>
+      <a data-id="0" href="javascript:void(0)"  class="touxin emotion"><img src="__PUBLIC__/Home/imag/send.jpg" /></a>
+      <!-- <a><img src="__PUBLIC__/Home/imag/send2.jpg" /></a> -->
+    </em>
+    <input type="hidden" id="hidden_id" name="exposal_id" value="{$exposal_id}">
+    <input name="submit" type="submit" value="发表评论" class="sub_btn" />
+  </span>
+  </form>
+</div>
+<include file="Public:footer_wap" />
+</body>
+<script type="text/javascript" src="__PUBLIC__/Home/js/jquery.qqFace_wap.js" ></script>
+<script type="text/javascript">
+$(function(){
+  //表情
+    $('.emotion').qqFace({
+      id : 'facebox', 
+      assign:'saytext', 
+      path:'__PUBLIC__/Home/arclist/' //表情存放的路径
+  });
+  //评论表单提交
+    $(".sub_btn").click(function(){
+      var objButton  = $(this);
+      var content = document.getElementById("saytext0").value;
+      var userid = '{$userid}';
+      if (content == "") {
+          mh_dialogShow('mh_warning','评论内容不能为空！',2,true);
+          return false;
+      }else if(content.length > 400){
+          mh_dialogShow('mh_warning','评论内容最多为400字符！',2,true);
+          return false;
+      }
+      if (userid == "") {
+          location.href='__APP__/login.html';
+          return false;
+      }
+      var options = {
+            //beforeSubmit: ValidateFile,
+            //resetForm: true,
+            beforeSend:function(){
+                objButton.val('发表评论').attr('disabled',true);
+            },
+            success: function (data) {
+              if (data) {
+                if (data == 0) {
+                  mh_dialogShow('mh_success','评论成功！',2,true,document.referrer);
+                  return false;
+                }else if(data == -1){
+                  mh_dialogShow('mh_warning','评论失败！',2,true);
+                  return false;
+                }else if(data == 6){
+                  mh_dialogShow('mh_warning','评论内容不能为空！',2,true);
+                  return false;
+                }else if(data == -4){
+                  mh_dialogShow('mh_warning','评论失败，该企业不存在或已删除！',2,true,'__ROOT__/');
+                  return false;
+                }else if(data == -2){
+                  mh_dialogShow('mh_warning','评论失败，该主贴评论不存在！',2,true);
+                  judge();
+                  return false;
+                }else{
+                  mh_dialogShow('mh_warning','评论失败，该主贴评论不存在！',2,true);
+                  judge();
+                  return false;
+                }
+              }
+            },
+            complete:function(){
+                objButton.val('发表评论').attr('disabled',false);
+            } 
+        };
+        $("#theForm").ajaxForm(options);
+    });
+    //上传插图
+    $(".ch_tu").click(function(){
+      var userid = "{$userid}";
+      $(".bd_wd").css("width", $(document).width());
+          $(".bd_wd").css("height", $(document).height());
+          $(".bd_wd").show();
+      if (userid == "") {
+          $("#tcwindows1").show();
+          return false;
+      }else{
+          $("#windows_ct").show();
+      }
+    });
+    //添加图片
+    $("#upload-file").change(function(){ 
+      if($("#msg li").size()>5){
+        alert("最多只能添加5张图片！");
+        return false;
+      }else{
+        upload();
+      }
+     });  
+    function upload(){
+      $("#uploadFrom").ajaxSubmit({
+         url:"__URL__/uploadImg",  
+         dataType: 'json',
+         contentType: "application/x-www-form-urlencoded; charset=utf-8",
+         success:function(data){
+          if(data){
+            if(data == 1){
+              alert("图片上传失败！");
+              return false;
+            }else if(data == 2){
+              alert("没有文件上传！");
+              return false;
+            }else if(data == 3){
+              alert("文件上传错误！");
+              return false;
+            }else if(data == 4){
+              alert("上传文件不能大于350kb！");
+              return false;
+            }else if(data == 5){
+              alert("图片格式错误！");
+              return false;
+            }else if(data == 6){
+              alert("请登录后操作！");
+              return false;
+            }else{
+              $("#msg").append("<li id='li_"+data.id+"' class='sx'><div class='ct_tubox'><img src='"+data.img+"'/></div><span class='delete' id='"+data.id+"'></span></li>");
+              $(".pic_id").append("<li id='inp_"+data.id+"' class='qc'><input type='hidden' id='"+data.id+"' name='pic[]' value='"+data.id+"'></li>");
+            }
+          }else{
+            return false;
+          }
+         },
+         error:function(msg){
+          return false;
+         }
+      });
+    }
+    //判断主贴是否存在
+    function judge(){
+      var auth_level = "{$list.auth_level}";
+      var c_id       = "{$list.id}";
+      if (auth_level == '006001') {
+        location.href='__APP__/hpt?resid='+c_id;
+      }else if(auth_level == '006002'){
+        location.href='__APP__/wrz?resid='+c_id;
+      }else if(auth_level == '006003'){
+        location.href='__APP__/yrz?resid='+c_id;
+      }
+    }
+})
+</script>
+</html>

@@ -1,0 +1,84 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no"/>
+<meta content="yes" name="apple-mobile-web-app-capable" />
+<meta content="black" name="apple-mobile-web-app-status-bar-style" />
+<meta content="telephone=no" name="format-detection" />
+<title>意见反馈--口碑</title>
+<link rel="icon" href="__PUBLIC__/s.ico" type="image/x-icon" />
+<link type="text/css" rel="stylesheet" href="__PUBLIC__/Home/css/wap_main.css"/>
+<script type="text/javascript" src="__PUBLIC__/js/jquery-1.8.3.min.js" ></script>
+<script type="text/javascript" src="__PUBLIC__/Home/js/jquery.form.js" ></script>
+<script type="text/javascript" src="__PUBLIC__/Home/js/app_mian.js" ></script>
+<script type="text/javascript" src="__PUBLIC__/Home/js/mh_dialog.js" ></script>
+</head>
+
+<body>
+<div class="top">
+<include file="Public:top_wap" />
+<h3>用户反馈</h3>
+<include file="Public:fx_wap" />
+</div>
+<div class="Feedback">
+<include file="Public:tc_wap" />
+	<form class="registerform" action="__URL__/feedback_ex" autocomplete="off" name="theForm" id="theForm" method="post" enctype="multipart/form-data">
+		<p>您的意见和建议是口碑前进的动力（不超过200字）</p>
+		<textarea name="content" class="yjkuang"></textarea>
+		<p>您的联系方式（手机号、邮箱或QQ号码）</p>
+		<input name="contact" type="text" class="lianxi" />
+		<button id="tijiao">提交反馈意见</button>
+	</form>
+</div>
+
+<include file="Public:footer_wap" />
+</body>
+<script type="text/javascript">
+  $(function(){ 
+    //用户登录
+    $('#tijiao').click(function(){
+          var content = $(this).parents('.Feedback').find('.yjkuang').val();
+          var contact = $(this).parents('.Feedback').find('.lianxi').val();
+          if(content == ""){ 
+              mh_dialogShow('mh_warning','意见反馈内容不能为空！',2,true);
+              return false;
+          }else if (content.length > 200) {
+              mh_dialogShow('mh_warning','意见反馈内容不能超过200字符！',2,true);
+              return false;
+          }
+          if (contact == "") {
+              mh_dialogShow('mh_warning','联系方式不能为空！',2,true);
+              return false;
+          }
+          var options = {
+              //dataType:"json", 
+              success:function(data){
+                  if(data){
+                    if (data == 0) {
+                      mh_dialogShow('mh_success','意见反馈添加成功！',2,true,window.location.href);
+                      return false;
+                    }else if(data == -1){
+                      mh_dialogShow('mh_warning','意见反馈添加失败！',2,true);
+                      return false;
+                    }else if(data == 6){
+                      mh_dialogShow('mh_warning','意见反馈内容不能为空！',2,true);
+                      return false;
+                    }else if(data == 7){
+                      mh_dialogShow('mh_warning','意见反馈内容不能超过200字符！',2,true);
+                      return false;
+                    }else if(data == 8){
+                      mh_dialogShow('mh_warning','联系方式不能为空！',2,true);
+                      return false;
+                    }else{
+                      mh_dialogShow('mh_warning','意见反馈添加失败！',2,true);
+                      return false;
+                    }
+                }
+              }
+          };
+          $('#theForm').ajaxForm(options); 
+    })
+});
+</script>
+</html>

@@ -1,0 +1,83 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no"/>
+<meta content="yes" name="apple-mobile-web-app-capable" />
+<meta content="black" name="apple-mobile-web-app-status-bar-style" />
+<meta content="telephone=no" name="format-detection" />
+<link type="text/css" rel="stylesheet" href="__PUBLIC__/Home/css/wap_main.css"/>
+<script type="text/javascript" src="__PUBLIC__/js/jquery-1.8.3.min.js" ></script>
+<script type="text/javascript" src="__PUBLIC__/Home/js/jquery.form.js" ></script>
+<script type="text/javascript" src="__PUBLIC__/Home/js/mh_dialog.js" ></script>
+<script type="text/javascript" src="__PUBLIC__/Home/js/app_mian.js" ></script>
+<title>登录</title>
+</head>
+<body>
+<div class="dowm_app"><a href="http://a.app.qq.com/o/simple.jsp?pkgname=com.huanrong.searchdarkvip"><img src="__PUBLIC__/Home/imag/dowm_app.jpg" /></a></div>
+<div class="sign">
+  <h3>用户登录</h3>
+</div>
+<div class="sign_ipt">
+	<form action="__APP__/User/login" method="post" name="logForm" id="logForm" autocomplete="off">
+		<p><em>账号:</em>
+		   <input name="mobile" class="input1" type="text" />
+		</p>
+		<p><em>密码:</em><input type="password" name="password" class="post2" /></p>
+		<span><input name="submit" type="submit" value="立即登录" class="but2"  /></span>
+	</form>
+	<div class="cipher">
+		<span><a href="__APP__/find_password.html">忘记密码</a></span>
+		<p><a href="__APP__/register.html">注册</a></p>
+	</div>
+</div>
+
+<include file="Public:footer_wap" />
+</body>
+<script type="text/javascript">
+	$(function(){ 
+      //用户登录
+      $('.but2').click(function(){
+          var mobile     = $(this).parents('.sign_ipt').find('.input1').val();
+          var password   = $(this).parents('.sign_ipt').find('.post2').val();
+          if(mobile == ""){ 
+              mh_dialogShow('mh_warning','请输入登录账号！',2,true);
+              return false; 
+          }
+          if (password == "") {
+            mh_dialogShow('mh_warning','请输入登录密码！',2,true);
+            return false;
+          }
+          var options = {
+              dataType:"json", 
+              beforeSend:function(){
+                $("#but2").val('立即登录').attr('disabled',true);
+              },
+              success:function(data){
+                  if (data == 0) {
+                    window.location.href=document.referrer;
+                    return false;
+                  }else if (data == -1) {
+                    mh_dialogShow('mh_warning','登录失败！',2,true);
+                    $("#but2").val('立即登录').attr('disabled',false);
+                    return false;
+                  }else if (data == -2) {
+                    mh_dialogShow('mh_warning','用户名不存在或密码错误！',2,true);
+                    $("#but2").val('立即登录').attr('disabled',false);
+                    return false;
+                  }else if (data == -3) {
+                    mh_dialogShow('mh_warning','用户被限制登录！',2,true);
+                    $("#but2").val('立即登录').attr('disabled',false);
+                    return false;
+                  }else if (data == -4) {
+                    mh_dialogShow('mh_warning','用户访问的IP被限制！',2,true);
+                    $("#but2").val('立即登录').attr('disabled',false);
+                    return false;
+                  }  
+              }
+          };
+          $('#logForm').ajaxForm(options);
+      })
+    });
+</script>
+</html>

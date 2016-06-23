@@ -1,0 +1,265 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no"/>
+<meta content="yes" name="apple-mobile-web-app-capable" />
+<meta content="black" name="apple-mobile-web-app-status-bar-style" />
+<meta content="telephone=no" name="format-detection" />
+<title>{$us_nickname}的个人中心_{$us_nickname}曝光的黑平台信息-口碑网</title>
+<meta name="keywords" content="{$us_nickname}"/>
+<meta name="description" content="{$us_nickname}在口碑网的个人中心，{$us_nickname}的相关评论，{$us_nickname}关注的黑平台。"/>
+<link rel="icon" href="__PUBLIC__/s.ico" type="image/x-icon" />
+<link type="text/css" rel="stylesheet" href="__PUBLIC__/Home/css/wap_main.css"/>
+<link type="text/css" rel="stylesheet" href="__PUBLIC__/Home/css/lightbox.css"/>
+<script type="text/javascript" src="__PUBLIC__/js/jquery-1.8.3.min.js" ></script>
+<script type="text/javascript" src="__PUBLIC__/Home/js/app_mian.js" ></script>
+<script type="text/javascript" src="__PUBLIC__/Home/js/lightbox-2.6.min.js" ></script>
+</head>
+
+<body>
+<div class="top">
+  <include file="Public:top_wap" />
+  <h3>个人中心</h3>
+  <p><a href="javascript:history.go(-1);"><img src="__PUBLIC__/Home/imag/fkico.jpg" /></a></p>
+</div>
+<div class="jcxx">
+</div>
+<div class="Center">
+  <h3>
+    <a href="javascript:void(0)" class="current">Ta的评论</a>
+    <a href="javascript:void(0)">Ta的曝光</a>
+    <a href="javascript:void(0)">Ta的关注</a>
+  </h3>
+  <div class="pl_text bg_shbox show">
+    <ul id="new_box_ex">
+    </ul>
+  </div>
+  <div class="main_bg bg_shbox hide">
+    <ul>
+    </ul>
+  </div>
+  <div class="attention bg_shbox hide">
+  </div>
+</div>
+<include file="Public:footer_wap" />
+</body>
+<script type="text/javascript">
+  $(function(){
+    var usid = "{$usid}";
+    //用户信息查询
+    $.ajax({  
+        type:"get",  
+        url:"__URL__/user_info",
+        timeout: 5000,  
+        dataType:"json",  
+        data:{id:usid},
+        success: function aa(data) {
+            if (data) {
+              var rel = '<dl><dt><img src="'+data.UI_Avatar+'" /></dt>';
+                  rel += '<dd><p>昵称：<i>'+data.UI_NickName+'</i></p>';
+                  rel += '<p>性别：<i>';
+                  if(data.UI_Sex == 1){
+                    rel += '男';
+                  }
+                  else if(data.UI_Sex == 0){
+                    rel += '女';
+                  }
+                  else {
+                    rel += '未知';
+                  }
+                  rel += '</i></p>';
+                  rel += '<p>生日：<i>'+data.UI_BirthDay+'</i></p>';
+                  rel += '<p>职业：<i>'+data.UI_Job+'</i></p>';
+                  rel += '<p>所在地：<i>'+data.UI_Address+'</i></p>';
+                  rel += '</dd></dl>';
+                  $('.jcxx').prepend(rel);
+            }
+        }
+    });
+    //Ta的评论
+    $.ajax({  
+        type:"get",  
+        url:"__URL__/user_pl",
+        timeout: 5000,  
+        dataType:"json",  
+        data:{id:usid},
+        success: function aa(data) {
+            if(data.pl_count > 0){
+              var datas = data.list;
+              $.each(datas,function(i){ 
+                    var rel = "<li><span>";
+                    if (datas[i]['parent_id'] != 0 && datas[i]['pparent_id'] == 0) {
+                      rel += "<a";
+                      if(datas[i]['company_name'] != null){
+                      rel += " href='__APP__/posts_pl?qy="+datas[i]['company_id']+"&pl="+datas[i]['parent_id']+"'";
+                      }
+                      rel += ">"+datas[i]['content']+"</a>";
+                    }else if(datas[i]['parent_id'] == 0){
+                      rel += "<a";
+                      if(datas[i]['company_name'] != null){
+                      rel += " href='__APP__/posts_pl?qy="+datas[i]['company_id']+"&pl="+datas[i]['id']+"'";
+                      }
+                      rel += ">"+datas[i]['content']+"</a>";
+                    }else{
+                      rel += "<a";
+                      if(datas[i]['company_name'] != null){
+                      rel += " href='__APP__/posts_pl?qy="+datas[i]['company_id']+"&pl="+datas[i]['pparent_id']+"'";
+                      }
+                      rel += ">"+datas[i]['content']+"</a>";
+                    }
+                    rel += "</span>";
+                    rel += "<p><em>"+datas[i]['add_time']+"</em>";
+                    if(datas[i]['company_name'] != null){
+                    rel += "<i>来自 <a href='__URL__/tiao?id="+datas[i]['company_id']+"'>"+datas[i]['company_name'].substring(0,10)+"...</a></i>";
+                    }
+                    rel += "</p></li>";
+                $("#new_box_ex").append(rel); 
+              });
+              if (data.pl_count > 20) {
+                var str = '<a id="ckgd_pl" href="javascript:void(0)" class="jz_more">加载更多</a>';
+                $(".pl_text").append(str); 
+              }
+            }else{
+              $(".pl_text").append('<span>该用户暂时没有评论！</span>');
+              return false; 
+            }
+        }
+    });
+    //ta的曝光
+    $.ajax({
+          type:"get",
+          url:"__URL__/user_bg",
+          timeout: 5000,  
+          dataType:"json",  
+          data:{id:usid},
+          success: function aa(data) {
+              if (data.bg_count > 0) { 
+                var datas = data.list;
+                $.each(datas,function(i){
+                      var str = '';
+                      if(datas[i]['company_id'] != 0){
+                        str += '<a href="__APP__/posts_bg?qy='+datas[i]['company_id']+'&pl='+datas[i]['id']+'">';
+                      }
+                      str += '<li><p>公司名称：';
+                      str += '<font>'+datas[i]['company_name']+'</font></p>';
+                      str += '<p>涉及金额：<i>';
+                      if(datas[i]['amount'] != null){
+                        str += datas[i]['amount'];
+                      }else{
+                        str += '--';
+                      }
+                      str += '</i></p>';
+                      str += '<p>公司网址：<font><a href="'+datas[i]['website']+'">'+datas[i]['website']+'</a></font></p>';
+                      str += '<p>曝光正文：'+datas[i]['content']+'</p>';
+                      str += '<span><i>回复数：<font>'+datas[i]['sub_count']+'</font>';
+                      str += '</i><em>'+datas[i]['add_time']+'</em></span></li>';
+                      if(datas[i]['company_id'] != 0){
+                        str += '</a>';
+                      }
+                    $(".main_bg ul").append(str);
+                });  
+              }else{
+                $(".main_bg").append("<span>该用户没有曝光信息！</span>");
+                return false;
+              }
+          }
+    });
+    //ta的关注
+    $.ajax({  
+          type:"get",  
+          url:"__URL__/user_gz",
+          timeout: 5000,  
+          dataType:"json",  
+          data:{id:usid},
+          success: function aa(data) {
+              if (data.gz_count > 0) {
+                var datas = data.list; 
+                $.each(datas,function(i){
+                    var str = '';
+                    if(i != 'gz_count'){
+                      str += '<dl><dt>';    
+                      str += '<p>'+datas[i]['company_name']+'</p>';
+                      str += '<span>关注时间：'+datas[i]['add_time']+'</span>';
+                      str += '</dt></dl>';
+                    }
+                    $(".attention").append(str);
+                });
+              }else{
+                $(".attention").append("<span>该用户没有关注信息！</span>");
+                return false;
+              }
+          }
+    });
+  })
+</script>
+<script type="text/javascript">
+  $(function(){
+      var usid = "{$usid}";
+      var p=2;// 初始化页面，点击事件从第二页开始
+      var flag=false;
+      $('#ckgd_pl').live('click',function(){
+          //初始状态，如果没数据return ,false;否则
+          if($("#new_box_ex li").size()<=0){
+            return false;
+          }else{
+            send();
+          }
+      })
+      function send(){
+          if(flag){
+            return false;
+          }
+          $.ajax({
+              type:'post',
+              url:"{:U('Usercenter/pl')}",
+              data:{k:p,
+                    user_id:usid},
+              beforeSend:function(){
+                   $("#new_box_ex").append("<div id='load'>加载中……</div>");
+              },
+              success:function(data){
+                if(data!=null){
+                  $.each(data,function(i){
+                    var rel = "<li><span>";
+                    if (data[i]['parent_id'] != 0 && data[i]['pparent_id'] == 0) {
+                      rel += "<a";
+                      if(data[i]['company_name'] != null){
+                      rel += " href='__APP__/posts_pl?qy="+data[i]['company_id']+"&pl="+data[i]['parent_id']+"'";
+                      }
+                      rel += ">"+data[i]['content']+"</a>";
+                    }else if(data[i]['parent_id'] == 0){
+                      rel += "<a";
+                      if(data[i]['company_name'] != null){
+                      rel += " href='__APP__/posts_pl?qy="+data[i]['company_id']+"&pl="+data[i]['id']+"'";
+                      }
+                      rel += ">"+data[i]['content']+"</a>";
+                    }else{
+                      rel += "<a";
+                      if(data[i]['company_name'] != null){
+                      rel += " href='__APP__/posts_pl?qy="+data[i]['company_id']+"&pl="+data[i]['pparent_id']+"'";
+                      }
+                      rel += ">"+data[i]['content']+"</a>";
+                    }
+                    rel += "</span>";
+                    rel += "<p><em>"+data[i]['add_time']+"</em>";
+                    if(data[i]['company_name'] != null){
+                    rel += "<i>来自 <a href='__URL__/tiao?id="+data[i]['company_id']+"'>"+data[i]['company_name'].substring(0,10)+"...</a></i>";
+                    }
+                    rel += "</p></li>";
+                    $("#new_box_ex").append(rel);
+                  })        
+                }else{
+                    $("#ckgd_pl").text('已无更多数据');
+                    flag=true;  
+                }
+              },
+              complete:function(){
+                     $("#load").remove();
+              },
+              dataType:'json'});
+            p++;
+      }
+  })
+</script>
+</html>

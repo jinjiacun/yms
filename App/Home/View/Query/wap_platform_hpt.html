@@ -1,0 +1,633 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no"/>
+<meta content="yes" name="apple-mobile-web-app-capable" />
+<meta content="black" name="apple-mobile-web-app-status-bar-style" />
+<meta content="telephone=no" name="format-detection" />
+<title>{$hpt_list.company_name}怎么样？{$hpt_list.company_name}的评价-口碑网</title>
+<meta name="keywords" content="{$hpt_list.company_name}"/>
+<meta name="description" content="{$hpt_list.company_name}怎么样？是不是安全可靠的交易平台，是不是黑平台，关于{$hpt_list.company_name}的评价。"/>
+<link rel="icon" href="__PUBLIC__/s.ico" type="image/x-icon" />
+<link type="text/css" rel="stylesheet" href="__PUBLIC__/Home/css/wap_main.css"/>
+<link type="text/css" rel="stylesheet" href="__PUBLIC__/Home/css/lightbox.css"/>
+<script type="text/javascript" src="__PUBLIC__/js/jquery-1.8.3.min.js" ></script>
+<script type="text/javascript" src="__PUBLIC__/Home/js/app_mian.js" ></script>
+<script type="text/javascript" src="__PUBLIC__/Home/js/lightbox-2.6.min.js" ></script>
+<script type="text/javascript" src="__PUBLIC__/Home/js/mh_dialog.js" ></script>
+</head>
+
+<body>
+<div class="top">
+  <include file="Public:top_wap" />
+  <h3>查询结果</h3>
+  <include file="Public:fx_wap" />
+</div>
+<div class="black">
+  <include file="Public:tc_wap" />
+  <b>该平台为"黑平台"</b>
+  <span>
+    <p id="emth">{$hpt_list.add_blk_amount}</p>
+    <a href="javascript:void(0)" class="jh bj_b" id="{$hpt_list.id}">
+      <img src="__PUBLIC__/Home/imag/jiahei.jpg" />
+    </a>
+  </span>
+</div>
+<div class="Trading">
+  <h3>
+    <if condition = "$hpt_list.logo_url neq '' " >
+    <span><img src="{$hpt_list.logo_url}" /></span>
+    </if>
+    <p>{$hpt_list.company_name|subtext=18}<i>其他名称：{$hpt_list.alias_list}</i></p>
+  </h3>
+  <ul class="yy_list">
+    <li>
+      <p>营业执照</p>
+      <span>
+        <if condition="$hpt_list.control_busin_license eq 1 ">
+          <img src="__PUBLIC__/Home/images/pic20b.png" />
+        <else />
+          <img src="__PUBLIC__/Home/images/pic20a.png" />
+        </if>
+      </span>
+    </li>
+    <li>
+      <p>机构代码证</p>
+      <span>
+        <if condition="$hpt_list.control_code_certificate eq 1 ">
+          <img src="__PUBLIC__/Home/images/pic20b.png" />
+        <else />
+          <img src="__PUBLIC__/Home/images/pic20a.png" />
+        </if>
+      </span>
+    </li>
+    <if condition = "$hpt_list.website neq '' " >
+    <li>
+      <p>官方网站</p>
+      <span><a href="{$hpt_list.website}">{$hpt_list.website}</a></span>
+    </li>
+    </if>
+    <if condition = "$hpt_list.record neq '' " >
+    <li>
+      <p>官网备案</p>
+      <span>{$hpt_list.record}</span>
+    </li>
+    </if>
+    <if condition = "$hpt_list.reg_address neq '' " >
+    <li>
+      <p>联系地址</p>
+      <span>{$hpt_list.reg_address}</span>
+    </li>
+    </if>
+  </ul>
+  <a href="javascript:void(0)" id="stop" class="stop">
+  </a>
+  <div class="Company">
+  </div>
+</div>
+<div class="comment">
+  <h4>
+    <a href="javascript:void(0)" class="current">网友评论<em>（{$record_count_p}）</em></a>
+    <a href="javascript:void(0)">网友曝光<em>（{$record_count_b}）</em></a>
+    <a href="javascript:void(0)">媒体报道<em>（{$record_count}）</em></a>
+  </h4>
+  <div class="comment_tab show">
+    <div id="div_pl">
+      <volist id="con_p" name="con_p" key="k" empty="还没有人评论过此公司哦，赶紧去吐槽吧！">
+      <dl>
+        <dt>
+          <span>
+            <a href="__APP__/Usercenter?id={$con_p.user_id}"><img src="{$con_p.user_photo}" /></a>
+          </span>
+          <p>
+            <a href="__APP__/Usercenter?id={$con_p.user_id}">
+              <if condition="$con_p.is_anonymous eq 0 ">{$con_p.nickname}
+              <else />{$con_p.nickname|sudtext}
+              </if>
+            </a>
+          </p>
+        </dt>
+        <dd>
+          <a href="__APP__/posts_pl?qy={$con_p.company_id}&pl={$con_p.id}">
+            <p>
+              <b>
+              <if condition="$con_p.type eq '005001'">
+              <img src="__PUBLIC__/Home/imag/png04.png" />
+              <elseif condition="$con_p.type eq '005002'"/>
+              <img src="__PUBLIC__/Home/imag/png05.png" />
+              <else />
+              <img src="__PUBLIC__/Home/imag/png06.png" />
+              </if>
+              </b>{$con_p.content}
+            </p>
+          </a>
+          <div>
+            <if condition="$con_p.pic_1_url neq ''">
+            <a href="{$con_p.pic_1_url}" data-lightbox='example-set'><img src="{$con_p.pic_1_url}"/></a>
+            </if>
+            <if condition="$con_p.pic_2_url neq ''">
+            <a href="{$con_p.pic_2_url}" data-lightbox='example-set'><img src="{$con_p.pic_2_url}"/></a>
+            </if>
+            <if condition="$con_p.pic_3_url neq ''">
+            <a href="{$con_p.pic_3_url}" data-lightbox='example-set'><img src="{$con_p.pic_3_url}"/></a>
+            </if>
+            <if condition="$con_p.pic_4_url neq ''">
+            <a href="{$con_p.pic_4_url}" data-lightbox='example-set'><img src="{$con_p.pic_4_url}"/></a>
+            </if>
+            <if condition="$con_p.pic_5_url neq ''">
+            <a href="{$con_p.pic_5_url}" data-lightbox='example-set'><img src="{$con_p.pic_5_url}"/></a>
+            </if>
+          </div>
+          <span>
+            <em><img src="__PUBLIC__/Home/imag/tw4.jpg" />{$con_p['re_sub']['record_count']}</em>
+            <if condition="$con_p.v_last_user_id eq 0 ">
+            <i>最后回复：<font>
+            <if condition="$con_p.is_anonymous eq 0 ">
+            {$con_p.nickname|subtext=7}
+            <else />
+            {$con_p.nickname|sudtext}
+            </if>
+            </font> 
+            <if condition="$con_p.add_time gt $news ">
+            {$con_p.add_time|date='H:i:s',###}
+            <else />
+            {$con_p.add_time|date='Y-m-d',###}
+            </if>
+            </i>
+            <else />
+            <i>最后回复：<font>
+            <if condition="$con_p.v_last_is_anonymous eq 0 ">
+            {$con_p.v_last_nickname|subtext=7}
+            <else />
+            {$con_p.v_last_nickname|sudtext}
+            </if>
+            </font>
+            <if condition="$con_p.v_last_time gt $news ">
+            {$con_p.v_last_time|date='H:i:s',###}
+            <else />
+            {$con_p.v_last_time|date='Y-m-d',###}
+            </if>
+            </i>
+            </if>
+          </span>
+        </dd>
+      </dl>
+      </volist>
+    </div>
+    <if condition="$record_count_p gt 10 ">
+    <a id="ckgd_pl" href="javascript:void(0)" class="jz_more">加载更多</a>
+    </if>
+    <div class="over">您已经看完了所有的评论，<a class="mlgb" href="__APP__/pl?pl={$hpt_list.id}">去评论</a></div>
+  </div>
+  <div class="comment_tab hide">
+    <div id="div_bg">
+      <volist id="con_b" name="con_b" key="k" empty="还没有用户曝光过此公司那，我要去曝光一个！">
+      <dl>
+        <dt>
+          <span>
+            <a href="__APP__/Usercenter?id={$con_b.user_id}"><img src="{$con_b.user_photo}" /></a>
+          </span>
+          <p>
+            <a href="__APP__/Usercenter?id={$con_b.user_id}">
+              {$con_b.nickname}
+            </a>
+          </p>
+        </dt>
+        <dd>
+          <a href="__APP__/posts_bg?qy={$con_b.company_id}&pl={$con_b.id}">
+            <p>
+              <b>
+              <img src="__PUBLIC__/Home/imag/png07.png" />
+              </b>{$con_b.content|subtext=50}
+            </p>
+          </a>
+          <div>
+            <if condition="$con_b.pic_1_url neq ''">
+            <a href="{$con_b.pic_1_url}" data-lightbox='example-set'><img src="{$con_b.pic_1_url}"/></a>
+            </if>
+            <if condition="$con_b.pic_2_url neq ''">
+            <a href="{$con_b.pic_2_url}" data-lightbox='example-set'><img src="{$con_b.pic_2_url}"/></a>
+            </if>
+            <if condition="$con_b.pic_3_url neq ''">
+            <a href="{$con_b.pic_3_url}" data-lightbox='example-set'><img src="{$con_b.pic_3_url}"/></a>
+            </if>
+            <if condition="$con_b.pic_4_url neq ''">
+            <a href="{$con_b.pic_4_url}" data-lightbox='example-set'><img src="{$con_b.pic_4_url}"/></a>
+            </if>
+            <if condition="$con_b.pic_5_url neq ''">
+            <a href="{$con_b.pic_5_url}" data-lightbox='example-set'><img src="{$con_b.pic_5_url}"/></a>
+            </if>
+          </div>
+          <span>
+            <em><img src="__PUBLIC__/Home/imag/tw4.jpg" />{$con_b['sub']['record_count']}</em>
+            <if condition="$con_b.v_last_user_id eq 0 ">
+            <i>最后回复：<font>
+            {$con_b.nickname|subtext=7}
+            </font> 
+            <if condition="$con_b.add_time gt $news ">
+            {$con_b.add_time|date='H:i:s',###}
+            <else />
+            {$con_b.add_time|date='Y-m-d',###}
+            </if>
+            </i>
+            <else />
+            <i>最后回复：<font>
+            <if condition="$con_b.v_last_is_anonymous eq 0 ">
+            {$con_b.v_last_nickname|subtext=7}
+            <else />
+            {$con_b.v_last_nickname|sudtext}
+            </if>
+            </font>
+            <if condition="$con_b.v_last_time gt $news ">
+            {$con_b.v_last_time|date='H:i:s',###}
+            <else />
+            {$con_b.v_last_time|date='Y-m-d',###}
+            </if>
+            </i>
+            </if>
+          </span>
+        </dd>
+      </dl>
+      </volist>
+    </div>
+    <if condition="$record_count_b gt 10 ">
+    <a id="ckgd_bg" href="javascript:void(0)" class="jz_more">加载更多</a>
+    </if>
+  </div>
+  <div class="comment_tab hide">
+    <ul id="div_xw">
+      <volist name="new_list" id="new_list" empty="哎哟，还不错哦，还没有媒体报道过这家公司呢！">
+      <li>
+        <span>
+          <a href="__APP__/article?id={$new_list.id}&company_id={$new_list.company_id}">
+          <img src="{$new_list.pic_url}" /></a>
+        </span>
+        <p>
+          <a href="__APP__/article?id={$new_list.id}&company_id={$new_list.company_id}">
+            <em>{$new_list.title}</em>
+          </a>
+          <i>{$new_list.show_time|date='Y-m-d',###}<font>来源：<a href="#">{$new_list.source}</a></font></i>
+        </p>
+      </li>
+      </volist>
+    </ul>
+    <if condition="$record_count gt 2">
+    <a id="ckgd_xw" href="javascript:void(0)" class="jz_more">加载更多</a>
+    </if>
+  </div>
+</div>
+
+<include file="Public:footer_wap" />
+</body>
+<script type="text/javascript">
+  $(function(){
+    //加黑
+    $('.jh').click(function(){
+            var id        = $(this).attr('id');//获取id属性
+            var userid    = '{$userid}';
+            if (userid == "") {
+              location.href='__APP__/login.html';
+              return false; 
+            }
+            $.ajax({  
+                type:"post",  
+                url:"{$call_url}",
+                timeout: 5000,  
+                dataType:"json",  
+                data:{"method":"Addblack.add","type":"text","content":{"company_id":id,"user_id":userid}},
+                success: function aa(data) {  
+                     if (200 == data.status_code) {
+                        if (0 == data.content.is_success) {
+                          mh_dialogShow('mh_success','成功！',2,true);
+                          $('#emth').text(data.content.amount); 
+                          return false;
+                        }
+                        else if(-1 == data.content.is_success){ 
+                          mh_dialogShow('mh_warning','操作失败！',2,true);
+                          return false;
+                        }
+                        else if(-2 == data.content.is_success){
+                          mh_dialogShow('mh_warning','您已经操作过，不能重复！',2,true);
+                          return false;
+                        }else if(-3 == data.content.is_success){
+                          mh_dialogShow('mh_warning','操作失败，该企业已被删除！',2,true,'__ROOT__/'); 
+                          location.href='__ROOT__/';
+                          return false; 
+                        } 
+                     }else{
+                          mh_dialogShow('mh_warning','操作错误！',2,true);
+                          return false;
+                     }
+                }  
+            })  
+    });
+    //会员单位
+    var qy_id = "{$hpt_list.id}";
+    $.ajax({  
+          type:"post",  
+          url:"{$call_url}",
+          timeout: 5000,  
+          dataType:"json",  
+          data:{"method":"Company.get_list","type":"text","content":{"page_size":5,'page_index':1,"where":{"agent_platform":qy_id,"nature":"003001"}}},
+          success: function aa(data) {
+            if (200 == data.status_code) {
+              if (data.content.record_count > 0) {
+                var list = data.content.list,length=list.length,i=0,k=0,j=0,str='',company_name='',content='';
+                str = '<h4>';
+                str += '<p>会员单位<em>（共<font>'+data.content.record_count+'</font>家）</em></p>';
+                str += '<span>';
+                if (data.content.record_count > 5)
+                  str += '<a href="__APP__/member?qy_id='+qy_id+'">更多</a>';
+                str += '</span></h4><ul>';
+                for(; i< length; i++){
+                  logo_url = list[i].logo_url;
+                  mem_sn      = list[i].mem_sn;
+                  str += '<a href="__APP__/';
+                  if('006001' == list[i].auth_level)
+                    str += 'hpt';
+                  else if('006002' == list[i].auth_level)
+                    str += 'wrz';
+                  else
+                    str += 'yrz';
+                  str += '?resid='+list[i].id+'">';
+                  str += '<li><img src="'+logo_url+'" />';
+                  str += '<p>'+mem_sn+'</p></li></a>';
+                }
+                str += '</ul>';
+                $(".Company").html(str);
+              }
+            }
+
+          }
+    });
+    //判断是否登录
+    $('.mlgb').live('click',function(){
+       var usaa = '{$userid}';
+       if (usaa == "") {
+            location.href='__APP__/login.html';
+            return false;
+        }
+    });
+  })
+</script>
+<script type="text/javascript">
+  //评论加载更多
+  $(function(){
+      var p=2;// 初始化页面，点击事件从第二页开始
+      var type = 'hpt';
+      var id = "{$hpt_list.id}";
+      var flag=false;
+      $('#ckgd_pl').live('click',function(){
+            send();
+      })
+      function send(){
+          if(flag){
+            return false;
+          }
+          $.ajax({
+              type:'post',
+              url:"{:U('pl')}",
+              data:{k:p,
+                    id:id,
+                    type:type},
+              beforeSend:function(){
+                   //$("#ul1").append("<div id='load'>加载中……</div>");
+              },
+              success:function(data){
+                var datas = data.list;
+                var news  = data.news;
+                if(datas!=''){
+                  $.each(datas,function(i){
+                    var rel = '<dl><dt><span>';
+                    rel += '<a href="__APP__/Usercenter?id='+datas[i]['user_id']+'">';
+                    rel += '<img src="'+datas[i]['user_photo']+'" /></a></span>';         
+                    rel += '<p><a href="__APP__/Usercenter?id='+datas[i]['user_id']+'">';
+                    if (datas[i]['is_anonymous'] == 0 ) {
+                      rel += datas[i]['nickname'];
+                    }else{
+                      rel += datas[i]['nickname_ex'];
+                    }
+                    rel += '</a></p></dt>';
+                    rel += '<dd>';
+                    rel += '<a href="__APP__/posts_pl?qy='+datas[i]['company_id']+'&pl='+datas[i]['id']+'">';
+                    rel += '<p><b>';
+                    if (datas[i]['type'] == '005001' ) {
+                      rel += '<img src="__PUBLIC__/Home/imag/png04.png" />';
+                    }else if(datas[i]['type'] == '005002'){
+                      rel += '<img src="__PUBLIC__/Home/imag/png05.png" />';
+                    }else{
+                      rel += '<img src="__PUBLIC__/Home/imag/png06.png" />';
+                    }
+                    rel += '</b>'+datas[i]['content']+'</p></a><div>';
+                    if (datas[i]['pic_1_url'] != '') {
+                      rel += '<a href="'+datas[i]['pic_1_url']+'" data-lightbox="example-set"><img src="'+datas[i]['pic_1_url']+'"/></a>';
+                    }
+                    if (datas[i]['pic_2_url'] != '') {
+                      rel += '<a href="'+datas[i]['pic_2_url']+'" data-lightbox="example-set"><img src="'+datas[i]['pic_2_url']+'"/></a>';
+                    }
+                    if (datas[i]['pic_3_url'] != '') {
+                      rel += '<a href="'+datas[i]['pic_3_url']+'" data-lightbox="example-set"><img src="'+datas[i]['pic_3_url']+'"/></a>';
+                    }
+                    if (datas[i]['pic_4_url'] != '') {
+                      rel += '<a href="'+datas[i]['pic_4_url']+'" data-lightbox="example-set"><img src="'+datas[i]['pic_4_url']+'"/></a>';
+                    }
+                    if (datas[i]['pic_5_url'] != '') {
+                      rel += '<a href="'+datas[i]['pic_5_url']+'" data-lightbox="example-set"><img src="'+datas[i]['pic_5_url']+'"/></a>';
+                    }
+                    rel += '</div><span>';
+                    rel += '<em><img src="__PUBLIC__/Home/imag/tw4.jpg" />'+datas[i]['re_sub']['record_count']+'</em>';
+                    if (datas[i]['v_last_user_id'] == 0) {
+                      rel += '<i>最后回复：<font>';
+                      if (datas[i]['is_anonymous'] == 0) {
+                        rel += datas[i]['nickname'].substring(0,7);
+                      }else{
+                        rel += datas[i]['nickname_ex'];
+                      }
+                      rel += '</font>';
+                      if (datas[i]['add_time'] > news) {
+                        rel += datas[i]['add_time_exx'];
+                      }else{
+                        rel += datas[i]['add_time_ex'];
+                      }
+                    }else{
+                      rel += '<i>最后回复：<font>';
+                      if (datas[i]['v_last_is_anonymous'] == 0) {
+                        rel += datas[i]['v_last_nickname'].substring(0,7);
+                      }else{
+                        rel += datas[i]['v_last_nickname_ex'];
+                      }
+                      rel += '</font>';
+                      if (datas[i]['v_last_time'] > news) {
+                        rel += datas[i]['v_last_time_exx'];
+                      }else{
+                        rel += datas[i]['v_last_time_ex'];
+                      }
+                    }
+                    rel += '</span></dd></dl>';
+                    $("#div_pl").append(rel);
+                  })
+                }else{
+                    $("#ckgd_pl").text('已无更多');
+                    flag=true;  
+                }
+              },
+              complete:function(){
+                     $("#load").remove();
+              },
+              dataType:'json'});
+            p++;
+      }
+  })
+</script>
+<script type="text/javascript">
+  //曝光加载更多
+  $(function(){
+      var p=2;// 初始化页面，点击事件从第二页开始
+      var type = 'hpt';
+      var id = "{$hpt_list.id}";
+      var flag=false;
+      $('#ckgd_bg').live('click',function(){
+            send();
+      })
+      function send(){
+          if(flag){
+            return false;
+          }
+          $.ajax({
+              type:'post',
+              url:"{:U('bg')}",
+              data:{k:p,
+                    id:id,
+                    type:type},
+              beforeSend:function(){
+                   //$("#ul1").append("<div id='load'>加载中……</div>");
+              },
+              success:function(data){
+                var datas = data.list;
+                var news  = data.news;
+                if(datas!=''){
+                  $.each(datas,function(i){
+                    var rel = '<dl><dt><span>';
+                    rel += '<a href="__APP__/Usercenter?id='+datas[i]['user_id']+'">';
+                    rel += '<img src="'+datas[i]['user_photo']+'" /></a></span>';         
+                    rel += '<p><a href="__APP__/Usercenter?id='+datas[i]['user_id']+'">';
+                    rel += datas[i]['nickname'];
+                    rel += '</a></p></dt>';
+                    rel += '<dd>';
+                    rel += '<a href="__APP__/posts_pl?qy='+datas[i]['company_id']+'&pl='+datas[i]['id']+'">';
+                    rel += '<p><b>';
+                    if (datas[i]['type'] == '005001' ) {
+                      rel += '<img src="__PUBLIC__/Home/imag/png04.png" />';
+                    }else if(datas[i]['type'] == '005002'){
+                      rel += '<img src="__PUBLIC__/Home/imag/png05.png" />';
+                    }else{
+                      rel += '<img src="__PUBLIC__/Home/imag/png06.png" />';
+                    }
+                    rel += '</b>'+datas[i]['content']+'</p></a><div>';
+                    if (datas[i]['pic_1_url'] != '') {
+                      rel += '<a href="'+datas[i]['pic_1_url']+'" data-lightbox="example-set"><img src="'+datas[i]['pic_1_url']+'"/></a>';
+                    }
+                    if (datas[i]['pic_2_url'] != '') {
+                      rel += '<a href="'+datas[i]['pic_2_url']+'" data-lightbox="example-set"><img src="'+datas[i]['pic_2_url']+'"/></a>';
+                    }
+                    if (datas[i]['pic_3_url'] != '') {
+                      rel += '<a href="'+datas[i]['pic_3_url']+'" data-lightbox="example-set"><img src="'+datas[i]['pic_3_url']+'"/></a>';
+                    }
+                    if (datas[i]['pic_4_url'] != '') {
+                      rel += '<a href="'+datas[i]['pic_4_url']+'" data-lightbox="example-set"><img src="'+datas[i]['pic_4_url']+'"/></a>';
+                    }
+                    if (datas[i]['pic_5_url'] != '') {
+                      rel += '<a href="'+datas[i]['pic_5_url']+'" data-lightbox="example-set"><img src="'+datas[i]['pic_5_url']+'"/></a>';
+                    }
+                    rel += '</div><span>';
+                    rel += '<em><img src="__PUBLIC__/Home/imag/tw4.jpg" />'+datas[i]['sub']['record_count']+'</em>';
+                    if (datas[i]['v_last_user_id'] == 0) {
+                      rel += '<i>最后回复：<font>';
+                      rel += datas[i]['nickname'].substring(0,7);
+                      rel += '</font>';
+                      if (datas[i]['add_time'] > news) {
+                        rel += datas[i]['add_time_exx'];
+                      }else{
+                        rel += datas[i]['add_time_ex'];
+                      }
+                    }else{
+                      rel += '<i>最后回复：<font>';
+                      if (datas[i]['v_last_is_anonymous'] == 0) {
+                        rel += datas[i]['v_last_nickname'].substring(0,7);
+                      }else{
+                        rel += datas[i]['v_last_nickname_ex'];
+                      }
+                      rel += '</font>';
+                      if (datas[i]['v_last_time'] > news) {
+                        rel += datas[i]['v_last_time_exx'];
+                      }else{
+                        rel += datas[i]['v_last_time_ex'];
+                      }
+                    }
+                    rel += '</span></dd></dl>';
+                    $("#div_bg").append(rel);
+                  })
+                }else{
+                    $("#ckgd_bg").text('已无更多');
+                    flag=true;  
+                }
+              },
+              complete:function(){
+                     $("#load").remove();
+              },
+              dataType:'json'});
+            p++;
+      }
+  })
+</script>
+<script type="text/javascript">
+  //新闻加载更多
+  $(function(){
+      var p=2;// 初始化页面，点击事件从第二页开始
+      var sign      = 1;
+      var companyid = "{$hpt_list.id}";
+      var flag=false;
+      $('#ckgd_xw').live('click',function(){
+            send();
+      })
+      function send(){
+          if(flag){
+            return false;
+          }
+          $.ajax({
+              type:'post',
+              url:"{:U('news_hyh')}",
+              data:{k:p,
+                    comment_id:companyid,
+                    sign:sign},
+              beforeSend:function(){
+                   //$("#ul1").append("<div id='load'>加载中……</div>");
+              },
+              success:function(data){
+                if(data!= 0){
+                  $.each(data,function(i){
+                  var rel = '<li><span>';     
+                      rel += '<a href="__APP__/article?id='+data[i]['id']+'&company_id='+data[i]['company_id']+'">';
+                      rel += '<img src="'+data[i]['pic_url']+'" /></a></span><p>';
+                      rel += '<a href="__APP__/article?id='+data[i]['id']+'&company_id='+data[i]['company_id']+'">';
+                      rel += '<em>'+data[i]['title']+'</em>'
+                      rel += '</a>';
+                      rel += '<i>'+data[i]['add_time_ex']+'<font>';
+                      rel += '来源：<a href="#">'+data[i]['source']+'</a></font></i></p></li>';
+                    $("#div_xw").append(rel);
+                  })
+                }else{
+                    $("#ckgd_xw").text('已无更多');
+                    flag=true;  
+                }
+              },
+              complete:function(){
+                     $("#load").remove();
+              },
+              dataType:'json'});
+            p++;
+      }
+  })
+</script>
+</html>

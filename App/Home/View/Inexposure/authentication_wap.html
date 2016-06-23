@@ -1,0 +1,280 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no"/>
+<meta content="yes" name="apple-mobile-web-app-capable" />
+<meta content="black" name="apple-mobile-web-app-status-bar-style" />
+<meta content="telephone=no" name="format-detection" />
+<title>合规认证平台--口碑</title>
+<meta name="keywords" content="合规认证平台,口碑,贵金属机构合规认证"/>
+<meta name="description" content="口碑,黄金、外汇、贵金属合规认证平台，为投资者甄选安全可靠的交易平台。"/>
+<link rel="icon" href="__PUBLIC__/s.ico" type="image/x-icon" />
+<link type="text/css" rel="stylesheet" href="__PUBLIC__/Home/css/wap_main.css"/>
+<link type="text/css" rel="stylesheet" href="__PUBLIC__/Home/css/jquery.editable-select.min.css"/>
+<script type="text/javascript" src="__PUBLIC__/js/jquery-1.8.3.min.js" ></script>
+<script type="text/javascript" src="__PUBLIC__/js/Validform_v5.3.2.js" ></script>
+<script type="text/javascript" src="__PUBLIC__/Home/js/app_mian.js" ></script>
+<script type="text/javascript" src="__PUBLIC__/Home/js/jquery.form.js" ></script>
+<script type="text/javascript" src="__PUBLIC__/Home/js/mh_dialog.js" ></script>
+</head>
+
+<body>
+<div class="top">
+  <include file="Public:top_wap" />
+  <h3>合格平台认证</h3>
+  <include file="Public:fx_wap" />
+</div>  
+<form class="registerform" name="theForm" id="theForm" action="__URL__/authentication_ex" method="post" enctype="multipart/form-data" onsubmit="return ValidateFile()">
+<div class="check">
+<include file="Public:tc_wap" />
+  <h3>请如实填写后，进行曝光。</h3>
+    <p><em>企业性质：</em><i>
+      <label>
+        <input type="radio" class="qyxzz nature" name="nature" value="003001" checked="checked" autocomplete="off" />
+        公司</label>
+      <label>
+        <input type="radio" class="qyxz nature" name="nature" value="003002" autocomplete="off" />
+        平台</label>
+    </i></p>
+    <p><em>所属行业：</em><i>
+      <label>
+        <input type="radio" value="004004" name="trade" checked="checked" />
+        大宗商品（贵金属、石油）</label>
+      <label>
+        <input type="radio" value="004002" name="trade" />
+        外汇 </label>
+      <label>
+        <input type="radio" value="004005" name="trade" />
+        其他 </label>
+    </i></p>
+</div>
+<div class="Basics">
+  <h3>
+    <p>基本信息</p>
+  </h3>
+  <ul>
+    <li>
+      <p><em>公司全称：</em>
+        <!-- <input name="company_name" type="text" class="text1" datatype="s" nullmsg="不能为空！" />
+        <span class="Validform_checktip"></span> -->
+        <span id="gs">
+          <select id="editable-select" name="company_name1" class="gjshu form-control">
+            <volist name="list_gs" id="list_gs">
+              <option>{$list_gs}</option>
+            </volist>
+          </select>
+        </span>
+        <span id="pt">
+          <select id="editable-selected" name="company_name2" class="gjshu form-control">
+            <volist name="list_pt" id="list_pt">
+              <option>{$list_pt}</option>
+            </volist>
+          </select>
+        </span>
+      </p>
+      <p><em>公司简称：</em>
+        <input name="corporation" type="text" class="text1"/>
+      </p>
+      <p><em>联系地址：</em>
+        <input name="reg_address" type="text" class="text1" datatype="s" nullmsg="不能为空！" />
+        <span class="Validform_checktip"></span>
+      </p>
+      <p><em>营业执照：</em>
+        <input type="file" name="busin_license" id="busin_license" class="file" />
+      </p>
+      <p><em>机构代码证：</em>
+        <input type="file" name="code_certificate" id="code_certificate"  class="file" />
+      </p>
+      <p><em>公司电话：</em>
+        <input name="telephone" type="text" class="text1" datatype="n5-13" nullmsg="请输入公司电话！" errormsg="输入的电话有误" />
+        <span class="Validform_checktip"></span>
+      </p>
+      <p><em>官方网站：</em>
+        <input name="website" type="text" class="text1" datatype="url"  ignore="ignore" />
+        <span class="Validform_checktip"></span>
+      </p>
+      <p><em>官网备案：</em>
+        <input name="record" type="text" class="text1" />
+        <span class="Validform_checktip"></span>
+      </p>
+    </li>
+    <li>
+      <div class="Basics">
+        <h3>
+          <p class="pd">联系人信息</p>
+        </h3>
+          <p><em>联系人：</em>
+            <input name="contact" type="text" class="text1" datatype="*" nullmsg="输入联系人！" errormsg="输入的联系人有误" />
+            <span class="Validform_checktip"></span>
+          </p>
+          <p><em>联系电话：</em>
+            <input name="mobile" type="text" class="text1" datatype="n5-13" nullmsg="输入电话号码！" errormsg="输入的电话有误" />
+            <span class="Validform_checktip"></span>
+          </p>
+      </div>
+    </li>
+    <li class="zixx">
+      <div class="Basics">
+        <h3>
+          <p class="pd">资质信息</p>
+        </h3>
+          <p><em>代理平台：</em>
+            <input name="agent_platform" type="text" class="text1" datatype="* , /^(([^\^\.<>%&',;=?$':#@!~\]\[{}\\/`\|])*)$/" ignore="ignore" />
+            <span class="Validform_checktip"></span>
+          </p>
+          <p><em>会员编号：</em>
+            <input name="mem_sn" type="text" class="text1" datatype="* , /^(([^\^\.<>%&',;=?$':#@!~\]\[{}\\/`\|])*)$/" ignore="ignore" />
+            <span class="Validform_checktip"></span>
+          </p>
+          <p><em>资质证明：</em>
+             <input type="file" name="certificate" id="certificate" class="file"/>
+          </p>
+          <p><em>查询网址：</em>
+            <input name="find_website" type="text" class="text1" datatype="url" ignore="ignore" />
+            <span class="Validform_checktip"></span>
+          </p>
+      </div>  
+    </li>
+    <span class="ljcz"><input name="submit" type="submit" value="提交认证" class="textn1" /></span>
+  </ul>
+</div>
+</form>
+
+<include file="Public:footer_wap" />
+</body>
+<script type="text/javascript" src="__PUBLIC__/Home/js/jquery.editable-select.min.js" ></script>
+<script type="text/javascript">
+    //公司
+    $('#editable-select').editableSelect({
+        effects: 'slide'
+    });
+    //平台
+    $('#editable-selected').editableSelect({
+        effects: 'slide'
+    });
+</script>
+<script type="text/javascript">
+   $(function(){
+      var nature_ex = $("input[name='nature']:checked").val();
+      if (nature_ex == 003001) {
+          $('#gs').show();
+      }else{
+          $('#pt').hide();
+      }
+      //清空公司名称
+      $("#editable-select,#editable-selected").attr("value","");
+      //切换公司性质
+      $(".nature").change(function(){
+          var nature = $(this).val();
+          $("#editable-select,#editable-selected").attr("value","");
+          if (nature == "003001") {
+            $('#gs').show();
+            $('#pt').hide();
+          }
+          if (nature == "003002") {
+            $('#pt').show();
+            $('#gs').hide();
+          }
+      });
+  }); 
+</script>
+<script type="text/javascript">
+    //表单验证插件
+    $(function(){
+      $(".registerform").Validform({
+        tiptype:function(msg,o,cssctl){
+          if(!o.obj.is("form")){
+            var objtip=o.obj.siblings(".Validform_checktip");
+            cssctl(objtip,o.type);
+            objtip.text(msg);
+          }
+        }
+      });
+      $('.qyxzz').click(function(){ 
+           $(".zixx").show();
+      })
+      $('.qyxz').click(function(){ 
+           $(".zixx").hide();
+      })
+      var bb = $(".qyxzz").val(); 
+      if (bb == '003001') {
+          $(".zixx").show();
+      }else{
+          $(".zixx").hide();
+      }
+    })
+    //图片上传验证
+    function ValidateFile(){ 
+        var tmp     = document.getElementById("busin_license").value; 
+        var tmp1    = document.getElementById("code_certificate").value;
+        var tmp2    = document.getElementById("certificate").value;
+        var tmpStr  = tmp.substring(tmp.lastIndexOf('.')+1,tmp.length).toLowerCase(); 
+        var tmpStr1 = tmp1.substring(tmp1.lastIndexOf('.')+1,tmp1.length).toLowerCase();
+        var tmpStr2 = tmp2.substring(tmp2.lastIndexOf('.')+1,tmp2.length).toLowerCase();
+        var userid  = '{$userid}';
+        if (userid == '') {
+          window.location.href="__APP__/login.html";
+          return false;
+        }
+        if(tmpStr != ""){
+            if(!/.(gif|jpg|jpeg|png|GIF|JPG|PNG|JPEG)$/.test(tmp)){
+              mh_dialogShow('mh_warning','营业执照类型必须是.gif,jpeg,jpg,png中的一种！',2,true);
+              return false; 
+            }
+        }
+        if (tmpStr1 != "") {
+            if(!/.(gif|jpg|jpeg|png|GIF|JPG|PNG|JPEG)$/.test(tmp1)){
+              mh_dialogShow('mh_warning','机构代码证类型必须是.gif,jpeg,jpg,png中的一种！',2,true); 
+              return false; 
+            }
+        }
+        if(tmpStr2 != ""){
+          if(!/.(gif|jpg|jpeg|png|GIF|JPG|PNG|JPEG)$/.test(tmp2)){ 
+            mh_dialogShow('mh_warning','资质证明类型必须是.gif,jpeg,jpg,png中的一种！',2,true); 
+            return false; 
+          }
+        }
+    }
+</script>
+<script type="text/javascript">
+    $(function () {
+        var options = {
+            success: function (data) {
+              if(data){
+                $(".bd_wd").show();
+                if (data == 0) {
+                  mh_dialogShow('mh_success','添加成功!',2,true,'__ROOT__/');
+                  return false;
+                }else if(data == -1){
+                  mh_dialogShow('mh_warning','合规认证添加失败！',2,true); 
+                  return false;
+                }else if(data == 1){
+                  mh_dialogShow('mh_warning','图片上传失败！',2,true); 
+                  return false;
+                }else if(data == 2){
+                  mh_dialogShow('mh_warning','没有文件上传！',2,true); 
+                  return false;
+                }else if(data == 3){
+                  mh_dialogShow('mh_warning','文件上传错误！',2,true); 
+                  return false;
+                }else if(data == 4){
+                  mh_dialogShow('mh_warning','上传文件不能大于400kb！',2,true); 
+                  return false;
+                }else if(data == 5){
+                  mh_dialogShow('mh_warning','图片格式错误！',2,true); 
+                  return false;
+                }else if(data == 6){
+                  mh_dialogShow('mh_warning','必填项没有填写！',2,true); 
+                  return false;
+                }else if(data == 7){
+                  mh_dialogShow('mh_warning','您还没有登录！',2,true); 
+                  return false;
+                }
+              }
+            }
+        };
+        $("#theForm").ajaxForm(options);
+    });
+</script>
+</html>

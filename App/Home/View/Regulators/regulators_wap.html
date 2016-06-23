@@ -1,0 +1,198 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no"/>
+<meta content="yes" name="apple-mobile-web-app-capable" />
+<meta content="black" name="apple-mobile-web-app-status-bar-style" />
+<meta content="telephone=no" name="format-detection" />
+<title>监管机构-贵金属监管机构-外汇监管机构-口碑网</title>
+<meta name="keywords" content="贵金属监管机构,外汇监管机构"/>
+<meta name="description" content="关于贵金属和外汇行业的金融监管机构列表和介绍，让投资者详细了解本行业的监管规范。"/>
+<link rel="icon" href="__PUBLIC__/s.ico" type="image/x-icon" />
+<link type="text/css" rel="stylesheet" href="__PUBLIC__/Home/css/wap_main.css"/>
+<script type="text/javascript" src="__PUBLIC__/js/jquery-1.8.3.min.js" ></script>
+<script type="text/javascript" src="__PUBLIC__/Home/js/app_mian.js" ></script>
+</head>
+
+<body>
+<div class="top">
+  <include file="Public:top_wap" />
+  <h3>监管机构</h3>
+  <include file="Public:fx_wap" />
+</div>
+<div class="tab_jg">
+  <include file="Public:tc_wap" />
+  <h3>
+    <a href="javascript:void(0)" class="current">国内监管机构</a> 
+    <a href="javascript:void(0)">国外监管机构</a>
+  </h3>
+  <div class="jg_nr yis1 show">
+  </div>
+  <div class="jg_nr yis2 hide">
+  </div>
+</div>
+<include file="Public:footer_wap" />
+</body>
+<script type="text/javascript"> 
+  $(function(){
+    window.onload=function(){
+      //国内监管机构
+      $.ajax({  
+            type:"post",  
+            url:"{$call_url}",
+            timeout: 5000,  
+            dataType:"json",  
+            data:{"method":"Regulators.get_list","type":"text","content":{"page_size":5,"where":{"type":"002001"}}},
+            success: function aa(data) {
+                if (200 == data.status_code) {
+                  var list = data.content.list,length=list.length,i=0,k=0,company_name='',content='';
+                  str ='<div id="ul1">';                                       
+                  for(; i< length; i++)
+                  {
+                    website = list[i].website;
+                    content      = list[i].content;
+                    str += '<table width="100%" border="0" cellspacing="0" cellpadding="0">';
+                    str += '<tr><td width="24%" height="62" align="center">机构名称</td>';
+                    str += '<td width="76%" class="size">';
+                    str += '<a href="'+website+'">'+list[i]['title']+'</a></td></tr>';
+                    str += '<tr><td align="center" valign="top">机构简介</td>';
+                    str += '<td>'+utf8to16(base64decode(content))+'</td></tr></table>';
+                  }
+                  str += '</div>';
+                  if(5< data.content.record_count){ 
+                    str += '<a href="javascript:void(0)" id="btn" class="jz_more">加载更多</a>'; 
+                  }
+                  $('.yis1').prepend(str);
+                }
+            }
+      });
+      //国外监管机构
+      $.ajax({  
+            type:"post",  
+            url:"{$call_url}",
+            timeout: 5000,  
+            dataType:"json",  
+            data:{"method":"Regulators.get_list","type":"text","content":{"page_size":5,"where":{"type":"002002"}}},
+            success: function aa(data) {
+                if (200 == data.status_code) {
+                  var list = data.content.list,length=list.length,i=0,k=0,company_name='',content='';
+                  str ='<div id="ul2">';                                       
+                  for(; i< length; i++)
+                  {
+                    website = list[i].website;
+                    content      = list[i].content;
+                    str += '<table width="100%" border="0" cellspacing="0" cellpadding="0">';
+                    str += '<tr><td width="24%" height="62" align="center">机构名称</td>';
+                    str += '<td width="76%" class="size">';
+                    str += '<a href="'+website+'">'+list[i]['title']+'</a></td></tr>';
+                    str += '<tr><td align="center" valign="top">机构简介</td>';
+                    str += '<td>'+utf8to16(base64decode(content))+'</td></tr></table>';
+                  }
+                  str += '</div>';
+                  if(5< data.content.record_count){ 
+                    str += '<a href="javascript:void(0)" id="btnn" class="jz_more">加载更多</a>';
+                  }
+                  $('.yis2').prepend(str);
+                }
+            }
+      });
+    }
+  })
+</script>
+<script type="text/javascript">
+  $(function(){
+      var p=2;// 初始化页面，点击事件从第二页开始
+      var flag=false;
+      $('#btn').live('click',function(){
+      //$("input[name=btn]").click(function(){
+          //初始状态，如果没数据return ,false;否则
+          if($("#ul1 table").size()<=0){
+            return false;
+          }else{
+            send();
+          }
+      })
+      function send(){
+          if(flag){
+            return false;
+          }
+          $.ajax({
+              type:'post',
+              url:"{:U('Regulators/gjs_send')}",
+              data:{k:p},
+              beforeSend:function(){
+                   //$("#ul1").append("<div id='load'>加载中……</div>");
+              },
+              success:function(data){
+                if(data!=null){
+                  $.each(data,function(i){
+                    var str = '<table width="100%" border="0" cellspacing="0" cellpadding="0">';
+                    str += '<tr><td width="24%" height="62" align="center">机构名称</td>';
+                    str += '<td width="76%" class="size">';
+                    str += '<a href="'+website+'">'+data[i]['title']+'</a></td></tr>';
+                    str += '<tr><td align="center" valign="top">机构简介</td>';
+                    str += '<td>'+data[i]['content']+'</td></tr></table>'
+                    $("#ul1").append(str);
+                  })
+                }else{
+                    $("#btn").text('已无更多');
+                    flag=true;  
+                }
+              },
+              complete:function(){
+                     $("#load").remove();
+              },
+              dataType:'json'});
+            p++;
+      }
+  })
+</script>
+<script type="text/javascript">
+  $(function(){
+      var p=2;// 初始化页面，点击事件从第二页开始
+      var flag=false;
+      $('#btnn').live('click',function(){
+          //初始状态，如果没数据return ,false;否则
+          if($("#ul2 table").size()<=0){
+            return false;
+          }else{
+            send();
+          }
+      })
+      function send(){
+          if(flag){
+            return false;
+          }
+          $.ajax({
+              type:'post',
+              url:"{:U('Regulators/wh_send')}",
+              data:{k:p},
+              beforeSend:function(){
+                   //$("#ul1").append("<div id='load'>加载中……</div>");
+              },
+              success:function(data){
+                if(data!=null){
+                  $.each(data,function(i){
+                    var str = '<table width="100%" border="0" cellspacing="0" cellpadding="0">';
+                    str += '<tr><td width="24%" height="62" align="center">机构名称</td>';
+                    str += '<td width="76%" class="size">';
+                    str += '<a href="'+website+'">'+data[i]['title']+'</a></td></tr>';
+                    str += '<tr><td align="center" valign="top">机构简介</td>';
+                    str += '<td>'+data[i]['content']+'</td></tr></table>'
+                    $("#ul2").append(str);
+                  })
+                }else{
+                    $("#btnn").text('已无更多');
+                    flag=true;  
+                }
+              },
+              complete:function(){
+                     $("#load").remove();
+              },
+              dataType:'json'});
+            p++;
+      }
+  });
+</script>
+</html>

@@ -1,0 +1,106 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no"/>
+<meta content="yes" name="apple-mobile-web-app-capable" />
+<meta content="black" name="apple-mobile-web-app-status-bar-style" />
+<meta content="telephone=no" name="format-detection" />
+<title>注册--口碑</title>
+<meta name="keywords" content="口碑，黑平台查询，黑平台曝光，贵金属黑平台，外汇黑平台"/>
+<meta name="description" content="口碑是全国性的交易市场曝光平台,携手每一位投资人共同揭开交易市场的层层黑幕,为您提供全方位的贵金属、外汇、黄金、石油等行业交易黑幕的查询、曝光。"/>
+<link rel="icon" href="__PUBLIC__/s.ico" type="image/x-icon" />
+<link type="text/css" rel="stylesheet" href="__PUBLIC__/Home/css/wap_main.css"/>
+<script type="text/javascript" src="__PUBLIC__/js/jquery-1.8.3.min.js" ></script>
+<script type="text/javascript" src="__PUBLIC__/js/Validform_v5.3.2.js" ></script>
+<script type="text/javascript" src="__PUBLIC__/Home/js/jquery.form.js" ></script>
+<script type="text/javascript" src="__PUBLIC__/Home/js/mh_dialog.js" ></script>
+<script type="text/javascript" src="__PUBLIC__/Home/js/app_mian.js" ></script>
+</head>
+
+<body>
+<div class="dowm_app"><a href="http://a.app.qq.com/o/simple.jsp?pkgname=com.huanrong.searchdarkvip"><img src="__PUBLIC__/Home/imag/dowm_app.jpg" /></a></div>
+<div class="sign">
+  <h3>用户注册</h3>
+</div>
+<div class="sign_mm">
+  <form class="one" action="__URL__/user_register" name="theForm" method="post" enctype="multipart/form-data" autocomplete="off">
+  <div></div>
+    <p><em>用户昵称:</em>
+      <input name="nickname" type="text" autocomplete="off" datatype="s1-16" errormsg="用户昵称不能为特殊字符且不能大于16个字符" ignore="ignore"/>
+      <span class="Validform_checktip">用户昵称不输入系统会自动生成一个</span>
+    </p>
+    <p><em>手机号码:</em>
+      <input name="mobile" id="mobile" class="text1" autocomplete="off" datatype="m" ajaxurl="{:U('User/check_mobile')}" nullmsg="请输入手机号码！" errormsg="输入的手机号码有误" />
+      <span class="Validform_checktip" id="mobile_ex"></span>
+    </p>
+    <p class="p_yzm" id="verify_but_y" style="display: none;">
+      <a href="javascript:void(0)" id="verify_but" class="obtain hqyzm">获取验证码</a>
+      <img id="verifyImg" class="yzm verify" name="verify" src="{:U('User/verify_c')}" title="点击刷新" onclick="this.src=this.src+'?'" />
+    </p>
+    <p><em>验证码:</em>
+      <input name="verify" type="text" datatype="s" ajaxurl="{:U('User/check_verify_ex')}" nullmsg="验证码不能为空" errormsg="请输入验证码" autocomplete="off" />
+      <span class="Validform_checktip"></span>
+    </p>
+     <p><em>登录密码:</em>
+      <input type="password" name="pswd" class="text1" id="pswd" datatype="*6-16" nullmsg="请设置密码！" errormsg="密码范围在6~16位之间！" autocomplete="off"/>
+      <span class="Validform_checktip"></span>
+    </p>
+     <p><em>重复密码:</em>
+      <input type="password" name="repassword" class="text1" id="repassword" autocomplete="off" datatype="*" recheck="pswd" nullmsg="请再输入一次密码！" errormsg="您两次输入的账号密码不一致！"/>
+      <span class="Validform_checktip"></span>
+    </p>
+    <div class="Agree">
+      <label>
+        <input type="checkbox" id="cbx" checked="checked" />同意
+      </label>
+      <i><a href="{:U('xieyi')}">服务条款和保密协议</a></i>
+    </div>
+    <span><input name="submit" type="submit" id="btn" value="立即注册" class="zhuce_bt" /></span>
+  </form>
+</div>
+<include file="Public:footer_wap" />
+</body>
+<script type="text/javascript">
+    //表单验证
+    $(function(){
+      $(".one").Validform({
+        tiptype:function(msg,o,cssctl){
+          if(!o.obj.is("form")){
+            var objtip=o.obj.siblings(".Validform_checktip");
+            cssctl(objtip,o.type);
+            objtip.text(msg);
+          }
+        }
+      });
+      //验证码
+      $("#mobile").blur(function(){
+        var mobile =document.getElementById("mobile").value;
+        if (mobile != "") {
+          $("#verify_but_y").show()
+        }else{
+          $("#verify_but_y").hide()
+        }
+      });
+      //点击显示验证码
+      $('#verify_but').click(function(){
+        var mobile_ex = document.getElementById("mobile_ex").innerHTML;
+        if (mobile_ex == "可以注册") {
+          $("#verifyImg").show(); 
+        }else{
+          $("#verifyImg").hide(); 
+        }
+      });
+      //保密协议
+      $('#cbx').click(function(){
+        var objButton   = document.getElementById('btn');
+        var checkbox_ok = document.getElementById("cbx").checked;
+        if(checkbox_ok == false){
+          objButton.disabled = true;
+        }else{
+          objButton.disabled = false;
+        }
+      });
+    });
+</script>
+</html>

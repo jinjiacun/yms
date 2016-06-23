@@ -1,0 +1,258 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no"/>
+<meta content="yes" name="apple-mobile-web-app-capable" />
+<meta content="black" name="apple-mobile-web-app-status-bar-style" />
+<meta content="telephone=no" name="format-detection" />
+<title>口碑—全国最大的查询曝光平台</title>
+<meta name="keywords" content="口碑，黑平台查询，黑平台曝光，贵金属黑平台，外汇黑平台"/>
+<meta name="description" content="口碑是全国性的交易市场曝光平台,携手每一位投资人共同揭开交易市场的层层黑幕,为您提供全方位的贵金属、外汇、黄金、石油等行业交易黑幕的查询、曝光。"/>
+<link rel="icon" href="__PUBLIC__/s.ico" type="image/x-icon" />
+<link type="text/css" rel="stylesheet" href="__PUBLIC__/Home/css/wap_main.css"/>
+<script type="text/javascript" src="__PUBLIC__/js/jquery-1.8.3.min.js" ></script>
+<script type="text/javascript" src="__PUBLIC__/Home/js/app_mian.js" ></script>
+</head>
+
+<body>
+<div class="top">
+  <include file="Public:top_wap" />
+  <h3>查询结果</h3>
+  <include file="Public:fx_wap" />
+</div>
+<div class="Result">
+<include file="Public:tc_wap" />
+  <p>为您找到 {$record_count} 个含"<font>{$search_name}</font>"的结果</p>
+  <input type="hidden" autocomplete="off" id="nature" name="nature" value="">
+  <input type="hidden" autocomplete="off" id="trade" name="trade" value="">
+  <input type="hidden" autocomplete="off" id="zz_p" name="zz_p" value="1">
+  <dl class="search_tit">
+    <dt>企业性质：</dt>
+    <dd>
+      <span class="current" id="">全部</span>
+      <span id="003001">公司</span>
+      <span id="003002">平台</span>
+    </dd>
+  </dl>
+  <dl class="search_tit_ch">
+    <dt>所属行业：</dt>
+    <dd>
+      <span id="" class="current">全部</span>
+      <span id="004002">外汇</span>
+      <span id="004004">大宗商品</span>
+      <div class="blank"></div>
+      <span id="004005">其他</span>
+    </dd>
+  </dl>
+</div>
+<div class="Result_cot" id="search_box">
+  <div id="search_xh">
+    <volist id='s_list' name='s_list' key="k">
+    <dl>
+      <if condition = "$s_list.auth_level eq '006001' " >
+      <a href="__APP__/hpt?resid={$s_list.id}">
+      <elseif condition="$s_list.auth_level eq '006002' "/>
+      <a href="__APP__/wrz?resid={$s_list.id}">
+      <else /> 
+      <a href="__APP__/yrz?resid={$s_list.id}">
+      </if>
+      <dt>
+        <if condition = "$s_list.logo_url neq '' " >
+        <span><img src="{$s_list.logo_url}" /></span>
+        </if>
+        <p><em>{$s_list.company_name}</em><i>其他名称： {$s_list.alias_list}</i></p>
+      </dt>
+      <dd><span>企业性质：{$s_list['nature']}</span>
+        <p>所属行业：<font>{$s_list['trade']}</font></p>
+      </dd>
+      </a>
+    </dl>
+    </volist>
+  </div>
+  <if condition="$record_count gt 10">
+    <div class="pd">
+      <a href="javascript:void(0)" class="jz_more">加载更多</a>
+    </div>
+  </if>
+</div>
+<include file="Public:footer_wap" />
+</body>
+<script type="text/javascript">
+  $(function(){
+    $(".search_tit span").click(function(){
+      $(".search_tit span").removeClass("current");
+      $(this).addClass("current");
+      var nature = $(this).attr('id');
+      $('#nature').val(nature);
+      $('#zz_p').val('1');
+      var search_name = "{$search_name}";
+      var nature1     = document.getElementById("nature").value; 
+      var trade1      = document.getElementById("trade").value;
+      $.ajax({  
+          type:'post',
+          url:"__URL__/search_ex",
+          dataType:"json", 
+          contentType: "application/x-www-form-urlencoded; charset=utf-8",
+          data:{
+              search_name:search_name,
+              nature1:nature1,
+              trade1:trade1},
+          success: function (data) {  
+            if (data.s_count > 0) {
+              $("#search_box").empty();
+                  var strr = '<div id="search_xh">';
+                  $.each(data,function(i){
+                    if(i != 's_count'){
+                      strr += '<dl>';
+                      if(data[i]['auth_level'] == '006001'){
+                        strr += '<a href="__APP__/hpt?resid='+data[i]['id']+'">';
+                      }else if (data[i]['auth_level'] == '006002') {
+                        strr += '<a href="__APP__/wrz?resid='+data[i]['id']+'">'; 
+                      }else if(data[i]['auth_level'] == '006003'){
+                        strr += '<a href="__APP__/yrz?resid='+data[i]['id']+'">';
+                      }
+                      strr += '<dt>';
+                      if (data[i]['logo_url'] != "") {
+                        strr += '<span><img src="'+data[i]['logo_url']+'" /></span>';
+                      }
+                      strr += '<p><em>'+data[i]['company_name']+'</em>';
+                      strr += '<i>其他名称： '+data[i]['alias_list']+'</i></p></dt>';
+                      strr += '<dd><span>企业性质：'+data[i]['nature']+'</span>';
+                      strr += '<p>所属行业：<font>'+data[i]['trade']+'</font></p></dd></a></dl>';
+                    }  
+                  });
+                  strr += "</div>";
+                  $("#search_box").prepend(strr);
+                  if (data.s_count > 10) {
+                      var str = '<div class="pd"><a class="jz_more" href="javascript:void(0)">加载更多</a></div>';
+                      $("#search_box").append(str); 
+                  }
+            }else{
+              $("#search_box").empty();
+              $("#search_box").append("<span>没有符合条件的数据！</span");
+                return false;
+            }
+          }  
+      })  
+    });
+
+    $(".search_tit_ch span").click(function(){
+      $(".search_tit_ch span").removeClass("current");
+      $(this).addClass("current");
+      var trade = $(this).attr('id');
+      $('#trade').val(trade);
+      $('#zz_p').val('1');
+      var search_name = "{$search_name}";
+      var nature1     = document.getElementById("nature").value; 
+      var trade1      = document.getElementById("trade").value;
+      $.ajax({  
+                type:'post',
+                url:"__URL__/search_ex",
+                dataType:"json", 
+                contentType: "application/x-www-form-urlencoded; charset=utf-8",
+                data:{
+                    search_name:search_name,
+                    nature1:nature1,
+                    trade1:trade1},
+                success: function (data) {  
+                  if (data.s_count > 0) {
+                    $("#search_box").empty();
+                      var strr = "<div id='search_xh'>";
+                      $.each(data,function(i){
+                        if(i != 's_count'){
+                          strr += '<dl>';
+                          if(data[i]['auth_level'] == '006001'){
+                            strr += '<a href="__APP__/hpt?resid='+data[i]['id']+'">';
+                          }else if (data[i]['auth_level'] == '006002') {
+                            strr += '<a href="__APP__/wrz?resid='+data[i]['id']+'">'; 
+                          }else if(data[i]['auth_level'] == '006003'){
+                            strr += '<a href="__APP__/yrz?resid='+data[i]['id']+'">';
+                          }
+                          strr += '<dt>';
+                          if (data[i]['logo_url'] != "") {
+                            strr += '<span><img src="'+data[i]['logo_url']+'" /></span>';
+                          }
+                          strr += '<p><em>'+data[i]['company_name']+'</em>';
+                          strr += '<i>其他名称： '+data[i]['alias_list']+'</i></p></dt>';
+                          strr += '<dd><span>企业性质：'+data[i]['nature']+'</span>';
+                          strr += '<p>所属行业：<font>'+data[i]['trade']+'</font></p></dd></a></dl>';
+                        }  
+                      });
+                      strr += "</div>";
+                      $("#search_box").prepend(strr);
+                      if (data.s_count > 10) {
+                          var str = '<div class="pd"><a class="jz_more" href="javascript:void(0)">加载更多</a></div>';
+                          $("#search_box").append(str); 
+                      }
+                  }else{
+                    $("#search_box").empty();
+                    $("#search_box").append("<span>没有符合条件的数据！</span");
+                      return false;
+                  }
+                }  
+      })  
+    });
+  })
+</script>
+<script type="text/javascript">
+  $(function(){
+      var search_name = "{$search_name}";
+      $('.jz_more').live('click',function(){
+          var flag = $(this).text();
+          var i = Number(document.getElementById("zz_p").value);
+          var nature = document.getElementById("nature").value; 
+          var trade  = document.getElementById("trade").value;
+          p = i+1;
+          $("#zz_p").val(p);
+
+          send(p,nature,trade,flag);
+      })
+      function send(p,nature,trade,flag){
+          if(flag == '已无更多数据'){
+            return false;
+          }
+          $.ajax({
+              type:'post',
+              url:"__URL__/search_jz",
+              data:{k:p,
+                    search_name:search_name,
+                    nature:nature,
+                    trade:trade},
+              beforeSend:function(){
+                   $("#new_box_ex").append("<div id='load'>加载中……</div>");
+              },
+              success:function(data){
+                if(data && data.length > 0){
+                    $.each(data,function(i){
+                          var strr = '<dl>';
+                          if(data[i]['auth_level'] == '006001'){
+                            strr += '<a href="__APP__/hpt?resid='+data[i]['id']+'">';
+                          }else if (data[i]['auth_level'] == '006002') {
+                            strr += '<a href="__APP__/wrz?resid='+data[i]['id']+'">'; 
+                          }else if(data[i]['auth_level'] == '006003'){
+                            strr += '<a href="__APP__/yrz?resid='+data[i]['id']+'">';
+                          }
+                          strr += '<dt>';
+                          if (data[i]['logo_url'] != "") {
+                            strr += '<span><img src="'+data[i]['logo_url']+'" /></span>';
+                          }
+                          strr += '<p><em>'+data[i]['company_name']+'</em>';
+                          strr += '<i>其他名称： '+data[i]['alias_list']+'</i></p></dt>';
+                          strr += '<dd><span>企业性质：'+data[i]['nature']+'</span>';
+                          strr += '<p>所属行业：<font>'+data[i]['trade']+'</font></p></dd></a></dl>';
+                            $("#search_xh").append(strr);
+                    });  
+                }else{
+                    $(".jz_more").text('已无更多数据'); 
+                    return false;
+                }
+              },
+              complete:function(){
+                     $("#load").remove();
+              },
+              dataType:'json'});
+      }
+  })
+</script>
+</html>

@@ -1,0 +1,75 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no"/>
+<meta content="yes" name="apple-mobile-web-app-capable" />
+<meta content="black" name="apple-mobile-web-app-status-bar-style" />
+<meta content="telephone=no" name="format-detection" />
+<title>{$new_list.title}--口碑</title>
+<meta name="keywords" content="口碑，黑平台查询，黑平台曝光，贵金属黑平台，外汇黑平台"/>
+<meta name="description" content="口碑是全国性的交易市场曝光平台,携手每一位投资人共同揭开交易市场的层层黑幕,为您提供全方位的贵金属、外汇、黄金、石油等行业交易黑幕的查询、曝光。"/>
+<link rel="icon" href="__PUBLIC__/s.ico" type="image/x-icon" />
+<link type="text/css" rel="stylesheet" href="__PUBLIC__/Home/css/wap_main.css"/>
+<script type="text/javascript" src="__PUBLIC__/js/jquery-1.8.3.min.js" ></script>
+<script type="text/javascript" src="__PUBLIC__/Home/js/app_mian.js" ></script>
+<script type="text/javascript" src="__PUBLIC__/Home/js/mh_dialog.js" ></script>
+</head>
+
+<body>
+<div class="top">
+  <include file="Public:top_wap" />
+  <h3>监管机构</h3>
+  <include file="Public:fx_wap" />
+</div>
+<div class="article_y">
+  <include file="Public:tc_wap" />
+  <h1>{$new_list.title}</h1>
+  <h4>{$add_time}</h4>
+  <div class="article_text">
+    <p>{$content|htmlspecialchars_decode|stripslashes}</p>
+  </div>
+  <dl>
+    <dt>来源：{$new_list.source}</dt>
+    <dd>
+      <a href="javascript:void(0)" class='z' id="{$new_list.id}">
+        <img src="__PUBLIC__/Home/imag/top_z.jpg" />
+      </a>
+      <em id="dz">{$new_list.assist_num}</em>
+    </dd>
+  </dl>
+</div>
+<include file="Public:footer_wap" />
+</body>
+<script type="text/javascript">
+  $(function(){
+    //文章点赞
+    $(".z").live('click',function(){
+          var Oa=$(this);
+          var id=Oa.attr('id');//获取id属性
+          var userid = '{$userid}';
+          if (userid == "") {
+             location.href='__APP__/login.html';
+             return false; 
+          }
+          $.ajax({  
+              type:"post",  
+              url:"{$call_url}",
+              timeout: 5000,  
+              dataType:"json",  
+              data:{"method":"Newsassist.add","type":"text","content":{"news_id":id,"user_id":userid}},
+              success: function aa(data) {  
+                   if (200 == data.status_code && 0 == data.content.is_success) {
+                    mh_dialogShow('mh_success','点赞成功！',2,true);
+                    $('#dz').text(data.content.amount);
+                    return false;
+                   }else{
+                    mh_dialogShow('mh_warning','明天再来吧！',2,true);
+                    return false;
+                   }
+              }  
+          });  
+    });
+  });
+</script>
+</html>

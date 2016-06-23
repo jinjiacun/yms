@@ -1,0 +1,234 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no"/>
+<meta content="yes" name="apple-mobile-web-app-capable" />
+<meta content="black" name="apple-mobile-web-app-status-bar-style" />
+<meta content="telephone=no" name="format-detection" />
+<title>口碑—全国最大的查询曝光平台</title>
+<meta name="keywords" content="口碑，黑平台查询，黑平台曝光，贵金属黑平台，外汇黑平台"/>
+<meta name="description" content="搜黑是全国性的交易市场曝光平台,携手每一位投资人共同揭开交易市场的层层黑幕,为您提供全方位的贵金属、外汇、黄金、石油等行业交易黑幕的查询、曝光。"/>
+<meta property="wb:webmaster" content="3a329171ece5137b" />
+<meta property="qc:admins" content="214176571463750516375636" />
+<link rel="icon" href="__PUBLIC__/s.ico" type="image/x-icon" />
+<link type="text/css" rel="stylesheet" href="__PUBLIC__/Home/css/wap_main.css"/>
+<script type="text/javascript" src="__PUBLIC__/js/jquery-1.8.3.min.js" ></script>
+<script type="text/javascript" src="__PUBLIC__/Home/js/app_mian.js" ></script>
+<script type="text/javascript" src="__PUBLIC__/Home/js/mh_dialog.js" ></script>
+</head>
+
+<body>
+<div class="head">
+    <div class="dowm_app"><a href="http://a.app.qq.com/o/simple.jsp?pkgname=com.huanrong.searchdarkvip"><img src="__PUBLIC__/Home/imag/dowm_app.jpg" /></a></div>
+    <span><img src="__PUBLIC__/Home/imag/head.jpg" /></span>
+    <dl>
+      <if condition="$userid eq '' ">
+      <a href="__APP__/login.html"><dt><img src="__PUBLIC__/Home/imag/head2.jpg" /></dt></a>
+      <else />
+      <a href="__APP__/user_center.html"><dt><img src="{$photo_url}" /></dt></a>
+      </if>
+      <dd><a id="dianji" href="javascript:void(0)"><img src="__PUBLIC__/Home/imag/head3.jpg" /></a></dd>
+    </dl>
+</div>
+
+<div class="search">
+  <include file="Public:tc_wap" />
+  <h3>共收录企业 <font  id="zd_count"></font> 家<br />为用户识别 <font id="cx_count_ex"></font> 次</h3>
+  <form class="registerform" action="__URL__/search" name="theForm" method="post" onsubmit="return ValidateFile()">
+    <input name="search_name" id="search_name_ex" autocomplete="off" type="text" placeholder="请输入企业名称" value="" class="text" />
+    <input name="submit" type="submit" class="chaxun_new2 btn" value="" />
+  </form>
+  <span>
+    推荐：
+    <font class="zuiduoa"></font>
+    <font class="zuiduob"></font>
+    <font class="zuiduoc"></font>
+  </span>
+</div>
+<div class="ranking">
+</div>
+<div class="Exposure">
+  <h3 class="public"><span>最新曝光</span>
+    <p>网友已曝光 <font id="record_count_ex"></font> 次</p>
+  </h3>
+</div>
+<div class="Mechanism">
+  <h3 class="public"><span>监管机构</span>
+    <p>严格监管造就合规企业</p>
+  </h3>
+  <dl>
+    <a class="disx_ex" href="http://www.sge.com.cn" target="_blank">
+      <dt><img src="__PUBLIC__/Home/imag/jg.jpg" /></dt>
+    </a>
+    <a class="disx_ex" href="http://www.tjpme.com" target="_blank">
+      <dd><img src="__PUBLIC__/Home/imag/jg2.jpg" /></dd>
+    </a>
+  </dl>
+ <span class="more"><a class="disx_ex" href="__APP__/regulators.html">查看更多监管机构</a></span>
+</div>
+<include file="Public:footer_wap" />
+</body>
+<script type="text/javascript"> 
+  $(function(){ 
+      //判断是否登录
+      // $('.foot').live('click',function(){
+      //    var usaa = '{$userid}';
+      //    if (usaa == "") {
+      //         location.href='__APP__/login.html';
+      //         return false;
+      //     }
+      // });
+      //为用户识别公司 
+      $.ajax({  
+          type:"post",  
+          url:"{$call_url}",
+          timeout: 5000,  
+          dataType:"json",  
+          data:{"method":"Querylog._amount","type":"text"},
+          success: function aa(data) {
+              if (200 == data.status_code) {
+                  $("#cx_count_ex").html(data.content.record_count*3);
+              }
+          }
+      });
+      //查询最多,查询曝光最多,加黑最多
+      $.ajax({  
+          type:"post",  
+          url:"{$call_url}",
+          timeout: 5000,  
+          dataType:"json",  
+          data:{"method":["Company.get_list","Company.get_list","Company.get_list"],"type":"text","content":[{"page_size":1},{"page_size":1,"where":{"auth_level":["in","006001,006002"]},"order":{"exp_amount":"DESC"}},{"page_size":1,"where":{"auth_level":["in","006001,006002"]},"order":{"add_blk_amount":"DESC"}}]},
+          success: function aa(data) {
+              //查询最多
+              if (200 == data.status_code[0]) {
+                var data_info = data.content[0].list[0];
+                var str = '';
+                str = '<a class="disx_ex" href="__APP__/';
+                if('006001' == data_info['auth_level'])
+                  str += 'hpt';
+                else if('006002' == data_info['auth_level'])
+                  str += 'wrz';
+                else
+                  str += 'yrz';
+                str += '?resid='+data_info['id']+'">查询最多</a>';
+               $('.zuiduoa').html(str);
+               $('#zd_count').html(data.content[0].record_count*3);
+              }
+             //查询曝光最多
+             if (200 == data.status_code[1]) {
+                var data_info = data.content[1].list[0];
+                var str = '';
+                str = '<a class="disx_ex" href="__APP__/';
+                if('006001' == data_info['auth_level'])
+                  str += 'hpt';
+                else
+                  str += 'wrz';
+                str += '?resid='+data_info['id']+'#basic_setting">曝光最多</a>';
+
+               $('.zuiduob').html(str);
+              }
+              //加黑最多
+              if (200 == data.status_code[2]) {
+                var data_info = data.content[2].list[0];
+                var str = '';
+                str = '<a class="disx_ex" href="__APP__/';
+                if('006001' == data_info['auth_level'])
+                  str += 'hpt';
+                else
+                  str += 'wrz';
+                str += '?resid='+data_info['id']+'">加黑最多</a>';
+
+               $('.zuiduoc').html(str);
+              }
+          }
+      });
+      //黑榜排行
+      $.ajax({  
+          type:"post",  
+          url:"{$call_url}",
+          timeout: 5000,  
+          dataType:"json",  
+          data:{"method":"Company.black_sort","type":"text","content":{"page_size":5,"where":{"auth_level":"006001"},"order":{"add_blk_amount":"DESC","exp_amount":"DESC"}}},
+          success: function aa(data) {
+              if (200 == data.status_code) {
+                var list = data.content.list,length=list.length,i=0,k=0,company_name='',alias_list='';
+                str = '<h3 class="public"><span>黑榜排行</span><p>让黑平台无处藏身</p></h3>';
+                for(; i< length; i++)
+                {
+                  k = i+1;
+                  company_name = list[i].company_name;
+                  alias_list   = list[i].alias_list;
+                  str += '<dl>';
+                  str += '<dt';
+                  if(k < 4)
+                    str += ' class="fril"' ;
+                  str += '>0'+k;
+                  str += '</dt><dd><span>';
+                  str += '<a class="disx_ex" class="mlgb" href="__APP__/hpt?resid='+list[i].id+'" title="'+list[i].company_name+'">';
+                  str += company_name.substring(0,15)+'</a></span>';
+                  str += '<p>其他名称： '+alias_list.substring(0,20)+'</p></dd></dl>';
+                }
+                str += '<span class="more"><a class="disx_ex" href="__APP__/ranking.html">查看更多黑榜企业</a></span>'
+                $('.ranking').prepend(str);
+              }
+          }
+      });
+      //最新曝光
+      $.ajax({  
+          type:"post",  
+          url:"{$call_url}",
+          timeout: 5000,  
+          dataType:"json",  
+          data:{"method":"Inexposal.dynamic","type":"text","content":{"page_size":5}},
+          success: function aa(data) {
+              if (200 == data.status_code) {
+                var list = data.content.list,length=list.length,i=0,k=0,company_name='',content='';
+                str ='';                                       
+                for(; i< length; i++)
+                {
+                  company_name = list[i].company_name;
+                  content      = list[i].content;
+                  str += '<dl>';
+                  str += '<dt>'+getTimeEx(list[i].add_time)+'</dt>';
+                  str += '<dd><span>';
+                  str += '<p><em>曝光员：</em><font>';
+                  str += '<a class="disx_ex" href="__APP__/Usercenter?id='+list[i].user_id+'">'+list[i].nickname+'</a></font></p>';
+                  str += '<p><em>曝光公司：</em>';
+                  str += '<font><a class="disx_ex" href="__APP__/';
+                  if('006001' == list[i].auth_level)
+                    str += 'hpt';
+                  else
+                   str += 'wrz';
+                  str += '?resid='+list[i].company_id+'">'+company_name.substring(0,15)+'</a></font></p>';
+                  str += '<p>'+content.substring(0,70)+'...';
+                  str += '<a class="disx_ex" href="__APP__/';
+                  if('006001' == list[i].auth_level)
+                    str += 'hpt';
+                  else
+                   str += 'wrz';
+                  str += '?resid='+list[i].company_id+'"><font>[详情]</font></a><font></font></p>';
+                  str += '</dd></dl>';           
+                }
+                str += '<span class="more"><a class="disx_ex" href="__APP__/explist.html">查看更多网友曝光</a></span>';
+                $('#record_count_ex').html(data.content.record_count*3);
+                $('.Exposure').append(str);
+              }
+          }
+      });
+  })
+  function ValidateFile(){ 
+      var checkbox_ok = document.getElementById("search_name_ex").value;
+      // var usaa = '{$userid}';
+      // if (usaa == "") {
+      //     location.href='__APP__/login.html';
+      //     return false;
+      // }
+      if(checkbox_ok == "请输入公司或平台名称" 
+         || checkbox_ok == ""){ 
+          mh_dialogShow('mh_warning','请输入搜索内容！',2,true);
+          return false;
+      }
+  }
+</script>
+</html>

@@ -1,0 +1,314 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>网友曝光-网友曝光的黑平台列表-口碑</title>
+<meta name="keywords" content="网友曝光,黑平台列表"/>
+<meta name="description" content="网友自发揭露的关于贵金属、外汇、黄金、石油等行业的交易黑幕，通过非法操作、黑幕交易等手段欺骗投资者的公司或者平台机构都将在这里被广大受骗的网友曝光。"/>
+<link rel="icon" href="__PUBLIC__/s.ico" type="image/x-icon" />
+<link type="text/css" rel="stylesheet" href="__PUBLIC__/Home/css/main.css"/>
+<script type="text/javascript" src="__PUBLIC__/js/jquery-1.8.3.min.js" ></script>
+<script type="text/javascript" src="__PUBLIC__/Home/js/main.js" ></script>
+<script type="text/javascript" src="__PUBLIC__/Home/js/jquery.form.js" ></script>
+<script type="text/javascript" id="bdshare_js" data="type=button&amp;uid=0" ></script>
+<style type="text/css">
+  .bdsharebuttonbox{ display:inline-block; *display:inline; float:right; margin-top:9px;}
+  .bdsharebuttonbox .chare{ display:inline-block; *display:inline;font-size:12px; height: 28px; line-height: 28px; float: left; }
+</style>
+</head>
+
+<script type="text/javascript">
+var t = n = 0, count;
+$(function(){
+count=$("#banner_list li").length;
+$("#banner_list li:not(:first-child)").hide();
+$("#banner ul.btn_list li").click(function() {
+var i = $(this).text() - 1;
+n = i;
+if (i >= count) return;
+$("#banner_list li").filter(":visible").fadeOut(500).parent().children().eq(i).fadeIn(1000);
+document.getElementById("banner").style.background="";
+$(this).toggleClass("on");
+$(this).siblings().removeAttr("class");
+});
+t = setInterval("showAuto()", 5000);
+$("#banner").hover(function(){clearInterval(t)}, function(){t = setInterval("showAuto()", 5000);});
+})
+
+function showAuto()
+{
+n = n >=(count - 1) ? 0 : ++n;
+$("#banner ul.btn_list li").eq(n).trigger('click');
+}
+
+</script>
+
+<body>
+<!--Begin--登录-->   
+<include file="Public:login" />
+<!--End--登录--> 
+<div id="wrap">
+<!--头部--Begin-->   
+  <include file="Public:top" />
+<!--头部--End--> 
+<!--内容--Begin-->     
+   <div id="content">
+   		<div class="cont_new_lt">
+                
+          		<div class="new_bgph new_list_lt">
+               	<div class="new_bgph_tit">
+                        <h3 class="bg">网友曝光</h3>
+                </div>
+                  <div class="new_list">
+                    <div class="jibao_tit">
+                        <div id="banner">    
+                            <div id="banner_list">                               
+
+                            </div> 
+                            
+                            <ul class="btn_list">
+                                <li class="on">1</li>
+                                <li>2</li>
+                                <li>3</li>
+                                <li>4</li>
+                            </ul>
+                        </div>        
+                    </div>
+                    <div class="new_bgph_box">
+
+                    </div>
+                  </div>  
+                </div>
+        </div>
+        <div class="centbox_rt cont_new_rt new_list_rt">
+            <div class="baoguant_rt1">
+                  <a href="__APP__/exposure.html" class="wybgs wybg_a">我要曝光</a>
+                  <p>已有<span id="user_amout">{$user_amout}</span>名网友曝光了<span id="record_count_exx">{$record_count_exx}</span>次</p>
+            </div>
+            <div class="new_rts"></div>
+        </div>
+		<div class="clear"></div>
+   </div>
+<!--内容--End--> 
+
+
+<!--底部--Begin-->     
+<include file="Public:footer" />
+<!--底部--End-->  
+</div>
+<script>
+ $(function(){ 
+    var multiple=3;
+    var page_index = 1;
+    window.onload=function(){
+      //统计曝光人数
+       $.ajax({  
+          type:"post",  
+          url:"{$call_url}",
+          timeout: 5000,  
+          dataType:"json",  
+          data:{"method":"Inexposal.stat_user_amount","type":"text","content":{}},
+          success: function aa(data) {
+              if (200 == data.status_code) {
+                $('#user_amout').html(data.content*multiple);
+              }
+          }
+      });
+
+      //曝光平台总数
+      $.ajax({  
+          type:"post",  
+          url:"{$call_url}",
+          timeout: 5000,  
+          dataType:"json",  
+          data:{"method":"Inexposal.dynamic","type":"text","content":{"_tag":"flat_form_count"}},
+          success: function aa(data) {
+              if (200 == data.status_code) {
+                $('#record_count_exx').html(data.content.flat_form_count*multiple);
+              }
+          }
+      }); 
+
+      //黑榜排行
+      $.ajax({  
+          type:"post",  
+          url:"{$call_url}",
+          timeout: 5000,  
+          dataType:"json",  
+          data:{"method":"Company.black_sort","type":"text","content":{"page_size":"5","where":{"auth_level":"006001"},"order":{"add_blk_amount":"desc","exp_amount":"desc"}}},
+          success: function aa(data) {
+              if (200 == data.status_code) {
+                var list = data.content.list,length=list.length,i=0,k=0,j=0,str='',company_name='',alias_list='';
+                str = '<h3><span>黑榜排行</span><a target="_blank" href="__APP__/ranking.html">更多&gt;</a></h3>';
+                for(; i<length; i++)
+                {
+                    k = i + 1;
+                    company_name = list[i].company_name;
+                    alias_list   = list[i].alias_list;
+                    str += '<dl class="new_hbph">';
+                    str += '<dt>';
+                    str += '<img src="__PUBLIC__/Home/images/new_sz0'+k+'.png"/>';
+                    str += '</dt><dd>';
+                    str += '<h4><a href="__APP__/hpt?resid='+list[i].id+'" target="_blank" title="'+company_name+'{">'+company_name.substring(0,20)+'</a></h4>';
+                    str +='<p>其他名称： '+alias_list.substring(0,20)+'</p>';
+                    str +='</dd></dl>';
+                }
+                $(".new_rts").html(str);
+              }
+          }
+      });
+
+     
+     exp_list(page_index);
+
+    };
+  });
+
+  function exp_list(page_index){
+         //曝光列表
+         $.ajax({  
+            type:"post",  
+            url:"{$call_url}",
+            timeout: 5000,  
+            dataType:"json",  
+            data:{"method":"Inexposal.dynamic","type":"text","content":{"page_size":10,'page_index':page_index}},
+            success: function aa(data) {
+                if (200 == data.status_code) {
+                  var list = data.content.list,length=list.length,i=0,k=0,j=0,str='',company_name='',content='';
+                  str = '<ul>';
+                  for(; i< length; i++)
+                  {
+                    company_name = list[i].company_name;
+                    content      = list[i].content;
+                    if(null == content)
+                      content = '';
+                    str += '<li';
+                    if(0 == list[i].pic_1)
+                      str += ' class="bian"';
+                    str += '><dl>';
+                    if(0 != list[i].pic_1)
+                    {
+                        str += '<dt><a target="_blank" href="__APP__/';
+                        if('006001' == list[i].auth_level)
+                          str += 'hpt';
+                        else
+                          str += 'wrz';
+                        str += '?resid='+list[i].company_id+'"><img src="'+list[i].pic_1_url+'" /></a></dt>';
+                     }
+                     str += '<dd><h4>';
+                     str += '<a target="_blank" href="__APP__/';
+                     if('006001' == list[i].auth_level)
+                          str += 'hpt';
+                     else
+                          str += 'wrz';
+                    str += '?resid='+list[i].company_id+'" title="'+list[i].company_name+'">'+company_name.substring(0,25)+'</a>';
+                    str += '</h4><div class="new_sj">';
+                    str += '<span>时间：'+getTime(list[i].add_time)+'</span>';
+                    str += '<span>曝光员：<a target="_blank" href="__APP__/Usercenter?id='+list[i].user_id+'">'+list[i].nickname+'</a></span>';
+                    str += '</div>';
+                    str += '<p>'+content.substring(0,70)+'</p>';
+                    if(0 != list[i].pic_1_url)
+                      str += '<div class="new_fx">';
+                    else                  
+                      str += '<div class="new_fx new_fxxx">';
+                    str += '<div class="new_fx_lt"><span>'+list[i].re_amount+'</span></div>';
+                    str += '<div class="new_fx_rt">';
+                    str += '<div class="bdsharebuttonbox">';
+                    str += '<span class="chare">分享到：</span>';
+                    str += '<a href="#" class="bds_qzone" data-cmd="qzone" title="分享到QQ空间"></a>';
+                    str += '<a href="#" class="bds_tsina" data-cmd="tsina" title="分享到新浪微博"></a>';
+                    str += '<a href="#" class="bds_tqq" data-cmd="tqq" title="分享到腾讯微博"></a>';
+                    str += '<a href="#" class="bds_more" data-cmd="more"></a>';
+                    str += '</div></div></div></dd></dl></li>';
+                  }
+                  str += '</ul>';
+                  str += '<div class="pagees">';
+                  str += '<p class="nas">共有网友曝光<em>'+data.content.record_count+'</em>个</p>';
+                  //分页
+                  if(10 <data.content.record_count)
+                  {
+                    str += '<div>';
+                    var page_length = Math.ceil(data.content.record_count/10);
+                    if(1<page_index)
+                    {
+                      var pref = page_index -1;
+                      str += '<a class="next" href="javascript:void(0);" onclick="exp_list('+pref+')">上一页</a>'; 
+                    }  
+                    for(var j=1; j<= page_length; j++)
+                    {
+                      if(page_index != j)
+                      {
+                        str += '<a class="num" href="javascript:void(0);" onclick="exp_list('+j+')">'+j+'</a>';  
+                      }
+                      else
+                      {
+                        str += '<span class="current">'+j+'</span>';
+                      }
+                    }
+                    if(1< page_length
+                    && page_index<page_length
+                    )
+                    {
+                      var next = page_index +1;
+                      str += '<a class="next" href="javascript:void(0);" onclick="exp_list('+next+')">下一页</a>';
+                    }
+
+                    str += '</div>';
+                  }
+                  str += '</div>';
+                  $(".new_bgph_box").html(str);
+                  if(null == window._bd_share_config)
+                  {
+                    window._bd_share_config={"common":{"bdSnsKey":{},"bdText":"","bdMini":"2","bdPic":"","bdStyle":"0","bdSize":"16"},"share":{}};with(document)0[(getElementsByTagName('head')[0]||body).appendChild(createElement('script')).src='http://bdimg.share.baidu.com/static/api/js/share.js?v=89860593.js?cdnversion='+~(-new Date()/36e5)];  
+                  }
+                  else
+                  {
+                     window._bd_share_main.init();
+                  }
+                }
+            }
+        });
+  }
+
+</script>
+</body>
+</html>
+<script type="text/javascript">
+//#曝光轮播
+    $.ajax({  
+        type:"post",  
+        url:"{$call_url}",
+        timeout: 5000,  
+        dataType:"json",  
+        async: false,
+        data:{"method":"Inexposal.dynamic","type":"text","content":{"page_size":4,"where":{"pic_1":["not in",[0]]}}},
+        success: function aa(data) {
+            if (200 == data.status_code) {
+              var list = data.content.list,length=list.length,i=0,k=0,j=0,str='',company_name='',content='';
+              str = '<ul>';
+              for(; i<length; i++)
+              {
+                   company_name = list[i].company_name;
+                   content      = list[i].content;
+                   str += '<li><dl><dt>';
+                   str += '<a target="_blank" href="__APP__/';
+                   if('006001' == list[i].auth_level)
+                      str += 'hpt';
+                    else
+                      str += 'wrz';
+                   str += '?resid='+list[i].company_id+'"><img src="'+list[i].pic_1_url+'" /></a>';
+                   str += '</dt><dd><h3>';
+                   str += '<a target="_blank" href="__APP__/';
+                   if('006001' == list[i].auth_level)                       
+                      str += 'hpt';
+                   else
+                      str += 'wrz';
+                   str += '?resid='+list[i].company_id+'" title="'+list[i].company_name+'">被曝平台：'+company_name.substring(0,15)+'</a>';
+                   str += '</h3><p>'+content.substring(0,99)+'</p></dd></dl></li>';
+              }                
+              str +='</ul>';
+              $('#banner_list').html(str);
+            }
+        }
+    }); 
+</script>

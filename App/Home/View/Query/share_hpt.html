@@ -1,0 +1,464 @@
+<!Doctype html>  
+<html>
+<head>
+<meta http-equiv="Content-type" content="text/html; charset=utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<meta name="wap-font-scale" content="no">
+<meta name="apple-mobile-web-app-capable" content="yes" />
+<meta name="apple-mobile-web-app-status-bar-style" content="black" />
+<title>口碑</title>
+<link type="text/css" rel="stylesheet" href="__PUBLIC__/Home/css/app_mian.css"/>
+<link type="text/css" rel="stylesheet" href="__PUBLIC__/Home/css/lightbox.css"/>
+<script type="text/javascript" src="__PUBLIC__/js/jquery-1.8.3.min.js" ></script>
+<script type="text/javascript" src="__PUBLIC__/Home/js/app_mian.js"></script>
+<script type="text/javascript" src="__PUBLIC__/Home/js/lightbox-2.6.min.js" ></script>
+</head>
+
+<body>
+<div id="wrap_app">
+
+<div class="fx_logo">
+	<div class="fx_logo_lt"><a href="http://a.app.qq.com/o/simple.jsp?pkgname=com.huanrong.searchdarkvip"><img src="__PUBLIC__/Home/imag/logo_fx.png" /></a></div>
+    <div class="fx_btn"><a href="http://a.app.qq.com/o/simple.jsp?pkgname=com.huanrong.searchdarkvip"><img src="__PUBLIC__/Home/imag/btn01.png" /></a></div>
+</div>
+<div class="soubox">
+  <div class="hptbox">
+      <img src="__PUBLIC__/Home/imag/png12.png" />
+      <div class="hbts">
+          <a href="http://a.app.qq.com/o/simple.jsp?pkgname=com.huanrong.searchdarkvip"><span><img src="__PUBLIC__/Home/imag/png14.png" /></span><em>（{$hpt_list.add_blk_amount}）</em></a>
+      </div>
+  </div>
+	<div class="gsxxbox">
+	<dl>
+      <if condition = "$hpt_list.logo_url neq '' " >
+    	<dt><img src="{$hpt_list.logo_url}" /></dt>
+      </if>
+        <dd>
+        	<h3><a href="http://a.app.qq.com/o/simple.jsp?pkgname=com.huanrong.searchdarkvip">{$hpt_list.company_name|subtext=18}</a></h3>
+            <p><span>其他名称：</span><a href="http://a.app.qq.com/o/simple.jsp?pkgname=com.huanrong.searchdarkvip">{$hpt_list.alias_list}</a></p>
+        </dd>
+    </dl>
+</div> 
+    <div class="jysxxbox">
+        <if condition = "$hpt_list.agent_platform_n neq '' " >
+        <dl>
+          <dt>代理平台 </dt>
+          <dd><a href="http://a.app.qq.com/o/simple.jsp?pkgname=com.huanrong.searchdarkvip" class="tit">{$hpt_list.agent_platform_n|subtext=19}</a></dd>
+        </dl>
+        </if>
+        <if condition = "$hpt_list.mem_sn neq '' " >
+        <dl>
+          <dt>会员编号 </dt>
+          <dd>{$hpt_list.mem_sn}</dd>
+        </dl>
+        </if>
+        <dl>
+          <dt>资质证明 </dt>
+          <dd>天津贵金属交易所</dd>
+        </dl>
+        <if condition = "$hpt_list.regulators_id_n neq '' " >
+        <dl>
+          <dt>监管机构 </dt>
+          <dd>冒充{$hpt_list.regulators_id_n}监管</dd>
+        </dl>
+        </if>
+        <dl>
+          <dt>营业执照 </dt>
+          <dd>
+          <if condition="$hpt_list.control_busin_license eq 1 ">
+            <img src="__PUBLIC__/Home/images/pic20b.png" width="35" height="28"/>
+          <else />
+            <img src="__PUBLIC__/Home/images/pic20a.png" width="35" height="28"/>
+          </if>
+          </dd>
+        </dl>
+        <dl>
+          <dt>机构代码证 </dt>
+          <dd>
+            <if condition="$hpt_list.control_code_certificate eq 1 ">
+              <img src="__PUBLIC__/Home/images/pic20b.png" width="35" height="28"/>
+            <else />
+              <img src="__PUBLIC__/Home/images/pic20a.png" width="35" height="28"/>
+            </if>
+          </dd>
+        </dl>
+        <if condition = "$hpt_list.telephone neq '' " >
+        <dl>
+          <dt>联系电话  </dt>
+          <dd>{$hpt_list.telephone}</dd>
+        </dl>
+        </if>
+        <if condition = "$hpt_list.website neq '' " >
+        <dl>
+          <dt>官方网站 </dt>
+          <dd><a href="{$hpt_list.website}">{$hpt_list.website}</a></dd>
+        </dl>
+        </if>
+        <if condition = "$hpt_list.record neq '' " >
+        <dl>
+          <dt>官网备案 </dt>
+          <dd>{$hpt_list.record}</dd>
+        </dl>
+        </if>
+        <if condition = "$hpt_list.reg_address neq '' " >
+        <dl>
+          <dt>联系地址 </dt>
+          <dd>{$hpt_list.reg_address}</dd>
+        </dl>
+        </if>
+    </div>
+    
+    <div class="nrbox">
+    	<div class="nrbox_txt">
+        	<ul>
+            	<li class="activ" style="margin:0">网友评论</li>
+                <li>网友曝光</li>
+                <li>媒体报道</li>
+            </ul>
+        </div>
+        <div class="bg_shbox show">
+          <div class="plbox_zs">共有主题评论<em>
+          <if condition="$record_count_p gt 0 ">
+          {$record_count_p}
+          <else />
+          0
+          </if>
+          </em>个</div>
+          <div id="div_pl">
+          <volist id="con_p" name="con_p" key="k" empty="还没有人评论过此公司哦，赶紧去吐槽吧！">
+			      <dl>
+              <dt><a href="http://a.app.qq.com/o/simple.jsp?pkgname=com.huanrong.searchdarkvip"><img src="{$con_p.user_photo}"></a></dt>
+              <dd>
+                <h3>
+                  <a href="http://a.app.qq.com/o/simple.jsp?pkgname=com.huanrong.searchdarkvip">
+                  <if condition="$con_p.is_anonymous eq 0 ">{$con_p.nickname}
+                  <else />{$con_p.nickname|sudtext}
+                  </if>
+                  </a>
+                </h3>
+                <p class="bg_jss">
+                  <em class="bgs">
+                  <if condition="$con_p.type eq '005001'">
+                  <img src="__PUBLIC__/Home/imag/png04.png" />
+                  <elseif condition="$con_p.type eq '005002'"/>
+                  <img src="__PUBLIC__/Home/imag/png05.png" />
+                  <else />
+                  <img src="__PUBLIC__/Home/imag/png06.png" />
+                  </if>
+                  </em>
+                  <span>{$con_p.content}</span>
+                </p>
+                <div class="tubox">
+                  <if condition="$con_p.pic_1_url neq ''">
+                  <a href="{$con_p.pic_1_url}" data-lightbox='example-set'><img src="{$con_p.pic_1_url}"/></a>
+                  </if>
+                  <if condition="$con_p.pic_2_url neq ''">
+                  <a href="{$con_p.pic_2_url}" data-lightbox='example-set'><img src="{$con_p.pic_2_url}"/></a>
+                  </if>
+                  <if condition="$con_p.pic_3_url neq ''">
+                  <a href="{$con_p.pic_3_url}" data-lightbox='example-set'><img src="{$con_p.pic_3_url}"/></a>
+                  </if>
+                  <if condition="$con_p.pic_4_url neq ''">
+                  <a href="{$con_p.pic_4_url}" data-lightbox='example-set'><img src="{$con_p.pic_4_url}"/></a>
+                  </if>
+                  <if condition="$con_p.pic_5_url neq ''">
+                  <a href="{$con_p.pic_5_url}" data-lightbox='example-set'><img src="{$con_p.pic_5_url}"/></a>
+                  </if>
+                </div>
+                <p class="geshbox">
+                 	<span class="geshu">
+                    <em>
+                      <img src="__PUBLIC__/Home/imag/png08.png" />
+                    </em>
+                    {$con_p['re_sub']['record_count']}&nbsp
+                  </span>
+                  <span class="times">
+                  <if condition="$con_p.add_time gt $news ">
+                    {$con_p.add_time|date='H:i:s',###}
+                    <else />
+                    {$con_p.add_time|date='Y-m-d',###}
+                    </if>
+                  </span>
+                </p>
+              </dd>
+            </dl>
+          </volist>
+          </div>
+          <if condition="$record_count_p gt 10 ">
+          <div class="ckgdbox"><a id="ckgd_pl" href="javascript:void(0)">查看更多</a></div>  
+          </if>
+        </div>
+        <div class="bg_shbox hide">
+          <div class="plbox_zs">共有网友曝光<em>
+          <if condition="$record_count_b gt 0">{$record_count_b}
+          <else />0
+          </if>
+          </em>个</div>
+          <div id="div_bg">
+          <volist id="con_b" name="con_b" key="k" empty="还没有用户曝光过此公司那，我要去曝光一个！">
+			    <dl>
+            <dt><a href="http://a.app.qq.com/o/simple.jsp?pkgname=com.huanrong.searchdarkvip"><img src="{$con_b.user_photo}"></a></dt>
+            <dd>
+              <h3><a href="http://a.app.qq.com/o/simple.jsp?pkgname=com.huanrong.searchdarkvip">
+              <if condition="$con_b.is_anonymous eq 0 ">{$con_b.nickname}
+              <else />{$con_b.nickname|sudtext}
+              </if>
+              </a></h3>
+              <p class="bg_jss">
+                <em class="bgs"><img src="__PUBLIC__/Home/imag/png07.png" /></em>
+                {$con_b.content|subtext=50}
+              </p>
+              <div class="tubox">
+                <if condition="$con_b.pic_1_url neq ''">
+                <a href="{$con_b.pic_1_url}" data-lightbox='example-set'><img src="{$con_b.pic_1_url}"/></a>
+                </if>
+                <if condition="$con_b.pic_2_url neq ''">
+                <a href="{$con_b.pic_2_url}" data-lightbox='example-set'><img src="{$con_b.pic_2_url}"/></a>
+                </if>
+                <if condition="$con_b.pic_3_url neq ''">
+                <a href="{$con_b.pic_3_url}" data-lightbox='example-set'><img src="{$con_b.pic_3_url}"/></a>
+                </if>
+                <if condition="$con_b.pic_4_url neq ''">
+                <a href="{$con_b.pic_4_url}" data-lightbox='example-set'><img src="{$con_b.pic_4_url}"/></a>
+                </if>
+                <if condition="$con_b.pic_5_url neq ''">
+                <a href="{$con_b.pic_5_url}" data-lightbox='example-set'><img src="{$con_b.pic_5_url}"/></a>
+                </if>
+              </div>
+              <p class="geshbox">
+               	<span class="geshu">
+                <em><img src="__PUBLIC__/Home/imag/png08.png" /></em>{$con_b['sub']['record_count']}&nbsp
+                </span>
+                <span class="times">
+                  <if condition="$con_b.add_time gt $news ">
+                  {$con_b.add_time|date='H:i:s',###}
+                  <else />
+                  {$con_b.add_time|date='Y-m-d',###}
+                  </if>
+                </span>
+              </p>
+            </dd>
+          </dl>
+          </volist>
+          </div>
+          <if condition="$record_count_b gt 10">
+          <div class="ckgdbox"><a id="ckgd_bg" href="javascript:void(0)">查看更多</a></div> 
+          </if> 
+        </div>
+        <div class="bg_shbox hide">
+          <div class="plbox_zs">共有媒体报道<em>
+          <if condition="$record_count gt 0">{$record_count}
+          <else />0
+          </if>
+          </em>个</div>
+          <div id="div_xw">
+          <volist name="new_list" id="new_list" empty="哎哟，还不错哦，还没有媒体报道过这家公司呢！">
+			    <dl>
+            <dt><a href="http://a.app.qq.com/o/simple.jsp?pkgname=com.huanrong.searchdarkvip"><img style="border-radius:0" src="{$new_list.pic_url}"></a></dt>
+            <dd>
+              <p class="bg_jss">{$new_list.title}</p>
+              <p class="geshbox">
+               		<span class="times">{$new_list.show_time|date='Y-m-d',###}</span>
+              </p>
+            </dd>
+          </dl>
+          </volist>
+          </div>
+          <if condition="$record_count gt 2">
+          <div class="ckgdbox"><a id="ckgd_xw" href="javascript:void(0)">查看更多</a></div>  
+          </if>
+        </div>  
+    </div> 
+</div>
+<div class="code_foot">
+	<div class="foot_logo"><a href="http://a.app.qq.com/o/simple.jsp?pkgname=com.huanrong.searchdarkvip"><img src="__PUBLIC__/Home/imag/db_logo.png" /></a></div>
+    <div class="foot_code"><a href="javascript:void(0)"><img src="__PUBLIC__/Home/imag/code.jpg" /></a><p>扫一扫<br/>简单查询黑平台</p></div>
+</div>
+
+</div>
+</body>
+<script type="text/javascript">
+//评论加载更多
+  $(function(){
+      var p=2;// 初始化页面，点击事件从第二页开始
+      var type = 'hpt';
+      var id = "{$hpt_list.id}";
+      var flag=false;
+      $('#ckgd_pl').live('click',function(){
+            send();
+      })
+      function send(){
+          if(flag){
+            return false;
+          }
+          $.ajax({
+              type:'post',
+              url:"{:U('pl')}",
+              data:{k:p,
+                    id:id,
+                    type:type},
+              beforeSend:function(){
+                   //$("#ul1").append("<div id='load'>加载中……</div>");
+              },
+              success:function(data){
+                if(data!=''){
+                  $.each(data,function(i){
+                  var rel  = '<dl>';
+                      rel += '<dt><a href="http://a.app.qq.com/o/simple.jsp?pkgname=com.huanrong.searchdarkvip"><img src="'+data[i]['user_photo']+'"></a></dt>';
+                      rel += '<dd><h3><a href="http://a.app.qq.com/o/simple.jsp?pkgname=com.huanrong.searchdarkvip">'+data[i]['nickname']+'</a></h3>';
+                      rel += '<p class="bg_jss"><em class="bgs">';
+                      if (data[i]['type'] == '005001') {
+                      rel += '<img src="__PUBLIC__/Home/imag/png04.png" />';
+                      }else if (data[i]['type'] == '005002') {
+                      rel += '<img src="__PUBLIC__/Home/imag/png05.png" />';
+                      }else{
+                      rel += '<img src="__PUBLIC__/Home/imag/png06.png" />';
+                      }
+                      rel += '</em><span>'+data[i]['content']+'</span></p><div class="tubox">';
+                      if (data[i]['pic_1_url'] != '') {
+                      rel += '<a href="'+data[i]['pic_1_url']+'" data-lightbox="example-set"><img src="'+data[i]['pic_1_url']+'"/></a>';
+                      }
+                      if (data[i]['pic_2_url'] != '') {
+                      rel += '<a href="'+data[i]['pic_2_url']+'" data-lightbox="example-set"><img src="'+data[i]['pic_2_url']+'"/></a>';
+                      }
+                      if (data[i]['pic_3_url'] != '') {
+                      rel += '<a href="'+data[i]['pic_3_url']+'" data-lightbox="example-set"><img src="'+data[i]['pic_3_url']+'"/></a>';
+                      }
+                      if (data[i]['pic_4_url'] != '') {
+                      rel += '<a href="'+data[i]['pic_4_url']+'" data-lightbox="example-set"><img src="'+data[i]['pic_4_url']+'"/></a>';
+                      }
+                      if (data[i]['pic_5_url'] != '') {
+                      rel += '<a href="'+data[i]['pic_5_url']+'" data-lightbox="example-set"><img src="'+data[i]['pic_5_url']+'"/></a>';
+                      }
+                      rel += '</div><p class="geshbox"><span class="geshu"><em><img src="__PUBLIC__/Home/imag/png08.png" />';
+                      rel += '</em>'+data[i]['re_sub']['record_count']+'</span><span class="times">&nbsp';
+                      rel += data[i]['add_time'];
+                      rel += '</span></p></dd></dl>';
+                    $("#div_pl").append(rel);
+                  })
+                }else{
+                    $("#ckgd_pl").text('已无更多');
+                    flag=true;  
+                }
+              },
+              complete:function(){
+                     $("#load").remove();
+              },
+              dataType:'json'});
+            p++;
+      }
+  })
+</script>
+<script type="text/javascript">
+//曝光加载更多
+  $(function(){
+      var p=2;// 初始化页面，点击事件从第二页开始
+      var type = 'hpt';
+      var id = "{$hpt_list.id}";
+      var flag=false;
+      $('#ckgd_bg').live('click',function(){
+            send();
+      })
+      function send(){
+          if(flag){
+            return false;
+          }
+          $.ajax({
+              type:'post',
+              url:"{:U('bg')}",
+              data:{k:p,
+                    id:id,
+                    type:type},
+              beforeSend:function(){
+                   //$("#ul1").append("<div id='load'>加载中……</div>");
+              },
+              success:function(data){
+                if(data!=''){
+                  $.each(data,function(i){
+                  var rel  = '<dl>';
+                      rel += '<dt><a href="http://a.app.qq.com/o/simple.jsp?pkgname=com.huanrong.searchdarkvip"><img src="'+data[i]['user_photo']+'"></a></dt>';
+                      rel += '<dd><h3><a href="http://a.app.qq.com/o/simple.jsp?pkgname=com.huanrong.searchdarkvip">'+data[i]['nickname']+'</a></h3>';
+                      rel += '<p class="bg_jss"><em class="bgs">';
+                      rel += '<img src="__PUBLIC__/Home/imag/png07.png" />';
+                      rel += '</em><span>'+data[i]['content']+'</span></p><div class="tubox">';
+                      if (data[i]['pic_1_url'] != '') {
+                      rel += '<a href="'+data[i]['pic_1_url']+'" data-lightbox="example-set"><img src="'+data[i]['pic_1_url']+'"/></a>';
+                      }
+                      if (data[i]['pic_2_url'] != '') {
+                      rel += '<a href="'+data[i]['pic_2_url']+'" data-lightbox="example-set"><img src="'+data[i]['pic_2_url']+'"/></a>';
+                      }
+                      if (data[i]['pic_3_url'] != '') {
+                      rel += '<a href="'+data[i]['pic_3_url']+'" data-lightbox="example-set"><img src="'+data[i]['pic_3_url']+'"/></a>';
+                      }
+                      if (data[i]['pic_4_url'] != '') {
+                      rel += '<a href="'+data[i]['pic_4_url']+'" data-lightbox="example-set"><img src="'+data[i]['pic_4_url']+'"/></a>';
+                      }
+                      if (data[i]['pic_5_url'] != '') {
+                      rel += '<a href="'+data[i]['pic_5_url']+'" data-lightbox="example-set"><img src="'+data[i]['pic_5_url']+'"/></a>';
+                      }
+                      rel += '</div><p class="geshbox"><span class="geshu"><em><img src="__PUBLIC__/Home/imag/png08.png" />';
+                      rel += '</em>'+data[i]['sub']['record_count']+'</span><span class="times">&nbsp';
+                      rel += data[i]['add_time'];
+                      rel += '</span></p></dd></dl>';
+                    $("#div_bg").append(rel);
+                  })
+                }else{
+                    $("#ckgd_bg").text('已无更多');
+                    flag=true;  
+                }
+              },
+              complete:function(){
+                     $("#load").remove();
+              },
+              dataType:'json'});
+            p++;
+      }
+  })
+</script>
+<script type="text/javascript">
+//新闻加载更多
+  $(function(){
+      var p=2;// 初始化页面，点击事件从第二页开始
+      var sign      = 1;
+      var companyid = "{$hpt_list.id}";
+      var flag=false;
+      $('#ckgd_xw').live('click',function(){
+            send();
+      })
+      function send(){
+          if(flag){
+            return false;
+          }
+          $.ajax({
+              type:'post',
+              url:"{:U('news_hyh')}",
+              data:{k:p,
+                    comment_id:companyid,
+                    sign:sign},
+              beforeSend:function(){
+                   //$("#ul1").append("<div id='load'>加载中……</div>");
+              },
+              success:function(data){
+                if(data!= 0){
+                  $.each(data,function(i){
+                  var rel  = '<dl>';
+                      rel += '<dt><a href="http://a.app.qq.com/o/simple.jsp?pkgname=com.huanrong.searchdarkvip"><img style="border-radius:0" src="'+data[i]['pic_url']+'"></a></dt>';
+                      rel += '<dd><p class="bg_jss">'+data[i]['title']+'</p><p class="geshbox">';
+                      rel += '<span class="times">'+data[i]['add_time_ex']+'</span>';
+                      rel += '</p></dd></dl>';
+                    $("#div_xw").append(rel);
+                  })
+                }else{
+                    $("#ckgd_xw").text('已无更多');
+                    flag=true;  
+                }
+              },
+              complete:function(){
+                     $("#load").remove();
+              },
+              dataType:'json'});
+            p++;
+      }
+  })
+</script>
+</html>

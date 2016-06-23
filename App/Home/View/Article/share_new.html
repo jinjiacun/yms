@@ -1,0 +1,39 @@
+<!Doctype html>  
+<html>
+<head>
+<meta http-equiv="Content-type" content="text/html; charset=utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<meta name="wap-font-scale" content="no">
+<meta name="apple-mobile-web-app-capable" content="yes" />
+<meta name="apple-mobile-web-app-status-bar-style" content="black" />
+<title>口碑</title>
+<link type="text/css" rel="stylesheet" href="__PUBLIC__/Home/css/app_mian.css"/>
+<script type="text/javascript" src="__PUBLIC__/js/jquery-1.8.3.min.js" ></script>
+<script type="text/javascript" src="__PUBLIC__/Home/js/app_mian.js"></script>
+</head>
+
+<body>
+<div id="wrap_app">
+
+<div class="fx_logo">
+	<div class="fx_logo_lt"><a href="http://a.app.qq.com/o/simple.jsp?pkgname=com.huanrong.searchdarkvip"><img src="__PUBLIC__/Home/imag/logo_fx.png" /></a></div>
+    <div class="fx_btn"><a href="http://a.app.qq.com/o/simple.jsp?pkgname=com.huanrong.searchdarkvip"><img src="__PUBLIC__/Home/imag/btn01.png" /></a></div>
+</div>
+
+<div class="newbox">
+	<dl>
+    	<dt>{$new_list.title}</dt>
+        <dd><span>{$add_time}</span><em>{$new_list.source}</em></dd>
+    </dl>
+	{$content|htmlspecialchars_decode|stripslashes}
+</div>
+
+
+<div class="code_foot">
+	<div class="foot_logo"><a href="http://a.app.qq.com/o/simple.jsp?pkgname=com.huanrong.searchdarkvip"><img src="__PUBLIC__/Home/imag/db_logo.png" /></a></div>
+    <div class="foot_code"><a href="javascript:void(0)"><img src="__PUBLIC__/Home/imag/code.jpg" /></a><p>扫一扫<br/>简单查询黑平台</p></div>
+</div>
+
+</div>
+</body>
+</html>

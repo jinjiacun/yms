@@ -1,0 +1,963 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>最全的投资平台评价，小伙伴们都在围观-口碑</title>
+<link rel="icon" href="__PUBLIC__/s.ico" type="image/x-icon" />
+<link type="text/css" rel="stylesheet" href="__PUBLIC__/Home/css/main.css"/>
+<link type="text/css" rel="stylesheet" href="__PUBLIC__/Home/css/lightbox.css"/>
+<script type="text/javascript" src="__PUBLIC__/js/jquery-1.8.3.min.js" ></script>
+<script type="text/javascript" src="__PUBLIC__/js/Validform_v5.3.2.js" ></script>
+<script type="text/javascript" src="__PUBLIC__/Home/js/main.js" ></script>
+<script type="text/javascript" src="__PUBLIC__/Home/js/lightbox-2.6.min.js" ></script>
+<script type="text/javascript" src="__PUBLIC__/Home/js/jquery.form.js" ></script>
+<style type="text/css">
+  a.num{
+    margin-left: 8px;
+    cursor:pointer;
+  }
+  span.current{
+    margin-left: 8px;
+    color: #3dafea;
+  }
+  a.num :hover{
+    color: #3dafea;
+  }
+</style>
+</head>
+
+<body>  
+<!--成功-->  
+<div class="yzsbai1">
+    <p id="tishi1"></p>
+    <input name="" type="button" value="确 定" class="xigs1" />
+</div>
+<div class="yzsbai2">
+    <p id="tishi2"></p>
+    <input name="" type="button" value="确 定" class="xigs2" />
+</div>
+<div class="yzsbai3">
+    <p id="tishi3"></p>
+    <input name="" type="button" value="确 定" class="xigs3" />
+</div>
+<!--Begin--登录-->   
+<include file="Public:login" />
+<!--End--登录-->
+
+<!--Begin--插入图片-->   
+<div class="windows_ct" id="windows_ct">
+    <div class="title_cts">
+      <h3 class="titltes">插入图片</h3>
+      <a class="close_gb">关闭</a>
+    </div>
+    <ul id="msg">
+       <li>
+         <div class="ct_tubox">
+           <div class="tianjia">
+             <a href="#">添加</a>
+           </div>
+           <p>添加图片</p>
+         </div>
+         <form name="uploadFrom" id="uploadFrom" target="tarframe" method="post" enctype="multipart/form-data" autocomplete="off">
+           <a href="javascript:void(0)" class="upload-img">
+           <label for="upload-file"></label>
+         </a>
+           <input name="file" type="file" class="x_file" id="upload-file" />
+         </form>
+         
+       </li>
+    </ul>
+    <div class="tin_qq">
+      <input name="" type="button" value="确认" class="x_queren" />
+      <input name="" type="button" value="取消" class="x_qvxiao" />
+    </div>
+</div>
+<!--End--插入图片-->  
+
+<div id="wrap">
+<!--头部--Begin-->   
+  <include file="Public:top" />
+<!--头部--End--> 
+
+<!--内容--Begin-->     
+   <div id="content">
+   		<div class="plzty_tit">
+        		<dl>
+              <if condition="$qy_list.logo_url neq '' ">
+              <dt><img src="{$qy_list.logo_url}" /></dt>
+              </if>
+              <dd class="gs_xx">
+                  <h3><a title="{$qy_list.company_name}">{$qy_list.company_name|subtext=20}</a></h3>
+                  <p><span>其他名称</span>
+                    <a>{$qy_list.alias_list}</a>
+                  </p>
+              </dd>
+              <dd class="dz_jh">
+              	<span class="noborder"><img src="__PUBLIC__/Home/images/ico02a.png" /><br/><em>{$qy_list.select_amount}</em></span>
+                <if condition="$qy_list.auth_level neq '006001' ">
+                <span><img src="__PUBLIC__/Home/images/ico03a.png" /><br/><em>{$qy_list.assist_amount}</em></span>
+                </if>
+                <span><img src="__PUBLIC__/Home/images/ico04a.png" /><br/><em>{$qy_list.add_blk_amount}</em></span>
+                <span><img src="__PUBLIC__/Home/images/ico01a.png" /><br/><em>{$qy_list.exp_amount}</em></span>
+              </dd>
+            </dl>
+        </div>
+     <div class="ss_mtbg">
+     	<div class="py_tit">
+     	  <ul>
+     	      <li class="qb activ" id="qb">全部</li>
+            <li class="ytyzx" id='pic_1'><span class="ico1"></span>有图有真相</li>
+            <li class="jcpl" id='has_child'><span class="ico2"></span>精彩评论</li>
+            <li class="lzcp" id='{$lz.user_id}'><span class="ico3"></span>楼主出品</li>
+   	    </ul>
+     	</div>	
+     	<div class="plzty">
+             <dl class="bg_shbox">
+                 <dt class="bgshu_lt">
+                   <a href="__APP__/Usercenter?id={$lz.user_id}" target="_blank"><img src="{$user_photo}" /></a>
+                   <h3 class="names">
+                        <a href="__APP__/Usercenter?id={$lz.user_id}" target="_blank">{$lz.nickname}</a>
+                   </h3>
+                 </dt>
+                 <dd class="bgshu_rt">
+                 <div class="time">{$add_time}</div>
+                       <p class="bg_jss"><em class="bgs"></em>{$content}</p>
+                       <div class="tubox">
+                          <if condition="$lz.pic_1_url neq ''">
+                          <a href="{$lz.pic_1_url}" data-lightbox="example-set"><img src="{$lz.pic_1_url}"/></a>
+                          </if>
+                          <if condition="$lz.pic_2_url neq ''">
+                          <a href="{$lz.pic_2_url}" data-lightbox="example-set"><img src="{$lz.pic_2_url}"/></a>
+                          </if>
+                          <if condition="$lz.pic_3_url neq ''">
+                          <a href="{$lz.pic_3_url}" data-lightbox="example-set"><img src="{$lz.pic_3_url}"/></a>
+                          </if>
+                          <if condition="$lz.pic_4_url neq ''">
+                          <a href="{$lz.pic_4_url}" data-lightbox="example-set"><img src="{$lz.pic_4_url}"/></a>
+                          </if>
+                          <if condition="$lz.pic_5_url neq ''">
+                          <a href="{$lz.pic_5_url}" data-lightbox="example-set"><img src="{$lz.pic_5_url}"/></a>
+                          </if>
+                       </div>
+                       <div class="hf_zf_dz">
+                          <a class="dz b_ding" id="{$lz.id}" rel="{$lz.id}" href="javascript:void(0)">
+                              <span></span><br/>
+                                点赞（<em class="em0">{$lz.top_num}</em>）
+                          </a>
+                       		<a href="javascript:void(0)" class="hf wypll">
+                            	<span></span><br/>
+                                回复（<em>{$record_count_p}</em>）
+                          </a>
+                       		<div class="jiathis_style_24x24">
+                            <a id="aaa" class="jiathis jiathis_txt jtico jtico_jiathis"></a><br/>
+                            转发
+                            <if condition="$fx_times eq ''">
+                            （<em id="zf">0</em>）
+                            <else />
+                            （<em id="zf">{$fx_times}</em>）
+                            </if>
+                          </div>
+                          <script "text/javascript"> 
+                            var pic1 = "{$lz.pic_1_url}";
+                            var jiathis_config = { 
+                                  pic: pic1
+                            } 
+                          </script> 
+                          <script type="text/javascript" src="http://v3.jiathis.com/code/jia.js" charset="utf-8"></script>
+                       </div>
+                 </dd>
+                 <dd class="louzhu">楼主</dd>
+			</dl>
+			<div class="fb_plbox">
+       		<dl>
+              	<dt>
+                  <if condition="$userid neq '' ">
+                  <a href="#"><img src="{$photo_url}" /></a>
+                  <else />
+                  <a><img src="__PUBLIC__/Home/images/avatar.jpg" /></a>
+                  </if>
+                </dt>
+                <dd>
+                  <div class="plbox1">在这里输入评论内容</div>
+                  <div class="plbox2">
+                    <form id="theForm" name="theForm" method="post" action="{:U('comexposal_add')}" enctype="multipart/form-data" autocomplete="off">
+                       <p class="wypl_wypl1">观点：
+                         <span class="isspan"><input name="wypl" type="radio" value="005001" checked="checked" />点赞</span>
+                         <span class="isspan"><input name="wypl" type="radio" value="005003" />加黑</span>
+                       </p>
+                       <p class="wypl_wypl2">
+                         <textarea name="saytext" id="saytext0"></textarea>
+                       </p>
+                       <p class="wypl_wypl3">
+                          <a data-id="0" href="javascript:void(0)"  class="touxin emotion">&nbsp;</a>
+                          <a href="javascript:void(0)" class="tupian ch_tu" >&nbsp;</a>
+                          <span><input name="is_anonymous" id="checkbox-id" type="checkbox" value="1" />匿名评论</span>
+                       </p>
+                       <div class="wypl_wypl4">
+                           <ul class="pic_id">
+                           </ul>
+                          <input type="hidden" id="hidden_id" name="exposal_id" value="{$lz.id}">
+                          <input name="submit" type="submit" value="发表评论" class="sub_btn" />
+                      </div>
+                    </form>
+                  </div>
+                </dd>
+            </dl>
+       
+       </div>
+        </div>	
+     </div>
+     <div class="ss_mtbg">
+  	   <div class="ss_mtbg_tit">
+          <ul>
+            <li>全部跟帖</li>
+          </ul>
+       </div>
+  	   <div class="baoguan_pl2" id="baoguan_pl2">
+          <volist id="con_p" name="con_p" key="k" empty="还没有人评论哦，赶紧去吐槽吧！">
+          <dl class="pinglubox">
+             <dt class="pinglubox_lt">
+               <a href="__APP__/Usercenter?id={$con_p.user_id}" target="_blank"><img src="{$con_p.user_photo}" /></a>
+               <h3 class="names">
+                 <a href="__APP__/Usercenter?id={$con_p.user_id}" target="_blank">
+                 <if condition="$con_p.is_anonymous eq 0 ">
+                 {$con_p.nickname}
+                 <else />{$con_p.nickname|sudtext}
+                 </if>
+                 </a>
+               </h3>
+             </dt>
+             <dd class="pinglubox_rt">   
+                <p class="pinglubox_xs">
+                  <if condition="$con_p.type eq '005001'">
+                    <em class="dinzan1"></em>
+                  <elseif condition="$con_p.type eq '005002'"/>
+                    <em class="jiahei"></em>
+                  <else />
+                    <em class="tiwen"></em>
+                  </if>
+                  {$con_p.content}
+                </p>
+                <div class="tubox">
+                  <if condition="$con_p.pic_1_url neq ''">
+                  <a href="{$con_p.pic_1_url}" data-lightbox='example-set'><img src="{$con_p.pic_1_url}"/></a>
+                  </if>
+                  <if condition="$con_p.pic_2_url neq ''">
+                  <a href="{$con_p.pic_2_url}" data-lightbox='example-set'><img src="{$con_p.pic_2_url}"/></a>
+                  </if>
+                  <if condition="$con_p.pic_3_url neq ''">
+                  <a href="{$con_p.pic_3_url}" data-lightbox='example-set'><img src="{$con_p.pic_3_url}"/></a>
+                  </if>
+                  <if condition="$con_p.pic_4_url neq ''">
+                  <a href="{$con_p.pic_4_url}" data-lightbox='example-set'><img src="{$con_p.pic_4_url}"/></a>
+                  </if>
+                  <if condition="$con_p.pic_5_url neq ''">
+                  <a href="{$con_p.pic_5_url}" data-lightbox='example-set'><img src="{$con_p.pic_5_url}"/></a>
+                  </if>
+                </div>  
+                <div class="hfpl_chd">
+                  <div class="timens"><span>{$k}楼 {$con_p.add_time}</span></div>
+                  <div class="showhide" <if condition="$con_p['sub']['record_count'] gt 0">style="display:block"</if>>
+                    <div id="itemContainer_{$con_p.id}">
+                    <volist id="vo" name="con_p['re_sub_ex']">
+                    <dl>
+                         <dt><a href="__APP__/Usercenter?id={$vo.user_id}" target="_blank"><img src="{$vo.user_id|photo}" /></a></dt>
+                         <dd>
+                            <p><a href="__APP__/Usercenter?id={$vo.user_id}" target="_blank">{$vo.nickname}：</a>{$vo.content|cont}</p>
+                            <p class="timen"><span>{$vo.add_time|date='Y-m-d H:i',###}</span>
+                            <a class="huifu" href="javascript:void(0)" id="{$vo.nickname}">回复</a></p>
+                         </dd>
+                    </dl>
+                    </volist>
+                    </div>
+                    <div class="wysyij">
+                        <if condition="($con_p.re_sub_count eq 1) OR ($con_p.re_sub_count gt 1)">
+                        <div class="chakquanb">还有<span>{$con_p.re_sub_count}</span>条回复，<a href="javascript:void(0)" class="ckgd" id="{$con_p.id}">点击查看</a></div>
+                        </if>
+                        <div class="pages" id="pages_{$con_p.id}" rel="{$con_p.id}"></div>
+                        <a href="javascript:void(0)" class="wzsyiju">我也说一句</a>
+                    </div>
+                    <div class="fanbiaob">
+                      <textarea name="saytext" id="saytext{$k}" class="saytext" autocomplete="off"></textarea>
+                      <div class="tisbox">
+                        <input class="fb" name="" type="button" value="发表" id="{$con_p.id}" />
+                        <input type="hidden" class="p3" name="p3" value="{$con_p.exposal_id}">  
+                        <a data-id="{$k}" href="javascript:void(0)"  class="touxin emotion">&nbsp;</a>
+                      </div>
+                    </div>
+                 </div>
+                </div>
+             </dd>
+             <dd class="dianzans">
+              <div class="hf_zf_dz">
+                  <a href="javascript:void(0)" class="hf">
+                      <span></span><br/>
+                        回复（<em>{$con_p['sub']['record_count']}</em>）
+                  </a>
+                  <a class="dz" id="{$con_p.id}" rel="{$con_p.id}" href="javascript:void(0)">
+                      <span></span><br/>
+                        点赞（<em class="em_{$con_p.id}">{$con_p.top_num}</em>）
+                  </a>
+              </div>
+             </dd>
+          </dl>
+          </volist>
+          <div class="pagees">
+              <p class="nas">共有主贴评论<em>{$record_count_p}</em>个</p>
+                {$page}
+          </div>
+       </div>
+     </div>
+  </div>
+<!--内容--End--> 
+
+<!--底部--Begin-->     
+<include file="Public:footer" />
+<!--底部--End--> 
+
+</div>
+</body>
+<script type="text/javascript" src="__PUBLIC__/Home/js/jquery.qqFace.js" ></script>
+<script type="text/javascript">
+  $(function(){
+    var pl = "{$lz.id}";
+    $(".qb").click(function(){
+      var a = $(".fb_plbox").offset().top;
+      $("html,body").animate({scrollTop:a}, 'slow'); 
+      var id = $(this).attr('id');//获取id属性
+      send(id);     
+    });
+    //有图有真相
+    $(".ytyzx").click(function(){
+      var a = $(".fb_plbox").offset().top;
+      $("html,body").animate({scrollTop:a}, 'slow'); 
+      var id = $(this).attr('id');//获取id属性
+      send(id);     
+    });
+    //精彩评论
+    $(".jcpl").click(function(){
+      var a = $(".fb_plbox").offset().top;
+      $("html,body").animate({scrollTop:a}, 'slow'); 
+      var id = $(this).attr('id');//获取id属性
+      send(id);  
+           
+    });
+    //楼主出品
+    $(".lzcp").click(function(){
+      var a = $(".fb_plbox").offset().top;
+      $("html,body").animate({scrollTop:a}, 'slow'); 
+      var id = $(this).attr('id');//获取id属性
+      send(id);  
+           
+    });
+    function send(id){
+          $.ajax({
+              type:'post',
+              url:"__URL__/comexposal_list",
+              dataType:"json", 
+              contentType: "application/x-www-form-urlencoded; charset=utf-8",
+              data:{
+                id:id,
+                pl:pl},
+              beforeSend:function(){
+              },
+              success:function(data){
+                $("#baoguan_pl2").empty();
+                var datas = data.list;
+                if(datas.length != 0){
+                  $.each(datas,function(i,array){
+                    var picContent = "<dl class='pinglubox "+array['id']+"'><dt class='pinglubox_lt'>";
+                        picContent += "<a href='__APP__/Usercenter?id="+array['user_id']+"' target='_blank'><img src='"+array['user_photo']+"'/></a><h3 class='names'>";
+                        if(array['is_anonymous'] == 0){
+                          picContent += "<a href='__APP__/Usercenter?id="+array['user_id']+"' target='_blank'>"+array['nickname']+"</a>";
+                        }else{
+                          picContent += "<a href='__APP__/Usercenter?id="+array['user_id']+"' target='_blank'>"+array['nickname_ex']+"</a>";
+                        }
+                        picContent += "</h3></dt><dd class='pinglubox_rt'><p class='pinglubox_xs'>";
+                        if(array['type'] == '005001'){
+                          picContent += "<em class='dinzan1'></em>";
+                        }else if(array['type'] == '005002'){
+                          picContent += "<em class='jiahei'></em>";
+                        }else{
+                          picContent += "<em class='tiwen'></em>";
+                        }
+                        picContent += ""+array['content']+"</p><div class='tubox'>";          
+                        if(array['pic_1'] != 0){
+                          picContent += "<a href='"+array['pic_1_url']+"' data-lightbox='example-set'><img src='"+array['pic_1_url']+"'/></a>";
+                        }
+                        if(array['pic_2'] != 0){
+                          picContent += "<a href='"+array['pic_2_url']+"' data-lightbox='example-set'><img src='"+array['pic_2_url']+"'/></a>";
+                        }
+                        if(array['pic_3'] != 0){
+                          picContent += "<a href='"+array['pic_3_url']+"' data-lightbox='example-set'><img src='"+array['pic_3_url']+"'/></a>";
+                        }
+                        if(array['pic_4'] != 0){
+                          picContent += "<a href='"+array['pic_4_url']+"' data-lightbox='example-set'><img src='"+array['pic_4_url']+"'/></a>";
+                        }
+                        if(array['pic_5'] != 0){
+                          picContent += "<a href='"+array['pic_5_url']+"' data-lightbox='example-set'><img src='"+array['pic_5_url']+"'/></a>";
+                        }
+                        picContent += "</div><div class='hfpl_chd'><div class='timens'><span>"+(i*1+1)+"楼"+array['add_time']+"</span></div>";
+                        if(array['re_record_count'] > 0){
+                          picContent += "<div class='showhide' style='display:block'>";
+                        }else{
+                          picContent += "<div class='showhide'>";
+                        }
+                        picContent += "<div id='itemContainer_"+array['id']+"'>"; 
+                        $.each(array['re_sub_ex'],function(j,items){
+                          picContent += "<dl><dt><a href='__APP__/Usercenter?id="+items['user_id']+"' target='_blank'><img src='"+items['user_photo']+"' /></a></dt>"; 
+                          picContent += "<dd><p><a href='__APP__/Usercenter?id="+items['user_id']+"' target='_blank'>"+items['nickname']+"：</a>"+items['content']+"</p>"; 
+                          picContent += "<p class='timen'><span>"+items['add_time']+"</span>"; 
+                          picContent += "<a class='huifu' href='javascript:void(0)' id='"+items['nickname']+"'>回复</a></p></dd></dl>"; 
+                        })
+                        picContent += "</div><div class='wysyij'>"; 
+                        if(array['re_sub_count'] >= 1){
+                          picContent += "<div class='chakquanb'>还有<span>"+array['re_sub_count']+"</span>条回复，<a href='javascript:void(0)' class='ckgd' id='"+array['id']+"'>点击查看</a></div>"; 
+                        }
+                        picContent += "<div class='pages' id='pages_"+array['id']+"' rel='"+array['id']+"'></div>"; 
+                        picContent += "<a href='javascript:void(0)' class='wzsyiju'>我也说一句</a>"; 
+                        picContent += "</div><div class='fanbiaob'><textarea name='saytext' id='saytext"+(i*1+1)+"' class='saytext' autocomplete='off'></textarea>"; 
+                        picContent += "<div class='tisbox'><input class='fb' name='' type='button' value='发表' id='"+array['id']+"' />"; 
+                        picContent += "<input type='hidden' class='p3' name='p3' value='{$lz.id}'>"; 
+                        picContent += "<a data-id='"+(i*1+1)+"' href='javascript:void(0)' class='touxin emotion'>&nbsp;</a>";
+                        picContent += "</div></div></div></div></dd><dd class='dianzans'><div class='hf_zf_dz'>";
+                        picContent += "<a href='javascript:void(0)' class='hf'><span></span><br/>";
+                        picContent += "回复（<em>"+array['re_record_count']+"</em>）";
+                        picContent += "</a><a class='dz' id='"+array['id']+"' rel='"+array['id']+"' href='javascript:void(0)'>";
+                        picContent += "<span></span><br/>点赞（<em class='em_"+array['id']+"'>"+array['top_num']+"</em>）";
+                        picContent += "</a></div></dd></dl>";
+                    $("#baoguan_pl2").append(picContent);
+                    //动态加载表情
+                    $('.emotion').qqFace({
+                          id : 'facebox', 
+                          assign:'saytext', 
+                          path:'__PUBLIC__/Home/arclist/' //表情存放的路径
+                    });
+                  })
+                }else{
+                    $("#baoguan_pl2").text('没有符合条件的结果！');
+                    return false;  
+                }
+              },
+              complete:function(){
+              }
+          });
+    }
+  })
+</script>
+<script type="text/javascript">
+$(function(){ 
+    //消息不存在，跳转
+    var auth_level = "{$qy_list.auth_level}";
+    var c_id = "{$qy_list.id}";
+    $('.xigs2').live('click',function(){
+      if (auth_level == '006001') {
+        location.href='__APP__/hpt?resid='+c_id+'#basic_setting';
+      }else if(auth_level == '006002'){
+        location.href='__APP__/wrz?resid='+c_id+'#basic_setting';
+      }else if(auth_level == '006003'){
+        location.href='__APP__/yrz?resid='+c_id;
+      }
+    });
+    //企业不存在，跳转首页
+    $('.xigs3').live('click',function(){
+        location.href='__ROOT__/';
+    });
+    //分享次数
+    $('.jiatitle').live('click',function(){
+      var id   = "{$lz.id}";
+      var type = "007003";
+      $.ajax({  
+          type:"post",  
+          url:"{$call_url}",
+          timeout: 5000,  
+          dataType:"json",  
+          data:{"method":"Sharecount.add","type":"text","content":{"value_id":id,"type":type}},
+          success: function aa(data) {  
+                  if (200 == data.status_code && 0 == data.content.is_success) {
+                      $('#zf').text(data.content.amount); 
+                      return false;
+                  }else{
+                      return false;
+                  }
+          }  
+      })  
+    });
+    //回复
+    $('.wypll').click(function(){   
+      var a = $(".fb_plbox").offset().top;
+      $("html,body").animate({scrollTop:a}, 'slow'); 
+      $("#saytext0").select();
+      $("#saytext0").val("");
+    });
+    //表情
+    $('.emotion').qqFace({
+      id : 'facebox', 
+      assign:'saytext', 
+      path:'__PUBLIC__/Home/arclist/' //表情存放的路径
+    });
+    //评论表单提交
+    $(".sub_btn").click(function(){
+      var objButton  = $(this);
+      var content = document.getElementById("saytext0").value;
+      var userid = '{$userid}';
+      if (content == "") {
+          $('#tishi').text("评论内容不能为空！");
+          $(".bd_wd").css("width", $(document).width());
+          $(".bd_wd").css("height", $(document).height());
+          $(".bd_wd").show();
+          $(".yzsbai").show();
+          return false;
+      }else if(content.length > 400){
+          $('#tishi').text("评论内容最多为400字符");
+          $(".bd_wd").css("width", $(document).width());
+          $(".bd_wd").css("height", $(document).height());
+          $(".bd_wd").show();
+          $(".yzsbai").show();
+          return false;
+      }
+      if (userid == "") {
+          $(".bd_wd").css("width", $(document).width());
+          $(".bd_wd").css("height", $(document).height());
+          $(".bd_wd").show();
+          $("#tcwindows1").show();
+          return false;
+      }
+      var options = {
+            //beforeSubmit: ValidateFile,
+            //resetForm: true,
+            beforeSend:function(){
+                objButton.val('发表评论').attr('disabled',true);
+            },
+            success: function (data) {
+              if (data) {
+                $(".bd_wd").css("width", $(document).width());
+                $(".bd_wd").css("height", $(document).height());
+                $(".bd_wd").show();
+                if (data == 0) {
+                  $('#tishi1').text("评论成功！");
+                  $(".yzsbai1").show();          
+                  return false;
+                }else if(data == -1){
+                  $('#tishi').text("评论失败！");
+                  $(".yzsbai").show();
+                  return false;
+                }else if(data == -2){
+                  $('#tishi2').text("该主贴评论不存在！");
+                  $(".yzsbai2").show();
+                  return false;
+                }else if(data == 6){
+                  $('#tishi').text("评论内容不能为空！");
+                  $(".yzsbai").show();
+                  return false;
+                }else if(data == -4){
+                  $('#tishi3').text("评论失败，该企业不存在或已删除！");
+                  $(".yzsbai3").show();
+                  return false;
+                }else{
+                  $('#tishi2').text("评论失败，该主贴评论不存在！");
+                  $(".yzsbai2").show();
+                  return false;
+                }
+              }
+            },
+            complete:function(){
+                objButton.val('发表评论').attr('disabled',false);
+            }
+        };
+        $("#theForm").ajaxForm(options);
+    });
+    //上传插图
+    $(".ch_tu").click(function(){
+      var userid = "{$userid}";
+      $(".bd_wd").css("width", $(document).width());
+          $(".bd_wd").css("height", $(document).height());
+          $(".bd_wd").show();
+      if (userid == "") {
+          $("#tcwindows1").show();
+          return false;
+      }else{
+          $("#windows_ct").show();
+      }
+    });
+    //添加图片
+    $("#upload-file").change(function(){ 
+      if($("#msg li").size()>5){
+        alert("最多只能添加5张图片！");
+        return false;
+      }else{
+        upload();
+      }
+     });  
+    function upload(){
+      $("#uploadFrom").ajaxSubmit({
+         url:"{:U('Query/uploadImg')}",  
+         dataType: 'json',
+         contentType: "application/x-www-form-urlencoded; charset=utf-8",
+         success:function(data){
+          if(data){
+            if(data == 1){
+              alert("图片上传失败！");
+              return false;
+            }else if(data == 2){
+              alert("没有文件上传！");
+              return false;
+            }else if(data == 3){
+              alert("文件上传错误！");
+              return false;
+            }else if(data == 4){
+              alert("上传文件不能大于350kb！");
+              return false;
+            }else if(data == 5){
+              alert("图片格式错误！");
+              return false;
+            }else if(data == 6){
+              alert("请登录后操作！");
+              return false;
+            }else{
+              $("#msg").append("<li id='li_"+data.id+"' class='sx'><div class='ct_tubox'><img src='"+data.img+"'/></div><span class='delete' id='"+data.id+"'></span></li>");
+              $(".pic_id").append("<li id='inp_"+data.id+"' class='qc'><input type='hidden' id='"+data.id+"' name='pic[]' value='"+data.id+"'></li>");
+            }
+          }else{
+            return false;
+          }
+         },
+         error:function(msg){
+          return false;
+         }
+      });
+    }
+    //网友曝光顶
+    $('.bgshu_rt .b_ding').click(function(){
+          var id        = $(this).attr('id');
+          var userid    = '{$userid}';
+          if (userid == "") {
+            $(".bd_wd").css("width", $(document).width());
+            $(".bd_wd").css("height", $(document).height());
+            $(".bd_wd").show();
+            $("#tcwindows1").show();
+            return false;
+          }
+          $.ajax({  
+              type:"post",  
+              url:"{$call_url}",
+              timeout: 5000,  
+              dataType:"json", 
+              data:{"method":"Exposaltop.add","type":"text",
+              "content":{"user_id":userid,"exposal_id":id}},
+              success: function aa(data) {  
+                   if (200 == data.status_code) {
+                      if (0 == data.content.is_success) {
+                        $('.em0').text(data.content.amount); 
+                        return false;
+                      }else if(-1 == data.content.is_success){
+                        $('#tishi_ex').text("点赞失败！");
+                        $(".bd_wd_ex").css("width", $(document).width());
+                        $(".bd_wd_ex").css("height", $(document).height());
+                        $(".bd_wd_ex").show();
+                        $(".yzsbai_ex").show();
+                        setTimeout('$(".bd_wd_ex").hide("fast")',3000); 
+                        setTimeout('$(".yzsbai_ex").hide("fast")',3000);
+                        return false; 
+                      }else if(-2 == data.content.is_success){
+                        $('#tishi_ex').text("明天再来吧！");
+                        $(".bd_wd_ex").css("width", $(document).width());
+                        $(".bd_wd_ex").css("height", $(document).height());
+                        $(".bd_wd_ex").show();
+                        $(".yzsbai_ex").show();
+                        setTimeout('$(".bd_wd_ex").hide("fast")',3000); 
+                        setTimeout('$(".yzsbai_ex").hide("fast")',3000);
+                        return false; 
+                      }else if(-3 == data.content.is_success || -4 == data.content.is_success){
+                        $('#tishi2').text("点赞失败,此主贴已删除！");
+                        $(".bd_wd_ex").css("width", $(document).width());
+                        $(".bd_wd_ex").css("height", $(document).height());
+                        $(".bd_wd_ex").show();
+                        $(".yzsbai2").show();
+                        return false; 
+                      }else if(-5 == data.content.is_success){
+                        $('#tishi3').text("点赞失败,此曝光企业已删除或不存在！");
+                        $(".bd_wd_ex").css("width", $(document).width());
+                        $(".bd_wd_ex").css("height", $(document).height());
+                        $(".bd_wd_ex").show();
+                        $(".yzsbai3").show();
+                        return false; 
+                      }
+                   }else{
+                      $('#tishi_ex').text("点赞失败！");
+                      $(".bd_wd_ex").css("width", $(document).width());
+                      $(".bd_wd_ex").css("height", $(document).height());
+                      $(".bd_wd_ex").show();
+                      $(".yzsbai_ex").show();
+                      setTimeout('$(".bd_wd_ex").hide("fast")',3000); 
+                      setTimeout('$(".yzsbai_ex").hide("fast")',3000);
+                      return false; 
+                   }
+              }  
+          })  
+    });
+    //评论顶
+    $('.pinglubox .dz').live('click',function(){
+          var id = $(this).attr('id');  //评论id
+          var company_id = "{$qy_list.id}";  //企业id
+          var userid    = '{$userid}';  //评论id
+          var exposal_id = '{$lz.id}';  // 曝光企业id
+          var emm       = '.em_'+id;
+          if (userid == "") {
+              $(".bd_wd").css("width", $(document).width());
+              $(".bd_wd").css("height", $(document).height());
+              $(".bd_wd").show();
+              $("#tcwindows1").show();
+              return false;
+          }
+          $.ajax({  
+              type:"post",  
+              url:"{$call_url}",
+              timeout: 5000,  
+              dataType:"json",  
+              data:{"method":"Comexposaltop.add","type":"text",
+              "content":{"exposal_id":exposal_id,
+                   "user_id":userid,
+                   "comment_id":id,
+                   "company_id":company_id}},
+              success: function aa(data) {  
+                   if (200 == data.status_code) {
+                      if (0 == data.content.is_success) {
+                        $(emm).text(data.content.amount); 
+                        return false;
+                      }else if(-1 == data.content.is_success){
+                        $('#tishi_ex').text("点赞失败！");
+                        $(".bd_wd_ex").css("width", $(document).width());
+                        $(".bd_wd_ex").css("height", $(document).height());
+                        $(".bd_wd_ex").show();
+                        $(".yzsbai_ex").show();
+                        setTimeout('$(".bd_wd_ex").hide("fast")',3000); 
+                        setTimeout('$(".yzsbai_ex").hide("fast")',3000);
+                        return false; 
+                      }else if(-2 == data.content.is_success){
+                        $('#tishi_ex').text("明天再来吧！");
+                        $(".bd_wd_ex").css("width", $(document).width());
+                        $(".bd_wd_ex").css("height", $(document).height());
+                        $(".bd_wd_ex").show();
+                        $(".yzsbai_ex").show();
+                        setTimeout('$(".bd_wd_ex").hide("fast")',3000); 
+                        setTimeout('$(".yzsbai_ex").hide("fast")',3000);
+                        return false; 
+                      }else if(-3 == data.content.is_success || -4 == data.content.is_success){
+                        $('#tishi2').text("点赞失败,此曝光主贴已删除！");
+                        $(".bd_wd_ex").css("width", $(document).width());
+                        $(".bd_wd_ex").css("height", $(document).height());
+                        $(".bd_wd_ex").show();
+                        $(".yzsbai2").show();
+                        return false; 
+                      }else if(-5 == data.content.is_success){
+                        $('#tishi3').text("点赞失败,此企业已删除或不存在！");
+                        $(".bd_wd_ex").css("width", $(document).width());
+                        $(".bd_wd_ex").css("height", $(document).height());
+                        $(".bd_wd_ex").show();
+                        $(".yzsbai3").show();
+                        return false; 
+                      }else if(-6 == data.content.is_success || -7 == data.content.is_success){
+                        $('#tishi1').text("点赞失败,此评论已删除！");
+                        $(".bd_wd").css("width", $(document).width());
+                        $(".bd_wd").css("height", $(document).height());
+                        $(".bd_wd").show();
+                        $(".yzsbai1").show();
+                        return false; 
+                      }
+                   }else{
+                      $('#tishi_ex').text("点赞失败！");
+                      $(".bd_wd_ex").css("width", $(document).width());
+                      $(".bd_wd_ex").css("height", $(document).height());
+                      $(".bd_wd_ex").show();
+                      $(".yzsbai_ex").show();
+                      setTimeout('$(".bd_wd_ex").hide("fast")',3000); 
+                      setTimeout('$(".yzsbai_ex").hide("fast")',3000);
+                      return false; 
+                   }
+              }  
+          })  
+    });
+    //评论回复
+    $('.fb').live('click',function(){
+          var objButton  = $(this);
+          var id        = $(this).attr('id');//获取企业id属性
+          var type      = '005001';
+          var content_ex = $(this).parents('.fanbiaob').find('.saytext').val().replace(/\ +/g,"");//去掉空格;
+          var content_ex = $(this).parents('.fanbiaob').find('.saytext').val().replace(/[ ]/g,"");//去掉空格;
+          var content_ex = $(this).parents('.fanbiaob').find('.saytext').val().replace(/[\r\n]/g,"");//去掉空格;
+          var content_ex = $(this).parents('.fanbiaob').find('.saytext').val().replace(/[~',.?;"{}!<>@#$%^&*()-+=:]/g,"");
+          var content   = urlencode(content_ex);
+          var exposal_id= $(this).parents('.fanbiaob').find('.p3').val();
+          var userid    = '{$userid}';
+          if (content_ex == "") {
+            $('#tishi').text("评论内容不能为空");
+            $(".bd_wd").css("width", $(document).width());
+            $(".bd_wd").css("height", $(document).height());
+            $(".bd_wd").show();
+            $(".yzsbai").show();
+            return false;
+          }else if(content_ex.length > 400){
+            $('#tishi').text("评论内容最多为400字符");
+            $(".bd_wd").css("width", $(document).width());
+            $(".bd_wd").css("height", $(document).height());
+            $(".bd_wd").show();
+            $(".yzsbai").show();
+            return false;
+          }
+          if (userid == "") {
+            $(".bd_wd").css("width", $(document).width());
+            $(".bd_wd").css("height", $(document).height());
+            $(".bd_wd").show();
+            $("#tcwindows1").show();
+            return false;
+          }
+          $.ajax({  
+              type:"post",  
+              url:"{$call_url}",
+              timeout: 5000,  
+              dataType:"json",  
+              data:{"method":"Comexposal.add","type":"text",
+              "content":{"exposal_id":exposal_id,
+                   "user_id":userid,
+                   "type":type,
+                   "content":content,
+                   "parent_id":id,
+                   "is_anonymous":0,
+                   "is_depth":1}},
+              beforeSend:function(){
+                objButton.val('发表').attr('disabled',true);
+              },
+              success: function aa(data) {  
+                   if (200 == data.status_code ){
+                      $(".bd_wd").css("width", $(document).width());
+                      $(".bd_wd").css("height", $(document).height());
+                      $(".bd_wd").show();
+                      if(0 == data.content.is_success) {
+                        $('#tishi1').text("回复成功！");
+                        $(".yzsbai1").show();
+                        return false;
+                      }else if(-1 == data.content.is_success) {
+                        $('#tishi').text("回复失败！");
+                        $(".yzsbai").show();
+                        return false;
+                      }else if(-2 == data.content.is_success || -3 == data.content.is_success) {
+                        $('#tishi2').text("回复失败,该曝光主贴已删除！");
+                        $(".yzsbai2").show();
+                        return false;
+                      }else if(-4 == data.content.is_success) {
+                        $('#tishi3').text("回复失败,该企业已删除！");
+                        $(".yzsbai3").show();
+                        return false;
+                      }else if(-5 == data.content.is_success || -6 == data.content.is_success) {
+                        $('#tishi1').text("回复失败,该评论已删除！");
+                        $(".yzsbai1").show();
+                        return false;
+                      }else{
+                        $('#tishi').text("回复失败！");
+                        $(".yzsbai").show();
+                        return false;
+                      }
+                   }else{
+                        $('#tishi').text("回复失败！");
+                        $(".bd_wd").css("width", $(document).width());
+                        $(".bd_wd").css("height", $(document).height());
+                        $(".bd_wd").show();
+                        $(".yzsbai").show();
+                        return false; 
+                   }
+              },
+              complete:function(){
+                objButton.val('发表').attr('disabled',false);
+              }   
+          })  
+    });
+    //urlencode数据转换
+    function urlencode (str) {  
+        str = (str + '').toString();   
+        return encodeURIComponent(str).replace(/!/g, '%21').replace(/'/g, '%27').replace(/\(/g, '%28').  
+        replace(/\)/g, '%29').replace(/\*/g, '%2A').replace(/%20/g, '+');  
+    }    
+    //回复显示输入框
+    $('.pinglubox .hf').live('click',function(){
+        if($(this).parents(".pinglubox").find('.showhide').css('display') == 'none'){
+          $(this).parents(".pinglubox").find('.showhide').show();
+          $(this).parents(".pinglubox").find('.fanbiaob').show();       
+          $(this).parents(".pinglubox").find('.saytext').select();
+          $(this).parents(".pinglubox").find('.saytext').val("");
+            
+        }else{ 
+          $(this).parents(".pinglubox").find('.showhide').hide();   
+          $(this).parents(".showhide").find('.fanbiaob').hide();
+        }
+    });
+    //回复获取用户名
+    $('.huifu').live('click',function(){
+      var nickname = $(this).attr('id');//获取企业id属性
+      var gd       = " 回复 ";
+      $(this).parents(".showhide").find('.saytext').val(gd+nickname+'：');
+      $(this).parents(".showhide").find('.fanbiaob').show();
+    });
+    //我也说一句
+    $('.wzsyiju').live('click',function(){
+        if($(this).parents(".showhide").find('.fanbiaob').css('display') == 'none'){       
+          $(this).parents(".showhide").find('.fanbiaob').show(); 
+          $(this).parents(".showhide").find('.saytext').select(); 
+          $(this).parents(".showhide").find('.saytext').val("");  
+        }else{ 
+          $(this).parents(".showhide").find('.fanbiaob').hide();
+        }
+    });
+})
+</script>
+<script type="text/javascript">
+///评论回复点击查看更多
+    $(function (){
+      $('.ckgd').live('click',function(){
+        $(this).parents(".showhide").find('.chakquanb').hide();
+        var ids = "{$lz.id}";
+        var id  = $(this).attr('id');
+          // alert(ids+"/"+id);
+          // return false;
+        var url = "__URL__/query_wybg_hf/exposal_id/"+ids+"/uId/"+id;
+        getDate(url,id);
+      });  
+      //pages
+      $('.pages a').live('click',function(){
+          var parentId = $(this).parents('.pages').attr('rel');
+          var href=$(this).attr("href");
+          getDate(href,parentId);
+          return false;
+      });
+    });
+    //ajax
+    function getDate(url,ids){
+      $.ajax({
+        type: 'GET',
+        url: url,
+        dataType: 'json',
+        contentType: "application/x-www-form-urlencoded; charset=utf-8",
+        //data: {'pages':1},
+        beforeSend: function () {              
+        },
+        success: function (data) {
+          $("#itemContainer_"+ids).empty();
+          $("#pages_"+ids).empty();
+          var lis="";
+          var lists=data.list;
+          $.each(lists,function (index,array){
+             lis +='<dl class="'+array['id']+'"><dt><a href="__APP__/Usercenter?id='+array['user_id']+'" target="_blank"><img src="'+array['user_photo']+'" /></a></dt><dd><p><a href="__APP__/Usercenter?id='+array['user_id']+'" target="_blank">'+array['nickname']+'：</a>'+array['content']+'</p><p class="timen"><span>'+array['add_time']+'</span><a class="huifu" id="'+array['nickname']+'" href="javascript:void(0)">回复</a></dd></dl>';
+          });
+           $("#itemContainer_"+ids).append(lis);
+           $("#pages_"+ids).append(data.pages);
+        },
+        complete: function () {
+        },
+        error: function () {
+          alert("数据加载中......")
+        }
+      });
+    }
+</script>
+<script type="text/javascript" src="__PUBLIC__/Home/js/main_ex.js" ></script>
+</html>
