@@ -11,6 +11,8 @@ class BaseController extends Controller {
 	{	
 		$this->assign('call_url', C('call_url'));
 		$this->assign('domain', C('domain'));
+		$this->assign('controller', C('controller'));
+		$this->assign('resource', C('resource'));
 	}
 
 	//解析接口调用返回处理

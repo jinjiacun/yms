@@ -1,5 +1,5 @@
 ﻿require.config({
-    baseUrl: "http://localhost/yms/Public/Azureadmin/scripts",
+    baseUrl: resource+"/scripts",
     urlArgs: "r=" + Math.random(),
     paths: {
         artDialog: "lib/artDialog/jquery.artDialog",

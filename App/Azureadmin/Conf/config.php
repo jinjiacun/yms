@@ -10,4 +10,6 @@ return array(
     //'TMPL_ACTION_ERROR'=>'Public:dispatch_jump',
 	'bq_url' => "/yms/Public/Home/arclist",
 	'domain'=>'http://localhost/yms/',
+	'controller'=>'http://localhost/yms/azureadmin.php/Azureadmin',
+	'resource'=>'http://localhost/yms/Public/Azureadmin',
 );

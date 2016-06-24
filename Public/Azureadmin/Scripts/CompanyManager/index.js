@@ -14,20 +14,20 @@
         },
         getDetail: function (id) {
             var tip = dialog.ShowTip('请稍候...');
-            $.post('http://localhost/yms/azureadmin.php/Azureadmin/CompanyManager/GetDetail', { 'companyID': id }, function (data) {
+            $.post(controller+'/CompanyManager/GetDetail', { 'ComId': id }, function (data) {
                 tip.close();
                 if (data.res == 1) {
                     var layer = dialog.LoadEle('<div class="row title"><h4>机构信息修改</h4></div>'
-                        + '<div class="row"><span class="col span">公司名称：</span><div class="col">' + data.data.companyName + '</div></div>'
-                        + '<div class="row"><span class="col span">公司官网：</span><div class="col"><a target="_blank" href="' + data.data.companyUrl + '">' + data.data.companyUrl + '</a></div></div>'
-                        + '<div class="row"><span class="col span">联系人：</span><div class="col"><input id="contact" type="text" value="' + data.data.contact + '"/></div></div>'
-                        + '<div class="row"><span class="col span">联系电话：</span><div class="col"><input id="mobile" type="text" value="' + data.data.mobile + '" /></div></div>'
-                        + '<div class="row"><span class="col span">联系邮箱：</span><div class="col"><input id="mail" type="text" value="' + data.data.mail + '" /></div></div>'
-                        + '<div class="row"><span class="col span">热线电话：</span><div class="col"><input id="hotline" type="text" value="' + data.data.hotline + '" /></div></div>'
-                        + '<div class="row"><span class="col span">企业邮箱：</span><div class="col"><input id="email" type="text" value="' + data.data.email + '" /></div></div>'
-                        + '<div class="row"><span class="col span">地址：</span><div class="col"><input id="address" type="text" value="' + data.data.address + '" /></div></div>'
-                        + (data.data.state != 0 ? '<div class="row"><span class="col span">过期时间：</span><div class="col"><input id="expTime" type="text" value="' + data.data.expTime + '" style="width:100px;cursor:pointer"></div><div class="col"><button id="btnExtendTime" class="btn btn-success">延期</button></div></div>' : '')
-                        + (data.data.state != 0 ? '<div class="row"><span class="col span">登录帐号：</span><div class="col">' + data.data.adminUsername + '</div></div>' : '')
+                        + '<div class="row"><span class="col span">公司名称：</span><div class="col">' + data.data.ComAllName + '</div></div>'
+                        + '<div class="row"><span class="col span">公司官网：</span><div class="col"><a target="_blank" href="' + data.data.ComUrl + '">' + data.data.ComUrl + '</a></div></div>'
+                        + '<div class="row"><span class="col span">联系人：</span><div class="col"><input id="contact" type="text" value="' + data.data.ComLine + '"/></div></div>'
+                        + '<div class="row"><span class="col span">联系电话：</span><div class="col"><input id="mobile" type="text" value="' + data.data.ComMob + '" /></div></div>'
+                        + '<div class="row"><span class="col span">联系邮箱：</span><div class="col"><input id="mail" type="text" value="' + data.data.ComMail + '" /></div></div>'
+                        + '<div class="row"><span class="col span">热线电话：</span><div class="col"><input id="hotline" type="text" value="' + data.data.ComPhone + '" /></div></div>'
+                        + '<div class="row"><span class="col span">企业邮箱：</span><div class="col"><input id="email" type="text" value="' + data.data.ComEmail + '" /></div></div>'
+                        + '<div class="row"><span class="col span">地址：</span><div class="col"><input id="address" type="text" value="' + data.data.ComAddress + '" /></div></div>'
+                        + (data.data.ComState != 0 ? '<div class="row"><span class="col span">过期时间：</span><div class="col"><input id="expTime" type="text" value="' + data.data.ExpTime + '" style="width:100px;cursor:pointer"></div><div class="col"><button id="btnExtendTime" class="btn btn-success">延期</button></div></div>' : '')
+                        + (data.data.ComState != 0 ? '<div class="row"><span class="col span">登录帐号：</span><div class="col">' + data.data.AdminUserName + '</div></div>' : '')
                         + '<div class="row update"><button id="updateInfo" class="btn btn-primary">修改信息</button></div>',
                         function () {
                             $('#expTime').datepicker({ weekStart: 1, format: 'yyyy-mm-dd', language: 'zh-CN', autoclose: true, todayHighlight: true, startDate: data.data.nowTime });
@@ -41,19 +41,7 @@
                                         dialog.ErrorBox('操作失败');
                                     }
                                 }, 'json');
-                            });
-                            //<div class="col"><button id="btnResetPwd" uid="' + data.data.adminID + '" class="btn btn-mini">重置密码</button></div>
-                            //$('#btnResetPwd').click(function () {
-                            //    var tip = dialog.ShowTip('请稍候...');
-                            //    $.post('/CompanyManager/ResetPwd', { 'adminID': $(this).attr('uid'), 'companyID': id }, function (data) {
-                            //        tip.close();
-                            //        if (data.res == 1) {
-                            //            dialog.MsgBox('succeed', '重置成功，密码为：' + data.pwd + '&nbsp;&nbsp;', null, 24 * 60 * 60);
-                            //        } else {
-                            //            dialog.ErrorBox('操作失败');
-                            //        }
-                            //    }, 'json');
-                            //});
+                            });                           
                             $('#updateInfo').click(function () {
                                 var contact = $.trim($("#contact").val());
                                 if (contact == '') {
@@ -86,7 +74,7 @@
                                     return;
                                 }
                                 var tip = dialog.ShowTip('请稍候...');
-                                $.post('/CompanyManager/UpdateInfo', { 'companyID': id, 'contact': contact, 'mobile': mobile, 'email': email, 'address': address, 'mail': mail, 'hotline': hotline }, function (data) {
+                                $.post(controller+'/CompanyManager/UpdateInfo', { 'ComId': id, 'ComLine': contact, 'ComMob': mobile, 'ComEmail': email, 'ComAddress': address, 'ComMail': mail, 'ComPhone': hotline }, function (data) {
                                     tip.close();
                                     if (data.res == 1) {
                                         layer.close();
@@ -140,11 +128,11 @@
         refresh: function () {
             var p = $('#grid a[currpage]').attr('currpage');
             if (p == null) p = 1;
-            $('#grid').load('/CompanyManager/GetTable?page=' + p + '&company=' + searchCompany + '&r=' + Math.random() + ' #grid');
+            $('#grid').load(controller+'/CompanyManager/GetTable?page=' + p + '&company=' + searchCompany + '&r=' + Math.random() + ' #grid');
         },
         search: function () {
             searchCompany = encodeURIComponent($.trim($('#txtSearchCompany').val()));
-            $('#grid').load('/CompanyManager/GetTable?page=1&company=' + searchCompany + '&r=' + Math.random() + ' #grid');
+            $('#grid').load(controller+'/CompanyManager/GetTable?page=1&company=' + searchCompany + '&r=' + Math.random() + ' #grid');
         }
     }
-});
+}); 
