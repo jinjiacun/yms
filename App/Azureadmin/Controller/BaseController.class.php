@@ -40,6 +40,53 @@ class BaseController extends Controller {
 		$this->assign('page',$show);// 赋值分页输出
 	}
 
+	//获取自定义分页
+	public function get_page_by_custom($ctl_url, $cur_page_index, $record_count, $page_size)
+	{
+		//计算页数
+		$page_count = ceil($record_count*1.0/$page_size);
+
+		$page_template_begin = <<<EOF
+		 <div class="dataTables_wrapper">
+            <div class="fg-toolbar ui-toolbar ui-widget-header ui-corner-bl ui-corner-br ui-helper-clearfix">
+                <div class="dataTables_paginate fg-buttonset ui-buttonset fg-buttonset-multi ui-buttonset-multi paging_full_numbers">
+EOF;
+
+		$page_tempalte_end = <<<EOF
+			 </div>
+            </div>
+        </div>	
+EOF;
+
+	$span = '';
+	//第一页
+	if($cur_page_index == 1)
+	{
+		$span = "<a href=\"javascript:;\" class=\"first ui-corner-tl ui-corner-bl fg-button ui-button ui-state-default ui-state-disabled\" title=\"首页\" >首页</a><span>";
+		for($i=1; $i<= $page_count; $i++)
+		{
+			if($i == 1)
+				$span .= "<a currpage=\"1\" class=\"fg-button ui-button ui-state-default ui-state-disabled\" href=\"javascript:;\" title=\"第".$i."页\">".$i."</a>";                        
+			else
+                $span .= "<a href=\"javascript:;\" onclick=\"$('#grid').load('".$ctl_url."?page=$i&company= #grid');\"  class=\"fg-button ui-button ui-state-default\">".$i."</a>";	
+		}
+		
+        $span .= "</span>
+                    <a href=\"javascript:;\" onclick=\"$('#grid').load('".$ctl_url."?page=$page_size&company= #grid');\" class=\"last ui-corner-tr ui-corner-br fg-button ui-button ui-state-default\"  title=\"末页\">末页</a> 
+                  ";
+	}
+	//最后一页
+	if($cur_page_index == $page_count)
+	{
+		
+	}
+	//非第一页也不是最后一页
+
+
+  	return $page_template_begin.$span.$page_tempalte_end;
+
+	}
+
 	#调用接口
 	/**
 	*

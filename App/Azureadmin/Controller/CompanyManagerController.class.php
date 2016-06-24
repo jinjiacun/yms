@@ -50,7 +50,8 @@ class CompanyManagerController extends BaseController {
                     $this->assign('list', $list);     
                     $record_count = $result['content']['record_count'];
                     $this->assign('record_count', $record_count);
-                    $this->get_page($record_count, $page_size);
+                    //$this->get_page($record_count, $page_size);
+                    $this->assign('page', $this->get_page_by_custom(C('controller').'/CompanyManager/GetTable', 1, $record_count, $page_size));
                 }
             }
         }
@@ -128,20 +129,21 @@ EOF;
 $html_end = <<<EOF
                             </tbody>
                             </table>
-                            <div class="dataTables_wrapper">
+EOF;
+                          /*  <div class="dataTables_wrapper">
                                 <div class="fg-toolbar ui-toolbar ui-widget-header ui-corner-bl ui-corner-br ui-helper-clearfix">
                                     <div class="dataTables_paginate fg-buttonset ui-buttonset fg-buttonset-multi ui-buttonset-multi paging_full_numbers">
-                                        <a href="javascript:;" class="first ui-corner-tl ui-corner-bl fg-button ui-button ui-state-default ui-state-disabled" title="首页" >首页                    </a>
+                                        <a href="javascript:;" class="first ui-corner-tl ui-corner-bl fg-button ui-button ui-state-default ui-state-disabled" title="首页">首页</a>
                                         <span>
                                             <a currpage="1" class="fg-button ui-button ui-state-default ui-state-disabled" href="javascript:;" title="第1页">1</a>
                                             <a href="javascript:;" onclick="$('#grid').load('/CompanyManager/GetTable?page=2&company= #grid');"  class="fg-button ui-button ui-state-default">2</a></span><a href="javascript:;" onclick="$('#grid').load('/CompanyManager/GetTable?page=2&company= #grid');" class="last ui-corner-tr ui-corner-br fg-button ui-button ui-state-default"  title="末页">末页</a>
                                     </div>
                                 </div>
                             </div>
-                </div>
-EOF;
-
-
+*/  
+                    $record_count = $result['content']['record_count'];
+                    $page_size = 20;                    
+                    $my_page = $this->get_page_by_custom(C('controller').'/CompanyManager/GetTable', $page_index, $record_count, $page_size);
                     $tr_str = '';
                     $_map_vip = array(
                         1=>'白金版',
@@ -188,7 +190,7 @@ EOF;
                                     </tr>
                         ";
                     }
-                    echo $html_begin.$tr_str.$html_end;
+                    echo $html_begin.$tr_str.$html_end.$my_page."</div>";
                     exit();
                 }
             }
