@@ -44,7 +44,7 @@ table.treetable span
 
     table.treetable span.column
     {
-        background-image: url(/Content/img/column.png);
+        background-image: url(../../Content/img/column.png);
     }
 
     table.treetable span.folder
