@@ -89,8 +89,44 @@
         <div style="clear: left; float: none;"></div>
     </div>
     <div id="grid">
-        <table class="table table-bordered data-table dataTable"><thead><th class="ui-state-default width1">编号</th><th class="ui-state-default width3">角色名称</th><th class="ui-state-default">所属机构</th><th class="ui-state-default width2">操作</th></thead><tbody><tr><td>12116</td><td>平台超级管理员</td><td>平台</td><td><button onclick="b(12116)" class="btn btn-primary btn-mini">修改</button>&nbsp;</td></tr><tr><td>12552</td><td>超级管理员</td><td>北京融金汇商品经营有限公司</td><td><button onclick="b(12552)" class="btn btn-primary btn-mini">修改</button>&nbsp;</td></tr><tr><td>12554</td><td>分析师</td><td>北京融金汇商品经营有限公司</td><td><button onclick="b(12554)" class="btn btn-primary btn-mini">修改</button>&nbsp;</td></tr><tr><td>12456</td><td>超级管理员</td><td>北京融金汇商品经营有限公司</td><td><button onclick="b(12456)" class="btn btn-primary btn-mini">修改</button>&nbsp;</td></tr><tr><td>12458</td><td>分析师</td><td>北京融金汇商品经营有限公司</td><td><button onclick="b(12458)" class="btn btn-primary btn-mini">修改</button>&nbsp;</td></tr><tr><td>12540</td><td>超级管理员</td><td>北京盛汇商品经营有限公司</td><td><button onclick="b(12540)" class="btn btn-primary btn-mini">修改</button>&nbsp;</td></tr><tr><td>12542</td><td>分析师</td><td>北京盛汇商品经营有限公司</td><td><button onclick="b(12542)" class="btn btn-primary btn-mini">修改</button>&nbsp;</td></tr><tr><td>12548</td><td>超级管理员</td><td>测试公司</td><td><button onclick="b(12548)" class="btn btn-primary btn-mini">修改</button>&nbsp;</td></tr><tr><td>12550</td><td>分析师</td><td>测试公司</td><td><button onclick="b(12550)" class="btn btn-primary btn-mini">修改</button>&nbsp;</td></tr><tr><td>12408</td><td>超级管理员</td><td>常州瑞银汇鑫黄金经营有限公司</td><td><button onclick="b(12408)" class="btn btn-primary btn-mini">修改</button>&nbsp;</td></tr><tr><td>12410</td><td>分析师</td><td>常州瑞银汇鑫黄金经营有限公司</td><td><button onclick="b(12410)" class="btn btn-primary btn-mini">修改</button>&nbsp;</td></tr><tr><td>12480</td><td>超级管理员</td><td>广东大衍贵金属经营有限公司</td><td><button onclick="b(12480)" class="btn btn-primary btn-mini">修改</button>&nbsp;</td></tr><tr><td>12482</td><td>分析师</td><td>广东大衍贵金属经营有限公司</td><td><button onclick="b(12482)" class="btn btn-primary btn-mini">修改</button>&nbsp;</td></tr><tr><td>12490</td><td>超级管理员</td><td>江苏千业贵金属有限公司</td><td><button onclick="b(12490)" class="btn btn-primary btn-mini">修改</button>&nbsp;</td></tr><tr><td>12492</td><td>分析师</td><td>江苏千业贵金属有限公司</td><td><button onclick="b(12492)" class="btn btn-primary btn-mini">修改</button>&nbsp;</td></tr><tr><td>12518</td><td>超级管理员</td><td>天津鑫沣贵金属经营有限公司</td><td><button onclick="b(12518)" class="btn btn-primary btn-mini">修改</button>&nbsp;</td></tr><tr><td>12520</td><td>分析师</td><td>天津鑫沣贵金属经营有限公司</td><td><button onclick="b(12520)" class="btn btn-primary btn-mini">修改</button>&nbsp;</td></tr><tr><td>12466</td><td>超级管理员</td><td>宜昌嘉信贵金属经营有限公司 </td><td><button onclick="b(12466)" class="btn btn-primary btn-mini">修改</button>&nbsp;</td></tr><tr><td>12468</td><td>分析师</td><td>宜昌嘉信贵金属经营有限公司 </td><td><button onclick="b(12468)" class="btn btn-primary btn-mini">修改</button>&nbsp;</td></tr><tr><td>12524</td><td>超级管理员</td><td>盈天下</td><td><button onclick="b(12524)" class="btn btn-primary btn-mini">修改</button>&nbsp;</td></tr></tbody></table><div class="dataTables_wrapper"><div class="fg-toolbar ui-toolbar ui-widget-header ui-corner-bl ui-corner-br ui-helper-clearfix"><div class="dataTables_paginate fg-buttonset ui-buttonset fg-buttonset-multi ui-buttonset-multi paging_full_numbers"><a href="javascript:;" class="first ui-corner-tl ui-corner-bl fg-button ui-button ui-state-default ui-state-disabled" title="首页" >首页</a><span><a currpage="1" class="fg-button ui-button ui-state-default ui-state-disabled" href="javascript:;" title="第1页">1</a><a href="javascript:;" onclick="$('#grid').load('/RoleManager/GetTable?page=2&company= #grid');"  class="fg-button ui-button ui-state-default">2</a></span><a href="javascript:;" onclick="$('#grid').load('/RoleManager/GetTable?page=2&company= #grid');" class="last ui-corner-tr ui-corner-br fg-button ui-button ui-state-default"  title="末页">末页</a></div></div></div></div>
+        <table class="table table-bordered data-table dataTable">
+            <thead>
+                <th class="ui-state-default width1">编号</th>
+                <th class="ui-state-default width3">角色名称</th>
+                <th class="ui-state-default">所属机构</th>
+                <th class="ui-state-default width2">操作</th>
+            </thead>
+            <tbody>
+                <volist name="list" id="item">
+                <tr>
+                    <td>{$item.RoleId}</td>
+                    <td>{$item.RoleName}</td>
+                    <td>
+                    <if condition="$item.ComAllName eq ''">
+                    平台
+                    <else />
+                    {$item.ComAllName}
+                    </if>
+                    </td>
+                    <td><button onclick="b({$item.RoleId})" class="btn btn-primary btn-mini">修改</button>&nbsp;</td>
+                </tr>
+                </volist>
+            </tbody>
+        </table>
+
+        <div class="dataTables_wrapper">
+            <div class="fg-toolbar ui-toolbar ui-widget-header ui-corner-bl ui-corner-br ui-helper-clearfix">
+                <div class="dataTables_paginate fg-buttonset ui-buttonset fg-buttonset-multi ui-buttonset-multi paging_full_numbers">
+                    <a href="javascript:;" class="first ui-corner-tl ui-corner-bl fg-button ui-button ui-state-default ui-state-disabled" title="首页" >首页</a>
+                    <span>
+                        <a currpage="1" class="fg-button ui-button ui-state-default ui-state-disabled" href="javascript:;" title="第1页">1</a><a href="javascript:;" onclick="$('#grid').load('/RoleManager/GetTable?page=2&company= #grid');"  class="fg-button ui-button ui-state-default">2</a>
+                    </span>
+                    <a href="javascript:;" onclick="$('#grid').load('/RoleManager/GetTable?page=2&company= #grid');" class="last ui-corner-tr ui-corner-br fg-button ui-button ui-state-default"  title="末页">末页</a>
+                </div>
+            </div>
+        </div>
     </div>
+</div>
 </div>
 
 

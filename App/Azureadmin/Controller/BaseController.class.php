@@ -72,12 +72,24 @@ EOF;
 		}
 		
         $span .= "</span>
-                    <a href=\"javascript:;\" onclick=\"$('#grid').load('".$ctl_url."?page=$page_size&company= #grid');\" class=\"last ui-corner-tr ui-corner-br fg-button ui-button ui-state-default\"  title=\"末页\">末页</a> 
+                    <a href=\"javascript:;\" onclick=\"$('#grid').load('".$ctl_url."?page=$page_count&company= #grid');\" class=\"last ui-corner-tr ui-corner-br fg-button ui-button ui-state-default\"  title=\"末页\">末页</a> 
                   ";
 	}
 	//最后一页
 	if($cur_page_index == $page_count)
 	{
+		$span = "<a href=\"javascript:;\" onclick=\"$('#grid').load('".$ctl_url."?company= #grid');\" class=\"first ui-corner-tl ui-corner-bl fg-button ui-button ui-state-default\" title=\"首页\">首页</a><span>";
+		for($i=1; $i<= $page_count; $i++)
+		{
+			if($i == $page_count)
+				$span .= "<a title=\"第".$i."页\" href=\"javascript:;\" class=\"fg-button ui-button ui-state-default ui-state-disabled\" currpage=\"".$i."\">".$i."</a>";                        
+			else
+                $span .= "<a class=\"fg-button ui-button ui-state-default\" onclick=\"$('#grid').load('".$ctl_url."?page=1&amp;company= #grid');\" href=\"javascript:;\">".$i."</a>";	
+		}
+		
+        $span .= "</span>
+                   <a class=\"last ui-corner-tr ui-corner-br fg-button ui-button ui-state-default ui-state-disabled\" title=\"末页\" href=\"javascript:;\">末页</a> 
+                  ";
 		
 	}
 	//非第一页也不是最后一页

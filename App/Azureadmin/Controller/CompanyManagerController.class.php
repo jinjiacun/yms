@@ -56,9 +56,6 @@ class CompanyManagerController extends BaseController {
             }
         }
         
-        
-        $this->_map_trade_list();
-        
 		$this->display();
 	}
 

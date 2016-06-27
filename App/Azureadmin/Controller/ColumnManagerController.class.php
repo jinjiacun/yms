@@ -18,8 +18,108 @@ class ColumnManagerController extends BaseController {
      */
 	public function Index()
 	{
-        $this->assign('title', '栏目管理');
-        $this->assign('menu_index', 2);
+    $this->assign('title', '栏目管理');
+    $this->assign('menu_index', 2);
+
+    //查询平台
+    $page_index = 1;
+    $page_size  = 20;
+    $content    = array();
+    $content['page_size'] = $page_size;
+    $content['page_index'] = $page_index;    
+    $content['where']['AMoType'] = 1;
+    $content['where']['AMoPId'] = 0;
+    $res = A('Callapi')->call_api('Amodule.get_list', 
+                                $content,
+                                'text',
+                              null);
+    $result = $this->deal_re_call_api($res);
+
+    $list = array();
+    if($result)
+    {
+        if(200 == $result['status_code'])
+        {
+            if(isset($result['content']['list'])
+            && isset($result['content']['record_count']))
+            {
+                $list   = $result['content']['list'];   
+                $this->assign('list', $list);
+            }
+        }
+    }
+
+    //查询机构
+    $content['where']['AMoType'] = 2;
+    $content['where']['AMoPId'] = 0;
+    $res = A('Callapi')->call_api('Amodule.get_list', 
+                                $content,
+                                'text',
+                              null);
+    $result = $this->deal_re_call_api($res);
+
+    $list = array();
+    if($result)
+    {
+        if(200 == $result['status_code'])
+        {
+            if(isset($result['content']['list'])
+            && isset($result['content']['record_count']))
+            {
+                $list   = $result['content']['list'];   
+                $this->assign('list_ex', $list);
+            }
+        }
+    }
+
+    unset($result);
+    $id_list = array();
+    $ids = '';
+    //查询三级关系
+    if($list && 0<count($list))
+    {
+      foreach($list as $v)
+      {
+        $id_list[] = $v['AMoId'];
+      }
+
+
+      if(0< count($id_list))
+      {
+        $ids = implode($id_list, ',');
+        $content['where']['AMoType'] = 2;
+        $content['where']['AMoPId'] = array('in', $ids);
+        $res = A('Callapi')->call_api('Amodule.get_list', $content, 'text', null);
+        $result = $this->deal_re_call_api($res);
+        if($result)
+        {
+          if(200 == $result['status_code']){
+            if(isset($result['content']['list'])
+            && isset($result['content']['record_count']))
+            {
+              $tmp_list = $result['content']['list'];
+              foreach($list as $k=>$v)
+              {
+                foreach($tmp_list as $t_k=>$t_v)
+                {
+                    if($v['AMoId'] == $t_v['AMoPId'])
+                    {
+                      $list[$k]['_ex'][] = $t_v;
+                    }
+                }
+              }
+               $this->assign('list_ex', $list);
+            }
+          }
+        }
+      }
+    }
+
+
+
+
+
+
         
 		$this->display();
 	}
