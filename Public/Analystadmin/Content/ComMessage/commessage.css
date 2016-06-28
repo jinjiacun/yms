@@ -1,0 +1,28 @@
+﻿td.td_checkbox
+{
+    text-align: center;
+    width: 70px;
+}
+
+td.td_time
+{
+    width: 200px;
+}
+#div_search
+{
+    padding: 10px;
+}
+#div-edit
+{
+    height: 400px; width: 600px;
+    overflow-y: scroll;
+}
+.div-left
+{
+    float: left;
+}
+
+.clear
+{
+    clear: both;
+}

@@ -1,0 +1,47 @@
+﻿.uploadtips
+{
+    color: #cdcdcd;
+    padding: 4px;
+}
+
+.fontleft
+{
+    width: 300px !important;
+    padding-left: 20px;
+    text-align: left !important;
+}
+
+.label-width
+{
+    width: 400px !important;
+}
+
+.span4
+{
+    text-align: right;
+}
+
+.nobottom
+{
+    border-bottom: 0;
+}
+
+.class3
+{
+    width: 70px !important;
+    text-align: left !important;
+}
+
+.class4
+{
+    /*margin-left: 50px !important;*/
+    /*padding: 0 50px !important;*/
+}
+
+.bg-primary
+{
+    font-weight: bold;
+    padding: 10px;
+    color: #fff;
+    background-color: #428bca;
+}

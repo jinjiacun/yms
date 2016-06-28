@@ -1,0 +1,45 @@
+﻿/*grid 操作列居中*/
+td.grid_operate_td
+{
+    text-align: center;
+}
+
+#search_LoginId
+{
+    /*width: 200px;*/
+}
+
+#search_UserName
+{
+    /*width: 150px;*/
+}
+
+.s-auto
+{
+    width: auto;
+}
+
+#div_search
+{
+    padding: 10px;
+}
+
+#div_edit
+{
+    width: 400px;
+}
+
+.div-left
+{
+    float: left;
+}
+
+.clear
+{
+    clear: both;
+}
+
+.uploadtips
+{
+    color: #999999;
+}

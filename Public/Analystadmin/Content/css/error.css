@@ -1,0 +1,13 @@
+﻿@charset "utf-8";
+
+
+/*---------------------------------------------------*/
+body {
+ background:url('../img/404_error_bg.jpg')}
+.body{ min-width:1000px;}
+.error {width:100%;text-align:center;height:393px;position:absolute;top:50%;margin-top:-196px;left:0}
+.num_tip span{ width:180px; height:37px; line-height:37px; background-color:#dcdcdc; color:#3e3e3e; font-family:"微软雅黑"; font-size:14px; display:inline-block;}
+.num_tip span b{ color:#c70707; font-family:Arial; font-size:18px; margin:0 5px;}
+.return_link{ width:1000px; text-align:center; padding:40px 0;}
+.return_link a{ height:30px; line-height:30px; color:#fff; background-color:#a1c2cc; display:inline-block; padding:0 8px; margin-right:4px; font-family:"宋体";}
+.return_link a:hover{ background-color:#f5b201; text-decoration:none;}

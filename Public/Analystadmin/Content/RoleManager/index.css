@@ -1,0 +1,74 @@
+﻿.row
+{
+    width: 345px;
+    margin-left: 25px;
+}
+
+.title
+{
+    border-bottom: 1px dashed #ccc;
+    margin-bottom: 10px;
+}
+
+.col
+{
+    float: left;
+    line-height: 32px;
+    margin-right: 5px;
+}
+
+.span
+{
+    width: 45px;
+    text-align: right;
+}
+
+.width
+{
+    width: 220px;
+}
+
+.update
+{
+    margin-left: 58px;
+}
+
+.top_r
+{
+    float: right;
+    margin-top: 6px;
+    margin-right: 8px;
+}
+
+ul.ztree
+{
+    margin-top: 10px;
+    margin-bottom: 10px;
+    margin-left:60px;
+    border: 1px solid #617775;
+    background: #f0f6e4;
+    width: 250px;
+    height: 150px;
+    overflow: auto;
+}
+
+.search
+{
+    border-bottom: 1px solid #ddd;
+    padding:13px 0px 11px 5px;
+    line-height:30px;
+}
+    .search > div
+    {
+        float:left;
+        margin-left:10px;
+    }
+    .search #txtSearchCompany
+    {
+        margin-bottom:0px;
+    }
+
+#grid table{table-layout: fixed;}
+#grid td{text-overflow: ellipsis;white-space: nowrap;overflow: hidden;}
+.width1{width:80px;}
+.width2{width:100px;}

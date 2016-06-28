@@ -1,0 +1,10 @@
+﻿.top_r
+{
+    float:right;
+    margin-top:6px;
+    margin-right:8px;
+}
+
+#grid{table-layout: fixed;}
+#grid td{text-overflow: ellipsis;white-space: nowrap;overflow: hidden;}
+.width1{width: 250px;}
