@@ -1,0 +1,19 @@
+<div id="welcome" class="navbar navbar-inverse">
+    <ul class="nav">
+        
+
+        <li class="dropdown" id="menu-personal">
+            <a href="javascript:;" data-toggle="dropdown" data-target="#menu-personal" class="dropdown-toggle">
+                <span class="text">欢迎您，{$AdminName} ({$dictionary["Role"][$RoleId]})</span>
+                <b class="caret"></b>
+            </a>
+            <ul class="dropdown-menu">
+                <li><a title="" href="javascript:changePassword();">修改密码</a></li>
+            </ul>
+        </li>
+        <li class="logo">
+            <img class="logo" src="__PUBLIC__/Azureadmin/Content/img/jcs_logo.png" />
+        </li>
+        <li><a href="__APP__/Azureadmin/Login/Quit"><i class="icon icon-share-alt icon-white"></i><span class="text">退出</span></a></li>
+    </ul>
+</div>
