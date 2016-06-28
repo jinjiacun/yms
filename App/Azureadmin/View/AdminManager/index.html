@@ -28,25 +28,7 @@
     <h1><span>机构服务平台</span></h1>
 </div>
 
-<div id="welcome" class="navbar navbar-inverse">
-    <ul class="nav">
-        
-
-        <li class="dropdown" id="menu-personal">
-            <a href="javascript:;" data-toggle="dropdown" data-target="#menu-personal" class="dropdown-toggle">
-                <span class="text">欢迎您，aisa (平台超级管理员)</span>
-                <b class="caret"></b>
-            </a>
-            <ul class="dropdown-menu">
-                <li><a title="" href="javascript:changePassword();">修改密码</a></li>
-            </ul>
-        </li>
-        <li class="logo">
-            <img class="logo" src="__PUBLIC__/Azureadmin/Content/img/jcs_logo.png" />
-        </li>
-        <li><a href="/Login/Exit"><i class="icon icon-share-alt icon-white"></i><span class="text">退出</span></a></li>
-    </ul>
-</div>
+<include file="Public:welcome" />
 
 <div id="user-nav" class="navbar navbar-inverse">
     <ul class="nav">
@@ -56,17 +38,7 @@
     </ul>
 </div>
 
-    <div id="sidebar">
-        <ul>
-            <li><a href="__APP__/Azureadmin/CompanyManager/Index"><i class="icon-th-list"></i><span>机构管理</span></a></li>
-            <li><a href="__APP__/Azureadmin/ColumnManager/Index"><i class="icon-th-list"></i><span>后台栏目管理</span></a></li>
-            <li><a href="__APP__/Azureadmin/RoleManager/Index"><i class="icon-th-list"></i><span>角色管理</span></a></li>
-            <li><a href="__APP__/Azureadmin/NoticeManager/Index"><i class="icon-th-list"></i><span>公告管理</span></a></li>
-            <li><a href="__APP__/Azureadmin/LogManager/Index"><i class="icon-th-list"></i><span>日志管理</span></a></li>
-            <li><a href="__APP__/Azureadmin/Modules/Index"><i class="icon-th-list"></i><span>前台模块管理</span></a></li>
-            <li class="active"><a href="__APP__/Azureadmin/AdminManager/Index"><i class="icon-th-list"></i><span>管理员管理</span></a></li>
-        </ul>
-    </div>
+    <include file="Public:navigate" />
     
     <div id="content">
         <div id="breadcrumb"><a href="__APP__/Azureadmin/Index"><i class="icon-home"></i>欢迎</a><a href="__APP__/Azureadmin/AdminManager/Index" class="current">管理员管理</a></div>

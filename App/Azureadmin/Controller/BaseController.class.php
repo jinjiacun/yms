@@ -13,6 +13,18 @@ class BaseController extends Controller {
 		$this->assign('domain', C('domain'));
 		$this->assign('controller', C('controller'));
 		$this->assign('resource', C('resource'));
+		$this->assign('AdminName', session('AdminName'));
+		$this->assign('RoleId', session('RoleId'));
+	}
+
+	protected function get_dictionary(){
+		$result = $this->_call('Help.get_dictionary');
+	    if($result)
+	    {
+	        if(200 == $result['status_code']){
+	            $this->assign('dictionary', $result['content']);
+	        }
+	    }
 	}
 
 	//解析接口调用返回处理
@@ -109,7 +121,7 @@ EOF;
                                       $content,
                                       $type,
                                       $handler);
-		print_r($res);
+		//print_r($res);
         $result = $this->deal_re_call_api($res);
         return $result;
 	}

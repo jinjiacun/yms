@@ -1,6 +1,6 @@
 <?php
 namespace Azureadmin\Controller;
-use Azureadmin\Controller;
+use Think\Controller;
 include_once(dirname(__FILE__).'/BaseController.class.php');
 class CallapiController extends BaseController {
 	#api接口回调统一函数

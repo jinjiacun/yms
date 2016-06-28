@@ -18,6 +18,8 @@ class LoginController extends BaseController {
                     && 0 == $result['content']['is_success'])
                     {
                         session('AdminName', I('post.AdminName'));
+                        //角色名称
+                        session('RoleId', $result['content']['RoleId']);
                         //$this->echo_message(0,'成功登录', C('admin_url'));
                         $this->redirect("Index/index");
                         exit();
@@ -32,10 +34,12 @@ class LoginController extends BaseController {
 		$this->display();
 	}
 
-    public function quit()
+    public function Quit()
     {
         session('AdminName',null);
         $this->redirect("Index/index");
         exit();
     }
+
+
 }

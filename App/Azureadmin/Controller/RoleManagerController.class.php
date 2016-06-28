@@ -19,6 +19,7 @@ class RoleManagerController extends BaseController {
 	public function Index()
 	{ 
 
+    $this->assign('menu_index', 3);
     $page_index = 1;
     $page_size  = 20;
     $content    = array();

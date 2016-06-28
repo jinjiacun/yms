@@ -15,6 +15,7 @@ class LogManagerController extends BaseController {
 
 	public function index()
 	{
+        $this->assign('menu_index', 5);
 		$this->display();
 	}
 

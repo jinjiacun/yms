@@ -15,7 +15,7 @@ class AdminManagerController extends BaseController {
 
 	public function index()
 	{
-        $this->assign('menu_index', 1);
+        $this->assign('menu_index', 7);
 
         $page_index = 1;
         $page_size  = 20;

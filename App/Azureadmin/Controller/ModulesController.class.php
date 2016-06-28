@@ -15,6 +15,7 @@ class ModulesController extends BaseController {
 
 	public function index()
 	{
+        $this->assign('menu_index', 6);
         $page_index = 1;
         $page_size  = 20;
         $content    = array();
