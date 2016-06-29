@@ -6,7 +6,7 @@ class IndexController extends BaseController {
     public function _initialize()
     {
         parent::get_dictionary();
-	   parent::_initialize();
+	    parent::_initialize();
 
     	if(null == session('AdminName')
     	|| ''   == session('AdminName'))
@@ -16,13 +16,13 @@ class IndexController extends BaseController {
     }
     
     public function index(){
-        if(I('post.submit'))
+       /* if(I('post.submit'))
         {
             $content = array(
                 'AdminName' =>I('post.AdminName'),
                 'Password'  =>I('post.Password'),
             );
-            $result = $this->_call("Comadmin.login",
+            $result = $this->_call("ComAdmin.login",
                                    $content);
             if($result
             && 200 == $result['status_code']
@@ -38,7 +38,7 @@ class IndexController extends BaseController {
                 $this->echo_message(-1,'登录失败');
                 exit();
             }
-        }
+        }*/
         $this->display();
     }
 

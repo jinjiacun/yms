@@ -6,6 +6,7 @@ class CompanyManagerController extends BaseController {
     public function _initialize()
     {
         parent::_initialize();
+        parent::get_dictionary();
         if(null == session('AdminName')
         || ''   == session('AdminName'))
         {
@@ -32,11 +33,9 @@ class CompanyManagerController extends BaseController {
             $content['page_index'] = $page_index;
         }
                
-        $res = A('Callapi')->call_api('Comtable.get_list', 
-                                    $content,
-                                    'text',
-                                  null);
-        $result = $this->deal_re_call_api($res);
+        
+        $result = $this->_call('ComTable.get_list', $content);
+        $this->deal_re_call_api($res);
 
         $list = array();
         if($result)
@@ -85,11 +84,7 @@ class CompanyManagerController extends BaseController {
             $content['where']['ComAllName'] = array('like', '$'.urlencode(I('get.company')).'$');
         }
 
-        $res = A('Callapi')->call_api('Comtable.get_list', 
-                                    $content,
-                                    'text',
-                                  null);
-        $result = $this->deal_re_call_api($res);
+        $result = $this->_call('ComTable.get_list', $content);
 
         $list = array();
         if($result)
@@ -211,11 +206,8 @@ EOF;
         }
 
         $content['ComId'] = $ComId;
-        $res = A('Callapi')->call_api('Comtable.get_info_by_key', 
-                                    $content,
-                                    'text',
-                                  null);
-        $result = $this->deal_re_call_api($res);
+        
+        $result = $this->_call('ComTable.get_info_by_key', $content);
         
         $data = array();
         $info = array();
@@ -234,11 +226,7 @@ EOF;
              unset($content);
             $content['ComId'] = $ComId;
             //查询管理员id
-            $res = A('Callapi')->call_api("Cominit.get_info",
-                                            $content,
-                                            'text',
-                                            null);
-            $result = $this->deal_re_call_api($res);
+            $result = $this->_call("ComInit.get_info", $content);
             $ComAdmin = 0;
             if($result)
             {
@@ -250,11 +238,7 @@ EOF;
             unset($content);
             //查询管理员用户名及其id
             $content['AdminId'] = $ComAdmin;
-            $res = A('Callapi')->call_api("ComAdmin.get_info_by_key",
-                                           $content,
-                                          'text',
-                                           null);
-            $result = $this->deal_re_call_api($res);
+            $result = $this->_call("ComAdmin.get_info_by_key", $content);
             if($result)
             {
                 if(200 == $result['status_code'])

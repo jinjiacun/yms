@@ -6,6 +6,7 @@ class ColumnManagerController extends BaseController {
     public function _initialize()
     {
         parent::_initialize();
+        parent::get_dictionary();
         if(null == session('AdminName')
         || ''   == session('AdminName'))
         {
@@ -29,11 +30,7 @@ class ColumnManagerController extends BaseController {
     $content['page_index'] = $page_index;    
     $content['where']['AMoType'] = 1;
     $content['where']['AMoPId'] = 0;
-    $res = A('Callapi')->call_api('Amodule.get_list', 
-                                $content,
-                                'text',
-                              null);
-    $result = $this->deal_re_call_api($res);
+    $result = $this->_call('AModule.get_list', $content);
 
     $list = array();
     if($result)
@@ -52,11 +49,7 @@ class ColumnManagerController extends BaseController {
     //查询机构
     $content['where']['AMoType'] = 2;
     $content['where']['AMoPId'] = 0;
-    $res = A('Callapi')->call_api('Amodule.get_list', 
-                                $content,
-                                'text',
-                              null);
-    $result = $this->deal_re_call_api($res);
+    $result = $this->_call('AModule.get_list', $content);
 
     $list = array();
     if($result)
@@ -89,8 +82,7 @@ class ColumnManagerController extends BaseController {
         $ids = implode($id_list, ',');
         $content['where']['AMoType'] = 2;
         $content['where']['AMoPId'] = array('in', $ids);
-        $res = A('Callapi')->call_api('Amodule.get_list', $content, 'text', null);
-        $result = $this->deal_re_call_api($res);
+        $result = $this->_call('AModule.get_list', $content);
         if($result)
         {
           if(200 == $result['status_code']){

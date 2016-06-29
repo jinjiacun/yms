@@ -6,6 +6,7 @@ class LogManagerController extends BaseController {
     public function _initialize()
     {
         parent::_initialize();
+        parent::get_dictionary();
         if(null == session('AdminName')
         || ''   == session('AdminName'))
         {

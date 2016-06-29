@@ -6,6 +6,7 @@ class RoleManagerController extends BaseController {
     public function _initialize()
     {
         parent::_initialize();
+        parent::get_dictionary();
         if(null == session('AdminName')
         || ''   == session('AdminName'))
         {
@@ -35,11 +36,7 @@ class RoleManagerController extends BaseController {
         $content['page_index'] = $page_index;
     }
            
-    $res = A('Callapi')->call_api('Comrole.get_list', 
-                                $content,
-                                'text',
-                              null);
-    $result = $this->deal_re_call_api($res);
+    $result = $this->_call('ComRole.get_list', $content);
 
     $list = array();
     if($result)

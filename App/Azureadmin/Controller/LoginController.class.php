@@ -11,7 +11,7 @@ class LoginController extends BaseController {
                         'AdminName'=>I('post.AdminName'),
                         'Password'    =>I('post.Password'),
                     );
-                    $result = $this->_call("Comadmin.login",
+                    $result = $this->_call("ComAdmin.login",
                                            $content);
                     if($result
                     && 200 == $result['status_code']
@@ -26,8 +26,9 @@ class LoginController extends BaseController {
                     }
                     else
                     {
-                        //$this->error("登录失败");
+                        $this->error("登录失败");
                         //$this->echo_message(-1,'登录失败');
+                        //$this->redirect("Index/index");
                         exit();
                     }
 		}
