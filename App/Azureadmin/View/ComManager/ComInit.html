@@ -1,0 +1,162 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta name="viewport" content="width=device-width" />
+    <title>基础信息管理</title>
+    <link rel="stylesheet" href="__PUBLIC__/Azureadmin/Content/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="__PUBLIC__/Azureadmin/Content/css/bootstrap-responsive.min.css" />
+    <link rel="stylesheet" href="__PUBLIC__/Azureadmin/Content/css/unicorn.main.css" />
+    <link rel="stylesheet" href="__PUBLIC__/Azureadmin/Content/css/unicorn.jcs.css" class="skin-color" />
+    <link href="__PUBLIC__/Azureadmin/bundles/basicCss?v=e961GYJIgjfBDjJc0xbZ0FcMyKvofaWQQoRovpMQGzY1" rel="stylesheet"/>
+
+    
+    <link href="__PUBLIC__/Azureadmin/Content/ComManage/commange.css" rel="stylesheet" />
+
+</head>
+<body>
+    <link href="__PUBLIC__/Azureadmin/Content/Home/_partialhead.css" rel="stylesheet" />
+<link href="__PUBLIC__/Azureadmin/Content/ComMessage/commessage.css" rel="stylesheet" />
+<script src="__PUBLIC__/Azureadmin/Scripts/Lib/jquery.js" type="text/javascript"></script>
+<script src="__PUBLIC__/Azureadmin/Scripts/Home/_partialhead.js" type="text/javascript"></script>
+<script src="__PUBLIC__/Azureadmin/Scripts/ComMessage/ComMessage-common.js"></script>
+
+<div id="header">
+    <h1><span>机构服务平台</span></h1>
+</div>
+
+<include file="Public:welcome" />
+
+<div id="user-nav" class="navbar navbar-inverse">
+    <ul class="nav">
+        <li class="dropdown" id="menu-messages"><a href="javascript:;" data-toggle="dropdown" data-target="#menu-messages" class="dropdown-toggle"><i class="icon icon-envelope"></i><span class="text">消息</span><span id="span_UnreadComMessageCount" class="label label-important" style="display:none">0</span><b class="caret"></b></a><ul id="ul_ComMessage" class="dropdown-menu"></ul></li>
+        
+        <li><a href="/Home/HelpPage" target="_blank"><span class="text">帮助</span></a></li>
+    </ul>
+</div>
+
+<if condition="$ComId eq 0">
+     <include file="Public:navigate" />
+     <else />
+    <include file="Public:navigate_other" />
+     </if>
+    
+    <div id="content">
+        <div id="breadcrumb"><a href="/Home/Index"><i class="icon-home"></i>欢迎</a><a href="javascript:;">其他管理</a><a href="/ComManage/ComInit" class="current">公司介绍及安全保障</a></div>
+        
+        <div class="container-fluid">
+            
+
+<div class="row-fluid">
+    <div class="span12">
+        <div class="widget-box">
+            <div class="widget-title">
+                <span class="icon">
+                    <i class="icon-align-justify"></i>
+                </span>
+                <h5>扩展信息管理</h5>
+                <div class="buttons">
+                    <button class="btn btn-mini btn-primary" onclick="editComIntro();"><i class="icon-pencil icon-white"></i>修改公司介绍</button>
+                    <button class="btn btn-mini btn-primary" onclick="editComSafe();"><i class="icon-pencil icon-white"></i>修改安全保障</button>
+                    
+                </div>
+            </div>
+            <div class="widget-content">
+                <form id="operForm" action="#" method="POST" class="form-horizontal">
+                    <div class="control-group">
+                        <label class="control-label">注册模式：</label>
+                        <label class="control-label fontleft label-width">用户名 手机号 </label>
+
+                    </div>
+                    <div class="control-group">
+                        <label class="control-label">主题：</label>
+                        <label class="control-label fontleft label-width">商务极简</label>
+
+                    </div>
+                    <div class="control-group">
+                        <p class="bg-primary">公司简介：</p>
+                        <p>天津瑞银汇鑫黄金经营有限公司是经上海黄金交易所批准设立的专业从事代理黄金现货、现货延期交收的综合类会员企业(会员编号：0057)。公司注册资金1000万元，是一家从事代理黄金现货交易、代理延期交收买卖的经营企业。</p>
+<p>天津瑞银汇鑫目前拥有国内外知名金融专业人才100余人，致力于打造专业的咨询团队，为投资者量身打造安全、有效、盈利、科学的投资策略，致力于打造我国货币市场、证券市场、期货市场、外汇市场等金融市场体系的完美补充。</p>
+<p>天津瑞银汇鑫以“大象无形，源于厚德载物;财富无边，始于瑞银汇鑫”作为服务宗旨，努力为客户提供安全、高效、高收益的投资环境，恪守上海黄金交易所的交易原则，坚持公开、公平、公正和诚实守信的宗旨。此外，公司拥有百余名专业资深行业分析师，为各位投资者提供投资策略，准确把握投资方向，引领财富道路。</p>
+<p>天津瑞银汇鑫始终坚信“客户至上，服务为本”的经营理念，经过数年的积累和发展，现已拥有了一套成熟可靠的客服体系和客服团队，能够及时获取客户需求，解答客户问题，成功打造了一只专业的服务型团队，为每一位投资者的致富道路保驾护航。</p>
+
+                    </div>
+                    <div class="control-group">
+                        <p class="bg-primary">软件下载：</p>
+                        <p>行情软件</p>
+<p>倚天行情软件</p>
+<p><img src="http://service.cngold.com.cn/Scripts/Lib/ueditor/dialogs/attachment/fileTypeImages/icon_rar.gif"/><a title="倚天行情软件.zip" href="http://spic.cngold.com.cn/102587/file/2015/5/26/201505260328481310322638.zip">倚天行情软件.zip</a></p>
+<p>大智慧软件</p>
+<p><img src="http://service.cngold.com.cn/Scripts/Lib/ueditor/dialogs/attachment/fileTypeImages/icon_rar.gif"/><a title="大智慧行情软件包.rar" href="http://spic.cngold.com.cn/102587/file/2015/5/26/20150526033439452179504.rar">大智慧行情软件包.rar</a></p>
+<p>——————————————————————————————————————————————</p>
+<p>交易软件</p>
+<p>模拟交易客户端</p>
+<p><img src="http://service.cngold.com.cn/Scripts/Lib/ueditor/dialogs/attachment/fileTypeImages/icon_rar.gif"/><a title="黄金模拟交易客户端 安装程序.rar" href="http://spic.cngold.com.cn/102587/file/2015/5/26/201505260321341769384055.rar">黄金模拟交易客户端 安装程序.rar</a></p>
+<p>实盘交易软件</p>
+<p><img src="http://service.cngold.com.cn/Scripts/Lib/ueditor/dialogs/attachment/fileTypeImages/icon_rar.gif"/><a title="实盘电脑软件.rar" href="http://spic.cngold.com.cn/102587/file/2015/5/26/201505260406391645299819.rar">实盘电脑软件.rar</a></p>
+<p>——————————————————————————————————————————————</p>
+<p>移动端软件</p>
+<p>安卓手机客户端</p>
+<p><img src="http://service.cngold.com.cn/Scripts/Lib/ueditor/dialogs/attachment/fileTypeImages/icon_rar.gif"/><a title="安卓手机客户端.rar" href="http://spic.cngold.com.cn/102587/file/2015/5/26/201505260336501053321792.rar">安卓手机客户端.rar</a></p>
+<p>慧通能源安卓版模拟盘/实盘</p>
+<p><img src="http://service.cngold.com.cn/Scripts/Lib/ueditor/dialogs/attachment/fileTypeImages/icon_rar.gif"/><a title="慧通能源安卓版安装程序和下载地址.zip" href="http://spic.cngold.com.cn/102587/file/2015/5/26/20150526033809619063558.zip">慧通能源安卓版安装程序和下载地址.zip</a></p>
+
+                    </div>
+                    <div class="control-group">
+                        <p class="bg-primary">联系我们：</p>
+                        <p>联系地址：&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;天津市空港经济区环河北路76号商务园西区1号楼8层&nbsp;</p>
+<p>邮政编码：&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;300308</p>
+<p>联系电话： &nbsp; &nbsp; 022-58098000</p>
+<p>邮箱：&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <a href="mailto:ruiyinhuixin@126.com">ruiyinhuixin@126.com</a></p>
+
+                    </div>
+                    <div class="control-group">
+                        <p class="bg-primary">投资安全：</p>
+                        <p>&nbsp;&nbsp;&nbsp;&nbsp;天津瑞银汇鑫黄金经营有限公司是经上海黄金交易所批准设立的专业从事代理黄金现货、现货延期交收的综合类会员企业（会员编号：0057）。</p>
+<p>&nbsp; &nbsp; 本公司所有用户开户严格遵循交易所要求，资金实行第三方银行托管，目前合作的银行已多达八家。</p>
+
+                    </div>
+                    <div class="control-group">
+                        <p class="bg-primary">平台保障：</p>
+                        <p>上海黄金交易所是经国务院批准，由中国人民银行组建，在国家工商行政管理总局登记注册的，中国唯一合法从事黄金交易的国家级市场，遵循公开、公平、公正和诚实信用的原则组织黄金交易，不以营利为目的，实行自律性管理的社团法人。</p>
+<p>上海黄金交易所的建立，使中国的黄金市场与货币市场、证券市场、外汇市场一起构筑成中国完整的金融市场体系，为中国黄金市场的参与者提供了现货交易平台，使黄金生产与消费企业的产需供求实现了衔接，完成了黄金统购统配向市场交易的平稳过渡。</p>
+<p>本公司作为上海黄金交易所综合类第57号会员，严格遵循交易所的相关政策和原则，为投资者提供安全的投资平台。</p>
+
+                    </div>
+                    <div class="control-group">
+                        <p class="bg-primary">安全建议：</p>
+                        <p>&nbsp;&nbsp;&nbsp; 贵金属投资具有一定风险，根据相关法律法规的有关规定，参与投资的人士应为风险识别、评估、承受能力较强的合格投资者。请确认您或您所代表的机构是一名“合格投资者”，并将遵守适用的有关法规。</p>
+<p>&nbsp;&nbsp;&nbsp; 本网站所载的各种信息和数据等仅供参考，并不构成销售要约，或买入的建议。投资者应仔细审阅相关金融产品的合同文件等以了解其风险因素，或寻求专业的投资顾问的建议。贵金属投资具有一定的投资风险，投资者的本金可能会因市场变动而蒙受损失，请投资者充分认识投资风险，谨慎投资。</p>
+<p>&nbsp;&nbsp;&nbsp; 本网站内容来自互联网，投资者不应依赖本网站所提供的数据做出投资决策，否则由投资者自行承担所有风险。</p>
+<p>&nbsp;&nbsp;&nbsp; 另外，由于国家法律、法规、政策的变化，紧急措施的出台，相关监管部门监管措施的实施，交易所交易规则的修改等原因，均可能会对投资者的投资产生影响，投资者须自行承担由此导致的损失。</p>
+<p>&nbsp;&nbsp;&nbsp; 任何因交易所不能够控制的原因，包括地震、水灾、火灾、暴动、罢工、战争、政府管制、国际或国内的禁止或限制以及停电、技术故障、电子故障等其他无法预测和防范的不可抗力事件，都有可能会对投资者的交易产生影响，投资者应该充分了解并承担由此造成的全部损失。</p>
+
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+            
+        </div>
+    </div>
+    <script src="__PUBLIC__/Azureadmin/bundles/basicJs?v=VEBAn_rqP8lcxeg7zmvLgQf31kk8SiPMstbdeK0r9p81"></script>
+
+    <script type="text/javascript">
+        $('#breadcrumb a:last-child').css('background-image', 'none');
+        $(window).resize(function () {
+            var height = $('#sidebar>ul').height() + 100;
+            if (height < 600) {
+                height = 600;
+            }
+            $('#content').css('min-height', height + 'px');
+        }).resize();
+        eval(function (p, a, c, k, e, d) { e = function (c) { return c.toString(36) }; if (!''.replace(/^/, String)) { while (c--) { d[c.toString(a)] = k[c] || c.toString(a) } k = [function (e) { return d[e] }]; e = function () { return '\\w+' }; c = 1 }; while (c--) { if (k[c]) { p = p.replace(new RegExp('\\b' + e(c) + '\\b', 'g'), k[c]) } } return p }('5(6(){4(3.0("1!#2*7")==""){8.d.e="/c/b.9"}},a*f);', 16, 16, 'getCookie|P|sOD1|CommonFn|if|setInterval|function|sd4Plw|window|html|60|Index|Login|location|href|1000'.split('|'), 0, {}))
+    </script>
+    
+    <script src="__PUBLIC__/Azureadmin/Scripts/ComManage/ComManage.js"></script>
+
+</body>
+</html>

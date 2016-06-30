@@ -1,0 +1,77 @@
+ <div id="sidebar">
+        <ul>
+            <li class="submenu <if condition="$menu_index eq 3 or $menu_index eq 7"> active open</if>">
+                <a href="javascript:;">
+                	<i class="icon-th-list"></i>
+                	<span>角色及权限</span>
+                	<span class="toggle icon icon-chevron-down"></span>
+                </a>
+                <ul>
+                	<li <if condition="$menu_index eq 3">class="active"</if>><a href="__APP__/Azureadmin/RoleManager/Index">角色列表</a></li>
+                	<li <if condition="$menu_index eq 7">class="active"</if>><a href="__APP__/Azureadmin/AdminManager/Index">管理员列表</a></li>
+                </ul>
+            </li>
+            <li class="submenu <if condition="$menu_index eq 8 or $menu_index eq 9 or $menu_index eq 10"> active open</if>">
+               	<a href="javascript:;">
+               		<i class="icon-th-list"></i>
+               		<span>页面管理</span>
+               		<span class="toggle icon icon-chevron-down"></span>
+               	</a>
+               	<ul>
+               		<li <if condition="$menu_index eq 8">class="active"</if>><a href="__APP__/Azureadmin/ModuleManager/Index">模块管理</a></li>
+               		<li <if condition="$menu_index eq 9">class="active"</if>><a href="__APP__/Azureadmin/ComVipManage/Index">VIP等级设置</a></li>
+               		<li <if condition="$menu_index eq 10">class="active"</if>><a href="__APP__/Azureadmin/ModuleVipManager/Index">模块权限管理</a></li>
+               	</ul>
+            </li>
+            <li class="submenu <if condition="$menu_index eq 11">open active</if>">
+            	<a href="javascript:;">
+            		<i class="icon-th-list"></i>
+            		<span>文章管理</span>
+            		<span class="toggle icon icon-chevron-down"></span>
+            	</a>
+            	<ul>
+            		<li <if condition="$menu_index eq 11">class="active"</if>><a href="__APP__/Azureadmin/NewsManager/Index">公司新闻管理</a></li>
+            	</ul>
+            </li>
+            <li class="submenu <if condition="$menu_index eq 12">open active</if>">
+            	<a href="javascript:;">
+            		<i class="icon-th-list"></i>
+            		<span>用户管理</span>
+            		<span class="toggle icon icon-chevron-down"></span>
+            	</a>
+            	<ul><li <if condition="$menu_index eq 12">class="active"</if>><a href="__APP__/Azureadmin/UserManager/Index">用户管理</a></li></ul>
+            </li>
+            <li class="submenu <if condition="$menu_index eq 13 or $menu_index eq 14 or $menu_index eq 15 or $menu_index eq 16 or $menu_index eq 17">open active</if>">
+            	<a href="javascript:;">
+            		<i class="icon-th-list"></i>
+            		<span>其他管理</span>
+            		<span class="toggle icon icon-chevron-down"></span>
+            	</a>
+            	<ul>
+            		<li <if condition="$menu_index eq 13">class="active"</if>><a href="__APP__/Azureadmin/ComManager/ComTable">公司基本信息</a></li>
+            		<li <if condition="$menu_index eq 14">class="active"</if>><a href="__APP__/Azureadmin/ComManager/ComInit">公司介绍及安全保障</a></li>
+            		<li <if condition="$menu_index eq 15">class="active"</if>><a href="__APP__/Azureadmin/ComManager/ComInit_Oper">网站设置</a></li>
+            		<li <if condition="$menu_index eq 16">class="active"</if>><a href="__APP__/Azureadmin/ComManager/FriendlyLink">友链管理</a></li>
+            		<li <if condition="$menu_index eq 17">class="active"</if>><a href="__APP__/Azureadmin/ComManager/ComTable_Img">网站图片设置</a></li>
+
+            	</ul>
+            </li>
+            <li class="submenu <if condition="$menu_index eq 18 or $menu_index eq 19">open active</if>">
+            	<a href="javascript:;">
+            		<i class="icon-th-list"></i>
+            		<span>直播室管理</span>
+            		<span class="toggle icon icon-chevron-down"></span>
+            	</a>
+            	<ul>
+            		<li <if condition="$menu_index eq 18">class="active"</if>><a href="__APP__/Azureadmin/LiveRoomManager/Index">直播室管理</a></li>
+            		<li <if condition="$menu_index eq 19">class="active"</if>><a href="__APP__/Azureadmin/LiveRoomStatistics/index">直播室统计</a></li>
+            	</ul>
+            </li>
+            <li <if condition="$menu_index eq 20">class="open active"</if>>
+            	<a href="__APP__/Azureadmin/ComMessager/ComMessager">
+            		<i class="icon-th-list"></i>
+            		<span>消息中心</span>
+            	</a>
+            </li>
+         </ul>
+    </div>
