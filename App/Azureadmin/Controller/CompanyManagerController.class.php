@@ -35,7 +35,6 @@ class CompanyManagerController extends BaseController {
                
         
         $result = $this->_call('ComTable.get_list', $content);
-        $this->deal_re_call_api($res);
 
         $list = array();
         if($result)
@@ -285,11 +284,7 @@ EOF;
                     'ComMail' => I('post.ComMail')
                     ),
             );
-	$res = A('Callapi')->call_api(
-		'Comtable.update',
-		$content,
-		'text',null);
-	$result = $this->deal_re_call_api($res);
+	$result = $this->_call('ComTable.update', $content);
 	if($result)
 	{
 		if(0 == $result['is_success'])
@@ -320,7 +315,7 @@ EOF;
 		    ),
 	    );
 
-	$res = A('Callapi')->call_api('Comtalbe.update', $content, 'text', null);
+	$res = A('Callapi')->call_api('ComTalbe.update', $content, 'text', null);
 	$result = $this->deal_re_call_api($res);
 	if($result)
 	{
@@ -380,7 +375,7 @@ EOF;
 		'data' => array('ComState' => I('post.ComState'))
 	);
 
-	$res = A("Callapi")->call_api("Comtable.update", $content, 'text', null);
+	$res = A("Callapi")->call_api("ComTable.update", $content, 'text', null);
 	$result = $this->deal_re_call_api($res);
 	if($result)
 	{
@@ -406,8 +401,8 @@ EOF;
     public function Pass()
     {
 	//检查机构tag
-	$content = array("ComTag" => I("ComTag"));
-	$res = A("Callapi")->call_api("Comtable.check", $content, 'text', null);
+	$content = array("ComTag" => I("post.ComTag"), 'ComId' => I('post.ComId'));
+	$res = A("Callapi")->call_api("ComTable.check", $content, 'text', null);
 	$result = $this->deal_re_call_api($res);
 	if($result)
 	{

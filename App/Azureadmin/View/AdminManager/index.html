@@ -37,8 +37,12 @@
         <li><a href="/Home/HelpPage" target="_blank"><span class="text">帮助</span></a></li>
     </ul>
 </div>
-
+    
+    <if condition="$ComId eq 0">
     <include file="Public:navigate" />
+    <else />
+    <include file="Public:navigate_other" />
+    </if>
     
     <div id="content">
         <div id="breadcrumb"><a href="__APP__/Azureadmin/Index"><i class="icon-home"></i>欢迎</a><a href="__APP__/Azureadmin/AdminManager/Index" class="current">管理员管理</a></div>

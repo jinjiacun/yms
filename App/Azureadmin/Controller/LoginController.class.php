@@ -20,8 +20,19 @@ class LoginController extends BaseController {
                         session('AdminName', I('post.AdminName'));
                         //角色名称
                         session('RoleId', $result['content']['RoleId']);
+                        //机构
+                        session('ComId', $result['content']['ComId']);
+                        //头像
+                        session('Adavatar', $result['content']['Adavatar']);
                         //$this->echo_message(0,'成功登录', C('admin_url'));
-                        $this->redirect("Index/index");
+                        if($result['content']['ComId'] == 0)
+                        {
+                            $this->redirect("Index/sys_index");    
+                        }
+                        else
+                        {   
+                            $this->redirect("Index/other_index");
+                        }
                         exit();
                     }
                     else

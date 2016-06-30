@@ -41,7 +41,11 @@
     </ul>
 </div>
 
+     <if condition="$ComId eq 0">
      <include file="Public:navigate" />
+     <else />
+    <include file="Public:navigate_other" />
+     </if>
     
     <div id="content">
         <div id="breadcrumb"><a href="/Home/Index"><i class="icon-home"></i>欢迎</a><a href="__PUBLIC__/Azureadmin/ColumnManager/Index" class="current">后台栏目管理</a></div>

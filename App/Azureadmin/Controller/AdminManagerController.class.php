@@ -33,6 +33,11 @@ class AdminManagerController extends BaseController {
             $content['page_index'] = $page_index;
         }
         
+        if(session('ComId') != 0)
+        {
+            $content['where']['ComId'] = session('ComId');
+        }
+
         $result = $this->_call('ComAdmin.get_list', $content);
 
         $list = array();

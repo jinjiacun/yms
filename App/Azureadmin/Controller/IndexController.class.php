@@ -15,7 +15,7 @@ class IndexController extends BaseController {
     	}
     }
     
-    public function index(){
+    public function sys_index(){
        /* if(I('post.submit'))
         {
             $content = array(
@@ -39,6 +39,11 @@ class IndexController extends BaseController {
                 exit();
             }
         }*/
+        $this->display();
+    }
+
+    public function other_index()
+    {
         $this->display();
     }
 

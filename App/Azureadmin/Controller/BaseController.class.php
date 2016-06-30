@@ -15,6 +15,8 @@ class BaseController extends Controller {
 		$this->assign('resource', C('resource'));
 		$this->assign('AdminName', session('AdminName'));
 		$this->assign('RoleId', session('RoleId'));
+		$this->assign('ComId', session('ComId'));
+		$this->assign('Adavatar', session('Adavatar'));
 	}
 
 	protected function get_dictionary(){
