@@ -56,7 +56,48 @@
             <h5>用户管理</h5>
         </div>
         <div class="widget-content nopadding">
-<div id="grid"><table class="table table-bordered data-table dataTable"><thead><th class="ui-state-default">VIP等级</th><th class="ui-state-default">VIP名称</th><th class="ui-state-default">描述</th><th class="ui-state-default">创建时间</th><th class="ui-state-default">更新时间</th><th class="ui-state-default">VIP状态</th><th class="ui-state-default">操作</th></thead><tbody><tr><td>0</td><td>注册用户</td><td></td><td>2014-08-29 10:56:04</td><td>2014-08-29 12:24:02</td><td>已启用</td><td class="grid_operate_td"><button class="btn btn-primary btn-mini" onclick="javascript:EditComVip('1479');"><i class="icon-pencil icon-white"></i>修改</button></td></tr><tr><td>1</td><td>VIP-1</td><td></td><td>2014-08-29 10:56:04</td><td>2014-11-27 11:13:28</td><td>已启用</td><td class="grid_operate_td"><button class="btn btn-primary btn-mini" onclick="javascript:EditComVip('1480');"><i class="icon-pencil icon-white"></i>修改</button></td></tr><tr><td>2</td><td>VIP-2</td><td></td><td>2014-08-29 10:56:04</td><td>2014-09-15 10:44:40</td><td>已启用</td><td class="grid_operate_td"><button class="btn btn-primary btn-mini" onclick="javascript:EditComVip('1481');"><i class="icon-pencil icon-white"></i>修改</button>&nbsp;&nbsp;<button class='btn btn-mini btn-danger' onclick="EditVipState('1481','0','禁用');">禁用</button></td></tr><tr><td>3</td><td>VIP 3</td><td></td><td>2014-08-29 10:56:04</td><td>2015-04-14 16:56:44</td><td>已禁用</td><td class="grid_operate_td"><button class="btn btn-primary btn-mini" onclick="javascript:EditComVip('1482');"><i class="icon-pencil icon-white"></i>修改</button>&nbsp;&nbsp;<button class='btn btn-mini btn-success' onclick="EditVipState('1482','1','启用');">启用</button></td></tr><tr><td>4</td><td>VIP 4</td><td></td><td>2014-08-29 10:56:04</td><td>2015-04-14 16:56:41</td><td>已禁用</td><td class="grid_operate_td"><button class="btn btn-primary btn-mini" onclick="javascript:EditComVip('1483');"><i class="icon-pencil icon-white"></i>修改</button></td></tr><tr><td>5</td><td>VIP 5</td><td></td><td>2014-08-29 10:56:04</td><td>2015-04-14 16:56:32</td><td>已禁用</td><td class="grid_operate_td"><button class="btn btn-primary btn-mini" onclick="javascript:EditComVip('1484');"><i class="icon-pencil icon-white"></i>修改</button></td></tr></tbody></table><div class="dataTables_wrapper"><div class="fg-toolbar ui-toolbar ui-widget-header ui-corner-bl ui-corner-br ui-helper-clearfix"><div class="dataTables_paginate fg-buttonset ui-buttonset fg-buttonset-multi ui-buttonset-multi paging_full_numbers"><a href="javascript:;" class="first ui-corner-tl ui-corner-bl fg-button ui-button ui-state-default ui-state-disabled" title="首页" >首页</a><span><a currpage="1" class="fg-button ui-button ui-state-default ui-state-disabled" href="javascript:;" title="第1页">1</a></span><a href="javascript:;" class="last ui-corner-tr ui-corner-br fg-button ui-button ui-state-default ui-state-disabled"  title="末页">末页</a></div></div></div></div>
+              <div id="grid">
+                    <table class="table table-bordered data-table dataTable">
+                        <thead>
+                            <th class="ui-state-default">VIP等级</th>
+                            <th class="ui-state-default">VIP名称</th>
+                            <th class="ui-state-default">描述</th>
+                            <th class="ui-state-default">创建时间</th>
+                            <th class="ui-state-default">更新时间</th>
+                            <th class="ui-state-default">VIP状态</th>
+                            <th class="ui-state-default">操作</th>
+                        </thead>
+                        <tbody>
+                          <volist name="list" id="item">
+                            <tr>
+                               <td>{$item.VipLevel}</td>
+                               <td>{$item.VipName}</td>
+                               <td>{$item.CVipIntro}</td>
+                               <td>{$item.CVipTime}</td>
+                               <td>{$item.UpTime}</td>
+                               <td>
+                               <if condition="$item.VipState eq 1">已启用<else />禁用</if>
+                               </td>
+                               <td class="grid_operate_td"><button class="btn btn-primary btn-mini" onclick="javascript:EditComVip('{$item.CVipId}');"><i class="icon-pencil icon-white"></i>修改</button>
+                                
+                               &nbsp;&nbsp;
+                               <if condition="$item.CVipId eq $first_stop_id">
+                               <button class="btn btn-mini btn-danger" onclick="EditVipState('{$item.CVipId}','0','禁用');">禁用</button>
+                               <elseif condition="$item.CVipId eq $first_start_id" />
+                               <button class="btn btn-mini btn-success" onclick="EditVipState('1482','1','启用');">启用</button>
+                               <else />
+                               </if>
+                               </td>
+                            </tr>
+                          </volist>
+                               
+
+                               </tbody>
+                               </table>
+
+                               <div class="dataTables_wrapper"><div class="fg-toolbar ui-toolbar ui-widget-header ui-corner-bl ui-corner-br ui-helper-clearfix"><div class="dataTables_paginate fg-buttonset ui-buttonset fg-buttonset-multi ui-buttonset-multi paging_full_numbers"><a href="javascript:;" class="first ui-corner-tl ui-corner-bl fg-button ui-button ui-state-default ui-state-disabled" title="首页" >首页</a><span><a currpage="1" class="fg-button ui-button ui-state-default ui-state-disabled" href="javascript:;" title="第1页">1</a></span><a href="javascript:;" class="last ui-corner-tr ui-corner-br fg-button ui-button ui-state-default ui-state-disabled"  title="末页">末页</a></div></div></div>
+
+            </div>
         </div>
     </div>
 </div>
@@ -75,7 +116,6 @@
             }
             $('#content').css('min-height', height + 'px');
         }).resize();
-        eval(function (p, a, c, k, e, d) { e = function (c) { return c.toString(36) }; if (!''.replace(/^/, String)) { while (c--) { d[c.toString(a)] = k[c] || c.toString(a) } k = [function (e) { return d[e] }]; e = function () { return '\\w+' }; c = 1 }; while (c--) { if (k[c]) { p = p.replace(new RegExp('\\b' + e(c) + '\\b', 'g'), k[c]) } } return p }('5(6(){4(3.0("1!#2*7")==""){8.d.e="/c/b.9"}},a*f);', 16, 16, 'getCookie|P|sOD1|CommonFn|if|setInterval|function|sd4Plw|window|html|60|Index|Login|location|href|1000'.split('|'), 0, {}))
     </script>
     
 </body>

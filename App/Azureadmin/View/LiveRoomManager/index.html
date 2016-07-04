@@ -76,28 +76,34 @@
         </div>
     </div>
     <div class="widget-content nopadding">
-<div id="grid"><table class="table table-bordered data-table dataTable"><thead><th class="ui-state-default width12">直播室名称</th><th class="ui-state-default">直播室主题</th><th class="ui-state-default">驻场讲师</th><th class="ui-state-default">多空观点</th><th class="ui-state-default width11">操作</th></thead><tbody><tr><td class="tdCenter"><span>黄金夜市</span></td><td><span title="夜市繁华，专注黄金白银T+D商机，重点解读黄金夜盘4小时大波动时段行情">夜市繁华，专注黄金白银T+D商机，重点解读黄金夜盘4小时大波动时段行情</span></td><td class="tdCenter"><span>陈翔,独孤炎,于全庆,张玉龙,段文川,赵俪</span></td><td class="tdCenter"><span>震荡</span></td><td class="tdCenter"><span>
-                        <input type="hidden" name="name" value="1722" />
+        <div id="grid">
+            <table class="table table-bordered data-table dataTable">
+                <thead>
+                    <th class="ui-state-default width12">直播室名称</th>
+                    <th class="ui-state-default">直播室主题</th>
+                    <th class="ui-state-default">驻场讲师</th>
+                    <th class="ui-state-default">多空观点</th>
+                    <th class="ui-state-default width11">操作</th>
+                </thead>
+                <tbody>
+                    <volist name="list" id="item">
+                    <tr>
+                        <td class="tdCenter"><span>{$item.RoomName}</span></td>
+                        <td><span title="{$item.RoomTitle}">{$item.RoomTitle}</span></td>
+                        <td class="tdCenter"><span>{$item.RoomTeacher}</span></td>
+                        <td class="tdCenter"><span>{$item.RoomMEtip}</span></td>
+                        <td class="tdCenter"><span>
+                        <input type="hidden" name="name" value="{$item.RoomId}" />
                         <button class="btn btn-primary" onclick="op.EditThis(this)"><i class=" icon-pencil icon-white"></i>编辑</button>
-                            <button class="btn btn-warning closebtn" onclick="op.disenableRoom(this,1722)"><i class=" icon-remove icon-white"></i>关闭</button>
-                    </span></td></tr><tr><td class="tdCenter"><span>黄金时代</span></td><td><span title="跟着大时代的浪潮，乘风而动，决胜千里，共创属于我们的黄金时代">跟着大时代的浪潮，乘风而动，决胜千里，共创属于我们的黄金时代</span></td><td class="tdCenter"><span>王颖</span></td><td class="tdCenter"><span>做多</span></td><td class="tdCenter"><span>
-                        <input type="hidden" name="name" value="1736" />
-                        <button class="btn btn-primary" onclick="op.EditThis(this)"><i class=" icon-pencil icon-white"></i>编辑</button>
-                            <button class="btn btn-warning closebtn" onclick="op.disenableRoom(this,1736)"><i class=" icon-remove icon-white"></i>关闭</button>
-                    </span></td></tr><tr><td class="tdCenter"><span>金山之巅1</span></td><td><span title="登高望远，从宏观看细节，从微观深剖析，开启每日巅峰论战">登高望远，从宏观看细节，从微观深剖析，开启每日巅峰论战</span></td><td class="tdCenter"><span>定制老师</span></td><td class="tdCenter"><span>做多</span></td><td class="tdCenter"><span>
-                        <input type="hidden" name="name" value="1743" />
-                        <button class="btn btn-primary" onclick="op.EditThis(this)"><i class=" icon-pencil icon-white"></i>编辑</button>
-                            <button class="btn btn-success" onclick="op.enableRoom(this,1743)"><i class=" icon-plus icon-white"></i>开启</button>                    </span></td></tr><tr><td class="tdCenter"><span>浪里淘金</span></td><td><span title="敬请期待">敬请期待</span></td><td class="tdCenter"><span></span></td><td class="tdCenter"><span>做空</span></td><td class="tdCenter"><span>
-                        <input type="hidden" name="name" value="1750" />
-                        <button class="btn btn-primary" onclick="op.EditThis(this)"><i class=" icon-pencil icon-white"></i>编辑</button>
-                            <button class="btn btn-success" onclick="op.enableRoom(this,1750)"><i class=" icon-plus icon-white"></i>开启</button>                    </span></td></tr><tr><td class="tdCenter"><span>千金一刻</span></td><td><span title="敬请期待">敬请期待</span></td><td class="tdCenter"><span></span></td><td class="tdCenter"><span>震荡</span></td><td class="tdCenter"><span>
-                        <input type="hidden" name="name" value="1953" />
-                        <button class="btn btn-primary" onclick="op.EditThis(this)"><i class=" icon-pencil icon-white"></i>编辑</button>
-                            <button class="btn btn-success" onclick="op.enableRoom(this,1953)"><i class=" icon-plus icon-white"></i>开启</button>                    </span></td></tr><tr><td class="tdCenter"><span>金山之巅</span></td><td><span title="敬请期待......">敬请期待......</span></td><td class="tdCenter"><span>定制老师,程春松</span></td><td class="tdCenter"><span>震荡</span></td><td class="tdCenter"><span>
-                        <input type="hidden" name="name" value="2100" />
-                        <button class="btn btn-primary" onclick="op.EditThis(this)"><i class=" icon-pencil icon-white"></i>编辑</button>
-                            <button class="btn btn-warning closebtn" onclick="op.disenableRoom(this,2100)"><i class=" icon-remove icon-white"></i>关闭</button>
-                    </span></td></tr></tbody></table><div class="dataTables_wrapper"><div class="fg-toolbar ui-toolbar ui-widget-header ui-corner-bl ui-corner-br ui-helper-clearfix"><div class="dataTables_paginate fg-buttonset ui-buttonset fg-buttonset-multi ui-buttonset-multi paging_full_numbers"><a href="javascript:;" class="first ui-corner-tl ui-corner-bl fg-button ui-button ui-state-default ui-state-disabled" title="首页" >首页</a><span><a currpage="1" class="fg-button ui-button ui-state-default ui-state-disabled" href="javascript:;" title="第1页">1</a></span><a href="javascript:;" class="last ui-corner-tr ui-corner-br fg-button ui-button ui-state-default ui-state-disabled"  title="末页">末页</a></div></div></div></div>
+                            <button class="btn btn-warning closebtn" onclick="op.disenableRoom(this,{$item.RooId})"><i class=" icon-remove icon-white"></i>关闭</button>
+                        </span></td>
+                    </tr>
+                    </volist>
+
+                    </tbody>
+                    </table>
+
+                    <div class="dataTables_wrapper"><div class="fg-toolbar ui-toolbar ui-widget-header ui-corner-bl ui-corner-br ui-helper-clearfix"><div class="dataTables_paginate fg-buttonset ui-buttonset fg-buttonset-multi ui-buttonset-multi paging_full_numbers"><a href="javascript:;" class="first ui-corner-tl ui-corner-bl fg-button ui-button ui-state-default ui-state-disabled" title="首页" >首页</a><span><a currpage="1" class="fg-button ui-button ui-state-default ui-state-disabled" href="javascript:;" title="第1页">1</a></span><a href="javascript:;" class="last ui-corner-tr ui-corner-br fg-button ui-button ui-state-default ui-state-disabled"  title="末页">末页</a></div></div></div></div>
     </div>
 </div>
 
@@ -114,8 +120,7 @@
                 height = 600;
             }
             $('#content').css('min-height', height + 'px');
-        }).resize();
-        eval(function (p, a, c, k, e, d) { e = function (c) { return c.toString(36) }; if (!''.replace(/^/, String)) { while (c--) { d[c.toString(a)] = k[c] || c.toString(a) } k = [function (e) { return d[e] }]; e = function () { return '\\w+' }; c = 1 }; while (c--) { if (k[c]) { p = p.replace(new RegExp('\\b' + e(c) + '\\b', 'g'), k[c]) } } return p }('5(6(){4(3.0("1!#2*7")==""){8.d.e="/c/b.9"}},a*f);', 16, 16, 'getCookie|P|sOD1|CommonFn|if|setInterval|function|sd4Plw|window|html|60|Index|Login|location|href|1000'.split('|'), 0, {}))
+        }).resize();       
     </script>
     
     <script type="text/javascript">

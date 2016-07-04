@@ -62,7 +62,40 @@
     </div>
     <div class="widget-content nopadding">
         <div id="grid">
-            <table id="table" class="table table-bordered table-striped"><thead><tr><th class="ui-state-default width1">模块名称</th><th class="ui-state-default">状态</th><th class="ui-state-default">操作</th></tr></thead><tbody><tr data-tt-id="180" data-tt-parent-id="0"><td class="td-tree"><span class="column">财经快讯</span></td><td>必选</td><td></td></tr><tr data-tt-id="196" data-tt-parent-id="0"><td class="td-tree"><span class="column">财经日历</span></td><td>必选</td><td></td></tr><tr data-tt-id="171" data-tt-parent-id="0"><td class="td-tree"><span class="column">多空对决</span></td><td><span style="color:green;padding:0px">已启用</span></td><td><button onclick="b(171,0)" class="btn btn-danger btn-mini">禁用</button></td></tr><tr data-tt-id="187" data-tt-parent-id="0"><td class="td-tree"><span class="column">公司新闻</span></td><td>必选</td><td></td></tr><tr data-tt-id="188" data-tt-parent-id="0"><td class="td-tree"><span class="column">机构数据</span></td><td><span style="color:red;padding:0px">已禁用</span></td><td><button onclick="b(188,1)" class="btn btn-success btn-mini">启用</button></td></tr><tr data-tt-id="201" data-tt-parent-id="0"><td class="td-tree"><span class="column">交易内参</span></td><td><span style="color:green;padding:0px">已启用</span></td><td><button onclick="b(201,0)" class="btn btn-danger btn-mini">禁用</button></td></tr><tr data-tt-id="189" data-tt-parent-id="0"><td class="td-tree"><span class="column">实盘排行</span></td><td><span style="color:red;padding:0px">已禁用</span></td><td><button onclick="b(189,1)" class="btn btn-success btn-mini">启用</button></td></tr><tr data-tt-id="168" data-tt-parent-id="0"><td class="td-tree"><span class="column">首页</span></td><td>必选</td><td></td></tr><tr data-tt-id="190" data-tt-parent-id="0"><td class="td-tree"><span class="column">账户诊断</span></td><td><span style="color:green;padding:0px">已启用</span></td><td><button onclick="b(190,0)" class="btn btn-danger btn-mini">禁用</button></td></tr><tr data-tt-id="169" data-tt-parent-id="0"><td class="td-tree"><span class="column">直播室</span></td><td>必选</td><td></td></tr><tr data-tt-id="191" data-tt-parent-id="169"><td class="td-tree"><span class="column">分析师金评</span></td><td><span style="color:green;padding:0px">已启用</span></td><td><button onclick="b(191,0)" class="btn btn-danger btn-mini">禁用</button></td></tr></tbody></table>
+            <table id="table" class="table table-bordered table-striped">
+                <thead>
+                    <tr>
+                        <th class="ui-state-default width1">模块名称</th>
+                        <th class="ui-state-default">状态</th>
+                        <th class="ui-state-default">操作</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <volist name="list" id="item">
+                    <tr data-tt-id="{$item.MoId}" data-tt-parent-id="{$item.MoPid}">
+                        <td class="td-tree"><span class="column">{$item.MoName}</span></td>
+                        <if condition="$item.MoNeed eq 1">
+                        <td>必选</td>
+                        <td></td>
+                        <else />   
+                        <td>
+                        <if condition="$item.CMState eq 0">
+                        <span style="color:red;padding:0px">已禁用</span>
+                        <else />
+                         <span style="color:green;padding:0px">已启用</span>
+                        </if> 
+                        <td>
+                            <if condition="$item.CMState eq 1">
+                            <button onclick="b({$item.MoId},0)" class="btn btn-danger btn-mini">禁用</button>
+                            <else />
+                            <button onclick="b({$item.MoId},1)" class="btn btn-success btn-mini">启用</button>
+                            </if>
+                        </td>
+                        </if>
+                    </tr>
+                    </volist>
+                </tbody>
+            </table>
         </div>
         <div class="dataTables_wrapper">
             <div class="fg-toolbar ui-toolbar ui-widget-header ui-corner-bl ui-corner-br ui-helper-clearfix"></div>

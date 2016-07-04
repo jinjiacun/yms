@@ -16,7 +16,8 @@ class BaseController extends Controller {
 		$this->assign('AdminId', session('AdminId'));
 		$this->assign('AdminName', session('AdminName'));
 		$this->assign('RoleId', session('RoleId'));
-		$this->assign('ComId', session('ComId'));
+		$this->ComId = session('ComId');
+		$this->assign('ComId', $this->ComId);
 		$this->assign('Adavatar', session('Adavatar'));
 	}
 
@@ -25,7 +26,8 @@ class BaseController extends Controller {
 	    if($result)
 	    {
 	        if(200 == $result['status_code']){
-	            $this->assign('dictionary', $result['content']);
+		    $this->dictionary = $result['content'];
+	            $this->assign('dictionary', $this->dictionary);		    
 	        }
 	    }
 	}

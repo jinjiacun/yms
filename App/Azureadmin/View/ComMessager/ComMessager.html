@@ -70,7 +70,26 @@
             </div>
             <div class="clear"></div>
         </div>
-<div id="grid"><table class="table table-bordered data-table dataTable"><thead><th class="ui-state-default"><input id='allchk' type='checkbox' value='' onchange='selectAll(this);'></th><th class="ui-state-default">标题</th><th class="ui-state-default">时间</th></thead><tbody><tr><td class="td_checkbox"><input type='checkbox' value='810f62cc-458c-4d7f-8154-f1375932f87b'></td><td class="td_title"><button type="button" class="btn btn-mini btn-link" onclick="ShowMessage('810f62cc-458c-4d7f-8154-f1375932f87b');">这是测试</button></td><td class="td_time">2014-09-02 17:37:06</td></tr><tr><td class="td_checkbox"><input type='checkbox' value='7abd15db-e250-4094-b2a6-8380e5d38e89'></td><td class="td_title"><button type="button" class="btn btn-mini btn-link" onclick="ShowMessage('7abd15db-e250-4094-b2a6-8380e5d38e89');">欢迎使用机构服务平台</button></td><td class="td_time">2014-08-29 15:38:00</td></tr></tbody></table><div class="dataTables_wrapper"><div class="fg-toolbar ui-toolbar ui-widget-header ui-corner-bl ui-corner-br ui-helper-clearfix"><div class="dataTables_paginate fg-buttonset ui-buttonset fg-buttonset-multi ui-buttonset-multi paging_full_numbers"><a href="javascript:;" class="first ui-corner-tl ui-corner-bl fg-button ui-button ui-state-default ui-state-disabled" title="首页" >首页</a><span><a currpage="1" class="fg-button ui-button ui-state-default ui-state-disabled" href="javascript:;" title="第1页">1</a></span><a href="javascript:;" class="last ui-corner-tr ui-corner-br fg-button ui-button ui-state-default ui-state-disabled"  title="末页">末页</a></div></div></div></div>
+
+        <div id="grid">
+            <table class="table table-bordered data-table dataTable">
+                <thead>
+                    <th class="ui-state-default"><input id='allchk' type='checkbox' value='' onchange='selectAll(this);'></th>
+                    <th class="ui-state-default">标题</th>
+                    <th class="ui-state-default">时间</th>
+                </thead>
+                <tbody>
+                    <volist name="list" id="item">
+                    <tr>
+                        <td class="td_checkbox"><input type='checkbox' value='810f62cc-458c-4d7f-8154-f1375932f87b'></td>
+                        <td class="td_title"><button type="button" class="btn btn-mini btn-link" onclick="ShowMessage('810f62cc-458c-4d7f-8154-f1375932f87b');">这是测试</button></td>
+                        <td class="td_time">2014-09-02 17:37:06</td>
+                    </tr>
+                    </volist>
+                </tbody>
+            </table>
+
+            <div class="dataTables_wrapper"><div class="fg-toolbar ui-toolbar ui-widget-header ui-corner-bl ui-corner-br ui-helper-clearfix"><div class="dataTables_paginate fg-buttonset ui-buttonset fg-buttonset-multi ui-buttonset-multi paging_full_numbers"><a href="javascript:;" class="first ui-corner-tl ui-corner-bl fg-button ui-button ui-state-default ui-state-disabled" title="首页" >首页</a><span><a currpage="1" class="fg-button ui-button ui-state-default ui-state-disabled" href="javascript:;" title="第1页">1</a></span><a href="javascript:;" class="last ui-corner-tr ui-corner-br fg-button ui-button ui-state-default ui-state-disabled"  title="末页">末页</a></div></div></div></div>
     </div>
 </div>
 

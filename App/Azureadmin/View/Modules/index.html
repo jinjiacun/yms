@@ -129,11 +129,14 @@
     <script src="__PUBLIC__/Azureadmin/Scripts/Lib/jquery.js"></script>
     <script src="__PUBLIC__/Azureadmin/Scripts/Lib/bootstrap.js"></script>
     <script src="__PUBLIC__/Azureadmin/Scripts/Lib/menu.js"></script>
+    <script type="text/javascript">
+    var resource = '{$resource}';
+    </script>
     <script src="__PUBLIC__/Azureadmin/Scripts/Lib/require.js"></script>
     <script src="__PUBLIC__/Azureadmin/Scripts/config.js"></script>
     <script src="__PUBLIC__/Azureadmin/Scripts/common.js"></script>
-
     <script type="text/javascript">
+        var controller = '{$controller}';
         $('#breadcrumb a:last-child').css('background-image', 'none');
         $(window).resize(function () {
             var height = $('#sidebar>ul').height() + 100;

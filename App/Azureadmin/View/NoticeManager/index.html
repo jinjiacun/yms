@@ -66,7 +66,9 @@
                     <tr>
                         <td>{$item.FMId}</td>
                         <td>{$item.FMTitle}</td>
-                        <td><a href="javascript:;" onclick="e({$item.FMId})">{$item.FMCon}</a></td>                        
+                        <td>
+                        <a href="javascript:;" onclick="e({$item.FMId})">{$item.FMCon}</a>
+                        </td>                        
                         <td>
                         <if condition="$item.FMFlag eq 0">
                             <span style="color:orange">未同步</span>
@@ -83,7 +85,9 @@
                         <if condition="$item.FMComId eq 0">
                         全部
                         <else />
+
                         <a href="javascript:;" onclick="f(this.innerHTML)"></a>
+                        
                         </if>
                         </td>
                     </tr>
@@ -114,11 +118,14 @@
     <script src="__PUBLIC__/Azureadmin/Scripts/Lib/jquery.js"></script>
     <script src="__PUBLIC__/Azureadmin/Scripts/Lib/bootstrap.js"></script>
     <script src="__PUBLIC__/Azureadmin/Scripts/Lib/menu.js"></script>
+    <script type="text/javascript">
+    var resource = '{$resource}';
+    </script>
     <script src="__PUBLIC__/Azureadmin/Scripts/Lib/require.js"></script>
     <script src="__PUBLIC__/Azureadmin/Scripts/config.js"></script>
     <script src="__PUBLIC__/Azureadmin/Scripts/common.js"></script>
-
     <script type="text/javascript">
+        var controller = '{$controller}';
         $('#breadcrumb a:last-child').css('background-image', 'none');
         $(window).resize(function () {
             var height = $('#sidebar>ul').height() + 100;
@@ -132,12 +139,12 @@
     <script type="text/javascript" src="__PUBLIC__/Azureadmin/Scripts/Lib/select2.min.js"></script>
     <script type="text/javascript" src="__PUBLIC__/Azureadmin/Scripts/Lib/jquery.uniform.js"></script>
     <script type="text/javascript">
-        function a() { require(["NoticeManager/index"], function (o) { o.add(); }); }
-        function b(a) { require(["NoticeManager/index"], function (o) { o.update(a); }); }
-        function c(a) { require(["NoticeManager/index"], function (o) { o.del(a); }); }
-        function d() { require(["NoticeManager/index"], function (o) { o.refresh(); }); }
-        function e(a) { require(["NoticeManager/index"], function (o) { o.get(a); }); }
-        function f(a) { require(["NoticeManager/index"], function (o) { o.showCompany(a); }); }
+        function a() { require(["__PUBLIC__/Azureadmin/Scripts/NoticeManager/index.js"], function (o) { o.add(); }); }
+        function b(a) { require(["__PUBLIC__/Azureadmin/Scripts/NoticeManager/index.js"], function (o) { o.update(a); }); }
+        function c(a) { require(["__PUBLIC__/Azureadmin/Scripts/NoticeManager/index.js"], function (o) { o.del(a); }); }
+        function d() { require(["__PUBLIC__/Azureadmin/Scripts/NoticeManager/index.js"], function (o) { o.refresh(); }); }
+        function e(a) { require(["__PUBLIC__/Azureadmin/Scripts/NoticeManager/index.js"], function (o) { o.get(a); }); }
+        function f(a) { require(["__PUBLIC__/Azureadmin/Scripts/NoticeManager/index.js"], function (o) { o.showCompany(a); }); }
     </script>
 
 </body>

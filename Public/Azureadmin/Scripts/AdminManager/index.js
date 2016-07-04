@@ -3,7 +3,7 @@
     return {
         add: function () {
             var tip = dialog.ShowTip('请稍候...');
-            $.post('/AdminManager/GetAllRole', function (data) {
+            $.post(controller+'/AdminManager/GetAllRole', function (data) {
                 tip.close();
                 if (data.res == 1) {
                     var options = '';
@@ -58,7 +58,7 @@
                             }
                             var company = data.type == 1 ? $('#selRole option:selected').parent().attr('company') : 0;
                             var tip = dialog.ShowTip('请稍候...');
-                            $.post('/AdminManager/Add', { 'name': name, 'uname': uname, 'pwd': pwd, 'role': role, 'company': company }, function (data) {
+                            $.post(controller+'/AdminManager/Add', { 'AdminName': name, 'AdminUserName': uname, 'Password': pwd, 'RoleId': role, 'ComId': company }, function (data) {
                                 tip.close();
                                 if (data.res == 1) {
                                     layer.close();
@@ -79,7 +79,7 @@
         },
         setState: function (id, state) {
             var tip = dialog.ShowTip('请稍候...');
-            $.post('/AdminManager/SetState', { 'id': id, 'state': state }, function (data) {
+            $.post(controller+'/AdminManager/SetState', { 'AdminId': id, 'AdminState': state }, function (data) {
                 tip.close();
                 if (data.res == 1) {
                     d();
@@ -90,9 +90,9 @@
         },
         update: function (id) {
             var tip = dialog.ShowTip('请稍候...');
-            $.post('/AdminManager/GetAllRole', function (data) {
+            $.post(controller+'/AdminManager/GetAllRole', function (data) {
                 if (data.res == 1) {
-                    $.post('/AdminManager/GetAdmin', { 'id': id }, function (data2) {
+                    $.post(controller+'/AdminManager/GetAdmin', { 'AdminId': id }, function (data2) {
                         tip.close();
                         if (data2.res == 1) {
                             var roleRow = '';
@@ -158,7 +158,7 @@
                                     var company = 0;
                                     //var company = data.type == 1 ? $('#selRole option:selected').parent().attr('company') : 0;
                                     var tip = dialog.ShowTip('请稍候...');
-                                    $.post('/AdminManager/Update', { 'id': id, 'name': name, 'uname': uname, 'pwd': pwd, 'role': role, 'company': company }, function (data) {
+                                    $.post(controller+'/AdminManager/Update', { 'AdminId': id, 'AdminName': name, 'AdminUserName': uname, 'Password': pwd, 'RoleId': role, 'ComId': company }, function (data) {
                                         tip.close();
                                         if (data.res == 1) {
                                             layer.close();
@@ -200,7 +200,7 @@
                         return;
                     }
                     var tip = dialog.ShowTip('请稍候...');
-                    $.post('/AdminManager/UpdatePwd', { 'id': id, 'pwd': pwd }, function (data) {
+                    $.post(controller+'/AdminManager/UpdatePwd', { 'AdminId': id, 'Password': pwd }, function (data) {
                         tip.close();
                         if (data.res == 1) {
                             layer.close();
@@ -215,11 +215,11 @@
         refresh: function () {
             var p = $('#grid a[currpage]').attr('currpage');
             if (p == null) p = 1;
-            $('#grid').load('/AdminManager/GetTable?page=' + p + '&company=' + searchCompany + '&r=' + Math.random() + ' #grid');
+            $('#grid').load(controller+'/AdminManager/GetTable?page=' + p + '&company=' + searchCompany + '&r=' + Math.random() + ' #grid');
         },
         search: function () {
             searchCompany = encodeURIComponent($.trim($('#txtSearchCompany').val()));
-            $('#grid').load('/AdminManager/GetTable?page=1&company=' + searchCompany + '&r=' + Math.random() + ' #grid');
+            $('#grid').load(controller+'/AdminManager/GetTable?page=1&company=' + searchCompany + '&r=' + Math.random() + ' #grid');
         }
     }
 });

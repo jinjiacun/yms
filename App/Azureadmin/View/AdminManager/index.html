@@ -82,7 +82,7 @@
                         <if condition="$item.ComId eq 0">
                         平台
                         <else />
-                            
+                         {$dictionary['com'][$item['ComId']]}
                         </if>
                     </td>
                     <td>
@@ -96,24 +96,17 @@
                     </if>
                     </td>
                     <td>{$item.LoginTime}</td>
-                    <td><button onclick="b({$item.AdminId})" class="btn btn-primary btn-mini">修改</button>&nbsp;<button onclick="c({$item.AdminId},0)" class="btn btn-danger btn-mini">禁用</button>&nbsp;<button onclick="e({$item.AdminId})" class="btn btn-mini">密码</button></td>
+                    <td><if condition="$item.CreateAdminId gt 0 or $ComId eq 0"><button onclick="b({$item.AdminId})" class="btn btn-primary btn-mini">修改</button>&nbsp;<if condition="$item.AdminState eq 1"><button onclick="c({$item.AdminId},0)" class="btn btn-danger btn-mini">禁用</button>&nbsp;<else /><button onclick="c({$item.AdminId},1)" class="btn btn-success btn-mini">启动</button>&nbsp;</if></if><button onclick="e({$item.AdminId})" class="btn btn-mini">密码</button></td>
                 </tr>
                 </volist>
             </tbody>
         </table>
 
-        <div class="dataTables_wrapper">
-            <div class="fg-toolbar ui-toolbar ui-widget-header ui-corner-bl ui-corner-br ui-helper-clearfix">
-                <div class="dataTables_paginate fg-buttonset ui-buttonset fg-buttonset-multi ui-buttonset-multi paging_full_numbers">
-                    <a href="javascript:;" class="first ui-corner-tl ui-corner-bl fg-button ui-button ui-state-default ui-state-disabled" title="首页" >首页</a>
-                    <span>
-                        <a currpage="1" class="fg-button ui-button ui-state-default ui-state-disabled" href="javascript:;" title="第1页">1</a><a href="javascript:;" onclick="$('#grid').load('/AdminManager/GetTable?page=2&company= #grid');"  class="fg-button ui-button ui-state-default">2</a>
-                    </span>
-                    <a href="javascript:;" onclick="$('#grid').load('/AdminManager/GetTable?page=2&company= #grid');" class="last ui-corner-tr ui-corner-br fg-button ui-button ui-state-default"  title="末页">末页</a>
-                </div>
-            </div>
-        </div>
+       {$page}
+
     </div>
+
+
 </div>
 </div>
 
@@ -144,12 +137,12 @@
     
     <script type="text/javascript" src="__PUBLIC__/Azureadmin/Scripts/Lib/select2.min.js"></script>
     <script type="text/javascript">
-        function a() { require(["AdminManager/index"], function (o) { o.add(); }); }
-        function b(a) { require(["AdminManager/index"], function (o) { o.update(a); }); }
-        function c(a,b) { require(["AdminManager/index"], function (o) { o.setState(a,b); }); }
-        function d() { require(["AdminManager/index"], function (o) { o.refresh(); }); }
-        function e(a) { require(["AdminManager/index"], function (o) { o.updatePwd(a); }); }
-        function f() { require(["AdminManager/index"], function (o) { o.search(); }); }
+        function a() { require(["__PUBLIC__/Azureadmin/Scripts/AdminManager/index.js"], function (o) { o.add(); }); }
+        function b(a) { require(["__PUBLIC__/Azureadmin/Scripts/AdminManager/index.js"], function (o) { o.update(a); }); }
+        function c(a,b) { require(["__PUBLIC__/Azureadmin/Scripts/AdminManager/index.js"], function (o) { o.setState(a,b); }); }
+        function d() { require(["__PUBLIC__/Azureadmin/Scripts/AdminManager/index.js"], function (o) { o.refresh(); }); }
+        function e(a) { require(["__PUBLIC__/Azureadmin/Scripts/AdminManager/index.js"], function (o) { o.updatePwd(a); }); }
+        function f() { require(["__PUBLIC__/Azureadmin/Scripts/AdminManager/index.js"], function (o) { o.search(); }); }
     </script>
 
 </body>
