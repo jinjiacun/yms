@@ -12,4 +12,10 @@ return array(
 	'domain'=>'http://localhost/yms/',
 	'controller'=>'http://localhost/yms/azureadmin.php/Azureadmin',
 	'resource'=>'http://localhost/yms/Public/Azureadmin',
+
+	//分析师权限
+	'TeacherInitCol' => "355,377,381,378,385",
+	'PlatFormName' => '平台',
+	
+	'DefaultPassword' => md5('123456')
 );

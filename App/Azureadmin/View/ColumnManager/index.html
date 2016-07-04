@@ -37,7 +37,7 @@
     <ul class="nav">
         
         
-        <li><a href="/Home/HelpPage" target="_blank"><span class="text">帮助</span></a></li>
+        <li><a href="__APP__/Azureadmin/Public/HelpPage" target="_blank"><span class="text">帮助</span></a></li>
     </ul>
 </div>
 
@@ -48,7 +48,7 @@
      </if>
     
     <div id="content">
-        <div id="breadcrumb"><a href="/Home/Index"><i class="icon-home"></i>欢迎</a><a href="__PUBLIC__/Azureadmin/ColumnManager/Index" class="current">后台栏目管理</a></div>
+        <div id="breadcrumb"><a href="__APP__/Azureadmin/Home/Index"><i class="icon-home"></i>欢迎</a><a href="__PUBLIC__/Azureadmin/ColumnManager/Index" class="current">后台栏目管理</a></div>
         
         <div class="container-fluid">
             
@@ -84,6 +84,14 @@
                     <td><button onclick="a({$item.AMoId},1)" class="btn btn-primary btn-mini">增加子栏目</button>&nbsp;<button onclick="a(0,1)" class="btn btn-mini">增加同级栏目</button>&nbsp;<button onclick="b({$item.AMoId})" class="btn btn-danger btn-mini">删除栏目</button>&nbsp;<button onclick="c({$item.AMoId})" class="btn btn-mini">修改栏目</button></td>
                 </tr>
                 </if>
+		<volist name="item._ex" id="s_item">
+		  <tr data-tt-id="{$s_item.AMoId}" data-tt-parent-id="{$s_item.AMoPId}">
+                    <td><span class="column">{$s_item.AMoName}</span></td>
+                    <td><a target="_blank" href="{$s_item.AMoUrl}">{$s_item.AMoUrl}</a></td>
+                    <td>平台</td>
+                    <td><button onclick="a(0,1)" class="btn btn-mini">增加同级栏目</button>&nbsp;<button onclick="b({$s_item.AMoId})" class="btn btn-danger btn-mini">删除栏目</button>&nbsp;<button onclick="c({$s_item.AMoId})" class="btn btn-mini">修改栏目</button></td>
+                </tr>
+		</volist>
                 </volist>  
 
                 
@@ -91,21 +99,21 @@
                     <td><span class="column">机构</span></td>
                     <td></td>
                     <td></td>
-                    <td><button onclick="a(0,1)" class="btn btn-primary btn-mini">增加子栏目</button></td>
+                    <td><button onclick="a(0,2)" class="btn btn-primary btn-mini">增加子栏目</button></td>
                 </tr>
                 <volist name="list_ex" id="item">
                 <tr data-tt-id="{$item.AMoId}" data-tt-parent-id="-2">
                     <td><span class="column">{$item.AMoName}</span></td>
                     <td><a target="_blank" href="{$item.AMoUrl}">{$item.AMoUrl}</a></td>
                     <td>机构</td>
-                    <td><button onclick="a({$item.AMoId},1)" class="btn btn-primary btn-mini">增加子栏目</button>&nbsp;<button onclick="a(0,1)" class="btn btn-mini">增加同级栏目</button>&nbsp;<button onclick="b({$item.AMoId})" class="btn btn-danger btn-mini">删除栏目</button>&nbsp;<button onclick="c({$item.AMoId})" class="btn btn-mini">修改栏目</button></td>
+                    <td><button onclick="a({$item.AMoId},2)" class="btn btn-primary btn-mini">增加子栏目</button>&nbsp;<button onclick="a(0,2)" class="btn btn-mini">增加同级栏目</button>&nbsp;<button onclick="b({$item.AMoId})" class="btn btn-danger btn-mini">删除栏目</button>&nbsp;<button onclick="c({$item.AMoId})" class="btn btn-mini">修改栏目</button></td>
                 </tr>
                     <volist name="item._ex" id="s_item">
                     <tr data-tt-id="{$s_item.AMoId}" data-tt-parent-id="{$s_item.AMoPId}">
                         <td><span class="column">{$s_item.AMoName}</span></td>
                         <td><a target="_blank" href="{$s_item.AMoUrl}">{$item.AMoUrl}</a></td>
                         <td>机构</td>
-                        <td><button onclick="a({$s_item.AMoId},1)" class="btn btn-primary btn-mini">增加子栏目</button>&nbsp;<button onclick="a(0,1)" class="btn btn-mini">增加同级栏目</button>&nbsp;<button onclick="b({$s_item.AMoId})" class="btn btn-danger btn-mini">删除栏目</button>&nbsp;<button onclick="c({$s_item.AMoId})" class="btn btn-mini">修改栏目</button></td>
+                        <td><button onclick="a(0,2)" class="btn btn-mini">增加同级栏目</button>&nbsp;<button onclick="b({$s_item.AMoId})" class="btn btn-danger btn-mini">删除栏目</button>&nbsp;<button onclick="c({$s_item.AMoId})" class="btn btn-mini">修改栏目</button></td>
                     </tr>
                     </volist>
                 </volist>               
@@ -148,10 +156,10 @@
     <script type="text/javascript" src="__PUBLIC__/Azureadmin/Scripts/Lib/jquery.treetable.js"></script>
     <script type="text/javascript">
         $("#table").treetable({ expandable: true });
-        function a(a,b) { require(["ColumnManager/index"], function (o) { o.add(a,b); }); }
-        function b(a) { require(["ColumnManager/index"], function (o) { o.del(a); }); }
-        function c(a) { require(["ColumnManager/index"], function (o) { o.update(a); }); }
-        function d() { require(["ColumnManager/index"], function (o) { o.refresh(); }); }
+        function a(a,b) { require(["__PUBLIC__/Azureadmin/Scripts/ColumnManager/index.js"], function (o) { o.add(a,b); }); }
+        function b(a) { require(["__PUBLIC__/Azureadmin/Scripts/ColumnManager/index.js"], function (o) { o.del(a); }); }
+        function c(a) { require(["__PUBLIC__/Azureadmin/Scripts/ColumnManager/index.js"], function (o) { o.update(a); }); }
+        function d() { require(["__PUBLIC__/Azureadmin/Scripts/ColumnManager/index.js"], function (o) { o.refresh(); }); }
     </script>
 
 </body>

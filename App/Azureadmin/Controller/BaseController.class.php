@@ -13,6 +13,7 @@ class BaseController extends Controller {
 		$this->assign('domain', C('domain'));
 		$this->assign('controller', C('controller'));
 		$this->assign('resource', C('resource'));
+		$this->assign('AdminId', session('AdminId'));
 		$this->assign('AdminName', session('AdminName'));
 		$this->assign('RoleId', session('RoleId'));
 		$this->assign('ComId', session('ComId'));

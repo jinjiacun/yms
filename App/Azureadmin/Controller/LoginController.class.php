@@ -18,6 +18,8 @@ class LoginController extends BaseController {
                     && 0 == $result['content']['is_success'])
                     {
                         session('AdminName', I('post.AdminName'));
+                        //用户id
+                        session('AdminId', $result['content']['AdminId']);
                         //角色名称
                         session('RoleId', $result['content']['RoleId']);
                         //机构

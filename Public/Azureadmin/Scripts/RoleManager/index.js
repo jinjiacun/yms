@@ -4,15 +4,16 @@
         refresh: function () {
             var p = $('#grid a[currpage]').attr('currpage');
             if (p == null) p = 1;
-            $('#grid').load('/RoleManager/GetTable?page=' + p + '&company=' + searchCompany + '&r=' + Math.random() + ' #grid');
+            $('#grid').load(
+controller+'/RoleManager/GetTable?page=' + p + '&company=' + searchCompany + '&r=' + Math.random() + ' #grid');
         },
         search: function () {
             searchCompany = encodeURIComponent($.trim($('#txtSearchCompany').val()));
-            $('#grid').load('/RoleManager/GetTable?page=1&company=' + searchCompany + '&r=' + Math.random() + ' #grid');
+            $('#grid').load(controller+'/RoleManager/GetTable?page=1&company=' + searchCompany + '&r=' + Math.random() + ' #grid');
         },
         add: function () {
             var tip = dialog.ShowTip('请稍候...');
-            $.post('/RoleManager/GetAllColumn', function (data) {
+            $.post(controller+'/RoleManager/GetAllColumn', function (data) {
                 tip.close();
                 if (data.res == 1) {
                     var companyRow = data.data.company;
@@ -58,7 +59,7 @@
                                 var checkedNodes = $.fn.zTree.getZTreeObj("treeColumn").getCheckedNodes();
                                 var column = $.map(checkedNodes, function (v) { return v.id; }).join(',');
                                 var tip = dialog.ShowTip('请稍候...');
-                                $.post('/RoleManager/Add', { 'name': name, 'company': company, 'column': column }, function (data) {
+                                $.post(controller+'/RoleManager/Add', { 'name': name, 'company': company, 'column': column }, function (data) {
                                     tip.close();
                                     if (data.res == 1) {
                                         layer.close();
@@ -78,7 +79,7 @@
         del: function (id) {
             dialog.ConfirmBox("确定要删除吗？", "确定", function () {
                 var tip = dialog.ShowTip('请稍候...');
-                $.post('/RoleManager/Delete', { 'id': id }, function (data) {
+                $.post(controller+'/RoleManager/Delete', { 'id': id }, function (data) {
                     tip.close();
                     if (data.res == 1) {
                         dialog.SuccessBox('删除成功');
@@ -91,7 +92,7 @@
         },
         update: function (id) {
             var tip = dialog.ShowTip('请稍候...');
-            $.post('/RoleManager/GetRole', { 'id': id }, function (data) {
+            $.post(controller+'/RoleManager/GetRole', { 'id': id }, function (data) {
                 tip.close();
                 if (data.res == 1) {
                     var layer = dialog.LoadEle('<div class="row title"><h4>修改角色</h4></div>'
@@ -110,7 +111,7 @@
                                 var checkedNodes = $.fn.zTree.getZTreeObj("treeColumn").getCheckedNodes();
                                 var column = $.map(checkedNodes, function (v) { return v.id; }).join(',');
                                 var tip = dialog.ShowTip('请稍候...');
-                                $.post('/RoleManager/Update', { 'id': id, 'name': name, 'column': column }, function (data) {
+                                $.post(controller+'/RoleManager/Update', { 'id': id, 'name': name, 'column': column }, function (data) {
                                     tip.close();
                                     if (data.res == 1) {
                                         layer.close();

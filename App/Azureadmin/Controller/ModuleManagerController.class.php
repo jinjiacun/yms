@@ -30,11 +30,7 @@ class ModuleManagerController extends BaseController{
     {
         $content['page_size'] = $page_size;
         $content['page_index'] = $page_index;
-    }
-    if(session('ComId') != 0)
-    {
-      $content['where']['ComId'] = session('ComId');
-    }
+    }    
            
     $result = $this->_call('ComModule.get_list', $content);
 

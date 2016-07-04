@@ -3,7 +3,7 @@
     return {
         setState: function (id, state) {
             var tip = dialog.ShowTip('请稍候...');
-            $.post('/CompanyManager/SetState', { 'companyID': id, 'state': state }, function (data) {
+            $.post(controller+'/CompanyManager/SetState', { 'ComId': id, 'ComState': state }, function (data) {
                 tip.close();
                 if (data.res == 1) {
                     require(["CompanyManager/index"], function (o) { o.refresh(); });
@@ -33,7 +33,7 @@
                             $('#expTime').datepicker({ weekStart: 1, format: 'yyyy-mm-dd', language: 'zh-CN', autoclose: true, todayHighlight: true, startDate: data.data.nowTime });
                             $('#btnExtendTime').click(function () {
                                 var tip = dialog.ShowTip('请稍候...');
-                                $.post('/CompanyManager/ExtendTime', { 'companyID': id, 'date': $('#expTime').val() }, function (data) {
+                                $.post(controller+'/CompanyManager/ExtendTime', { 'ComId': id, 'ExpTime': $('#expTime').val() }, function (data) {
                                     tip.close();
                                     if (data.res == 1) {
                                         dialog.SuccessBox('延期成功');
@@ -109,7 +109,7 @@
                     }
                     dialog.ConfirmBox("确定要通过审核吗？", "确定", function () {
                         var tip = dialog.ShowTip('请稍候...');
-                        $.post('/CompanyManager/Pass', { 'companyID': id, 'tag': tag }, function (data) {
+                        $.post(controller+'/CompanyManager/Pass', { 'ComId': id, 'ComTag': tag }, function (data) {
                             tip.close();
                             if (data.res == 1) {
                                 layer.close();
