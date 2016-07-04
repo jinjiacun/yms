@@ -3,7 +3,7 @@ namespace Azureadmin\Controller;
 use Think\Controller;
 include_once(dirname(__FILE__).'/BaseController.class.php');
 /**
-	Ç°Ì¨Ä£¿é¹ÜÀí
+	前台模块管理
 */
 class ModulesController extends BaseController {
     public function _initialize()
@@ -28,21 +28,21 @@ class ModulesController extends BaseController {
             $page_index = I('get.p');
             $content['page_size'] = $page_size;
             $content['page_index'] = $page_index;
-        }
-        else
-        {
+          }
+          else
+          {
             $content['page_size'] = $page_size;
             $content['page_index'] = $page_index;
-        }
+          }
                
-        $content['where']['MoPid'] = 0;
-        $content['order']['MoId'] = 'asc';
+          $content['where']['MoPid'] = 0;
+          $content['order']['MoId'] = 'asc';
         
-        $result = $this->_call('ComModule.get_list', $content);
+          $result = $this->_call('ComModule.get_list', $content);
 
-        $list = array();
-        if($result)
-        {
+          $list = array();
+          if($result)
+          {
             if(200 == $result['status_code'])
             {
                 if(isset($result['content']['list'])
@@ -52,13 +52,13 @@ class ModulesController extends BaseController {
                     $this->assign('list', $list); 
                 }
             }
-        }
+          }
 
-        //èŽ·å–æ¬¡çº§æ¨¡å—
-        unset($result);
-        if($list
-        && 0<count($list))
-        {
+          //èŽ·å–æ¬¡çº§æ¨¡å—
+          unset($result);
+         if($list
+         && 0<count($list))
+         {
             $id_list = array();
             $ids = '';
             foreach($list as $v)
@@ -93,76 +93,217 @@ class ModulesController extends BaseController {
                     }
                 }
             }
-        }
+         }
 
 		$this->display();
 	}
 
-	/**
-	¹¦ÄÜ£ºÌí¼ÓÄ£¿é
 	
-        ²ÎÊý£º
+	public function GetTable(){
+	  $page_index = 1;
+          $page_size  = 20;
+          $content    = array();
+          if(I('get.page'))
+          {
+            $page_index = I('get.page');
+            $content['page_size'] = $page_size;
+            $content['page_index'] = $page_index;
+          }
+          else
+          {
+            $content['page_size'] = $page_size;
+            $content['page_index'] = $page_index;
+          }
+               
+          $content['where']['MoPid'] = 0;
+          $content['order']['MoId'] = 'asc';
+        
+          $result = $this->_call('ComModule.get_list', $content);
+
+          $list = array();
+          if($result)
+          {
+            if(200 == $result['status_code'])
+            {
+                if(isset($result['content']['list'])
+                && isset($result['content']['record_count']))
+                {
+                    $list   = $result['content']['list'];   
+                    $this->assign('list', $list); 
+                }
+            }
+          }
+
+          //èŽ·å–æ¬¡çº§æ¨¡å—
+          unset($result);
+         if($list
+         && 0<count($list))
+         {
+            $id_list = array();
+            $ids = '';
+            foreach($list as $v)
+            {
+                $id_list[] = $v['MoId'];
+            }
+            if(0<count($id_list))
+                $ids = implode(',', $id_list);
+
+            $content['where']['MoPid'] = array('in', $ids);
+            $result = $this->_call('ComModule.get_list', $content);
+            if($result)
+            {
+                if(200 == $result['status_code'])
+                {
+                    if(isset($result['content']['list'])
+                    && isset($result['content']['record_count']))
+                    {
+                        $tmp_list = $result['content']['list'];
+                        foreach($list as $k=>$v)
+                        {
+                            foreach($tmp_list as $_k=>$_v)
+                            {
+                                if($v['MoId'] == $_v['MoPid'])
+                                {
+                                    $list[$k]['_ex'][] = $_v;
+                                    unset($tmp_list[$_k]);    
+                                }
+                            }
+                        }
+                        $this->assign('list', $list);
+                    }
+                }
+            }
+         }
+
+	       $html = '';
+	       foreach($list as $item){
+	        $version = '';
+		if($item['MoType'] == 1){
+		  $version = '白金版，钻石版，尊享版';
+		}
+		else if($item['MoType'] == 2){
+		  $version = '钻石版，尊享版';
+		}
+		else{
+		  $version = '尊享版';
+		}
+		$isNeed = '';
+		if($item['MoNeed'] == 1){
+		  $isNeed = '是';
+		}
+		else{
+		  $isNeed = '否';
+		}
+	        $html .= "
+                <tr data-tt-parent-id='0' data-tt-id='$item[MoId]'>
+                    <td><span class='column' title='$item[MoName]'>$item[MoName]</span></td>
+                    <td>$item[MoUrl]</td>
+                    <td title=''>$item[MoIntro]</td>
+                    <td>$version</td>
+                    <td style='text-align: center;'>$isNeed</td>
+                    <td><button onclick='op.x(0,$item[MoId],this)' data-isneed='1' class='btn btn-mini'>增加子模块</button>&nbsp;<button onclick='op.x(0,null,this)' class='btn btn-primary btn-mini'>增加同级模块</button>&nbsp;<button onclick='op.y(this,$item[MoId])' class='btn btn-danger btn-mini'>删除模块</button>&nbsp;<button onclick='op.z(this,$item[MoId])' class='btn btn-mini'>修改模块</button></td>
+                </tr>";
+		foreach($item['_ex'] as $s_item){
+		    $s_version = '';
+		    if($s_item['MoType'] == 1){
+		      $s_version = '白金版，钻石版，尊享版';  
+		    }
+		    else if($s_item['MoType'] == 2){
+		      $s_version = '钻石版，尊享版';
+		    }
+		    else{
+		      $s_version = '尊享版';
+		    }
+		    $s_isNeed = '';
+		    if($s_item['MoNeed'] == 1){
+		      $s_isNeed = '是';
+		    }
+		    else{
+		      $s_isNeed = '否';
+		    }
+		    $html .= "
+                    <tr data-tt-parent-id='$s_item[MoPid]' data-tt-id='$s_item[MoId]'>
+                        <td><span class='column' title='$s_item[MoName]'>$s_item[MoName]</span></td>
+                        <td>$s_item[MoUrl]</td>
+                        <td title=''>$s_item[MoIntro]</td>
+                        <td>$s_version</td>
+                        <td style='text-align: center;'>$s_isNeed</td>
+                        <td><button onclick='op.x(0,null,this)' class='btn btn-primary btn-mini'>增加同级模块</button>&nbsp;<button onclick='op.y(this,$s_item[MoId])' class='btn btn-danger btn-mini'>删除模块</button>&nbsp;<button onclick='op.z(this,$s_item[MoId])' class='btn btn-mini'>修改模块</button></td>
+                    </tr>";
+                }
+	     }
+
+	     echo $html;
+	     exit();
+	}
+
+	/**
+	功能：添加模块
+	
+        参数：
 	@@input
-	@param $AdminId int ´´½¨Õßid
-	@param $MoState int ×´Ì¬
-	@param $MoTime	string ´´½¨Ê±¼ä
-	@param $MoUpTime string ¸üÐÂÊ±¼ä
+	@param $AdminId int 创建者id
+	@param $MoState int 状态
 	@param $MoUrl string url
-	@param $MoIntro string ½éÉÜ
+	@param $MoIntro string 介绍
+	@param $Mopid int 父节点id
+	@param $MoType int 类型
+	@param $MoNeed int 是否必要
 	*/
-	public function AddModule(){
+	public function AddModel(){
 	       $content = array(
+	       		'MoName'  => urlencode(I('post.MoName')),
 	       		'AdminId' => session('AdminId'),
 			'MoState' => 1,
-			'MoTime'  => date('Y-m-d H:i:s'),
-			'MoUpTime'=> date('Y-m-d H:i:s'),
-			'MoUrl'   => '',
-			'MoIntro' => ''
+			'MoUrl'   => I('post.MoUrl'),
+			'MoIntro' => urlencode(I('post.MoIntro')),
+			'MoPid'   => I('post.MoPid'),
+			'MoType'  => I('post.MoType'),
+			'MoNeed'  => i('post.MoNeed')
 	       );
 	       $result = $this->_call('ComModule.add', $content);
 	       unset($content);
 	       if($result){
-		if($result['status_code'] == 200){
-		  $_list = array(
-		      'title'   => $result['content']['FMTitle'], 
-		      'content' => $result['content']['FMCon'], 
-		      'company' => $result['content']['FMComId']
-		  );
-		  $out = array('res'=>1, 'data'=>$_list);
+		if($result['status_code'] == 200
+		&& $result['content']['is_success'] == 0){		 
+		  header('Content-type:text/json');
+		  $out = array('res'=>1);
 		  echo json_encode($out);
 		  exit();
 	       }
 	     }
-
+	     
+	     header('Content-type:text/json');
 	     $out = array('res'=>-5001);
 	     echo json_encode($out);
 	     exit();
 	}
 
 	/**
-	¹¦ÄÜ£º»ñÈ¡Ä£¿é
+	功能：获取模块
 
-	²ÎÊý£º
+	参数：
 	@@input
-	@param $MoId int Ä£¿éid
+	@param $MoId int 模块id
 	*/
 	public function GetModel(){
-	       $content['MoId'] = I('post.MoId');
+	       $content['MoId'] = I('get.MoId');
 	       $result = $this->_call('ComModule.get_info_by_key', $content);
 	       unset($content);
 	       if($result){
 		if($result['status_code'] == 200){
+		  header('Content-type:text/json');
 		  $out = $result['content'];
-		  echo json_encode($out);
+		  echo json_encode($out);		  
 		  exit();
 	       }
 	     } 
 	}
 
 	/**
-	¹¦ÄÜ£º¸üÐÂ
+	功能：更新
 
-	²ÎÊý£º
+	参数：
 	@@input
 	@param $MoId int
 	@param $MoNeed 
@@ -175,7 +316,8 @@ class ModulesController extends BaseController {
 	       $model = array(
 	       	      'MoId'	=> I('post.MoId'),
 		      'MoNeed' 	=> I('post.MoNeed'),
-		      'MoType'	=> I('post.MoType')
+		      'MoType'	=> I('post.MoType'),
+		      'MoName'  => urlencode(I('post.MoName'))
 	       );
 	       $content['MoId'] = I('post.MoId');
 	       $ComModuleInfo = array();
@@ -229,10 +371,7 @@ class ModulesController extends BaseController {
 			   echo json_encode($out);
 			   exit();
 			}
-		    }
-		    
-		    
-			
+		    }	
 		  }		 
 	       }
 
@@ -252,7 +391,7 @@ class ModulesController extends BaseController {
 		unset($content);
 		if($result){
 		   if($result['status_code'] == 200
-		   && 0 == $result['content']['is_success']){
+		   && $result['content']['is_success'] == 0){
 		      $out = array('res'=>1);
 		      echo json_encode($out);
 		      exit();
@@ -265,17 +404,17 @@ class ModulesController extends BaseController {
 	}
 
 	/**
-	¹¦ÄÜ£ºÉ¾³ý
+	功能：删除
 
-	²ÎÊý£º
+	参数：
 	@@input
 	@param $MoId int
 	*/
 	public function DeleteModel(){
 	       $MoId = I('post.MoId');
-	       //²éÑ¯¸¸½Úµã¼°Æä×Ó½Úµã
+	       //查询父节点及其子节点
 	       $content['where']['MoId'] = $MoId;
-	       $content['where']['MoPId'] = $MoId;
+	       $content['where']['MoPid'] = $MoId;
 	       $content['where']['_logic'] = 'OR';
 	       $result = $this->_call('ComModule.get_list', $content);
 	       unset($content);
@@ -296,10 +435,11 @@ class ModulesController extends BaseController {
 	       	   $MoIdStr = implode(',', $_list);
 		   $content['MoId'] = array('in', $MoIdStr);
 		   $result = $this->_call('ComModule.delete', $content);
-		   unset($result);
+		   unset($content);
 		   if($result){
 			if($result['status_code'] == 200
 			&& $result['content']['is_success'] == 0){
+			   header('Content-type:text/json');
 			   $out = array('res'=>1);
 			   echo json_encode($out);
 			   exit();
@@ -307,6 +447,7 @@ class ModulesController extends BaseController {
 		   }	  
 	       }
 
+	       header('Content-type:text/json');
 	       $out = array('res'=>-5001);
 	       echo json_encode($out);
 	       exit();	       

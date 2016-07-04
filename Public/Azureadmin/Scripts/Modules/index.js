@@ -2,7 +2,7 @@
 $(function () {
     $("#table").treetable({ expandable: true, clickableNodeNames: true });
     op.Refresh = function () {
-        $('#grid').load('GetTable?r=' + new Date().getTime(), function () {
+        $('#grid').load(controller+'/Modules/GetTable?r=' + new Date().getTime(), function () {
             $("#table").treetable({ expandable: true, clickableNodeNames: true }, true);
         });
     };
@@ -18,7 +18,7 @@ $(function () {
                 ptype = 4 - ($(obj).parents('tr').find("td").eq(3).html().split("，").length);
             }
             var htmlstr = '<form id="' + formId + '"><div class="row title"><h4>增加模块</h4></div>'
-                + '<input name="Mopid" style="display:none;" type="text" value="' + pid + '"/>'
+                + '<input name="MoPid" style="display:none;" type="text" value="' + pid + '"/>'
                 + '<div class="row"><span class="col span">功能名称：</span><div class="col"><input name="MoName" id="MoName" type="text" autofocus/></div></div>'
                 + '<div class="row"><span class="col span">页面地址：</span><div class="col"><input name="MoUrl" id="MoUrl" type="text" /></div></div>'
                 + '<div class="row"><span class="col span">模块简介：</span><div class="col"><input name="MoIntro" id="MoIntro" type="text" /></div></div>'
@@ -47,9 +47,9 @@ $(function () {
                     }
                     var tip = dia.ShowTip('请稍候...');
                     var formData = $("#" + formId).serializeArray();
-                    $.post("AddModel.html", formData, function (data) {
+                    $.post(controller+"/Modules/AddModel.html", formData, function (data) {
                         tip.close();
-                        if (data && data.flag) {
+                        if (data && data.res && data.res == 1) {
                             layer.close(); op.Refresh(); dia.SuccessBox('增加成功');
                         } else {
                             dia.ErrorBox('操作失败');
@@ -64,9 +64,9 @@ $(function () {
         require(["dialog"], function (dia) {
             dia.ConfirmBox("<div>您确定要删除吗？</div>", "确定", function () {
                 var tip = dia.ShowTip('请稍候...');
-                $.post("DeleteModel.html", { mid: id }, function (data) {
+                $.post(controller+"/Modules/DeleteModel.html", { mid: id }, function (data) {
                     tip.close();
-                    if (data && data.flag) {
+                    if (data && data.res && data.res == 1) {
                         op.Refresh();
                         dia.SuccessBox("删除成功");
                     } else {
@@ -79,7 +79,7 @@ $(function () {
     };
     op.z = function (obj, id) {
         var formId = "formId" + new Date().getTime(), ptype = '';
-        $.get("GetModel.html", { mid: id }, function (model) {
+        $.get(controller+"/Modules/GetModel.html", { MoId: id }, function (model) {
             if (!model) window.location.reload();
             ptype = $(obj).parents('tr').data("tt-parent-id");
             if (ptype != 0) ptype = 4 - ($('[data-tt-id=' + ptype + ']').find("td").eq(3).html().split("，").length);
@@ -122,9 +122,9 @@ $(function () {
                         if (!name || name == "") { dia.MsgBox('warning', '请输入名称', function () { $("#MoName").focus(); }, 0.7); return; }
                         var tip = dia.ShowTip('请稍候...');
                         var formData = $("#" + formId).serializeArray();
-                        $.post("UpdateModel.html", formData, function (data) {
+                        $.post(controller+"/Modules/UpdateModel.html", formData, function (data) {
                             tip.close();
-                            if (data && data.flag) {
+                            if (data && data.res && data.res == 1) {
                                 op.Refresh(); layer.close(); dia.SuccessBox('修改成功');
                             } else {
                                 dia.ErrorBox('操作失败');
