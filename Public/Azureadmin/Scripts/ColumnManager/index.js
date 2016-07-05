@@ -48,7 +48,7 @@
         },
         update: function (id) {
             var tip = dialog.ShowTip('请稍候...');
-            $.post(controller+'/ColumnManager/Get', { 'AMoId': id }, function (data) {
+            $.post(controller+'/ColumnManager/GetModule', { 'AMoId': id }, function (data) {
                 tip.close();
                 if (data.res == 1) {
                     var layer = dialog.LoadEle('<div class="row title"><h4>栏目信息修改</h4></div>'

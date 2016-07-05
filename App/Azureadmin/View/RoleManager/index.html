@@ -60,6 +60,7 @@
         <button onclick="d()" class="btn btn-mini top_r">刷新</button>
     </div>
     <div class="widget-content nopadding">
+
         <div class="search"><div>机构全称(模糊)：</div>
         <div><input id="txtSearchCompany" type="text" /></div>
         <div><button class="btn btn-primary" onclick="e()">查询</button></div>
@@ -91,18 +92,10 @@
             </tbody>
         </table>
 
-        <div class="dataTables_wrapper">
-            <div class="fg-toolbar ui-toolbar ui-widget-header ui-corner-bl ui-corner-br ui-helper-clearfix">
-                <div class="dataTables_paginate fg-buttonset ui-buttonset fg-buttonset-multi ui-buttonset-multi paging_full_numbers">
-                    <a href="javascript:;" class="first ui-corner-tl ui-corner-bl fg-button ui-button ui-state-default ui-state-disabled" title="首页" >首页</a>
-                    <span>
-                        <a currpage="1" class="fg-button ui-button ui-state-default ui-state-disabled" href="javascript:;" title="第1页">1</a><a href="javascript:;" onclick="$('#grid').load('/RoleManager/GetTable?page=2&company= #grid');"  class="fg-button ui-button ui-state-default">2</a>
-                    </span>
-                    <a href="javascript:;" onclick="$('#grid').load('/RoleManager/GetTable?page=2&company= #grid');" class="last ui-corner-tr ui-corner-br fg-button ui-button ui-state-default"  title="末页">末页</a>
-                </div>
-            </div>
-        </div>
+       {$page}
+
     </div>
+    
 </div>
 </div>
 
@@ -136,11 +129,11 @@
     <script type="text/javascript" src="__PUBLIC__/Azureadmin/Scripts/Lib/jquery.ztree.core-3.5.min.js"></script>
     <script type="text/javascript" src="__PUBLIC__/Azureadmin/Scripts/Lib/jquery.ztree.excheck-3.5.min.js"></script>
     <script type="text/javascript">
-        function a() { require(["RoleManager/index"], function (o) { o.add(); }); }
-        function b(a) { require(["RoleManager/index"], function (o) { o.update(a); }); }
-        function c(a) { require(["RoleManager/index"], function (o) { o.del(a); }); }
-        function d() { require(["RoleManager/index"], function (o) { o.refresh(); }); }
-        function e() { require(["RoleManager/index"], function (o) { o.search(); }); }
+        function a() { require(["__PUBLIC__/Azureadmin/Scripts/RoleManager/index.js"], function (o) { o.add(); }); }
+        function b(a) { require(["__PUBLIC__/Azureadmin/Scripts/RoleManager/index.js"], function (o) { o.update(a); }); }
+        function c(a) { require(["__PUBLIC__/Azureadmin/Scripts/RoleManager/index.js"], function (o) { o.del(a); }); }
+        function d() { require(["__PUBLIC__/Azureadmin/Scripts/RoleManager/index.js"], function (o) { o.refresh(); }); }
+        function e() { require(["__PUBLIC__/Azureadmin/Scripts/RoleManager/index.js"], function (o) { o.search(); }); }
     </script>
 
 </body>

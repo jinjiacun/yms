@@ -39,6 +39,11 @@ class RoleManagerController extends BaseController {
     {
       $content['where']['ComId'] = session('ComId');
     }
+    else{
+      $content['where']['ComId'] = 0;
+      $content['where']['AdminId'] = 0;
+      $content['where']['_logic'] = 'OR';
+    }
            
     $result = $this->_call('ComRole.get_list', $content);
 
@@ -67,7 +72,88 @@ class RoleManagerController extends BaseController {
        功能:查询表格
      */
     public function GetTable(){
+        $this->assign('menu_index', 3);
+        $page_index = 1;
+        $page_size  = 20;
+        $content    = array();
+   	if(I('get.page'))
+   	{
+       	   $page_index = I('get.page');
+       	   $content['page_size'] = $page_size;
+           $content['page_index'] = $page_index;
+        }
+        else
+        {
+           $content['page_size'] = $page_size;
+           $content['page_index'] = $page_index;
+        }
 
+        if(session('ComId') != 0)
+        {
+           $content['where']['ComId'] = session('ComId');
+        }
+        else{
+           $content['where']['ComId'] = 0;
+           $content['where']['AdminId'] = 0;
+           $content['where']['_logic'] = 'OR';
+        }
+           
+        $result = $this->_call('ComRole.get_list', $content);
+
+        $list = array();
+        if($result)
+        {
+          if(200 == $result['status_code'])
+          {
+             if(isset($result['content']['list'])
+             && isset($result['content']['record_count']))
+             {
+                $list   = $result['content']['list'];   
+                $this->assign('list', $list);     
+                $record_count = $result['content']['record_count'];
+                //$this->assign('record_count', $record_count);
+                //$this->get_page($record_count, $page_size);
+		$page = $this->get_page_by_custom(C('controller').'/RoleManager/GetTable', $page_index, $record_count, $page_size);
+             }
+          }
+        }  
+
+    
+
+      $html = '
+                  <div class="search"><div>机构全称(模糊)：</div>
+        <div><input id="txtSearchCompany" type="text" /></div>
+        <div><button class="btn btn-primary" onclick="e()">查询</button></div>
+        <div style="clear: left; float: none;"></div>
+    </div>
+    <div id="grid">
+        <table class="table table-bordered data-table dataTable">
+            <thead>
+                <th class="ui-state-default width1">编号</th>
+                <th class="ui-state-default width3">角色名称</th>
+                <th class="ui-state-default">所属机构</th>
+                <th class="ui-state-default width2">操作</th>
+            </thead>
+            <tbody>
+	    ';
+      foreach($list as $item){
+          $platForm = '';
+	  $platForm = $item['ComAllName'] == ''?'平台':$item['ComAllName'];
+          $html .= '
+                <tr>
+                    <td>'.$item['RoleId'].'</td>
+                    <td>'.$item['RoleName'].'</td>
+                    <td>'.$platForm.'</td>
+                    <td><button onclick="b('.$item['RoleId'].')" class="btn btn-primary btn-mini">修改</button>&nbsp;</td>
+                </tr>
+                ';
+	}
+	$html .='
+            </tbody>
+        </table>'.$page.'</div>';
+	
+	echo $html;
+	exit();
     }
 
     /**

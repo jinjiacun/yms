@@ -31,21 +31,22 @@ class ColumnManagerController extends BaseController {
     	    $content['where']['AMoType'] = 1;
     	    $content['where']['AMoPId'] = 0;
     	    $result = $this->_call('AModule.get_list', $content);
-
+	    unset($content);
     	    $list = array();
     	    if($result)
     	    {
 		if(200 == $result['status_code'])
         	{
-			if(isset($result['content']['list'])
-            		&& isset($result['content']['record_count']))
-            		{
+		   if(isset($result['content']['list'])
+            	   && isset($result['content']['record_count']))
+            	   {
                 	$list   = $result['content']['list'];   
                 	$this->assign('list', $list);
-            		}
+            	   }
         	}
     	    }
 	    unset($result);
+
 	    $id_list = array();
     	    $ids = '';
     	    //查询三级关系
@@ -53,11 +54,10 @@ class ColumnManagerController extends BaseController {
     	    {
       	       foreach($list as $v)
       	      {
-               $id_list[] = $v['AMoId'];
+                $id_list[] = $v['AMoId'];
       	      }
 
-
-      	      if(0< count($id_list))
+      	      if(count($id_list) > 0)
       	      {
                $ids = implode($id_list, ',');
                $content['where']['AMoType'] = 1;
@@ -87,7 +87,6 @@ class ColumnManagerController extends BaseController {
                }
             }
            }	    
-
 
     	    //查询机构
     	    $content['where']['AMoType'] = 2;
