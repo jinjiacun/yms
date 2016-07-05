@@ -59,7 +59,7 @@ controller+'/RoleManager/GetTable?page=' + p + '&company=' + searchCompany + '&r
                                 var checkedNodes = $.fn.zTree.getZTreeObj("treeColumn").getCheckedNodes();
                                 var column = $.map(checkedNodes, function (v) { return v.id; }).join(',');
                                 var tip = dialog.ShowTip('请稍候...');
-                                $.post(controller+'/RoleManager/Add', { 'name': name, 'company': company, 'column': column }, function (data) {
+                                $.post(controller+'/RoleManager/Add', { 'RoleName': name, 'ComId': company, 'column': column }, function (data) {
                                     tip.close();
                                     if (data.res == 1) {
                                         layer.close();
@@ -92,7 +92,7 @@ controller+'/RoleManager/GetTable?page=' + p + '&company=' + searchCompany + '&r
         },
         update: function (id) {
             var tip = dialog.ShowTip('请稍候...');
-            $.post(controller+'/RoleManager/GetRole', { 'id': id }, function (data) {
+            $.post(controller+'/RoleManager/GetRole', { 'RoleId': id }, function (data) {
                 tip.close();
                 if (data.res == 1) {
                     var layer = dialog.LoadEle('<div class="row title"><h4>修改角色</h4></div>'

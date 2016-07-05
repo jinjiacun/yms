@@ -225,15 +225,14 @@ class RoleManagerController extends BaseController {
        @param $column string   角色权限（多个之间用','隔开）
      */
     public function Add(){
+    	   $column = I('post.column');
     	   //增加角色
 	   //return Content("{\"res\":-5001}");
 	   $content = array(
 	   	    'AdminId'	=> session('AdminId'),
                     'ComId'   	=> intval(session('ComId')),
-                    'RoleName' 	=> I('post.RoleName'),
-                    'RoleState' => 1,
-                    'Creatime' 	=> date('Y-m-d H:i:s'),
-                    'UpTime' 	=> date('Y-m-d H:i:s')
+                    'RoleName' 	=> urlencode(I('post.RoleName')),
+                    'RoleState' => 1
 	   );
 	   $result = $this->_call('ComRole.add', $content);
 	   unset($content);
