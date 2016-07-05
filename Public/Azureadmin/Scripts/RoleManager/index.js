@@ -111,7 +111,7 @@ controller+'/RoleManager/GetTable?page=' + p + '&company=' + searchCompany + '&r
                                 var checkedNodes = $.fn.zTree.getZTreeObj("treeColumn").getCheckedNodes();
                                 var column = $.map(checkedNodes, function (v) { return v.id; }).join(',');
                                 var tip = dialog.ShowTip('请稍候...');
-                                $.post(controller+'/RoleManager/Update', { 'id': id, 'name': name, 'column': column }, function (data) {
+                                $.post(controller+'/RoleManager/Update', { 'RoleId': id, 'RoleName': name, 'column': column }, function (data) {
                                     tip.close();
                                     if (data.res == 1) {
                                         layer.close();

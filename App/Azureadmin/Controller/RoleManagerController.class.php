@@ -283,7 +283,7 @@ class RoleManagerController extends BaseController {
      */
     public function Update(){
     	   $RoleId = I('post.RoleId');
-	   $RoleName = I('post.RoleName');
+	   $RoleName = urlencode(I('post.RoleName'));
 	   $column = I('post.column');
 	   //当前权限列表
 	   $CurrentRightList = explode(',', $column);
@@ -459,7 +459,7 @@ class RoleManagerController extends BaseController {
 				            'type' =>1,
 					    'data' =>array(
 					    	   'column'=>$_list,
-						   'company'=>C('PlatForm'),
+						   'company'=>C('PlatFormName'),
 						)
 					    );
 			       echo json_encode($out);
@@ -499,7 +499,7 @@ class RoleManagerController extends BaseController {
 	   unset($result);
 
 	   //获取机构信息
-	   $company = C('PlatForm');
+	   $company = C('PlatFormName');
 	   if(session('ComId') > 0){
 	      $content['ComId'] = session('ComId');
 	      $result = $this->_call('ComTable.get_info_by_key', $content);
@@ -557,11 +557,11 @@ class RoleManagerController extends BaseController {
 	   $_list = array();
 	   if(count($ColumnList) > 0){
 	   	foreach($ColumnList as $v){
-		      $_list = array(
+		      $_list[] = array(
 		      	     'id'      => $v['AMoId'],
 			     'pId'     => $v['AMoPId'],
 			     'name'    => $v['AMoName'],
-			     'checked' => in_array($v['AMoId'], $ComRoMo)?true:false
+			     'checked' => in_array($v['AMoId'], $ComRoMoList)?true:false
 		      );
 		}
 		
