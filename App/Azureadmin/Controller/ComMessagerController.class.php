@@ -10,4 +10,8 @@ class ComMessagerController extends BaseController{
 		$this->assign('menu_index', 20);
 		$this->display();
 	}
+
+	public function GetComMessageCount(){
+	       echo '{"count":0,"html":"\u003cli\u003e\u003ca title=\"\" href=\"javascript:void(0);\"\u003eÃ»ÓÐ×îÐÂÏûÏ¢\u003c/a\u003e\u003c/li\u003e"}';
+	}
 }

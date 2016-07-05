@@ -4,6 +4,15 @@ use Azureadmin\Controller;
 include_once(dirname(__FILE__).'/BaseController.class.php');
 
 class NewsManagerController extends BaseController{
+        public function _initialize()
+	{
+	   parent::_initialize();
+	   parent::get_dictionary();
+	   if(null == session('AdminName')
+	   || ''   == session('AdminName')){
+	      $this->redirect('/Azureadmin/Login/index');
+	   }
+	}
 
 	public function index()
 	{
@@ -53,5 +62,126 @@ class NewsManagerController extends BaseController{
         }
 
 		$this->display();
+	}
+
+	public function showone(){
+	       $NewId = '';
+	       if(I('get.id')){
+	         $NewId = I('get.id');
+		 $content['NewId'] = $NewId;
+		 $result = $this->_call('ComNews.get_info_by_key', $content);
+		 unset($content);
+		 if($result){
+		   if($result['status_code'] == 200
+		   && count($result['content']) >0){
+		    $this->assign('info', $result['content']);
+		   }
+		 }
+	       }
+	       else{
+	         $NewId = '00000000-0000-0000-0000-000000000000';
+	       }
+	       $this->assign('NewId', $NewId);
+	       
+	       $this->display();
+	}
+
+	public function Save(){
+	       $id = '';
+	       //ÅÐ¶¨ÐÂÔö»¹ÊÇÐÞ¸Ä
+	       if(I('post.id')){
+		$id = I('post.id');
+		if($id == '00000000-0000-0000-0000-000000000000'){
+		       //ÐÂÔö
+		       $content = array(
+		          'NewId'         => create_guid(),
+			  'AdminId'       => session('AdminId'),
+			  'AdminName'     => $this->dictionary['admin'][session('AdminId')],
+		       	  'NewsTitle'     => urlencode(I('post.NewsTitle')),
+			  'NewsCon'       => urlencode(I('post.NewsCon')),
+			  'NewsDocReader' => urlencode(base64_encode(I('post.NewsDocReader'))),
+			  'ColumnId'      => 222,
+			  'NewsUrl' 	  => "",
+			  'NewsImg' 	  => '',
+			  'ComId' 	  => session('ComId'),
+			  'NewsState' 	  => 1,
+			  'NewsFlag' 	  => 1,
+			  'NewShowTime'   => I('post.NewShowTime'),		   	  
+		       );
+		       $result = $this->_call('ComNews.add', $content);
+		       unset($content);
+		       if($result){
+			  if($result['status_code'] == 200
+			  && $result['content']['is_success'] == 0){		
+			     header('Content-type:text/json');
+			     $out = array('res'=>1);
+			     echo json_encode($out);
+			     exit();
+			  }
+		       }
+		       unset($result);            
+		}
+		else{
+		       //ÐÞ¸Ä
+		       $content = array(
+		       	  'where'=>array('NewId'=>$id),
+			  'data'=>array(
+			      'NewsTitle'     => urlencode(I('post.NewsTitle')),
+			      'NewsCon'       => urlencode(I('post.NewsCon')),
+			      'NewsDocReader' => urlencode(base64_encode(I('post.NewsDocReader'))),
+			      'ColumnId'      => 222,
+			      'NewsUrl' 	  => "",
+			      'NewsImg' 	  => '',
+			      'ComId' 	  => session('ComId'),
+			      'NewsState' 	  => 1,
+			      'NewsFlag' 	  => 1,
+			      'NewShowTime'   => I('post.NewShowTime'),
+			  )
+		       );
+		       $result = $this->_call('ComNews.update', $content);
+		       unset($content);
+		       if($result){
+			  if($result['status_code'] == 200
+			  && $result['content']['is_success'] == 0){		
+			     header('Content-type:text/json');
+			     $out = array('res'=>1);
+			     echo json_encode($out);
+			     exit();
+			  }
+		       }
+		       unset($result);		       
+		}	
+		header('Content-type:text/json');
+		$out = array('res'=>-5001);
+		echo json_encode($out);		
+		exit();	
+	       }
+	}
+
+	/**
+	¹¦ÄÜ£ºÉ¾³ý
+	
+	²ÎÊý£º
+	@@input
+	@param $NewId int ÐÂÎÅid
+	*/
+	public function Delete(){
+	   $content = array('NewId'=>I('post.NewId'));
+	   $result = $this->_call('ComNews.delete', $content);
+	   unset($content);
+	   if($result){
+	     if($result['status_code'] == 200
+	     && $result['content']['is_success'] == 0){
+	       header('Content-type:text/json');
+	       $out = array('res'=>1);
+	       echo json_encode($out);
+	       exit();
+	     }
+	   }
+
+	   header('Content-type:text/json');
+	   $out = array('res'=>-5001);
+	   echo json_encode($out);
+	   exit();
 	}
 }

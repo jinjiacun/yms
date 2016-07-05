@@ -51,7 +51,7 @@ function SavePassword() {
     var OldPassword = $("#OldPassword").val();
     var NewPassword = $("#NewPassword").val();
     var NewPassword2 = $("#NewPassword2").val();
-    $.post("/UserManage/SavePassword/", { OldPassword: OldPassword, NewPassword: NewPassword }, function (json) {
+    $.post(controller+"/UserManage/SavePassword/", { OldPassword: OldPassword, NewPassword: NewPassword }, function (json) {
         if (json.msg == "") {
             require(["dialog"], function (dia) {
                 dia.Close(dia_editpassword);
@@ -114,7 +114,7 @@ function GetComMessageCount() {
         //说明没权限
         return;
     }
-    $.post(resource+"/ComMessage/GetComMessageCount/", function (json) {
+    $.post(controller+"/ComMessager/GetComMessageCount/", function (json) {
         if (json.count == 0) {
             $("#span_UnreadComMessageCount").css("display", "none");
         } else {

@@ -2,6 +2,7 @@
 namespace Azureadmin\Controller;
 use Think\Controller;
 include_once(dirname(__FILE__).'/BaseController.class.php');
+//角色管理
 class RoleManagerController extends BaseController {
     public function _initialize()
     {
@@ -44,7 +45,8 @@ class RoleManagerController extends BaseController {
       $content['where']['AdminId'] = 0;
       $content['where']['_logic'] = 'OR';
     }
-           
+    $content['order']['RoleId'] = 'asc';    
+       
     $result = $this->_call('ComRole.get_list', $content);
 
     $list = array();
@@ -87,6 +89,12 @@ class RoleManagerController extends BaseController {
            $content['page_size'] = $page_size;
            $content['page_index'] = $page_index;
         }
+	
+	//查询机构？？？
+	if(I('get.company')){
+	   $company = urlencode(I('get.company'));
+           //$content['where']['RoleName'] = array('like', '$'.$company.'$');
+	}
 
         if(session('ComId') != 0)
         {
@@ -97,7 +105,9 @@ class RoleManagerController extends BaseController {
            $content['where']['AdminId'] = 0;
            $content['where']['_logic'] = 'OR';
         }
-           
+	
+	$content['order']['RoleId'] = 'asc';        
+   
         $result = $this->_call('ComRole.get_list', $content);
 
         $list = array();
