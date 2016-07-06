@@ -90,26 +90,48 @@
                     <volist name="list" id="item">
                     <tr>
                         <td>{$item.User_Id}</td>
-                        <td>zxf1111</td>
+                        <td><if condition="$item.LoginType eq 6">{$item.LTExtend}</if></td>
                         <td>{$item.UserName}</td>
-                        <td></td>
-                        <td></td>
+                        <td><if condition="$item.LoginType eq 1">{$item.LTExtend}</if></td>
+                        <td><if condition="$item.LoginType eq 5">{$item.LTExtend}</if></td>
                         <td>{$item.RegisterTime}</td>
-                        <td><div id="vipName_5388">注册用户</div></td>
-                        <td>已启用</td>
-                        <td class="grid_operate_td"><button class="btn btn-primary btn-mini" ondblclick="javascript:ShowDetail('5388');"><i class="icon-pencil icon-white"></i>查看详细</button>&nbsp;&nbsp;<button class="btn btn-primary btn-mini" onclick="javascript:editOne('5388');"><i class="icon-pencil icon-white"></i>编辑</button>&nbsp;&nbsp;<button class='btn btn-mini btn-danger' onclick="EditUCState('5388','0','禁用');">禁用</button>&nbsp;&nbsp;<button class="btn btn-success btn-mini" onclick="javascript:ResetUserPwd('113416');"><i class="icon-wrench icon-white"></i>&nbsp;重置密码</button></td>
+                        <td>
+                            <div id="vipName_{$item.ComUserId}">{$vip_list[$item['VipLevel']]['VipName']}</div>
+                        </td>
+                        <td>
+                        <if condition="$item.UCState eq 0">
+                        已禁用
+                        <elseif condition="$item.UCState eq 1" />
+                        已启用
+                        <else />
+
+                        </if>                        
+                        </td>
+                        <td class="grid_operate_td"><if condition="$is_allow eq 1"><button class="btn btn-primary btn-mini" ondblclick="javascript:ShowDetail('{$item.ComUserId}');"><i class="icon-pencil icon-white"></i>查看详细</button>&nbsp;&nbsp;</if><button class="btn btn-primary btn-mini" onclick="javascript:editOne('{$item.ComUserId}');"><i class="icon-pencil icon-white"></i>编辑</button>&nbsp;&nbsp;
+                        <if condition="$item.UCState eq 1">
+                        <button class='btn btn-mini btn-danger' onclick="EditUCState('{$item.ComUserId}','0','禁用');">禁用</button>
+                        <else />
+                        <button class='btn btn-mini btn-danger' onclick="EditUCState('{$item.ComUserId}','1','启用');">启用</button>
+                        </if>
+                        &nbsp;&nbsp;<button class="btn btn-success btn-mini" onclick="javascript:ResetUserPwd('{$item.User_Id}');"><i class="icon-wrench icon-white"></i>&nbsp;重置密码</button></td>
                     </tr>
                     </volist>
                 </tbody>
             </table>
 
-            <div class="dataTables_wrapper"><div class="fg-toolbar ui-toolbar ui-widget-header ui-corner-bl ui-corner-br ui-helper-clearfix"><div class="dataTables_paginate fg-buttonset ui-buttonset fg-buttonset-multi ui-buttonset-multi paging_full_numbers"><a href="javascript:;" class="first ui-corner-tl ui-corner-bl fg-button ui-button ui-state-default ui-state-disabled" title="首页" >首页</a><span><a currpage="1" class="fg-button ui-button ui-state-default ui-state-disabled" href="javascript:;" title="第1页">1</a><a href="javascript:;" onclick="$('#grid').load('/UserManage/Index?page=2 #grid');"  class="fg-button ui-button ui-state-default">2</a><a href="javascript:;" onclick="$('#grid').load('/UserManage/Index?page=3 #grid');"  class="fg-button ui-button ui-state-default">3</a><a href="javascript:;" onclick="$('#grid').load('/UserManage/Index?page=4 #grid');"  class="fg-button ui-button ui-state-default">4</a><a href="javascript:;" onclick="$('#grid').load('/UserManage/Index?page=5 #grid');"  class="fg-button ui-button ui-state-default">5</a><a href="javascript:;" onclick="$('#grid').load('/UserManage/Index?page=6 #grid');"  class="fg-button ui-button ui-state-default">6</a></span><a href="javascript:;" onclick="$('#grid').load('/UserManage/Index?page=6 #grid');" class="last ui-corner-tr ui-corner-br fg-button ui-button ui-state-default"  title="末页">末页</a></div></div></div></div>
+           {$page}
+
+       </div>
     </div>
 </div>
 
             
         </div>
     </div>
+    <script type="text/javascript">
+        var controller = '{$controller}';
+        var resource = '$resource';
+    </script>>
     <script src="__PUBLIC__/Azureadmin/bundles/basicJs?v=VEBAn_rqP8lcxeg7zmvLgQf31kk8SiPMstbdeK0r9p81"></script>
 
     <script type="text/javascript">

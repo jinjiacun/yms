@@ -17,5 +17,24 @@ return array(
 	'TeacherInitCol' => "355,377,381,378,385",
 	'PlatFormName' => '平台',
 	
-	'DefaultPassword' => md5('123456')
+	'DefaultPassword' => md5('123456'),
+	'Dictionary' => array(
+	   //登陆类型
+	   'EnumLoginType' => array(
+	     '手机号' => 1,
+	     '邮箱'   => 5,
+	     '用户名' => 6
+	   ),
+	   //用户状态
+	   'EnumUserState' => array(
+	     '禁用' => 0,
+	     '启用' => 1,
+	   ),
+	   //分析师等级
+	   'EnumAnalystRank' => array(
+	     '初级分析师' => 0,
+	     '中级分析师' => 1,
+	     '高级分析师' => 2
+	   ),
+	),
 );
