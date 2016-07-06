@@ -1,0 +1,215 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta name="viewport" content="width=device-width" />
+    <title>新闻发布</title>
+    <link rel="stylesheet" href="__PUBLIC__/Azureadmin/Content/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="__PUBLIC__/Azureadmin/Content/css/bootstrap-responsive.min.css" />
+    <link rel="stylesheet" href="__PUBLIC__/Azureadmin/Content/css/unicorn.main.css" />
+    <link rel="stylesheet" href="__PUBLIC__/Azureadmin/Content/css/unicorn.jcs.css" class="skin-color" />
+    <link href="__PUBLIC__/Azureadmin/Scripts/Lib/artDialog/skins/twitter.css" rel="stylesheet"/>
+    <link href="__PUBLIC__/Azureadmin/Content/css/global.css" rel="stylesheet"/>
+
+    
+    <link href="__PUBLIC__/Azureadmin/Scripts/Lib/DateTimePicker/bootstrap-datetimepicker.min.css" rel="stylesheet" />
+
+</head>
+<body>
+    <link href="__PUBLIC__/Azureadmin/Content/Home/_partialhead.css" rel="stylesheet" />
+    <link href="__PUBLIC__/Azureadmin/Content/ComMessage/commessage.css" rel="stylesheet" />
+    <script src="__PUBLIC__/Azureadmin/Scripts/Lib/jquery.js" type="text/javascript"></script>
+    <script type="text/javascript">
+    var resource = '{$resource}';
+    var controller = '{$controller}';
+    </script>
+    <script src="__PUBLIC__/Azureadmin/Scripts/Home/_partialhead.js" type="text/javascript"></script>
+    <script src="__PUBLIC__/Azureadmin/Scripts/ComMessage/ComMessage-common.js"></script>
+
+<div id="header">
+    <h1><span>机构服务平台</span></h1>
+</div>
+
+<include file="Public:welcome" />
+
+<div id="user-nav" class="navbar navbar-inverse">
+    <ul class="nav">
+        <li class="dropdown" id="menu-messages"><a href="javascript:;" data-toggle="dropdown" data-target="#menu-messages" class="dropdown-toggle"><i class="icon icon-envelope"></i><span class="text">消息</span><span id="span_UnreadComMessageCount" class="label label-important" style="display:none">0</span><b class="caret"></b></a><ul id="ul_ComMessage" class="dropdown-menu"></ul></li>
+        
+        <li><a href="/Home/HelpPage" target="_blank"><span class="text">帮助</span></a></li>
+    </ul>
+</div>
+
+    <include file="Public:navigate_other" />
+    
+    <div id="content">
+        <div id="breadcrumb"><a href="/Home/Index"><i class="icon-home"></i>欢迎</a></div>
+        
+        <div class="container-fluid">
+            
+<div class="row-fluid">
+    <div class="span12">
+        <div class="widget-box">
+            <div class="widget-title">
+                <span class="icon">
+                    <i class="icon-th-list"></i>
+                </span>
+<h5>新闻发布</h5><input data-val="true" data-val-required="NewId 字段是必需的。" id="m_NewId" name="m.NewId" type="hidden" value="{$NewId}" />
+            </div>
+            <div class="widget-content nopadding">
+                <form action="#" method="get" class="form-horizontal" id="form">
+                    <div class="control-group">
+                        <label class="control-label">标题</label>
+                        <div class="controls">
+                            <input id="m_NewsTitle" name="m.NewsTitle" type="text" value="{$info.NewsTitle}" />
+                        </div>
+                    </div>
+                    <div class="control-group">
+                        <label class="control-label">内容</label>
+                        <div class="controls">
+                            <textarea id="m_NewsCon" style="height: 383px; width: 90%">{$info.NewsCon}</textarea>
+                        </div>
+                    </div>
+                    <div class="control-group">
+                        <label class="control-label">导读</label>
+                        <div class="controls">
+                            <textarea cols="20" id="m_NewsDocReader" name="m.NewsDocReader" rows="2">{$info.NewsDocReader}
+</textarea>
+                        </div>
+                    </div>
+                    <div class="control-group">
+                        <label class="control-label">显示时间</label>
+                        <div class="controls input-append date" id="datetimepicker">
+                            <input data-val="true" id="m_NewShowTime" name="m.NewShowTime" type="text" value="{$info.NewShowTime}">
+                            <span class="add-on">
+                                <i class="icon-calendar"></i>
+                            </span>
+                        </div>
+                    </div>
+                    <div class="form-actions buttons">
+                        <button type="button" id="submitBtn" class="btn btn-primary"><i class="icon-ok icon-white"></i>保存</button>
+                        <button type="button" class="btn" onclick="return AreYouSure();"><i class="icon-refresh"></i>重置</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+            
+        </div>
+    </div>
+    <script src="__PUBLIC__/Azureadmin/Scripts/Lib/jquery.js"></script>
+<script src="__PUBLIC__/Azureadmin/Scripts/Lib/bootstrap.js"></script>
+<script src="__PUBLIC__/Azureadmin/Scripts/Lib/menu.js"></script>
+<script src="__PUBLIC__/Azureadmin/Scripts/Lib/require.js"></script>
+<script src="__PUBLIC__/Azureadmin/Scripts/config.js"></script>
+<script src="__PUBLIC__/Azureadmin/Scripts/common.js"></script>
+
+    <script type="text/javascript">
+        $('#breadcrumb a:last-child').css('background-image', 'none');
+        $(window).resize(function () {
+            var height = $('#sidebar>ul').height() + 100;
+            if (height < 600) {
+                height = 600;
+            }
+            $('#content').css('min-height', height + 'px');
+        }).resize();
+    </script>
+    
+    <script src="__PUBLIC__/Azureadmin/Scripts/Lib/DateTimePicker/bootstrap-datetimepicker.min.js"></script>
+    <script src="__PUBLIC__/Azureadmin/Scripts/Lib/DateTimePicker/bootstrap-datetimepicker.zh-CN.js"></script>
+    <script src="__PUBLIC__/Azureadmin/Scripts/Lib/ueditor/ueditor.config.js"></script>
+    <script type="text/javascript">
+        function AreYouSure() {
+            require(["dialog"], function (dia) {
+                dia.ConfirmBox("<div style='padding:10px 20px;'>确定要重置吗？</div>",
+                    "确定", function () {
+                        window.location.href = window.location.href + "&" + (new Date().getTime());
+                    },
+                    "取消", true, "warning");
+            });
+        }
+
+        require(["ueditor"], function () {
+            var ue = UE.getEditor('m_NewsCon', {
+                toolbars:[['source', 'link', 'simpleupload', 'insertimage']]
+            });
+        });
+        $(function () {
+
+            function areaDis() {
+                var te = document.getElementsByTagName("textarea")[0];
+                return ($(te).height() - te.scrollHeight) * (-1);
+            }
+
+            var distance = areaDis();
+            $("textarea").on("input", function () {
+                this.style.height = (this.scrollHeight - distance) + 'px';
+            });
+        });
+        $(function () {
+            $("#datetimepicker").datetimepicker({
+                language: 'zh-CN',
+                weekStart: 1,
+                todayBtn: 1,
+                autoclose: 1,
+                todayHighlight: 1,
+                startView: 2,
+                forceParse: 1,
+                showMeridian: 1,
+                pickerPosition: "top-left"
+            });
+            $("#submitBtn").on("click", function () {
+                require(["dialog"], function (dia) {
+                    var dd = {
+                        id: $("#m_NewId").val(),
+                        cid: "222",
+                        NewsTitle: $("#m_NewsTitle").val(),
+                        NewsCon: escape(UE.getEditor('m_NewsCon').getContent()),
+                        NewsDocReader: $("#m_NewsDocReader").val(),
+                        NewShowTime: $("#m_NewShowTime").val(),
+                    };
+                    if (dd.NewsTitle.length < 1) {
+                        dia.ErrorBox("请填写标题！");
+                        return;
+                    }
+                    if (dd.NewsCon.length < 1) {
+                        dia.ErrorBox("请填写内容！");
+                        return;
+                    }
+                    if (dd.NewsDocReader.length < 1) {
+                        dia.ErrorBox("请填写导读！");
+                        return;
+                    }
+                    if (dd.NewsTitle.length > 40) {
+                        dia.ErrorBox("标题过长！");
+                        return;
+                    }
+                    if (dd.NewsDocReader.length > 200) {
+                        dia.ErrorBox("导读过长！");
+                        return;
+                    }
+                    var tip = dia.ShowTip("提交中，请稍候...");
+                    $.post("Save.html?cid=222", dd, function (data) {
+                        tip.close();
+                        if (data && data.res && data.res == 1) {
+                            if (window.opener)
+                                window.opener.location.reload();
+                            dia.SuccessBox("提交成功", function () {
+                                window.opener = null;
+                                window.close();
+                            });
+                        } else {
+                            dia.ErrorBox("提交失败");
+                        }
+                    });
+                });
+            });
+        });
+
+    </script>
+
+</body>
+</html>
