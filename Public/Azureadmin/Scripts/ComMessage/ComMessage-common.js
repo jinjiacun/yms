@@ -1,7 +1,7 @@
 ﻿
 var dia_messageContent;
 function ShowMessage(id) {
-    $.post(resource+"/ComMessage/GetMessageContent/", { id: id }, function (json) {
+    $.post(controller+"/ComMessage/GetMessageContent/", { id: id }, function (json) {
         require(["dialog"], function (dia) {
             dia_messageContent = dia.LoadEle(json.html);
             if (json.isRefurbish) {
@@ -22,7 +22,7 @@ function FunDel(tips, ids) {
     require(["dialog"], function (dia) {
         dia.ConfirmBox("<div style='padding:10px;'>" + tips + "<div>", "确定", function () {
             dia.Close(dia_messageContent);
-            $.post(resource+"/ComMessage/DeleteMessage/", { ids: ids }, function (json) {
+            $.post(controller+"/ComMessage/DeleteMessage/", { ids: ids }, function (json) {
                 if (json.msg == "") {
                     dia.SuccessBox("删除成功.");
                     //刷新
