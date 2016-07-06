@@ -5,7 +5,7 @@
 function GetVipOptions() {
     $.ajax({
         type: "post",
-        url: '/UserManage/GetVipOptions?selValue=&isAddFirst=true',
+        url: controller+'/UserManage/GetVipOptions?selValue=&isAddFirst=true',
         //data: { selValue: "ss", isAddFirst: true },
         success: function (data) {
             $("#search_VipLevel").html(data);
@@ -34,7 +34,7 @@ function SetLink() {
 function EditUCState(ComUserId, UCState, strUCState) {
     require(["dialog"], function (dia) {
         dia.ConfirmBox("<div style='padding:10px;'>您确定要【" + strUCState + "】该用户吗？<div>", "确定", function () {
-            $.post("/UserManage/EditUCState", { ComUserId: ComUserId, UCState: UCState }, function (json) {
+            $.post(controller+"/UserManage/EditUCState", { ComUserId: ComUserId, UCState: UCState }, function (json) {
                 if (json.msg == "") {
                     require(["dialog"], function (dia) {
                         refurbishCurrentPage();
@@ -77,7 +77,7 @@ var dia_edit;
 function editOne(id) {
     $.ajax({
         type: "post",
-        url: '/UserManage/Bind_Edit_ComUser?id=' + id,
+        url: controller+'/UserManage/Bind_Edit_ComUser?id=' + id,
         success: function (json) {
             require(["dialog"], function (dia) {
                 dia_edit = dia.LoadEle(json.html);
@@ -92,7 +92,7 @@ function editOne(id) {
 function ShowDetail(id) {
     $.ajax({
         type: "post",
-        url: '/UserManage/GetDetails?id=' + id,
+        url: controller+'/UserManage/GetDetails?id=' + id,
         success: function (json) {
             require(["dialog"], function (dia) {
                 dia_edit = dia.LoadEle(json.html);
@@ -108,7 +108,7 @@ function SaveComUser(id) {
     //alert($("#VipLevel").val());
     //return;
     var parm = { Id: id, VipLevel: $("#VipLevel").val(), UCState: $("#UCState").val() };
-    $.post("/UserManage/SaveComUser", parm, function (json) {
+    $.post(controller+"/UserManage/SaveComUser", parm, function (json) {
         if (json.msg == "") {
             require(["dialog"], function (dia) {
                 dia.Close(dia_edit);
@@ -149,7 +149,7 @@ function ResetUserPwd(uid) {
                 }
                 $.ajax({
                     type: "POST",
-                    url: "ResetUserPwd.html",
+                    url: controller+"ResetUserPwd.html",
                     data: "uid=" + uid + "&pwd=" + encodeURIComponent(pwd) + "&repwd=" + encodeURIComponent(repwd),
                     success: function (json) {
                         if (json.Result == 1) {
