@@ -114,7 +114,7 @@ function GetComMessageCount() {
         //说明没权限
         return;
     }
-    $.post(controller+"/ComMessager/GetComMessageCount/", function (json) {
+    $.post(controller+"/ComMessage/GetComMessageCount/", function (json) {
         if (json.count == 0) {
             $("#span_UnreadComMessageCount").css("display", "none");
         } else {

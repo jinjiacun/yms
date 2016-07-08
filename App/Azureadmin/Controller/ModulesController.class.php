@@ -19,12 +19,12 @@ class ModulesController extends BaseController {
 
 	public function index()
 	{
-        $this->assign('menu_index', 6);
-        $page_index = 1;
-        $page_size  = 20;
-        $content    = array();
-        if(I('get.p'))
-        {
+	  $this->assign('menu_index', 6);
+          $page_index = 1;
+          $page_size  = 20;
+          $content    = array();
+          if(I('get.p'))
+          {
             $page_index = I('get.p');
             $content['page_size'] = $page_size;
             $content['page_index'] = $page_index;

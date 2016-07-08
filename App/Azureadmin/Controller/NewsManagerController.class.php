@@ -88,11 +88,11 @@ class NewsManagerController extends BaseController{
 
 	public function Save(){
 	       $id = '';
-	       //ÅÐ¶¨ÐÂÔö»¹ÊÇÐÞ¸Ä
+	       //判定新增还是修改
 	       if(I('post.id')){
 		$id = I('post.id');
 		if($id == '00000000-0000-0000-0000-000000000000'){
-		       //ÐÂÔö
+		       //新增
 		       $content = array(
 		          'NewId'         => create_guid(),
 			  'AdminId'       => session('AdminId'),
@@ -122,7 +122,7 @@ class NewsManagerController extends BaseController{
 		       unset($result);            
 		}
 		else{
-		       //ÐÞ¸Ä
+		       //修改
 		       $content = array(
 		       	  'where'=>array('NewId'=>$id),
 			  'data'=>array(
@@ -159,11 +159,11 @@ class NewsManagerController extends BaseController{
 	}
 
 	/**
-	¹¦ÄÜ£ºÉ¾³ý
+	功能：删除
 	
-	²ÎÊý£º
+	参数：
 	@@input
-	@param $NewId int ÐÂÎÅid
+	@param $NewId int 新闻id
 	*/
 	public function Delete(){
 	   $content = array('NewId'=>I('post.NewId'));

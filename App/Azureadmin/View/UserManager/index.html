@@ -56,10 +56,9 @@
             <div class="div-left">
                 <input id="search_LoginId"  placeholder="输入用户名/手机号/邮箱搜索" title="输入用户名/手机号/邮箱搜索" type="text">&nbsp;&nbsp;<input id="search_UserName" placeholder="输入真实姓名搜索" title="输入真实姓名搜索" type="text">&nbsp;&nbsp;<select id="search_VipLevel" class="s-auto">
                     <option value="">VIP等级</option>
-                        <option value="0" >注册用户</option>
-                        <option value="1" >VIP-1</option>
-                        <option value="2" >VIP-2</option>
-
+                        <volist name="vip_list" id="item">
+                        <option value="{$item.VipLevel}">{$item.VipName}</option>
+                        </volist>
                 </select>
             </div>
             <div>
@@ -107,7 +106,7 @@
 
                         </if>                        
                         </td>
-                        <td class="grid_operate_td"><if condition="$is_allow eq 1"><button class="btn btn-primary btn-mini" ondblclick="javascript:ShowDetail('{$item.ComUserId}');"><i class="icon-pencil icon-white"></i>查看详细</button>&nbsp;&nbsp;</if><button class="btn btn-primary btn-mini" onclick="javascript:editOne('{$item.ComUserId}');"><i class="icon-pencil icon-white"></i>编辑</button>&nbsp;&nbsp;
+                        <td class="grid_operate_td"><if condition="$is_allow eq 1"><button class="btn btn-primary btn-mini" ondblclick="javascript:ShowDetail('{$item.ComUserId}');"><i class="icon-pencil icon-white"></i>查看详细</button>&nbsp;&nbsp;</if><button class="btn btn-primary btn-mini" onclick="javascript:b('{$item.ComUserId}');"><i class="icon-pencil icon-white"></i>编辑</button>&nbsp;&nbsp;
                         <if condition="$item.UCState eq 1">
                         <button class='btn btn-mini btn-danger' onclick="EditUCState('{$item.ComUserId}','0','禁用');">禁用</button>
                         <else />
@@ -128,13 +127,17 @@
             
         </div>
     </div>
+    <script src="__PUBLIC__/Azureadmin/Scripts/Lib/jquery.js"></script>
+<script src="__PUBLIC__/Azureadmin/Scripts/Lib/bootstrap.js"></script>
+<script src="__PUBLIC__/Azureadmin/Scripts/Lib/menu.js"></script>
+<script src="__PUBLIC__/Azureadmin/Scripts/Lib/require.js"></script>
+<script type="text/javascript">
+    var resource = '{$resource}';
+</script>
+<script src="__PUBLIC__/Azureadmin/Scripts/config.js"></script>
+<script src="__PUBLIC__/Azureadmin/Scripts/common.js"></script>
     <script type="text/javascript">
         var controller = '{$controller}';
-        var resource = '$resource';
-    </script>>
-    <script src="__PUBLIC__/Azureadmin/bundles/basicJs?v=VEBAn_rqP8lcxeg7zmvLgQf31kk8SiPMstbdeK0r9p81"></script>
-
-    <script type="text/javascript">
         $('#breadcrumb a:last-child').css('background-image', 'none');
         $(window).resize(function () {
             var height = $('#sidebar>ul').height() + 100;
@@ -144,9 +147,17 @@
             $('#content').css('min-height', height + 'px');
         }).resize();
     </script>
-    
+    <script type="text/javascript" src="__PUBLIC__/Azureadmin/Scripts/Lib/select2.min.js"></script>
+    <script type="text/javascript" src="__PUBLIC__/Azureadmin/Scripts/Lib/jquery.uniform.js"></script>
+    <script type="text/javascript" src="__PUBLIC__/Azureadmin/Scripts/Lib/jquery.ztree.core-3.5.min.js"></script>
+    <script type="text/javascript" src="__PUBLIC__/Azureadmin/Scripts/Lib/jquery.ztree.excheck-3.5.min.js"></script>
+    <!--
     <script type="text/javascript" src="__PUBLIC__/Azureadmin/Scripts/UserManage/user.js"></script>
     <script src="__PUBLIC__/Azureadmin/Scripts/Lib/jquery.placeholder.js" type="text/javascript"></script>
+    -->
+    <script type="text/javascript">
+        function b(a) { require(["__PUBLIC__/Azureadmin/Scripts/UserManage/user.js"], function (o) { o.ShowDetail(a); }); }
+    </script>
 
 </body>
 </html>

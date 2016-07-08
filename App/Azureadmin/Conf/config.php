@@ -36,5 +36,15 @@ return array(
 	     '中级分析师' => 1,
 	     '高级分析师' => 2
 	   ),
+	   //消息阅读状态
+	   'EnumComMessageRead' => array(
+	     '未读' => 0,
+             '已读' => 1,
+	   ),
+	   //消息状态
+	   'EnumComMessageState' => array(
+	     '未删' => 1,
+             '已删' => 0,
+	   ),
 	),
 );

@@ -4,6 +4,16 @@ use Azureadmin\Controller;
 include_once(dirname(__FILE__).'/BaseController.class.php');
 
 class UserManagerController extends BaseController{
+        public function _initialize()
+	{
+	   parent::_initialize();
+           parent::get_dictionary();
+           if(null == session('AdminName')
+           || ''   == session('AdminName'))
+           {
+            $this->redirect('/Azureadmin/Login/index');
+           }
+	}        
 
 	public function index()
 	{
@@ -129,10 +139,22 @@ class UserManagerController extends BaseController{
 		   $this->assign('list', $list);
 		 }
 	       }
-	       
+	       unset($result);     
 	     }
 	  }
 
+	  //查看等级
+	  $content['where']['ComId'] = session('ComId');
+	  $content['where']['VipState'] = 1;
+	  $result = $this->_call('ComVip.get_list', $content);
+	  unset($content);
+	  if($result){
+	    if($result['status_code'] == 200){
+	       $this->assign('vip_list', $result['content']['list']);
+	    }
+	  }
+	  
+	  
 	  $this->display();
 	}
 
@@ -177,51 +199,46 @@ class UserManagerController extends BaseController{
 	@param $ComUserId 机构用户id
 	*/
 	public function Bind_Edit_ComUser(){
-	   $content['ComUserId'] = I('post.ComUserId');
+	   $content['ComUserId'] = I('get.ComUserId');
 
+	   $cur_vip_level = 0;
+	   $cur_uc_state = 0;
+	   $vip_list = array();
 	   $result = $this->_call('ComUser.get_info_by_key', $content);
 	   unset($content);
-	   $html = "<div class=\"widget-box\" id=\"div_edit\">
-	    	      <div class=\"widget-title\">
-            	              <span class=\"icon\">
-			         <i class=\"icon-align-justify\"></i>
-                              </span>
-			       <h5>编辑</h5>
-	              </div>
-                      <div class=\"widget-content nopadding\">
-                      <form id=\"form_edit\" action=\"/UserManage/SaveComUser/\" method=\"post\"
-                        class=\"form-horizontal\">
-                        <div class=\"control-group\">
-                           <label class=\"control-label\">VIP等级</label>
-                           <div class=\"controls\">
-                               <select id=\"VipLevel\" name=\"VipLevel\" class=\"s-auto\">{0}</select>
-                            </div>
-                        </div>
-                        <div class=\"control-group\">
-                            <label class=\"control-label\">状态</label>
-                            <div class=\"controls\">
-                                <select id=\"UCState\" name=\"UCState\" class=\"s-auto\">{1}</select>
-                            </div>
-                        </div>
-                        <div class=\"form-actions\">
-                            <button type=\"button\" onclick=\"SaveComUser('{2}');\" class=\"btn btn-primary\">保存</button>
-                        </div>
-                    </form>
-                </div>
-            </div>";	   
-
-	   $com_user_info = array();
+	  
 	   if($result){
 	     if($result['status_code'] == 200){
-	       $com_user_info = $result['content'];
-
-	       $html = str_replace('{0}', $com_user_info['VipLevel'], $html);//VipLevel
-	       $html = str_replace('{1}', $com_user_info['UCState'], $html);//UCState
-	       $html = str_replace('{2}', I('post.ComUserId'), $html);//ComUserId
-	       echo $html;
-	       exit();
+	       $cur_vip_level = $result['content']['VipLevel'];
+	       $cur_uc_state = $result['content']['UCState'];
 	     }
 	   }
+	   unset($result);
+
+	   //查询等级列表
+	   $content['where']['ComId'] = session('ComId');
+	   $content['where']['VipState'] = 1;
+	   $result = $this->_call('ComVip.get_list', $content);
+	   unset($result);
+	   if($result){
+	     if($result['status_code'] == 200){
+	       if(count($result['content']['list'])>0){
+	         foreach($result['content']['list'] as $v){
+		   $vip_list[intval($v['VipLevel'])] = $v['VipName'];
+		 }
+		 unset($v);
+	       }
+	     }
+	   }
+
+	   header('Content-type:text/json; charset=utf-8');
+	   $out = array(
+	        'cur_vip_level'=>$cur_vip_level,
+	        'cur_uc_state' =>$cur_ur_state,
+		'vip_list'     =>$vip_list
+  	   );
+	   echo json_encode($out);
+	   exit();
 	}
 
 	/**
@@ -469,7 +486,7 @@ class UserManagerController extends BaseController{
 	     unset($result);
 
 	     if(count($vip_grade_map) >0){
-	       foreach($vip_grade_map $User_Id=>$VipGrade){
+	       foreach($vip_grade_map as $User_Id=>$VipGrade){
 	          $content = array(
 		      'where'=>array('User_Id'=>$User_Id),
 		      'data'=>array('VipLevel'=>$VipGrade),
@@ -637,7 +654,7 @@ class UserManagerController extends BaseController{
 	   $out = array(
 	   	'Adavatar'=>$com_admin['Adavatar'],
 		'ComAdminLTE' => array(
-		   lblAdminId = comAdmin.AdminId.ToString(),
+		        'lblAdminId'       => $com_admin_info['AdminId'],
                         'lblAdminUserName' => $com_admin_info['AdminUserName'],
                         'lblRoleName'      => $com_role_info['RoleName'],
                         'lblRoomName'      => $com_room_info['RoomName'],
@@ -784,9 +801,9 @@ class UserManagerController extends BaseController{
 	      $content = array(
 	         'where' => array('ComAdminId'=>I('post.AdminId')),
 		 'data'  => array(
-		   'ComTLevel' => urlencode(I("post.ComTLevel"));
-                   'ComTStyle' => urlencode(I("post.ComTStyle"));
-                   'ComTIntr'  => urlencode(I("post.ComTIntro"));
+		   'ComTLevel' => urlencode(I("post.ComTLevel")),
+                   'ComTStyle' => urlencode(I("post.ComTStyle")),
+                   'ComTIntr'  => urlencode(I("post.ComTIntro")),
 		 )
 	      ); 
 	      $result = $this->_call('ComAdminLTE.update', $content);

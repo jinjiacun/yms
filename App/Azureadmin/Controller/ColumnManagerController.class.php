@@ -359,7 +359,7 @@ class ColumnManagerController extends BaseController {
        参数:
        @param $AMoId int 栏目id
      */
-    public function Get(){
+    public function GetModule(){
       $content['AMoId'] = I('post.AMoId');
 
       $result = $this->_call('AModule.get_info_by_key', $content);
