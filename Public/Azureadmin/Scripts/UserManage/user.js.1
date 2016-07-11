@@ -1,0 +1,115 @@
+define(['dialog'], function (dialog) {
+    var searchCompany = '';
+    return {
+         refresh: function () {
+            var p = $('#grid a[currpage]').attr('currpage');
+            if (p == null) p = 1;
+            $('#grid').load(
+controller+'/UserManager/GetTable?page=' + p + '&company=' + searchCompany + '&r=' + Math.random() + ' #grid');
+        },
+        EditUCState:function(ComUserId, UCState, strUCState){               
+                dialog.ConfirmBox("<div style='padding:10px;'>您确定要【" + strUCState + "】该用户吗？<div>", "确定", function () {
+                    $.post(controller+"/UserManage/EditUCState", { ComUserId: ComUserId, UCState: UCState }, function (json) {
+                        if (json.msg == "") {
+                            require(["dialog"], function (dia) {
+                                refurbishCurrentPage();
+                                dia.SuccessBox("编辑成功.");
+                            });
+                        } else {
+                            require(["dialog"], function (dia) {
+                                dia.ErrorBox("编辑失败.");
+                            });
+                        }
+                    });
+                }, "取消", function () {
+                }, "warning");           
+        },
+        editOne:function (id){
+            var tip = dialog.ShowTip('请稍候...');
+            $.post(controller+'/UserManager/Bind_Edit_ComUser', { 'ComUserId': id}, function (data) {
+                tip.close();
+                var companyRow = '';
+                var com_user_id = data.com_user_id;
+                //等级
+                var html_level = '';
+                $.each(data.vip_list, function(level, name){
+                    if(data.cur_vip_level == level){
+                        html_level +=  "<option value=\""+level+"\" selected=\"selected\">"+name+"</option>";
+                    }
+                    else
+                    {
+                        html_level +=  "<option value=\""+level+"\">"+name+"</option>";   
+                    }
+                });
+
+                //状态
+                var html_status = '';
+                if(data.cur_uc_state == 0)
+                {
+                    html_status = "                  <option value=\"0\" selected=\"selected\">禁用</option>"
+                  +"                  <option value=\"1\">启动</option>";
+                }
+                else
+                {
+                    html_status = "                  <option value=\"0\" >禁用</option>"
+                  +"                  <option value=\"1\" selected=\"selected\">启动</option>";   
+                }
+
+                var layer = dialog.LoadEle("<div class=\"widget-box\" id=\"div_edit\">"
+                  +"<div class=\"widget-title\">"
+                   +"           <span class=\"icon\">"
+                   +"  <i class=\"icon-align-justify\"></i>"
+                   +"           </span>"
+                   +"<h5>编辑</h5>"
+                  +"</div>"
+                  +"    <div class=\"widget-content nopadding\">"
+                  +"    <form id=\"form_edit\" action=\"\" method=\"post\""
+                  +"      class=\"form-horizontal\">"
+                  +"      <div class=\"control-group\">"
+                  +"         <label class=\"control-label\">VIP等级</label>"
+                  +"         <div class=\"controls\">"
+                  +"             <select id=\"VipLevel\" name=\"VipLevel\" class=\"s-auto\">"
+                  + html_level
+                  +"</select>"
+                  +"          </div>"
+                  +"      </div>"
+                  +"      <div class=\"control-group\">"
+                  +"          <label class=\"control-label\">状态</label>"
+                  +"          <div class=\"controls\">"
+                  +"              <select id=\"UCState\" name=\"UCState\" class=\"s-auto\">"
+                  + html_status
+                  +"</select>"
+                  +"          </div>"
+                  +"      </div>"
+                  +"      <div class=\"form-actions\">"
+                  +"          <input type='hidden' id='com_user_id' value='"+com_user_id+"' />"
+                  +"          <button type=\"button\" id=\"btnSave\"  class=\"btn btn-primary\">保存</button>"
+                  +"      </div>"
+                  +"  </form>"
+                +"</div>"
+            +"</div>", function(){
+                $('#btnSave').click(function () {
+                    var ComUserId =  $.trim($('#com_user_id').val());
+                    var VipLevel  =  $.trim($('#VipLevel').val()); 
+                    var UCState   =  $.trim($('#UCState').val());
+                     $.post(controller+"/UserManager/SaveComUser", { 'ComUserId': ComUserId, 'VipLevel': VipLevel, 'UCState': UCState }, function (data) {
+                                    tip.close();
+                                    if (data.res == 1) {
+                                        layer.close();
+                                        dialog.SuccessBox('编辑成功');
+                                        d();
+                                    } else {
+                                        dialog.ErrorBox('编辑失败');
+                                    }
+                                }, 'json');
+
+                });
+            });
+
+            }
+
+            );
+        }
+
+    }
+}); 
