@@ -5,7 +5,7 @@
 
 function initUploadify(id, funOnUploadSuccess) {
     $("#" + id).uploadify({
-        'swf': '../../Scripts/Lib/uploadify/uploadify.swf',
+        'swf': resource+'/Scripts/Lib/uploadify/uploadify.swf',
         'buttonText': '上传图片',
         'buttonClass': 'btn btn-info btn-mini',
         'height': 30,

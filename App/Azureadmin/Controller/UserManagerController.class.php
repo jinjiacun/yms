@@ -431,7 +431,7 @@ class UserManagerController extends BaseController{
 	public function GetDetails(){
 	  $com_user_info = array();
 	  $user_id = 0;
-	  $content['ComUserId'] = I('post.ComUserId');
+	  $content['ComUserId'] = I('get.ComUserId');
 	  $result = $this->_call('ComUser.get_info_by_key', $content);
 	  unset($content);
 	  if($result){

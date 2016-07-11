@@ -15,8 +15,8 @@ require(["ueditor"], function () {
 
 function SaveComIntro() {
     var comSafe = "{'Invest':'" + ue_invest.getContent() + "','Guarantee':'" + ue_guarantee.getContent() + "','Suggest':'" + ue_suggest.getContent() + "'}";
-    $.post("/ComManage/SaveComSafe", { ComSafe: escape(comSafe) }, function (json) {
-        if (json.msg == "") {
+    $.post(controller+"/ComManager/SaveComSafe", { 'Invest':ue_invest.getContent(),'Guarantee':ue_guarantee.getContent(),'Suggest':ue_suggest.getContent()}, function (json) {
+        if (json.res == 1) {
             require(["dialog"], function (dia) {
                 dia.SuccessBox("保存成功.");
             });

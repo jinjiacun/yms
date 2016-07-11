@@ -1,7 +1,7 @@
 ﻿/// <reference path="../../Views/ComManage/Edit_ComIntro.cshtml" />
 function editComTable() {
     require(["dialog"], function (dia) {
-        dia.OpenIframe("ComTable_Oper.html", " width='600' height='630' ", {
+        dia.OpenIframe(controller+"/ComManager/ComTable_Oper.html", " width='600' height='630' ", {
             fixed: false
     });
     });
@@ -9,28 +9,28 @@ function editComTable() {
 
 function editImg() {
     require(["dialog"], function (dia) {
-        dia.OpenIframe("ComTable_Img.html", " width='1200' height='600' ");
+        dia.OpenIframe(controller+"/ComManager/ComTable_Img.html", " width='1200' height='600' ");
     });
 }
 
 function editComInit() {
     require(["dialog"], function (dia) {
-        dia.OpenIframe("ComInit_Oper.html", " width='500' height='190' ");
+        dia.OpenIframe(controller+"/ComManager/ComInit_Oper.html", " width='500' height='190' ");
 
     });
 }
 
 function editLogo() {
     require(["dialog"], function (dia) {
-        dia.OpenIframe("ComTable_Logo.html", " width='500' height='490' ");
+        dia.OpenIframe(controller+"/ComManager/ComTable_Logo.html", " width='500' height='490' ");
     });
 }
 
 function editComIntro() {
-    window.open("/ComManage/Edit_ComIntro");
+    window.open(controller+"/ComManager/Edit_ComIntro");
 }
 
 function editComSafe() {
-    window.open("/ComManage/Edit_ComSafe");
+    window.open(controller+"/ComManager/Edit_ComSafe");
 }
 

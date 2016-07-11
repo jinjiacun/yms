@@ -8,9 +8,8 @@
     <link rel="stylesheet" href="__PUBLIC__/Azureadmin/Content/css/bootstrap.min.css" />
     <link rel="stylesheet" href="__PUBLIC__/Azureadmin/Content/css/bootstrap-responsive.min.css" />
     <link rel="stylesheet" href="__PUBLIC__/Azureadmin/Content/css/unicorn.main.css" />
-    <link rel="stylesheet" href="__PUBLIC__/Azureadmin/Content/css/unicorn.jcs.css" class="skin-color" />
-    <link href="__PUBLIC__/Azureadmin/bundles/basicCss?v=e961GYJIgjfBDjJc0xbZ0FcMyKvofaWQQoRovpMQGzY1" rel="stylesheet"/>
-
+    <link rel="stylesheet" href="__PUBLIC__/Azureadmin/Content/css/unicorn.jcs.css" class="skin-color" />  
+    <link href="__PUBLIC__/Azureadmin/Scripts/Lib/artDialog/skins/twitter.css" rel="stylesheet" />
     
     <link href="__PUBLIC__/Azureadmin/Content/ComManage/commange.css" rel="stylesheet" />
 
@@ -65,42 +64,42 @@
             <div class="row-fluid">
                 <div class="span4">
                     <div class="widget-content nobottom">
-                        <img  src="http://spic.cngold.com.cn/102587/img/base/2015/1/14/201501141441431156975801.png" />
+                        <img  src="{$item.ComLogo}" />
                         &nbsp;LOGO(大)
                     </div>
                     <div class="widget-content nobottom">
-                        <img  src="http://spic.cngold.com.cn/102587/img/base/2014/8/29/201408291109261899190660.png" />
+                        <img  src="{$item.ComSLogo}" />
                         &nbsp;LOGO(小)
                     </div>
                 </div>
                 <div class="span6">
                     <form action="#" method="get" class="form-horizontal">
                         <div class="control-group">
-                            <label class="control-label">公司简称：</label><label class="control-label fontleft">瑞银汇鑫</label>
+                            <label class="control-label">公司简称：</label><label class="control-label fontleft">{$item.ComName}</label>
                         </div>
                         <div class="control-group">
-                            <label class="control-label">公司全称：</label><label class="control-label fontleft">常州瑞银汇鑫黄金经营有限公司</label>
+                            <label class="control-label">公司全称：</label><label class="control-label fontleft">{$item.ComAllName}</label>
                         </div>
                         <div class="control-group">
-                            <label class="control-label">热线电话：</label><label class="control-label fontleft">022-58098000</label>
+                            <label class="control-label">热线电话：</label><label class="control-label fontleft">{$item.ComPhone}</label>
                         </div>
                         <div class="control-group">
-                            <label class="control-label">企业邮箱：</label><label class="control-label fontleft">ruiyinhuixin@126.com</label>
+                            <label class="control-label">企业邮箱：</label><label class="control-label fontleft">{$item.ComEmail}</label>
                         </div>
                         <div class="control-group">
-                            <label class="control-label">官网地址：</label><label class="control-label fontleft"><a target="_blank" href="http://www.ruiyin999.com">http://www.ruiyin999.com</a></label>
+                            <label class="control-label">官网地址：</label><label class="control-label fontleft"><a target="_blank" href="{$item.ComUrl}">{$item.ComUrl}</a></label>
                         </div>
                         <div class="control-group">
-                            <label class="control-label">联系人：</label><label class="control-label fontleft">韩先生</label>
+                            <label class="control-label">联系人：</label><label class="control-label fontleft">{$item.ComLine}</label>
                         </div>
                         <div class="control-group">
-                            <label class="control-label">联系电话：</label><label class="control-label fontleft">18702225074</label>
+                            <label class="control-label">联系电话：</label><label class="control-label fontleft">{$item.ComMob}</label>
                         </div>
                         <div class="control-group">
-                            <label class="control-label">邮箱：</label><label class="control-label fontleft">731037934@qq.com</label>
+                            <label class="control-label">邮箱：</label><label class="control-label fontleft">{$item.ComMail}</label>
                         </div>
                         <div class="control-group">
-                            <label class="control-label">地址：</label><label class="control-label fontleft">天津市空港经济区环河北路76号商务园西区1号楼8层</label>
+                            <label class="control-label">地址：</label><label class="control-label fontleft">{$item.ComAddress}</label>
                         </div>
                     </form>
                 </div>
@@ -112,6 +111,10 @@
             
         </div>
     </div>
+    <script type="text/javascript">
+        var resource = '{$resource}';
+        var controller = '{$controller}';
+    </script>
     <script src="__PUBLIC__/Azureadmin/bundles/basicJs?v=VEBAn_rqP8lcxeg7zmvLgQf31kk8SiPMstbdeK0r9p81"></script>
 
     <script type="text/javascript">

@@ -6,8 +6,8 @@ function SaveComIntro() {
 
     });
     var comIntro = "{'Introduce':'" + ue_introduce.getContent() + "','Download':'" + ue_download.getContent() + "','Contact':'" + ue_contact.getContent() + "'}";
-    $.post("/ComManage/SaveComIntro", { ComIntro: escape(comIntro) }, function (json) {
-        if (json.msg == "") {
+    $.post(controller+"/ComManager/SaveComIntro", {'Introduce':ue_introduce.getContent(),'Download':ue_download.getContent(),'Contact': ue_contact.getContent() }, function (json) {
+        if (json.res == 1) {
             require(["dialog"], function (dia) {
                 dia.SuccessBox("保存成功.");
             });

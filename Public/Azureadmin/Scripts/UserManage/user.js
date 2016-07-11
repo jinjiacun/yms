@@ -120,7 +120,7 @@ function editOne(id) {
                   +"      <div class=\"control-group\">"
                   +"         <label class=\"control-label\">VIP等级</label>"
                   +"         <div class=\"controls\">"
-                  +"             <select id=\"VipLevel\" name=\"VipLevel\" class=\"s-auto\">"
+                  +"             <select id=\"VipLevel\" name=\"VipLevel\" class=\"s-auto\" style=\"width:auto;\">"
                   + html_level
                   +"</select>"
                   +"          </div>"
@@ -128,7 +128,7 @@ function editOne(id) {
                   +"      <div class=\"control-group\">"
                   +"          <label class=\"control-label\">状态</label>"
                   +"          <div class=\"controls\">"
-                  +"              <select id=\"UCState\" name=\"UCState\" class=\"s-auto\">"
+                  +"              <select id=\"UCState\" name=\"UCState\" class=\"s-auto\" style=\"width:auto;\">"
                   + html_status
                   +"</select>"
                   +"          </div>"

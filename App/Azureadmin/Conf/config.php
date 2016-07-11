@@ -19,6 +19,12 @@ return array(
 	
 	'DefaultPassword' => md5('123456'),
 	'Dictionary' => array(
+	   //注册类型
+	   'EmumRegistType' =>array(
+             '用户名' => 2,
+             '邮箱'   => 1,
+	     '手机号' => 0,
+	   ),
 	   //登陆类型
 	   'EnumLoginType' => array(
 	     '手机号' => 1,
