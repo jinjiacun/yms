@@ -55,7 +55,7 @@ class UserManagerController extends BaseController{
                     $record_count = $result['content']['record_count'];
                     $this->assign('record_count', $record_count);
                     //$this->get_page($record_count, $page_size);
-                    $this->assign('page', $this->get_page_by_custom(C('controller').'/UserManager/Index', $page_index, $record_count, $page_size));
+                    $this->assign('page', $this->get_page_by_custom(C('controller').'/UserManager/GetTable', $page_index, $record_count, $page_size));
                 }
             }
           }
@@ -71,7 +71,7 @@ class UserManagerController extends BaseController{
 	    if($result['status_code'] == 200){
 	         if(count($result['content']['list']) > 0){
 		   foreach($result['content']['list'] as $v){
-		   	$vip_list[intval($v['VipLevel'])] = $v;
+		   	$vip_list[$v['VipLevel']] = $v['VipName'];
 		   }
 		   unset($v);
 		   $this->assign('vip_list', $vip_list);
@@ -142,22 +142,199 @@ class UserManagerController extends BaseController{
 	       unset($result);     
 	     }
 	  }
-
-	  //查看等级
-	  $content['where']['ComId'] = session('ComId');
-	  $content['where']['VipState'] = 1;
-	  $result = $this->_call('ComVip.get_list', $content);
-	  unset($content);
-	  if($result){
-	    if($result['status_code'] == 200){
-	       $this->assign('vip_list', $result['content']['list']);
-	    }
-	  }
 	  
 	  
 	  $this->display();
 	}
 
+	public function GetTable(){
+	       
+	  $page_index = 1;
+          $page_size  = 20;
+          $content    = array();
+          if(I('get.page'))
+          {
+            $page_index = I('get.page');
+            $content['page_size'] = $page_size;
+            $content['page_index'] = $page_index;
+          }
+          else
+          {
+            $content['page_size'] = $page_size;
+            $content['page_index'] = $page_index;
+          }
+	  
+	  if(session('ComId') >0){
+	    $content['where']['ComId'] = session('ComId');
+	  }
+               
+          $content['order']['User_Id'] = 'desc';
+          $result = $this->_call('ComUser.get_list', $content);
+	  unset($content);	  
+
+          $list = array();
+          if($result)
+          {
+            if(200 == $result['status_code'])
+            {
+                if(isset($result['content']['list'])
+                && isset($result['content']['record_count']))
+                {
+                    $list   = $result['content']['list'];   
+                    $this->assign('list', $list);     
+                    $record_count = $result['content']['record_count'];
+                    $this->assign('record_count', $record_count);
+                    //$this->get_page($record_count, $page_size);
+		    $page = $this->get_page_by_custom(C('controller').'/UserManager/GetTable', $page_index, $record_count, $page_size);
+                }
+            }
+          }
+	  unset($result);
+
+	  $vip_list = array();//以VipLevel作为键值
+	  //获取当前机构的vip等级
+	  $content['where']['ComId'] = session('ComId');
+	  $content['page_size'] = 20;
+	  $result = $this->_call('ComVip.get_list', $content);
+	  unset($content);
+	  if($result){
+	    if($result['status_code'] == 200){
+	         if(count($result['content']['list']) > 0){
+		   foreach($result['content']['list'] as $v){
+		   	$vip_list[$v['VipLevel']] = $v['VipName'];
+		   }
+		   unset($v);
+		   $this->assign('vip_list', $vip_list);
+		 }
+	    }
+	  }
+	  unset($result);
+
+	  //是否允许查看
+	  $is_allow = 0;
+	  $content['ComAdmin'] = session('AdminId');
+	  $result = $this->_call('ComInit.is_exists', $content);
+	  unset($content);
+	  if($result){
+	     if($result['status_code'] == 200
+	     && $result['content']['is_exits'] == 0){
+	        $is_allow = 1;
+	     	$this->assign('is_allow', $is_allow);
+	     }
+	  }
+	  unset($result);
+
+	   $user_ids = '';
+	  //获取用户详细信息(真实姓名)
+          if(count($list) > 0){
+	    $user_id_list = array();	   
+	    $tmp_list = array();
+	    foreach($list as $v){
+	      $user_id_list[] = intval($v['User_Id']);
+	      $tmp_list[intval($v['User_Id'])] = $v;
+	    }
+	    unset($v);
+	    $list = $tmp_list;
+	    unset($tmp_list);
+	    if(count($user_id_list) >0){
+	       $user_ids = implode(',', $user_id_list);
+	       $content['where']['User_Id'] = array('in', $user_ids);
+	       $content['page_size'] = 20;
+	       $result = $this->_call('CGUser.get_list', $content);
+	       unset($content);
+	       if($result){
+	         if($result['status_code'] == 200){
+                   foreach($result['content']['list'] as $v){
+		      $list[intval($v['User_Id'])] = array_merge($list[intval($v['User_Id'])], $v);
+		   }
+		   $this->assign('list', $list);
+		 }
+	       }
+	       
+	     }
+	  }
+	  unset($result);
+	  
+	  //获取用户名|手机号码|邮箱
+	  if(count($list) > 0){
+	    if(count($user_id_list) >0){
+	       $user_ids = implode(',', $user_id_list);
+	       $content['where']['User_Id'] = array('in', $user_ids);
+	       $content['page_size'] = 20;
+	       $result = $this->_call('UserLogin.get_list', $content);
+	       unset($content);
+	       if($result){
+	         if($result['status_code'] == 200){
+                   foreach($result['content']['list'] as $v){
+		      $list[intval($v['User_Id'])] = array_merge($list[intval($v['User_Id'])], $v);
+		   }
+		   $this->assign('list', $list);
+		 }
+	       }
+	       unset($result);     
+	     }
+	  }
+	
+
+	//html模板
+	$html = '
+	 <div id="grid">
+            <table class="table table-bordered data-table dataTable">
+                <thead>
+                    <th class="ui-state-default">编号</th>
+                    <th class="ui-state-default">用户名</th>
+                    <th class="ui-state-default">真实姓名</th>
+                    <th class="ui-state-default">手机号码</th>
+                    <th class="ui-state-default">邮箱</th>
+                    <th class="ui-state-default">注册时间</th>
+                    <th class="ui-state-default">VIP等级</th>
+                    <th class="ui-state-default">状态</th>
+                    <th class="ui-state-default">操作</th>
+                </thead>
+                <tbody>
+		';
+         foreach($list as $item){
+	       $username = '';//用户名
+	       $mobile = '';//手机号码
+	       $email  = '';//邮箱
+	       $state = '';
+	       $view_detail = '';
+	       $ctl_state = '';
+	       if($item['LoginType'] == 6){ $username = $item['LTExtend'];}
+	       if($item['LoginType'] == 1){ $mobile   = $item['LTExtend'];}
+	       if($item['LoginType'] == 5){ $email    = $item['LTExtend'];}
+	       $state = $item['UCState'] == 0?'已禁用':'已启用';
+	       $view_detail = $is_allow == 1?'<button class="btn btn-primary btn-mini" ondblclick="javascript:ShowDetail(\''.$item['ComUserId'].'\');"><i class="icon-pencil icon-white"></i>查看详细</button>&nbsp;&nbsp;':'';
+	       $ctl_state = $item['UCState'] == 1?"<button class='btn btn-mini btn-danger' onclick=\"EditUCState('".$item['ComUserId']."','0','禁用');\">禁用</button>":"                        <button class='btn btn-mini btn-danger' onclick=\"EditUCState('".$item['ComUserId']."','1','启用');\">启用</button>";
+	       $html .= '
+                    <tr>
+                        <td>'.$item['User_Id'].'</td>
+                        <td>'.$username.'</td>
+                        <td>'.$item['UserName'].'</td>
+                        <td>'.$mobile.'</td>
+                        <td>'.$email.'</td>
+                        <td>'.$item['RegisterTime'].'</td>
+                        <td>
+                            <div id="vipName_'.$item['ComUserId'].'">'.$vip_list[$item['VipLevel']].'</div>
+                        </td>
+                        <td>'.$state.'</td>
+                        <td class="grid_operate_td">'.$view_detail.'<button class="btn btn-primary btn-mini" onclick="javascript:b(\''.$item['ComUserId'
+].'\');"><i class="icon-pencil icon-white"></i>编辑</button>&nbsp;&nbsp;
+			'.$ctl_state.'
+                        &nbsp;&nbsp;<button class="btn btn-success btn-mini" onclick="javascript:ResetUserPwd(\''.$item['User_Id'].'\');"><i class="icon-wrench icon-white"></i>&nbsp;重置密码</button></td>
+                    </tr>';
+                    }
+     $html .= '
+                </tbody>
+            </table>'.
+           $page.
+'       </div>';
+	
+
+	echo $html;
+	exit();
+	}
+	
 	/**
 	功能：更新用户状态
 
@@ -203,6 +380,7 @@ class UserManagerController extends BaseController{
 
 	   $cur_vip_level = 0;
 	   $cur_uc_state = 0;
+	   $com_user_id = 0;
 	   $vip_list = array();
 	   $result = $this->_call('ComUser.get_info_by_key', $content);
 	   unset($content);
@@ -211,6 +389,7 @@ class UserManagerController extends BaseController{
 	     if($result['status_code'] == 200){
 	       $cur_vip_level = $result['content']['VipLevel'];
 	       $cur_uc_state = $result['content']['UCState'];
+	       $com_user_id  = $result['content']['ComUserId'];
 	     }
 	   }
 	   unset($result);
@@ -219,7 +398,7 @@ class UserManagerController extends BaseController{
 	   $content['where']['ComId'] = session('ComId');
 	   $content['where']['VipState'] = 1;
 	   $result = $this->_call('ComVip.get_list', $content);
-	   unset($result);
+	   unset($content);
 	   if($result){
 	     if($result['status_code'] == 200){
 	       if(count($result['content']['list'])>0){
@@ -233,8 +412,9 @@ class UserManagerController extends BaseController{
 
 	   header('Content-type:text/json; charset=utf-8');
 	   $out = array(
+	        'com_user_id'  =>$com_user_id,
 	        'cur_vip_level'=>$cur_vip_level,
-	        'cur_uc_state' =>$cur_ur_state,
+	        'cur_uc_state' =>$cur_uc_state,
 		'vip_list'     =>$vip_list
   	   );
 	   echo json_encode($out);
@@ -410,32 +590,17 @@ class UserManagerController extends BaseController{
 	       unset($content);
 	       if($result){
 	         if($result['status_code'] == 200
-		 && $result['content']['is_success'] == 1){
-		    $out = array('msg'=>'更新失败', 'VipName'=>'');
+		 && $result['content']['is_success'] == 0){
+		    $out = array('res'=>1);
 		    echo json_encode($out);
 		    exit();
 		 }
 	       }
 	       unset($result);
 
-	       $ComVipInfo = array();
-	       $content['ComId'] = session('ComId');
-	       $content['VipLevel'] = I('post.VipLevel');
-	       $result = $this-_call('ComVip.get_info', $content);
-	       unset($content);
-	       if($result){
-	          if($result['status_code'] == 200){
-		      $ComVipInfo = $result['content'];	     
-		      header('Content-type:text/json');
-		      $out = array('msg'=>'', 'VipName'=>$ComVipInfo['VipName']);
-		      echo json_encode($out);
-		      exit();
-		  }
-	       }
-	       unset($result);
 	       
 	       header('Content-type:text/json');
-	       $out = array('msg'=>'操作失败', 'VipName'=>'');
+	       $out = array('res'=>-5000);
 	       echo json_encode($out);
 	       exit();
 	}

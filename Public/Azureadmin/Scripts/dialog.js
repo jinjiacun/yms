@@ -12,7 +12,7 @@
 
     function LoadImg(url) {
         var bigImgId = "bigImg" + Math.random().toString().substr(2);
-        var imgHtml = "<div style='padding:10px;'><img style='max-width:1200px;max-height:700px;' src='/Scripts/Lib/artDialog/skins/icons/loading.gif' id='" + bigImgId + "'/></div>";
+        var imgHtml = "<div style='padding:10px;'><img style='max-width:1200px;max-height:700px;' src='"+resource+"/Scripts/Lib/artDialog/skins/icons/loading.gif' id='" + bigImgId + "'/></div>";
         var pop_Img = LoadEle(imgHtml, null, null);
         var img = new Image();
         img.onload = function () {

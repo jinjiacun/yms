@@ -3,7 +3,7 @@ namespace Azureadmin\Controller;
 use Azureadmin\Controller;
 include_once(dirname(__FILE__).'/BaseController.class.php');
 
-class ComMessagerController extends BaseController{
+class ComMessageController extends BaseController{
 
 	public function ComMessager()
 	{
