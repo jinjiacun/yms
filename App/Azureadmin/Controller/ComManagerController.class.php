@@ -116,6 +116,7 @@ class ComManagerController extends BaseController{
 	public function Edit_ComSafe(){
 	  $content['ComId'] = session('ComId');
 	  $result = $this->_call('ComInit.get_info', $content);
+	  unset($content);
 	  if($result){
 	    if($result['status_code'] == 200){
 	      $this->assign('item', $result['content']);
@@ -218,6 +219,47 @@ class ComManagerController extends BaseController{
 	      exit();
 	}
 
+	/**
+	 功能：添加友情链接
+
+	 参数：
+	 @@input
+	 @param $linkName string 友情链接链接名称
+         @param $linkImg string 友情链接图片
+         @param $linkUrl string 友情链接地址
+         @param $comLinkType string  友情链接类型（0.文字，1.图片）
+         @param $addType int 添加类型(0.友链，1.合作伙伴)
+	*/
+	public function AddFriendlyLink(){
+	       $content = array(
+	                'ComId'     => session('ComId'),
+                        'LinkAdmin' => session('AdminId'),
+                        'LinkAlt'   => I('post.linkName'),
+                        'LinkImg'   => I('post.linkImg'),
+                        'LinkName'  => I('post.linkName'),
+                        'LinkState' => 1,
+                        'LinkTime'  => date('Y-m-d H:i:s'),
+                        'LinkType'  => I('post.addType'),
+                        'LinkUrl'   => I('post.linkUrl')
+	       );
+	       $result = $this->_call('ComLink.add', $content);
+	       unset($content);
+	       if($result){
+		 if($result['status_code'] == 200
+		 && $result['content']['is_success'] == 0){
+		   header('Content-type:text/json');
+		   $out = array('res'=>1);
+		   echo json_encode($out);
+		   exit();
+		 }
+	       }
+
+	       header('Content-type:text/json');
+	       $out = array('res'=>5001);
+	       echo json_encode($out);
+	       exit();
+	}
+
 	public function FriendlyLink()
 	{
 		$this->assign('menu_index', 16);
@@ -264,6 +306,73 @@ class ComManagerController extends BaseController{
 		
 		$this->display();	
 	}	
+	
+	/**
+	功能：修改友情链接
+
+	参数：
+	@@input
+	@param $linkId int 友情链接ID
+        @param $linkName string 友情链接名称
+        @param $linkImg string 友情链接图片
+        @param $linkUrl string 友情链接地址
+        @param $comLinkType int 友情链接类型（0.文字，1.图片）
+        @param $updateType int 更新类型(0.友链，1.合作伙伴)
+	*/
+	public function UpdateFriendlyLink(){
+	  $content = array(
+	     'where'=>array('LinkId'=>I('post.LinkId')),
+	     'data'=>array(
+	          'LinkName' => I('post.LinkName'),
+                  'LinkImg'  => I('post.LinkImg'),
+                  'LinkUrl'  => I('post.LinkUrl'),
+                  'LinkTime' => date('Y-m-d H:i:s'),
+	     )
+	  );
+	  $result = $this->_call('ComLink.update', $content);
+	  unset($content);
+	  if($result){
+	    if($result['status_code'] == 200
+	    && $result['content']['is_success'] == 0){
+              header("Content-type:text/json");
+	      $out = array('res'=>1);
+	      echo json_encode($out);
+	      exit();
+	    }
+	  }
+
+	  header("Content-type:text/json");
+	  $out = array('res'=>5000);
+	  echo json_encode($out);
+	  exit();
+	}
+
+	/**
+	 功能：删除友情链接
+
+	 参数：
+	 @@input
+	 @param $LinkId int 友情链接ID
+	*/
+	public function DelFriendlyLink(){
+	  $content['LinkId'] = I('post.LinkId');
+	  $result = $this->_call('ComLink.delete', $content);
+	  unset($content);
+	  if($result){
+	    if($result['status_code'] == 200
+	    && $result['content']['is_success'] == 0){
+              header("Content-type:text/json");
+	      $out = array('res'=>1);
+	      echo json_encode($out);
+	      exit();
+	    }
+	  }
+
+	  header("Content-type:text/json");
+	  $out = array('res'=>5000);
+	  echo json_encode($out);
+	  exit();
+	}
 
 	public function ComTable_Img()
 	{

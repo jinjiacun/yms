@@ -35,10 +35,10 @@
         dia.ConfirmBox('<div style="padding:10px;">确定删除此条信息？</div>', "确定", function () {
             $.ajax({
                 type: "POST",
-                url: "DelFriendlyLink.html",
-                data: "linkId=" + linkId,
+                url: controller+"/ComManager/DelFriendlyLink.html",
+                data: "LinkId=" + linkId,
                 success: function (json) {
-                    if (json.Result == 200) {
+                    if (json.res == 1) {
                         dia.SuccessBox("删除成功！");
                         obj.parents("tr").remove();
                     }
@@ -65,12 +65,12 @@
             }
 
             $("#add_btnLinkImg").uploadify({
-                'swf': '/Scripts/Lib/uploadify/uploadify.swf',
+                'swf': resource+'/Scripts/Lib/uploadify/uploadify.swf',
                 'buttonText': '上传图片',
                 'buttonClass': 'btn btn-mini',
                 'height': 30,
                 'width': 100,
-                'uploader': '/Uploadify/UpLoadImage.html',
+                'uploader': controller+'/Uploadify/UpLoadImage.html',
                 'formData': { comId: comId },
                 'queueSizeLimit': 1,
                 'auto': true,
@@ -127,10 +127,10 @@
             }
             $.ajax({
                 type: "POST",
-                url: "AddFriendlyLink.html",
+                url: controller+"/ComManager/AddFriendlyLink.html",
                 data: "linkName=" + encodeURIComponent(linkName) + "&linkImg=" + encodeURI(linkImg) + "&linkUrl=" + link + "&comLinkType=" + comLinkType + "&addType=" + addType,
                 success: function (json) {
-                    if (json.Result == 200) {
+                    if (json.res == 1) {
                         dia.SuccessBox("添加成功！");
                         window.location.reload();
                     }
@@ -164,12 +164,12 @@
             }
 
             $("#up_btnLinkImg").uploadify({
-                'swf': '/Scripts/Lib/uploadify/uploadify.swf',
+                'swf': resource+'/Scripts/Lib/uploadify/uploadify.swf',
                 'buttonText': '上传图片',
                 'buttonClass': 'btn btn-mini',
                 'height': 30,
                 'width': 100,
-                'uploader': '/Uploadify/UpLoadImage.html',
+                'uploader': controller+'/Uploadify/UpLoadImage.html',
                 'formData': { comId: comId },
                 'queueSizeLimit': 1,
                 'auto': true,
@@ -228,10 +228,10 @@
             var linkId = obj.parents("tr").find("td:eq(0)").html().trim();
             $.ajax({
                 type: "POST",
-                url: "UpdateFriendlyLink.html",
-                data: "linkId=" + linkId + "&linkName=" + encodeURIComponent(linkName) + "&linkImg=" + encodeURI(linkImg) + "&linkUrl=" + link + "&comLinkType=" + comLinkType + "&updateType=" + updateType,
+                url: controller+"/ComManager/UpdateFriendlyLink.html",
+                data: "LinkId=" + linkId + "&LinkName=" + encodeURIComponent(linkName) + "&LinkImg=" + encodeURI(linkImg) + "&LinkUrl=" + link + "&LinkType=" + comLinkType + "&updateType=" + updateType,
                 success: function (json) {
-                    if (json.Result == 200) {
+                    if (json.res == 1) {
                         dia.SuccessBox("修改成功！");
                         window.location.reload();
                     }
