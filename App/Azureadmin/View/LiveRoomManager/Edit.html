@@ -1,0 +1,439 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Edit</title>
+    <link rel="stylesheet" href="__PUBLIC__/Azureadmin/Content/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="__PUBLIC__/Azureadmin/Content/css/bootstrap-responsive.min.css" />
+    <link rel="stylesheet" href="__PUBLIC__/Azureadmin/Content/css/unicorn.main.css" />
+    <link rel="stylesheet" href="__PUBLIC__/Azureadmin/Content/css/unicorn.jcs.css" class="skin-color" />
+    <link href="__PUBLIC__/Azureadmin/Scripts/Lib/artDialog/skins/twitter.css" rel="stylesheet" />
+    <link href="__PUBLIC__/Azureadmin/Content/css/global.css" rel="stylesheet" />
+    <style type="text/css">
+        * {
+            margin: 0;
+            padding: 0;
+        }
+
+        div.widget-box {
+            background: none repeat scroll 0 0 #F9F9F9;
+            border-top: 1px solid #CDCDCD;
+            border-left: 1px solid #CDCDCD;
+            border-right: 1px solid #CDCDCD;
+            clear: both;
+            margin-top: 0;
+            margin-bottom: 0;
+            position: relative;
+        }
+
+        body {
+            overflow: hidden;
+            background-color: white;
+        }
+
+        span > label {
+            display: inline-block;
+            width: 130px;
+        }
+
+        .blockdiv input[type=text] {
+            width: 250px;
+        }
+
+        .blockdiv {
+            padding: 5px 20px;
+        }
+
+        span div {
+            display: inline;
+        }
+
+        .radiolabel {
+            width: 60px;
+        }
+
+            .radiolabel input {
+                vertical-align: sub;
+            }
+
+        span.btn-group {
+            margin: 0 5px 5px 0;
+            margin-left: 0!important;
+        }
+
+        object {
+            padding: 2px 10px;
+        }
+
+        #teacherspan label {
+            width: 40px;
+            overflow: hidden;
+        }
+
+        .DeleteBtn {
+            border-top-right-radius: 4px;
+            padding-right: 8px;
+            padding-left: 8px;
+        }
+
+        .room-type {
+            width: 60px;
+        }
+
+            .room-type input {
+                vertical-align: top;
+            }
+
+        .roomVip-type {
+            width: 120px;
+        }
+
+            .roomVip-type input {
+                vertical-align: top;
+            }
+    </style>
+</head>
+<body>
+    <div class="widget-box">
+        <div class="widget-title">
+            <span class="icon">
+                <i class="icon-th-list"></i>
+            </span>
+            <h5>直播室信息</h5>
+            <input type="hidden" id="comId" value="102587"/>
+        </div>
+        <div class="widget-content">
+            <form action="__APP__/Azureadmin/LiveRoomManage/Save.html" method="post" class="form-horizontal" id="form">
+                <div>
+                    <input data-val="true" data-val-number="字段 RoomId 必须是一个数字。" data-val-required="The RoomId field is required." id="RoomId" name="RoomId" type="hidden" value="{$room_info.RoomId}" />
+
+                    <div class="control-group blockdiv">
+                        <span>
+                            <label>直播室名称</label>
+                        </span>
+                        <span>
+                            <input class="text-box single-line" id="RoomName" name="RoomName" type="text" value="{$room_info.RoomName}" />
+                        </span>
+                    </div>
+                    <div class="control-group blockdiv">
+                        <span>
+                            <label>直播室主题</label>
+                        </span>
+                        <span>
+                            <input class="text-box single-line" id="RoomTitle" name="RoomTitle" type="text" value="{$room_info.RoomTitle}" />
+                        </span>
+                    </div>
+                    <div class="control-group blockdiv">
+                        <span>
+                            <label>直播室简介</label>
+                        </span>
+                        <span>
+                            <input class="text-box single-line" id="RoomIntro" name="RoomIntro" type="text" value="{$room_info.RoomIntro}" />
+                        </span>
+                    </div>
+                    <div class="control-group blockdiv">
+                        <span style="float: left">
+                            <label>驻场讲师</label>
+                        </span>
+                        <div style="float: right; width: 394px">
+                            <span id="teacherspan">
+                                    <volist name="admin_list" id="item">
+                                    <span class="btn-group">
+                                        <label class="btn btn-info disabled" data-key="{$key}" >{$item}</label>
+                                        <button class="btn btn-info DeleteBtn tip-bottom" data-original-title="删除">
+                                            <i class="icon-remove icon-white"></i>
+                                        </button>
+                                    </span>
+                                   </volist>
+
+                                <span class="btn btn-info tip-bottom" id="addTeacher" data-original-title="添加讲师">
+                                    <i class="icon-plus icon-white"></i>
+                                </span>
+                                <select style="width: 100px; display: none" id="selectts">
+                                    <option selected="selected">请选择...</option>
+                                       <volist name="other_admin_list" id="item">
+                                        <option value="{$key}">{$item}</option>
+                                       </volist>
+                                </select>
+                                <input id="RoomTeacher" name="RoomTeacher" type="hidden" value="{$room_info.RoomTeacher}" />
+                            </span>
+                        </div>
+                    </div>
+
+                    <input data-val="true" data-val-number="字段 RoomMEtip 必须是一个数字。" data-val-required="The RoomMEtip field is required." id="RoomMEtip" name="RoomMEtip" type="hidden" value="{$room_info.RoomMEtip}" />
+                    <input data-val="true" data-val-number="字段 RoomPopSet 必须是一个数字。" data-val-required="The RoomPopSet field is required." id="RoomPopSet" name="RoomPopSet" type="hidden" value="{$room_info.RoomPopSet}" />
+                    <input data-val="true" data-val-number="字段 RoomHisPop 必须是一个数字。" data-val-required="The RoomHisPop field is required." id="RoomHisPop" name="RoomHisPop" type="hidden" value="{$room_info.RoomHisPop}" />
+                    
+                    
+                    
+                    <div class="control-group blockdiv">
+                        <span>
+                            <label>直播室类型</label>
+                        </span>
+                        <span>
+                            <label class="room-type">
+                                <input checked="checked" data-val="true" data-val-number="字段 RoomType 必须是一个数字。" data-val-required="The RoomType field is required." id="RoomType" name="RoomType" type="radio" value="0" /> 正常
+                            </label>
+                            <label class="room-type">
+                                <input id="RoomType" name="RoomType" type="radio" value="1" /> 镜像
+                            </label>
+                        </span>
+                    </div>
+                    <input data-val="true" data-val-number="字段 ComId 必须是一个数字。" data-val-required="The ComId field is required." id="ComId" name="ComId" type="hidden" value="102587" />
+
+                    <div class="control-group blockdiv">
+                        <span>
+                            <label>直播时间</label>
+                        </span>
+                        <span>
+                            <input type="text" name="splitTime" value="" style="width: 65px; font-size: 12px;" class="tip-bottom" data-original-title="上午" />
+                            <input type="text" name="splitTime" value="" style="width: 65px; font-size: 12px" class="tip-bottom" data-original-title="下午" />
+                            <input type="text" name="splitTime" value="" style="width: 65px; font-size: 12px" class="tip-bottom" data-original-title="晚上" />
+                            <input id="RoomLivetime" name="RoomLivetime" type="hidden" value="{$room_info.RoomLivetime}" />
+                        </span>
+                    </div>
+                    <div class="control-group blockdiv">
+                        <span>
+                            <label>直播室Logo</label>
+                        </span>
+                        <span>
+                            <input type="file" id="imgfile" />
+                            <input id="RoomMinimage" name="RoomMinimage" type="hidden" value="{$room_info.RoomMinimage}" />
+                            <img src="http://spic.cngold.com.cn/102587/img/base/2015/5/22/20150522094145177629932.jpg"  width='120' height='120' style='float:right;width: 120px;height: 120px;' onerror="this.style.display=none" id="logoimg" />
+                            <span style="color: #999999; display: inline; padding-left: 20px; font-size: 13px;">* 上传图片尺寸为 120×120</span>
+                        </span>
+                    </div>
+                    <div class="control-group blockdiv">
+                        <span>
+                            <label>直播等级权限类型</label>
+                        </span>
+                        <span>
+                            <label class="roomVip-type">
+                                <input checked="checked" data-val="true" data-val-number="字段 RoomVipType 必须是一个数字。" data-val-required="The RoomVipType field is required." id="RoomVipType" name="RoomVipType" type="radio" value="0" /> 最低等级权限
+                            </label>
+                            <label class="roomVip-type">
+                                <input id="RoomVipType" name="RoomVipType" type="radio" value="1" /> 特定等级权限
+                            </label>
+                        </span>
+                    </div>
+                    <div class="control-group blockdiv">
+                        <span>
+                            <label>查看直播等级权限</label>
+                        </span>
+                        <span>
+                            <select name="RoomLiveLimit">
+                            <volist name="vip_list" id="item">
+                            <option selected="selected" value="{$item.VipLevel}">{$item.VipName}</option>
+                            </volist>
+                            </select>
+                           
+                        </span>
+                    </div>
+                    <input type="hidden" name="RoomLivehisLimit" value="1" />
+                    <input type="hidden" name="RoomInterLimit" value="1" />
+                    
+                    <div>
+                        <button style="margin: 0 0 5px 150px" type="button" id="submitBtn" class="btn btn-primary"><i class="icon-ok icon-white"></i>保存</button>
+                        <button style="margin: 0 0 5px 0" class="btn btn-inverse" onclick="Reset()" type="button"><i class="icon-refresh icon-white"></i>重置</button>
+                        <span id="errormsg" style="color: #a52a2a; padding-left: 10px; font-size: 12px;"></span>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+    <script type="text/javascript">
+    var resource = '{$resource}';
+    var controller = '{$controller}';
+</script>
+    <script src="__PUBLIC__/Azureadmin/Scripts/Lib/jquery.js"></script>
+    <script src="__PUBLIC__/Azureadmin/Scripts/Lib/bootstrap.js"></script>
+    <script src="__PUBLIC__/Azureadmin/Scripts/Lib/menu.js"></script>
+    <script src="__PUBLIC__/Azureadmin/Scripts/Lib/require.js"></script>
+    <script src="__PUBLIC__/Azureadmin/Scripts/config.js"></script>
+    <script src="__PUBLIC__/Azureadmin/Scripts/common.js"></script>
+    <script src="__PUBLIC__/Azureadmin/Scripts/Lib/uploadify/jquery.uploadify.min.js?636039436788992298"></script>
+    <script src="__PUBLIC__/Azureadmin/Scripts/Lib/jquery.inputmask.js"></script>
+    <script type="text/javascript">
+        function Reset() {
+            document.getElementsByTagName("form")[0].reset();
+        }
+        function RefreshHidden() {
+            var ts = new Array();
+            $("#teacherspan label").each(function (i, item) {
+                var data = $(item).data("key");
+                if ($.inArray(data, ts) == -1) ts.push(data);
+            });
+            $("#RoomTeacher").val(ts.join(","));
+            ts = null; $("#selectts option:eq(0)").attr("selected", true);
+        }
+        function uq() {
+            var obj = $.trim($("#RoomName").val());
+            if (obj.length == 0) {
+                $("#errormsg").text("请填写直播室名称");
+                $("#RoomName").focus();
+                return;
+            }
+            if ("True".toLowerCase() == "false") {
+                $.post("/LiveRoomManage/nameUniqe.html", { name: obj }, function (flag) {
+                    if (!flag) {
+                        $("#errormsg").text("直播室名称重复！");
+                        $("#RoomName").focus();
+                    }
+                });
+            }
+
+        }
+        $(function () {
+            $("input").keyup(function () { $("#errormsg").text(""); });
+            $("#logoimg").load(function () { $("#errormsg").text(""); });
+            $("#addTeacher").click(function () { $("#errormsg").text(""); });
+            $("#RoomName").on("blur", uq);
+            //表单提交
+            $("#submitBtn").on("click", function () {
+                uq();
+                if ($("#errormsg").text() && $("#errormsg").text().length > 0) {
+                    return;
+                }
+                var obj = $(this);
+                var errormsg = $("#errormsg");
+                if ($.trim($("#RoomName").val()).length == 0) {
+                    errormsg.text("请填写直播室名称");
+                    $("#RoomName").focus();
+                    return;
+                }
+                if ($.trim($("#RoomTitle").val()).length == 0) {
+                    errormsg.text("请填写直播室主题");
+                    $("#RoomTitle").focus();
+                    return;
+                }
+                if ($.trim($("#RoomIntro").val()).length == 0) {
+                    errormsg.text("请填写直播室简介");
+                    $("#RoomIntro").focus();
+                    return;
+                }
+                if ($("#teacherspan .btn-group").length == 0) {
+                    errormsg.text("请选择驻场讲师");
+                    return;
+                }
+                if ($.trim($("#RoomLivetime").val()).length == 0) {
+                    errormsg.text("请填写直播时间");
+                    $("input[name='splitTime']").first().focus();
+                    return;
+                }
+                if ($.trim($("#RoomMinimage").val()).length == 0) {
+                    errormsg.text("请上传直播室Logo");
+                    $("#imgfile").focus();
+                    return;
+                }
+                obj.attr("disabled", "disabled");
+                var jsonData = $("form").serializeArray();
+                $.post(controller+"/LiveRoomManager/Save.html", jsonData, function (data) {
+                    require(["dialog"], function (dia) {
+                        if (data && data.res == 1) {
+                            dia.SuccessBox("保存成功", function () {
+                                (window.parent) && (window.parent.frameEdit) && window.parent.frameEdit.close();
+                            });
+                            (window.parent) && (window.parent.op) && window.parent.op.Refresh();
+                        } else {
+                            dia.ErrorBox("保存失败");
+                        }
+                        obj.removeAttr("disabled");
+                    });
+                });
+            });
+            //直播时间
+            (function () {
+                var timearr = $("#RoomLivetime").val().split("|");
+                $("input[name=splitTime]").each(function (i, item) {
+                    item.value = timearr[i];
+                });
+            })();
+            $("input[name=splitTime]").on("keyup", function () {
+                var s = new Array();
+                $("input[name=splitTime]").each(function (i, item) {
+                    if (/^[0-9]+:[0-9]+-[0-9]+:[0-9]+$/.test(item.value)) s.push(item.value);
+                    else s.push("");
+                });
+                $("#RoomLivetime").val(s.join("|"));
+
+            }).inputmask("h:s-h:s");
+            //驻场讲师
+            $("#selectts").on("change", function () {
+                var item = this.options[this.selectedIndex];
+                if (isNaN(item.value)) return;
+                var obj = $(this);
+                var ts = $("#RoomTeacher").val();
+                if (ts.indexOf(item.value) == -1) {
+                    $("#addTeacher").before('<span class="btn-group"><label class="btn btn-info disabled" data-key="' + item.value + '">' + item.text + '</label><button class="btn btn-info DeleteBtn tip-bottom" data-original-title="删除"><i class="icon-remove icon-white"></i></button></span>')
+                    obj.hide();
+                    $("#addTeacher").show();
+                    RefreshHidden();
+                }
+            });
+            $("#addTeacher").on("click", function () {
+                $(this).hide();
+                $("#selectts").show();
+            });
+            $("#teacherspan").delegate(".DeleteBtn", "click", function () {
+                $(this).parents(".btn-group").remove();
+                RefreshHidden();
+            });
+
+
+            $("input").attr({ "required": "required", "autocomplete": "off" });
+            $("input[type=number]").each(function (i, item) {
+                if (!item.value || item.value == 0) item.value = 1;
+            });
+            $("#RoomInterLimit,#RoomLivehisLimit").on("keyup", function () {
+                this.value = this.value.substring(0, 1).replace(/[^\d]/g, '');
+            }).attr({ "max": 5, "min": 0, "maxlength": 1 });
+            $("#RoomTitle").attr("maxlength", 150);
+            $("#RoomPopSet,#RoomHisPop").on("keyup", function () {
+                this.value = this.value.replace(/[^\d]/g, '');
+            });
+
+            (function () {
+                $("#imgfile").uploadify({
+                    'swf': resource+'/Scripts/Lib/uploadify/uploadify.swf', 'buttonText': '上传图片', 'buttonClass': 'btn btn-info btn-mini', 'height': 30, 'width': 80, 'queueID': 'pop_editorFileQueue', 'queueSizeLimit': 1, 'auto': true, 'multi': false, 'removeCompleted': true, 'fileSizeLimit': '10MB', 'fileTypeDesc': 'Image Files', 'fileTypeExts': '*.gif; *.jpg; *.png; *.bmp; *.jpeg',
+                    'formData': { 'comId': '' + $("#comId").val() + '' },
+                    'uploader': '/Uploadify/UpLoadImage.html',
+                    'onUploadStart': function (file) {
+                        require(["dialog"], function (dia) {
+                            var msg = "<p>" + file.name + " 正在上传中，请稍候...</p>";
+                            dia.MsgBox(null, msg, true, null);
+                        });
+                    },
+                    'onUploadSuccess': function (file, data, response) {
+                        require(["dialog"], function (dia) {
+                            if (response && data) {
+                                var image = new Image();
+                                image.onload = function () {
+                                    if (image.width != image.height || image.width != 120) {
+                                        dia.ErrorBox("<p>图片的尺寸必须是 120px * 120px 的！</p>", true, 1.5);
+                                    } else {
+                                        $("#RoomMinimage").val(data);
+                                        $("#logoimg").attr("src", data);
+                                        dia.SuccessBox("<p>上传成功！</p>", true, 1);
+                                    }
+
+                                };
+                                image.src = data;
+                            } else {
+                                dia.SuccessBox("<p>上传失败</p>", true, 1);
+                            }
+                        });
+                    }
+                });
+            })();
+        });
+        function getCookie(name) {
+            var arr, reg = new RegExp("(^| )" + name + "=([^;]*)(;|$)");
+            if (arr = document.cookie.match(reg))
+                return unescape(arr[2]);
+            else
+                return null;
+        }
+
+    </script>
+</body>
+</html>
