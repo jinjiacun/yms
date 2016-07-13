@@ -7,7 +7,7 @@
             bannerLink += "|" + $(o).val();
         });
         $.ajax({
-            url: "/ComManage/SavaCom_Img.html",
+            url: controller+"/ComManage/SavaCom_Img.html",
             type: "post",
             data: { comid: $("#comId").val(), comMin: $("input[name='ComMin']:checked").val(), bannerLink: bannerLink },
             success: function (data) {
@@ -23,12 +23,12 @@
 
 function initUploadify() {
     $("#imgfile").uploadify({
-        'swf': '../../../Scripts/Lib/uploadify/uploadify.swf',
+        'swf': resource+'/Scripts/Lib/uploadify/uploadify.swf',
         'buttonText': '上传图片',
         'buttonClass': 'btn btn-info btn-mini',
         'height': 30,
         'width': 80,
-        'uploader': '/Uploadify/UpLoadImage_Focus.html',
+        'uploader': controller+'/Uploadify/UpLoadImage_Focus.html',
         //'formData': { 'comId': '' + $("#comId").val() + '', 'comMin': '' + $("#hideComMin").val() + '' },这里的参数只能是静态的
         'queueID': 'pop_editorFileQueue',
         'queueSizeLimit': 0,
@@ -87,12 +87,12 @@ function initUploadify() {
 
 
     $("#loginBack").uploadify({
-        'swf': '../../../Scripts/Lib/uploadify/uploadify.swf',
+        'swf': resource+'/Scripts/Lib/uploadify/uploadify.swf',
         'buttonText': '上传图片',
         'buttonClass': 'btn btn-info btn-mini',
         'height': 30,
         'width': 80,
-        'uploader': '/Uploadify/UpLoadImage_Login.html',
+        'uploader': controller+'/Uploadify/UpLoadImage_Login.html',
         'formData': { 'comId': '' + $("#comId").val() + '' },
         'queueID': 'pop_editorFileQueue',
         'queueSizeLimit': 0,
@@ -138,8 +138,8 @@ function delImg(obj) {
             //数据库删除
             var url = $(obj).prev().attr("src");
             var link = $(obj).next().find("input").val();
-            $.post("/ComManage/DeleteImage_Focus/", { url: url, link: link }, function (json) {
-                if (json.msg == "") {
+            $.post(controller+"/ComManager/DeleteImage_Focus/", { url: url, link: link }, function (json) {
+                if (json.res == 1) {
                     //页面移除
                     $(obj).parent().remove();
                 } else {

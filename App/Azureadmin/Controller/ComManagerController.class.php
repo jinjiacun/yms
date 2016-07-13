@@ -374,9 +374,58 @@ class ComManagerController extends BaseController{
 	  exit();
 	}
 
+
 	public function ComTable_Img()
 	{
 		$this->assign('menu_index', 17);
+		
+	        $content['ComId'] = session('ComId');
+	        $result = $this->_call('ComTable.get_info_by_key', $content);
+	        unset($content);
+	        if($result){
+	          if($result['status_code'] == 200){
+		   $item = $result['content'];
+		   //分解ComBanLink
+		   $img_list = explode('|', $item['ComBanner']);
+		   $link_list = explode('|', $item['ComBanLink']);
+		   $this->assign('img_list', $img_list);   
+		   $this->assign('link_list', $link_list);
+	           $this->assign('item', $item);
+	          }
+	        }
+		
 		$this->display();	
-	}	
+	}
+
+	public function DeleteImage_Focus(){
+	       $ComBanner = I('post.url');
+	       $ComBanLink = I('post.link');
+	       $ComBanner = str_replace($Combanner, "",  $ComBanner);	       
+               $ComBanner = str_replace("||", "|",       $ComBanner);
+               $ComBanner = trim($ComBanner, '|');
+	       $content = array(
+	            'where'=>array('ComId'=>session('ComId')),
+		    'data'=>array(
+			'ComBanner'  => $ComBanner,
+			'ComBanLink' => $ComBanLink
+		    )
+	       );	       
+	       $result = $this->_call('ComTable.update', $content);
+	       unset($content);
+	       if($result){
+	         if($result['status_code'] == 200
+		 && $result['content']['is_success'] == 0){
+		    header('Content-type:text/json');		    
+		    $out = array('res'=>1);
+		    echo json_encode($out);	
+		    exit();
+		 }
+	       }
+	       
+	       header('Content-type:text/json');		    
+	       $out = array('res'=>5000);
+	       echo json_encode($out);	
+	       exit();
+	}
+
 }
