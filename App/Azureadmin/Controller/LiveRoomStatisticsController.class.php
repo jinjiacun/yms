@@ -1,52 +1,95 @@
 <?php
 namespace Azureadmin\Controller;
-use Azureadmin\Controller;
+use Think\Controller;
 include_once(dirname(__FILE__).'/BaseController.class.php');
-
 class LiveRoomStatisticsController extends BaseController{
+    public function _initialize()
+    {
+        parent::_initialize();
+        parent::get_dictionary();
+        if(null == session('AdminName')
+        || ''   == session('AdminName'))
+        {
+            $this->redirect('/Azureadmin/Login/index');
+        }
+    }
 
 	public function index()
 	{
 		$this->assign('menu_index', 19);
 
-		$page_index = 1;
-        $page_size  = 20;
-        $content    = array();
-        if(I('get.p'))
-        {
-            $page_index = I('get.p');
-            $content['page_size'] = $page_size;
-            $content['page_index'] = $page_index;
-        }
-        else
-        {
-            $content['page_size'] = $page_size;
-            $content['page_index'] = $page_index;
-        }
-               
-        //$content['where']['ComAdminId'] = session('AdminId');
-        
-        
-        $result = $this->_call('ComAdminLTE.get_list', $content);
-
-        $list = array();
-        if($result)
-        {
-            if(200 == $result['status_code'])
-            {
-                if(isset($result['content']['list'])
-                && isset($result['content']['record_count']))
-                {
-                    $list   = $result['content']['list'];   
-                    $this->assign('list', $list);     
-                    $record_count = $result['content']['record_count'];
-                    $this->assign('record_count', $record_count);
-                    //$this->get_page($record_count, $page_size);
-                    $this->assign('page', $this->get_page_by_custom(C('controller').'/CompanyManager/GetTable', 1, $record_count, $page_size));
-                }
+        $ComId = session('ComId');
+        //直播信息
+        $content['ComId'] = $ComId;
+        $content['template_name'] = 'STAT_LIVE_BROADCAST';
+        $result = $this->_call('Help.stat_by_template', $content);
+        if($result){
+            if($result['status_code'] == 200){
+                $this->assign('live_room_list', $result['content']);
             }
         }
+        unset($result);
 
+        //互动数量
+        $content['template_name'] = 'STAT_LIVE_BROADCAST';
+        $result = $this->_call('Help.stat_by_template', $content);
+        if($result){
+            if($result['status_code'] == 200){
+                $this->assign('room_inter_list', $result['content']);
+            }
+        }
+        unset($result);
+        
+        //操作建议
+        $content['template_name'] = 'OPTION';
+        $result = $this->_call('Help.stat_by_template', $content);
+        if($result){
+            if($result['status_code'] == 200){
+                $this->assign('opetion_suggest_list', $result['content']);
+            }
+        }
+        unset($result);
+
+        //金评信息
+        $content['template_name'] = 'GLOD_COMMENT';
+        $result = $this->_call('Help.stat_by_template', $content);
+        if($result){
+            if($result['status_code'] == 200){
+                $this->assign('comment_list', $result['content']);
+            }
+        }
+        unset($result);
+
+        //多空观点
+        $content['template_name'] = 'LONG_SHORT_VIEW';
+        $result = $this->_call('Help.stat_by_template', $content);
+        if($result){
+            if($result['status_code'] == 200){
+                $this->assign('view_list', $result['content']);
+            }
+        }
+        unset($result);
+
+        //账户诊断
+        $content['template_name'] = 'ACCOUNT_DIAGNOSIS';
+        $result = $this->_call('Help.stat_by_template', $content);
+        if($result){
+            if($result['status_code'] == 200){
+                $this->assign('account_list', $result['content']);
+            }
+        }
+        unset($result);
+
+        //公司新闻
+        $content['template_name'] = 'NEWS';
+        $result = $this->_call('Help.stat_by_template', $content);
+        if($result){
+            if($result['status_code'] == 200){
+                $this->assign('news_list', $result['content']);
+            }
+        }
+        unset($result);
+	
 		$this->display();
 	}
 }
