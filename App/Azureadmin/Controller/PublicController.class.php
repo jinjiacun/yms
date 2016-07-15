@@ -1,17 +1,18 @@
 <?php
 namespace Azureadmin\Controller;
 use Think\Controller;
-include_once(dirname(__FILE__).'/BaseController.class.php');
-class PublicController extends BaseController {
-	 public function _initialize()
+include_once(dirname(__FILE__).'/ComBaseController.class.php');
+class PublicController extends ComBaseController {
+    public function _initialize()
     {
-	parent::_initialize();
-	if(null == session('AdminName')
-	|| ''   == session('AdminName'))
-	{
-	    $this->redirect('/Azureadmin/Login/index');
-	}
+        parent::get_dictionary();
+        parent::_initialize();
+        if(null == session('AdminName')
+        || ''   == session('AdminName')){
+            $this->redirect('/Azureadmin/Login/index');
+        }
     }
+    
 	public function top()
 	{
 		$this->display();
@@ -52,4 +53,8 @@ class PublicController extends BaseController {
 	{
 		$this->display();
 	}
+
+    public function navigate_other(){       
+        $this->display();
+    }
 } 

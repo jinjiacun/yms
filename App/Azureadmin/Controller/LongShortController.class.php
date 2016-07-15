@@ -2,15 +2,15 @@
 namespace Azureadmin\Controller;
 use Think\Controller;
 include_once(dirname(__FILE__).'/ComBaseController.class.php');
-class TeacherRoomController extends ComBaseController {
+class LongShortController extends ComBaseController {
     public function _initialize()
     {
         parent::_initialize();
     }
 
-    public function LiveRoom(){
-        $this->assign('menu_p_index', 422);
-        $this->assign('menu_index', 424);
+    public function index(){
+        $this->assign('menu_p_index', 425);
+        $this->assign('menu_index', 426);
         $this->display();
     }
 

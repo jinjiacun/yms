@@ -60,6 +60,7 @@ class NewsManagerController extends BaseController{
                 }
             }
         }
+        unset($result);
 
 		$this->display();
 	}

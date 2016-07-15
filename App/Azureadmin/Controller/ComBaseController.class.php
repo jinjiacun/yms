@@ -1,7 +1,7 @@
 <?php
 namespace Azureadmin\Controller;
 use Think\Controller;
-class BaseController extends Controller {
+class ComBaseController extends BaseController {
 	function   _empty(){
                     header("HTTP/1.0  404  Not Found");
                     $this->display('Public:err_404');
@@ -9,90 +9,20 @@ class BaseController extends Controller {
 	    
 	public function _initialize()
 	{	
-		$this->assign('call_url', C('call_url'));
-		$this->assign('domain', C('domain'));
-		$this->assign('controller', C('controller'));
-		$this->assign('resource', C('resource'));
-		$this->assign('AdminId', session('AdminId'));
-		$this->assign('AdminName', session('AdminName'));
-		$this->assign('RoleId', session('RoleId'));
-		$this->ComId = session('ComId');
-		$this->assign('ComId', $this->ComId);
-		$this->assign('Adavatar', session('Adavatar'));
+        parent::_initialize();
+        $this->init_com_menu();
 	}
 
 	protected function get_dictionary(){
-        if(session('dictionary')){
-            $this->dictionary = $result['content'];
-            $this->assign('dictionary', $this->dictionary);		    
-        }
-        else{
-            $result = $this->_call('Help.get_dictionary');
-            if($result)
-                {
-                    if(200 == $result['status_code']){
-                        $this->dictionary = $result['content'];
-                        session('dictionary', $this->dictionary);
-                        $this->assign('dictionary', $this->dictionary);		    
-                    }
-                }
-            unset($result);
-        }
-
+		$result = $this->_call('Help.get_dictionary');
+	    if($result)
+	    {
+	        if(200 == $result['status_code']){
+		    $this->dictionary = $result['content'];
+	            $this->assign('dictionary', $this->dictionary);		    
+	        }
+	    }
 	}
-
-    //初始化机构管理员或者有分析师菜单
-    public function init_com_menu(){
-         if(session('resource_list')){
-            $resource_list = session('resource_list');
-        }
-        else{
-            //查询可使用资源
-            $am_id_list = array();
-            $content['where']['RoleId'] = session('RoleId');
-            $result = $this->_call("ComRoMo.get_list", $content);
-            unset($content);
-            if($result){
-                if($result['status_code'] == 200){
-                    if(count($result['content']['list']) > 0){
-                        foreach($result['content']['list'] as $v){
-                            $am_id_list[] = intval($v['AMId']);
-                        }
-                        unset($v);
-                    }
-                }
-            }
-            unset($result);
-
-            $resource_list = array();
-            if(count($am_id_list) > 0){
-                $content['where']['AMoId'] = array('in', implode(',', $am_id_list));
-                $content['order']['AMoPId'] = 'asc';
-                $result = $this->_call('AModule.get_list', $content);
-                unset($content);
-                if($result){
-                    if($result['status_code'] == 200){
-                        if(count($result['content']['list']) > 0){
-                            foreach($result['content']['list'] as $v){
-                                if($v['AMoPId']>0){
-                                    $resource_list[intval($v['AMoPId'])]['_ex'][intval($v['AMoId'])] = $v;
-                                }
-                                else{
-                                    $resource_list[intval($v['AMoId'])] = $v;
-                                }
-                            }
-                            unset($v);
-                        }
-                    }
-                }
-                unset($result);
-            }
-            session('resource_list', $resource_list);
-        }
-
-        //映射导航菜单
-        $this->assign('resource_list', $resource_list);
-    }
 
 	//解析接口调用返回处理
 	protected function deal_re_call_api($res)

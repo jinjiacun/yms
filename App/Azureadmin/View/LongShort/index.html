@@ -1,0 +1,221 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta name="viewport" content="width=device-width" />
+    <title>Index</title>
+    <link rel="stylesheet" href="__PUBLIC__/Azureadmin/Content/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="__PUBLIC__/Azureadmin/Content/css/bootstrap-responsive.min.css" />
+    <link rel="stylesheet" href="__PUBLIC__/Azureadmin/Content/css/unicorn.main.css" />
+    <link rel="stylesheet" href="__PUBLIC__/Azureadmin/Content/css/unicorn.jcs.css" class="skin-color" />
+    <link href="__PUBLIC__/Azureadmin/Scripts/Lib/artDialog/skins/twitter.css" rel="stylesheet"/>
+    <link href="__PUBLIC__/Azureadmin/Content/css/global.css" rel="stylesheet"/>
+
+    
+    <style type="text/css">
+        td { vertical-align: middle!important; }
+        .aui_content { padding: 0!important; }
+        .widget-content .buttons { float: right; padding-right: 18.5%; }
+        .radio label { display: inline-block; width: 40px; padding-left: 20px; }
+        .contentTD { width: 50%; }
+        .typeTD { text-align: center!important; }
+        .timeTD { width: 125px; }
+        .contentTD span { display: inline-block; word-wrap: break-word; white-space: normal; word-wrap: break-word; width: 780px; }
+    </style>
+
+</head>
+<body>
+    <link href="__PUBLIC__/Azureadmin/Content/Home/_partialhead.css" rel="stylesheet" />
+    <link href="__PUBLIC__/Azureadmin/Content/ComMessage/commessage.css" rel="stylesheet" />
+    <script src="__PUBLIC__/Azureadmin/Scripts/Lib/jquery.js" type="text/javascript"></script>
+    <script src="__PUBLIC__/Azureadmin/Scripts/Home/_partialhead.js" type="text/javascript"></script>
+    <script src="__PUBLIC__/Azureadmin/Scripts/ComMessage/ComMessage-common.js"></script>
+
+<div id="header">
+    <h1><span>机构服务平台</span></h1>
+</div>
+
+<include file="Public:welcome" />
+
+<div id="user-nav" class="navbar navbar-inverse">
+    <ul class="nav">
+        
+        
+        <li><a href="/Home/HelpPage" target="_blank"><span class="text">帮助</span></a></li>
+    </ul>
+</div>
+
+     <if condition="$ComId eq 0">
+     <include file="Public:navigate" />
+     <else />
+    <include file="Public:navigate_other" />
+     </if>
+    
+    <div id="content">
+        <div id="breadcrumb"><a href="/Home/Index"><i class="icon-home"></i>欢迎</a><a href="javascript:;">多空对决管理</a><a href="/LongShort/Index" class="current">多空观点</a></div>
+        
+        <div class="container-fluid">
+            
+
+<div class="widget-box" id="ContentBox">
+    <div class="widget-title">
+        <span class="icon">
+            <i class="icon-pencil"></i>
+        </span>
+        <h5>今日观点</h5>
+    </div>
+    <div class="widget-content">
+        <div class="form-horizontal">
+            <div class="control-group">
+                <label class="control-label">多空观点：</label>
+                <div class="controls">
+                    <div class="radio">
+                        <label>
+                            <input name="radios" type="radio" value="1">做多</label>
+                        <label>
+                            <input name="radios" type="radio" value="0">震荡</label>
+                        <label>
+                            <input name="radios" type="radio" value="-1">做空</label>
+                    </div>
+                </div>
+            </div>
+            <div class="control-group">
+                <input type="hidden" name="TipId" value="" id="TipId" />
+                <label class="control-label">观点内容：</label>
+                <div class="controls">
+                    <div class="textarea">
+                        <textarea autofocus="autofocus" required="required" wrap="soft"></textarea>
+                    </div>
+                </div>
+            </div>
+            <div class="control-group">
+                <label class="control-label"></label>
+                <div class="controls">
+                    <div class="buttons">
+                        <button class="btn btn-primary" id="submitBtn" name="submitBtn"><i class="icon-ok icon-white"></i>发布观点</button>
+                        <button class="btn" id="closeBtn" onclick="$('.aui_close').trigger('click')" style="display: none">取消</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="clearfix"></div>
+
+
+<div class="widget-box">
+    <div class="widget-title">
+        <span class="icon">
+            <i class="icon-th-list"></i>
+        </span>
+        <h5>历史观点管理</h5>
+        <div class="buttons">
+            <button class="btn btn-mini btn-inverse" onclick="op.Refresh();"><i class="icon-refresh icon-white"></i>刷新</button>
+        </div>
+    </div>
+    <div class="widget-content nopadding">
+<div id="grid"><table class="table table-bordered data-table dataTable"><tbody><tr><td style="text-align:center;">暂无数据</td></tr></tbody></table></div>
+    </div>
+</div>
+
+            
+        </div>
+    </div>
+    <script src="__PUBLIC__/Azureadmin/Scripts/Lib/jquery.js"></script>
+    <script src="__PUBLIC__/Azureadmin/Scripts/Lib/bootstrap.js"></script>
+    <script src="__PUBLIC__/Azureadmin/Scripts/Lib/menu.js"></script>
+    <script src="__PUBLIC__/Azureadmin/Scripts/Lib/require.js"></script>
+    <script src="__PUBLIC__/Azureadmin/Scripts/config.js"></script>
+    <script src="__PUBLIC__/Azureadmin/Scripts/common.js"></script>
+
+    <script type="text/javascript">
+        $('#breadcrumb a:last-child').css('background-image', 'none');
+        $(window).resize(function () {
+            var height = $('#sidebar>ul').height() + 100;
+            if (height < 600) {
+                height = 600;
+            }
+            $('#content').css('min-height', height + 'px');
+        }).resize();
+    </script>
+    
+    <script type="text/javascript">
+        var op = {};
+        $(function () {
+            op.Refresh = function () {
+                var page = $(".dataTables_wrapper").find("a[currpage]").attr("currpage");
+                $("#grid").load(window.location.href + '?page=' + page + " #grid");
+            };
+            op.Edit = function (obj, id) {
+                require(["dialog"], function (dia) {
+                    dia.LoadEle( $("#ContentBox")[0].outerHTML, function () {
+                        $(".aui_dialog #ContentBox").removeClass("widget-box").css("width", "600px");
+                        $(".aui_dialog #closeBtn").show(); $(".aui_dialog #TipId").val(id);
+                        var pa = $(obj).parents("tr");
+                        var con = pa.find(".contentTD").text();
+                        var type = pa.find(".typeTD").find("span").data("value");
+                        $(".aui_dialog textarea").val(con);
+                        $(".aui_dialog input[type=radio]").each(function (i, item) {
+                            if (item.value == type) {
+                                item.checked = true; $(item).hide();
+                            } else {
+                                $(item).parents("label").remove();
+                            }
+                        });
+                        $(".aui_dialog #submitBtn").text("修改观点");
+                        $(".aui_dialog textarea").focus().css("height", $(".aui_dialog textarea")[0].scrollHeight);
+                    }, true);
+                });
+            };
+            op.Delete = function (obj, id) {
+                require(["dialog"], function (dia) {
+                    dia.ConfirmBox("<div>您确定要删除吗？</div>", "确定", function () {
+                        $(obj).attr("disabled", "disabled");
+                        $.post("RemoveThis.html", { id: id }, function (data) {
+                            if (data && data.flag) {
+                                dia.SuccessBox("删除成功");
+                                $(obj).removeAttr("disabled");
+                                op.Refresh();
+                            } else {
+                                dia.ErrorBox("删除失败");
+                                $(obj).removeAttr("disabled");
+                            }
+                        });
+                    }, "取消", true, "warning");
+                });
+            };
+            $(document.body).delegate("button[name=submitBtn]", "click", function () {
+                var obj = $(this);
+                require(["dialog"], function (dia) {
+                    var formss = obj.parents(".form-horizontal");
+                    var rd = formss.find(":checked").val();
+                    if (!rd) { dia.ErrorBox("<div>请选择您的观点！&nbsp;&nbsp;</div>"); return false; }
+                    var con = $.trim(formss.find("textarea").val());
+                    if (con.length < 1) { dia.ErrorBox("<div>请填写内容！&nbsp;&nbsp;</div>"); return false; }
+                    if (con.length > 100) { dia.ErrorBox("<div>内容过长！&nbsp;&nbsp;</div>"); return false; }
+                    var id = formss.find("#TipId").val();
+                    id = id.length > 0 ? id : 0;
+                    rd = parseInt(rd);
+                    var d = { type: rd, id: id, content: con };
+
+                    obj.attr("disabled", "disabled");
+                    $.post("SetModel.html", d, function(data) {
+                        if (data && data.flag) {
+                            op.Refresh();
+                            obj.removeAttr("disabled");
+                            $("#closeBtn").trigger("click");
+                            formss.find(":radio").removeAttr("checked");
+                            formss.find("textarea").val("");
+                            dia.SuccessBox("发布成功");
+                        } else {
+                            obj.removeAttr("disabled");
+                            dia.ErrorBox("发布失败");
+                        }
+                    });
+                });
+            });
+        });
+    </script>
+
+</body>
+</html>

@@ -1,5 +1,37 @@
  <div id="sidebar">
         <ul>
+        <volist name="resource_list" id="item">
+            <li class="submenu <if condition="$menu_p_index eq $item['AMoId']"> active open</if>">
+                <a <if condition="$item._ex neq NULL">href="javascript:;"<else />href="__APP__/Azureadmin{$s_item.AMoUrl}"</if> >
+                    <i class="icon-th-list"></i>
+                    <span>{$item.AMoName}</span>
+                    <span class="toggle icon icon-chevron-down"></span>
+                </a>
+                <if condition="$item._ex neq NULL">
+                <ul>
+                    <volist name="item._ex" id="s_item">
+                    <li ee="{$menu_index}" <if condition="$menu_index eq $s_item['AMoId']">class="active"</if>><a href="__APP__/Azureadmin{$s_item.AMoUrl}">{$s_item.AMoName}</a></li>
+                    </volist>
+                </ul>
+                </if>
+            </li>
+        </volist>
+
+
+
+<!--
+        <li class="submenu <if condition="$menu_index eq 3 or $menu_index eq 7"> active open</if>">
+                <a href="javascript:;">
+                    <i class="icon-th-list"></i>
+                    <span>角色及权限</span>
+                    <span class="toggle icon icon-chevron-down"></span>
+                </a>
+                <ul>
+                    <li <if condition="$menu_index eq 3">class="active"</if>><a href="__APP__/Azureadmin/RoleManager/Index">角色列表</a></li>
+                    <li <if condition="$menu_index eq 7">class="active"</if>><a href="__APP__/Azureadmin/AdminManager/Index">管理员列表</a></li>
+                </ul>
+            </li>
+
             <li class="submenu <if condition="$menu_index eq 3 or $menu_index eq 7"> active open</if>">
                 <a href="javascript:;">
                 	<i class="icon-th-list"></i>
@@ -11,6 +43,7 @@
                 	<li <if condition="$menu_index eq 7">class="active"</if>><a href="__APP__/Azureadmin/AdminManager/Index">管理员列表</a></li>
                 </ul>
             </li>
+
             <li class="submenu <if condition="$menu_index eq 8 or $menu_index eq 9 or $menu_index eq 10"> active open</if>">
                	<a href="javascript:;">
                		<i class="icon-th-list"></i>
@@ -23,6 +56,7 @@
                		<li <if condition="$menu_index eq 10">class="active"</if>><a href="__APP__/Azureadmin/ModuleVipManager/Index">模块权限管理</a></li>
                	</ul>
             </li>
+
             <li class="submenu <if condition="$menu_index eq 11">open active</if>">
             	<a href="javascript:;">
             		<i class="icon-th-list"></i>
@@ -33,6 +67,8 @@
             		<li <if condition="$menu_index eq 11">class="active"</if>><a href="__APP__/Azureadmin/NewsManager/Index">公司新闻管理</a></li>
             	</ul>
             </li>
+
+
             <li class="submenu <if condition="$menu_index eq 12">open active</if>">
             	<a href="javascript:;">
             		<i class="icon-th-list"></i>
@@ -68,10 +104,12 @@
             	</ul>
             </li>
             <li <if condition="$menu_index eq 20">class="open active"</if>>
-            	<a href="__APP__/Azureadmin/ComMessager/ComMessage">
+            	<a href="__APP__/Azureadmin/ComMessage/ComMessage">
             		<i class="icon-th-list"></i>
             		<span>消息中心</span>
             	</a>
             </li>
+-->
+
          </ul>
     </div>

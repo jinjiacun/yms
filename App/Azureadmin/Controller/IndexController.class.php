@@ -1,6 +1,6 @@
 <?php
 namespace Azureadmin\Controller;
-use Think\Controller;
+use Azureadmin\Controller;
 include_once(dirname(__FILE__).'/BaseController.class.php');
 class IndexController extends BaseController {
     public function _initialize()
@@ -48,39 +48,41 @@ class IndexController extends BaseController {
     public function other_index()
     {
         //查询用户信息
-	$content['AdminId'] = session('AdminId');
-	$result = $this->_call('ComAdmin.get_info_by_key', $content);
-	unset($content);
-	if($result){
-	  if($result['status_code'] == 200){
-	    $this->assign('admin_info', $result['content']);
-	  }
-	}
-	unset($result);
+        $content['AdminId'] = session('AdminId');
+        $result = $this->_call('ComAdmin.get_info_by_key', $content);
+        unset($content);
+        if($result){
+            if($result['status_code'] == 200){
+                $this->assign('admin_info', $result['content']);
+            }
+        }
+        unset($result);
 	
 
-	//查询当前用户所属机构信息
-	$content['ComId'] = session('ComId');
-	$result = $this->_call('ComTable.get_info_by_key', $content);
-	unset($content);
-	if($result){
-	  if($result['status_code'] == 200){
-	    $this->assign('company_info', $result['content']);
-	  }
-	}
-	unset($result);
+        //查询当前用户所属机构信息
+        $content['ComId'] = session('ComId');
+        $result = $this->_call('ComTable.get_info_by_key', $content);
+        unset($content);
+        if($result){
+            if($result['status_code'] == 200){
+                $this->assign('company_info', $result['content']);
+            }
+        }
+        unset($result);
 	
 
-	//查询当前用户所属角色信息
-	$content['RoleId'] = session('RoleId');
-	$result = $this->_call('ComRole.get_info_by_key', $content);
-	unset($content);
-	if($result){
-	  if($result['status_code'] == 200){
-	    $this->assign('role_info', $result['content']);
-	  }
-	}
-	unset($result);
+        //查询当前用户所属角色信息
+        $content['RoleId'] = session('RoleId');
+        $result = $this->_call('ComRole.get_info_by_key', $content);
+        unset($content);
+        if($result){
+            if($result['status_code'] == 200){
+                $this->assign('role_info', $result['content']);
+            }
+        }
+        unset($result);
+        
+        $this->init_com_menu();
 
         $this->display();
     }

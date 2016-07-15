@@ -16,6 +16,8 @@ return array(
 	//分析师权限
 	'TeacherInitCol' => "355,377,381,378,385",
 	'PlatFormName' => '平台',
+    //分析师金评
+    'GoldCommentId'=>'888',
 	
 	'DefaultPassword' => md5('123456'),
 	'Dictionary' => array(

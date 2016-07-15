@@ -8,7 +8,7 @@ class LoginController extends BaseController {
 		if(I('post.submit'))
 		{
                     $content = array(
-                        'AdminName'=>I('post.AdminName'),
+                        'AdminUserName'=>I('post.AdminName'),
                         'Password'    =>I('post.Password'),
                     );
                     $result = $this->_call("ComAdmin.login",
@@ -50,7 +50,8 @@ class LoginController extends BaseController {
 
     public function Quit()
     {
-        session('AdminName',null);
+        //session('AdminName',null);
+        session(null);
         $this->redirect("Index/index");
         exit();
     }

@@ -83,9 +83,9 @@
                     <tbody>
                           <volist name="live_room_list" id="item">
                             <tr>
-                                <td>{$item.NAME}</td>
-                                <td>{$item.TotalCount}</td>
+                                <td>{$item.NAME}</td>                               
                                 <td><if condition="$item.TodayCount neq NULL">{$item.TodayCount}<else />0</if></td>
+                                 <td>{$item.TotalCount}</td>
                             </tr>
                           </volist>                            
                      </tbody>
@@ -112,9 +112,9 @@
                     <tbody>
                             <volist name="room_inter_list" id="item">
                             <tr>
-                                <td>{$item.NAME}</td>
-                                <td>{$item.TotalCount}</td>
+                                <td>{$item.NAME}</td>                                
                                 <td><if condition="$item.TodayCount neq NULL">{$item.TodayCount}<else />0</if></td>
+                                <td>{$item.TotalCount}</td>
                             </tr>
                             </volist>                            
                      </tbody>
