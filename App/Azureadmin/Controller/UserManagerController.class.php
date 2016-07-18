@@ -1,18 +1,11 @@
 <?php
 namespace Azureadmin\Controller;
 use Azureadmin\Controller;
-include_once(dirname(__FILE__).'/BaseController.class.php');
+include_once(dirname(__FILE__).'/ComBaseController.class.php');
 
-class UserManagerController extends BaseController{
-        public function _initialize()
-	{
-	   parent::_initialize();
-           parent::get_dictionary();
-           if(null == session('AdminName')
-           || ''   == session('AdminName'))
-           {
-            $this->redirect('/Azureadmin/Login/index');
-           }
+class UserManagerController extends ComBaseController{
+    public function _initialize(){
+        parent::_initialize();
 	}        
 
 	public function index()

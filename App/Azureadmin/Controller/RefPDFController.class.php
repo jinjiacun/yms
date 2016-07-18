@@ -53,4 +53,45 @@ class RefPDFController extends ComBaseController{
 
             $this->display();
         }
+
+        /**
+           功能：删除
+         */
+        public function Delete(){
+            $content['NewId'] = I('get.NewId');
+            $result = $this->_call("ComNews.delete", $content);
+            unset($content);
+            if($result){
+                if($result['status_code'] == 200
+                && $result['content']['is_success'] == 0){
+                    header('Content-type:text/json');
+                    $out = array('res'=>1);
+                    echo json_encode($out);
+                    exit();
+                }
+            }
+
+            header('Content-type:text/json');
+            $out = array('res'=>1);
+            echo json_encode($out);
+            exit();
+        }
+
+        
+        /**
+           功能：保存
+
+           参数：
+           @@input
+           @param $id string 
+           @param $cid string 
+           @param $title string 
+           @param $content string 
+           @param $docreader string 
+           @param $newsPDF string 
+           @param DateTime? showTime    
+         */
+        public function Save（）{
+
+        }
 }
