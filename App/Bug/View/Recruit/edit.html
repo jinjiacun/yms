@@ -1,0 +1,126 @@
+<!doctype html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>运营管理系统</title>
+    <link rel="stylesheet" type="text/css" href="__PUBLIC__/Home/css/common.css"/>
+    <link rel="stylesheet" type="text/css" href="__PUBLIC__/Home/css/main.css"/>
+
+    <script type="text/javascript" src="__PUBLIC__/js/jquery-1.8.3.min.js" ></script>
+    <script type="text/javascript" src="__PUBLIC__/Home/js/main.js" ></script>
+    <script type="text/javascript" src="__PUBLIC__/Home/js/mh_dialog.js" ></script>
+    <script type="text/javascript" src="__PUBLIC__/Home/js/jquery.form.js" ></script>
+</head>
+<body>
+<div class="container clearfix">
+    <div class="main-wrap">
+
+        <div class="crumb-wrap">
+            <div class="crumb-list">
+                <i class="icon-font"></i>
+                <a target="_top" href="__ROOT__/">首页</a>
+                <span class="crumb-step">&gt;</span>
+                <a class="crumb-name" href="index.html">招聘管理</a>
+                <span class="crumb-step">&gt;</span>
+                <span>修改招聘信息</span>
+            </div>
+        </div>
+        <div class="result-wrap">
+            <div class="result-content">
+                <form class="registerform" name="theForm" id="theForm" action="__URL__/edit" method="post" enctype="multipart/form-data" onsubmit="return ValidateFile()">
+                    <table class="insert-tab" width="100%">
+                        <tbody>
+                            <tr>
+                                <th><i class="require-red">*</i>部门：</th>
+                                <td>
+                                    <select name="part_id" id="part_id" class="required">
+                                        <option value="">请选择</option>
+                                        <volist name="u_map.part" id="par">
+                                        <option value="{$key}" <if condition="$edit_list.part_id eq $key">selected="selected"</if>>{$par}</option>
+                                        </volist>
+                                    </select>
+                                </td>
+                            </tr>
+                            <tr>
+                                <th><i class="require-red">*</i>岗位：</th>
+                                <td>
+                                    <input class="common-text" id="gw_name" name="gw_name" size="50" value="{$edit_list.name}" type="text" />
+                                </td>
+                            </tr>
+                            <tr>
+                                <th><i class="require-red">*</i>状态：</th>
+                                <td>
+                                    <select name="status" id="status" class="required">
+                                        <option value="0" <if condition="$edit_list.status eq 0">selected="selected"</if>>开启</option>
+                                        <option value="1" <if condition="$edit_list.status eq 1">selected="selected"</if>>关闭</option>
+                                    </select>
+                                </td>
+                            </tr>
+                            <tr>
+                                <th><i class="require-red">*</i>要求：</th>
+                                <td><textarea class="wtms" name="description" id="description">{$edit_list.description}</textarea></td>
+                            </tr>
+                            <tr>
+                                <th></th>
+                                <td>
+                                    <input type="hidden" id="id" name="id" value="{$edit_list.id}">
+                                    <input class="btn btn-primary btn6 mr10" id="submit" name="submit" value="提交" type="submit">
+                                    <input class="btn btn6" onClick="history.go(-1)" value="返回" type="button">
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </form>
+            </div>
+        </div>
+
+    </div>
+    <!--/main-->
+</div>
+</body>
+<script type="text/javascript">
+    //判断必填项
+    function ValidateFile(){
+        var part_id = $('#part_id').val();
+        var gw_name = $('#gw_name').val();
+        var description = $('#description').val();
+        if (part_id == "") {
+            mh_dialogShow('mh_warning','请选择部门！',2,true); 
+            return false;
+        } 
+        if (gw_name == "") {
+            mh_dialogShow('mh_warning','岗位不能为空！',2,true); 
+            return false;
+        } 
+        if (description == "") {
+            mh_dialogShow('mh_warning','要求不能为空！',2,true); 
+            return false;
+        } 
+    }
+    $(function () {
+        var options = {
+            beforeSend:function(){
+                $("#submit").val('提交').attr('disabled',true);
+            },
+            success: function (data) {
+                if(data){
+                  if (data == 0) {
+                    mh_dialogShow('mh_success','修改成功!',2,true,'__APP__/Recruit/index.html'); 
+                    return false;
+                  }else if(data == -1){
+                    mh_dialogShow('mh_warning','修改失败！',2,true); 
+                    return false;
+                  }else{
+                    mh_dialogShow('mh_warning','修改失败！',2,true); 
+                    return false;
+                  }
+                }
+            },
+            complete:function(){
+                $("#submit").val('提交').attr('disabled',false);
+            }
+        };
+        $("#theForm").ajaxForm(options);
+    });
+</script>
+</html>

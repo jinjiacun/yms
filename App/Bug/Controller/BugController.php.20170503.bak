@@ -1,0 +1,679 @@
+<?php
+namespace Home\Controller;
+use Think\Controller;
+header('Content-type: text/html; charset=utf-8');
+include_once(dirname(__FILE__)."/BaseController.class.php");
+class BugController extends BaseController {
+    public function _initialize(){
+        parent::_initialize();
+        if("" == session('user_id'))
+        {
+            exit('<script>top.location.href="../Login/index"</script>');
+        }
+    }
+	/*
+	*问题列表
+	*/
+    public function index(){
+        //映射
+        $u_map = $this->grtmap();
+        $u_map_admin = $u_map['admin'];
+        //查询全部还是自己权限
+        $bug_id = session('bug_id');
+        $pro_id = session('pro_id');
+        $role_id = session('role_id'); 
+        $map_priority_list = $this->_map_priority_list(); //优先级
+        $map_state_list = $this->_map_state_list();  //状态
+        
+	    $page_index = 1;
+        $page_size  = 20;
+        $content = array();
+        if(I('get.p'))
+        {
+            $page_index = I('get.p');
+            $content['page_size']  = $page_size;
+            $content['page_index'] = $page_index;
+        }else{
+            $content['page_size']  = $page_size;
+            $content['page_index'] = $page_index;
+        }
+        if ($bug_id == 4 && $pro_id == 2) {
+            $content['where'] = array(
+                '_string' => 'get_member = '.session('user_id').' or put_member = '.session('user_id')
+            );
+        }elseif ($bug_id == 3 && $pro_id == 2) {
+            $xm_id = $this->project_mem_xm();
+            $content['where'] = array(
+                '_string' => 'get_member = '.session('user_id').' or put_member = '.session('user_id').' or project_id in ('.$xm_id.')'
+            );
+        }
+        
+        //搜索
+        if (I('get.sub')) {
+            //关键字
+            $name = I('get.keywords');
+            //分类
+            $fenl = I('get.fenl');
+            if (0 != $fenl) {
+                $this->assign('fenl', $fenl);
+                if (1 == $fenl) {
+                    $content['where']['get_member'] = session('user_id');
+                }elseif (2 == $fenl) {
+                    $content['where']['put_member'] = session('user_id');
+                }elseif (3 == $fen){
+                    $content['where'] = array(
+                        '_string'    => 'get_member = '.session('user_id').' or put_member = '.session('user_id')
+                    ); 
+                }
+                $this->assign('fenl', $fenl);
+            }
+            if ("" != $name) {
+                $this->assign('name', $name);
+	        if(strstr($name, "WT")){
+                	$content['where']['number'] = array('like', '$'.urlencode($name).'$');
+		}
+		else{
+	        	$content['where']['title'] = array('like', '$'.urlencode($name).'$');
+		}
+                $this->assign('name', $name);
+            }
+            //模块
+            if (0 != I('get.project_mod_id')) {
+                //$this->assign('prmod', I('get.project_mod_id'));
+                $_SESSION['prmod']  = I('get.project_mod_id');
+                //$content['where']['project_mod_id'] = session('prmod');
+                //$this->assign('prmod', I('get.project_mod_id'));
+            }else{
+                session('prmod',null);
+            }
+            //项目分类
+            if (0 != I('get.class_id')) {
+                $_SESSION['class_id']  = I('get.class_id');
+                //查询分类下的项目
+                $class_con['where']['class_id'] = I('get.class_id');
+                $class_return = $this->_call('Project.get_list',$class_con);
+                if (200 == $class_return['status_code']) {
+                    $con_ar = $class_return['content']['list']; 
+                    foreach ($con_ar as $k => $v) {
+                        $con_arr[] = $v['id'];
+                    } 
+                }
+                $con_arr = implode(',', $con_arr);
+                //$this->assign('class_id', session('class_id'));
+            }else{
+                session('class_id',null);
+                session('prmod',null);
+                session('proj',null);
+            }
+            //项目
+            if (0 != I('get.project_id')) {
+                //$this->assign('proj', I('get.project_id'));
+                $_SESSION['proj']  = I('get.project_id');
+                //$content['where']['project_id'] = session('proj');
+                //$this->assign('proj', session('proj'));
+            }else{
+                session('proj',null);
+                session('prmod',null);
+            }
+            //状态
+            if (0 != I('get.status')) {
+                $this->assign('sta', I('get.status'));
+                $content['where']['status'] = I('get.status');
+                $this->assign('sta', I('get.status'));
+            }
+            //优先级
+	    if(0 != I('get.level')){
+		$this->assign('level', I('get.level'));
+                $content['where']['level'] = I('get.level');
+                $this->assign('level', I('get.level'));
+            }
+            //解决人查询
+            if (I('get.get_member') != "") {
+                $this->assign('get_member', I('get.get_member'));
+                $g_member = $this->findVal($u_map_admin,I('get.get_member'));
+               if(I('get.fenl') != 4){
+                //$g_member = array_filter($u_map_admin, I('get.get_member'));
+                //$arr2 = array_filter($arr, "search");
+                // print_r($g_member);
+                // exit();
+                $content['where']['get_member'] = array('in',$g_member);
+                $this->assign('get_member', I('get.get_member'));
+               }elseif(I('get.fenl') == 4){
+                $content['where']['put_member'] = array('in', $g_member); 
+                $this->assign('get_member', I('get.get_member'));
+               }
+            }
+        }
+        
+        if (session('class_id') > 0) {
+            $this->assign('class_id', session('class_id')); 
+        }
+        //查询分类下的项目
+        if (session('class_id') > 0 || session('proj') < 0) {
+            $content['where']['project_id'] = array('in', $con_arr);
+        }
+        if(session('proj') > 0){
+            $this->assign('proj', session('proj'));
+            $content['where']['project_id'] = session('proj');
+        }
+        if(session('prmod') > 0){
+            $this->assign('prmod', session('prmod'));
+            $content['where']['project_mod_id'] = session('prmod');
+        }
+        if ($role_id != 4) {
+            $content['order'] = array(
+                'status' => 'ASC',
+                'id' => 'desc'
+                );
+        }
+        $result = $this->_call('Bug.get_list',$content);
+        if (200 == $result['status_code']) {
+            $con = $result['content']['list']; 
+            foreach ($con as $key => $rs) {
+                //$con[$key]['get_member_ex'] = $this->project_mem_ex($rs['project_id'], $rs['get_member']);
+                $con[$key]['number'] = 'WT-'.sprintf("%06d", $rs['id']);
+                $con[$key]['add_time'] = date('m-d H:i',$rs['add_time']);
+                $con[$key]['add_time_ex'] = date('Y-m-d H:i',$rs['add_time']);
+                $con[$key]['last_update_time'] = date('m-d H:i',$rs['last_update_time']);
+                $con[$key]['last_update_time_ex'] = date('Y-m-d H:i',$rs['last_update_time']);
+                $con[$key]['level'] = $map_priority_list[$rs['level']];
+                $con[$key]['status'] = $map_state_list[$rs['status']];
+            } 
+            $this->assign('con',$con);
+            $record_count = $result['content']['record_count'];
+            $this->assign('record_count', $record_count);
+            $this->get_page($record_count, $page_size);
+        }
+
+	unset($result);
+	if(isset($content['where']['number']))
+		unset($content['where']['number']);
+	
+	//暂缓统计
+	$content['where']['status'] = 5;
+	$content['page_size'] = 1;
+	$content['page_index'] = 1;
+	$result = $this->_call('Bug.get_list', $content);
+	if($result){
+		if(200 == $result['status_code']){
+			$count_ex = $result['content']['record_count'];
+			$this->assign('count_ex', $count_ex);
+		}
+	}
+        
+        $this->_map_mybug();//分类映射
+        $this->display();
+    }
+    public function findVal($arr,$dir){
+        $has = array();
+        foreach($arr as $k=>$item){
+            if(strpos($item, $dir) !== false){
+                $has[] = $k;
+            }
+        }
+        return implode(',', $has);
+    }
+    //导出列表
+    public function export(){
+        $page_index = 1;
+        $page_size_fc  = 20;
+        $content = array();
+        $content['page_index'] = $page_index;
+        $content['page_size']  = $page_index;
+        if (I('post.subb')) {
+            $q_time = I('post.q_time');
+            $q_times = strtotime($q_time.' 01:00:00');
+            $t_time = I('post.t_time');
+            $t_times = strtotime($t_time.' 23:00:00');
+
+            if ($q_time != "" || $t_time != "") {
+                $content['where'] = array(
+                    'add_time' => array(array('EGT',$q_times),array('ELT',$t_times))
+                );
+            }
+            $content['where']['project_status_id'] = 1;
+        }
+        $r_count = $this->bug_export($content);
+        $r_count = $r_count[1];
+        if ($r_count > 0) {
+            $tu_count = ceil($r_count/$page_size_fc);
+            if ($tu_count >= 1) {
+                $content['page_index'] = 1;
+                $content['page_size']  = $page_size_fc;
+                $count1 = $this->bug_export($content);
+                $count1 = $count1[0];
+            }
+            if ($tu_count >= 2) {
+                $content['page_index'] = 2;
+                $content['page_size']  = $page_size_fc;
+                $count2 = $this->bug_export($content);
+                $count2 = $count2[0];
+            }
+            if ($tu_count >= 3) {
+                $content['page_index'] = 3;
+                $content['page_size']  = $page_size_fc;
+                $count3 = $this->bug_export($content);
+                $count3 = $count3[0];
+            }
+            if (!empty($count1) && !empty($count2) && !empty($count3)) {
+                $con = array_merge($count1, $count2, $count3);
+            }elseif (!empty($count1) && !empty($count2)) {
+                $con = array_merge($count1, $count2);
+            }elseif (!empty($count1)) {
+                $con = $count1;
+            }
+            //导出列表
+            $u_map = $this->grtmap();
+            foreach ($con as $k=>$v){
+                $data[$k][title] = $v['title'];  //bug描述
+                $data[$k][level] = $v['level']; //优先级
+                $data[$k][add_time]  = $v['add_time']; //反馈时间
+                $data[$k][solve_description]  = $v['solve_description']; //bug原因描述
+                $data[$k][solve_explain]  = $v['solve_explain']; //解决方案
+                $data[$k][get_member] = $u_map['admin'][$v['get_member']]; //处理人
+                $data[$k][last_update_time] = $v['last_update_time']; //处理时间
+            }
+            $this->assign('data', $data);
+            $this->display();
+            //$this->goods_export($con);
+        }
+        $this->error('没有搜索结果，无法导出数据');
+    }
+    //信息查询
+    public function bug_export($content){
+        $map_priority_list = $this->_map_priority_list(); //优先级
+        $map_state_list = $this->_map_state_list();  //状态
+        $result = $this->_call('Bug.get_list',$content);
+        if (200 == $result['status_code']) {
+            $con = $result['content']['list']; 
+            foreach ($con as $key => $rs) {
+                $con[$key]['add_time'] = date('m-d',$rs['add_time']);
+                $con[$key]['last_update_time'] = date('m-d',$rs['last_update_time']);
+                $con[$key]['level'] = $map_priority_list[$rs['level']];
+                $con[$key]['status'] = $map_state_list[$rs['status']];
+            } 
+            $record_count = $result['content']['record_count'];
+            return array($con,$record_count);
+        }
+    }
+    /*
+    *问题添加
+    */
+    public function add(){
+    	if (I('post.submit')) {
+            $this->_login();  //判断登录是否过期
+            $number         = I('post.number');
+            $level          = I('post.level');
+            $status         = I('post.status');
+            $project_id     = I('post.project_id');
+            $project_mod_id = I('post.project_mod_id');
+            $get_member     = I('post.get_member');
+            $title          = I('post.title');
+            $title          = $this->DeleteHtml($title);
+            $description    = I('post.description');
+            $put_member     = session('user_id');
+            $project_status_id = $this->project_status($project_id);
+            $content = array(
+                'number' => urlencode($number),
+                'level' => $level,
+                'status' => $status,
+                'project_id' => $project_id,
+                'project_mod_id' => $project_mod_id,
+                'get_member' => $get_member,
+                'put_member' => $put_member,
+                'title' => urlencode($title),
+                'description' => urlencode(base64_encode($description)),
+                'project_status_id' => $project_status_id
+                );
+            $result = $this->_call('Bug.add',$content);
+            if (200 == $result['status_code']
+                && 0 == $result['content']['is_success']) {
+                echo 0;
+                exit();
+            }else{
+                echo -1;
+                exit();
+            }
+        }
+        //编号
+        $mod = "Bug.get_list";
+        $type = "WT-";
+        $this->_number($mod, $type);
+
+    	$this->_map_priority_list(); //优先级
+        $this->_map_state_list();  //状态
+    	$this->display();
+    }
+    //查询对应项目状态
+    public function project_status($project_id){
+        $content['id']  = $project_id;
+        $result = $this->_call('Project.get_info',$content);
+        if (200 == $result['status_code']) {
+            $con = intval($result['content']['status']); 
+            return $con;
+        }
+    }
+    /*
+    *问题修改
+    */
+    public function edit(){
+        $id = I('get.id');
+        //修改信息查询
+        $content['id'] = $id;
+        $result = $this->_call('Bug.get_info',$content);
+        if ($result && 200 == $result['status_code']) {
+            $edit_info = $result['content'];
+            $edit_info['number'] = 'WT-'.sprintf("%06d", $edit_info['id']);
+            $edit_info['description'] = str_replace(' ', '+', $edit_info['description']);
+            $edit_info['description'] = base64_decode($edit_info['description']);
+            $edit_info['add_time'] = date('Y-m-d H:i',$result['content']['add_time']);
+            $this->assign('edit_info',$edit_info);
+        }
+        
+        //反馈信息查询
+        $content_fk = array();
+        $content_fk['page_size'] = 20;
+        $content_fk['where'] = array('bug_id' => $id);
+        $result_fk = $this->_call('Bugfeedback.get_list', $content_fk);
+        if (200 == $result_fk['status_code']) {
+            $fk_list = $result_fk['content']['list'];
+            foreach ($fk_list as $key => $v) {
+                $fk_list[$key]['add_time'] = date('Y-m-d H:i:s',$v['add_time']);
+                $fk_list[$key]['option_process'] = base64_decode(str_replace(' ', '+', $v['option_process']));
+            }
+            $this->assign('fk_list',$fk_list);
+        }
+        $this->_map_priority_list(); //优先级
+        $this->_map_state_list();  //状态
+        $this->display();
+    }
+    /*
+    *基本详情修改
+    */
+    public function update_jb(){
+        if (I('post.submit')) {
+            $this->_login();  //判断登录是否过期
+            $id             = I('post.id');
+            $level          = I('post.level');
+            $status         = I('post.status');
+            $project_id     = I('post.project_id');
+            $project_mod_id = I('post.project_mod_id');
+            $get_member     = I('post.get_member');
+
+            $content['data'] = array(
+                'level' => $level,
+                'status' => $status,
+                'project_id' => $project_id,
+                'project_mod_id' => $project_mod_id,
+                'get_member' => $get_member,
+                );
+            $content['where'] = array('id'=>$id);
+
+            $result = $this->_call('Bug.update',$content);
+            if (200 == $result['status_code']
+                && 0 == $result['content']['is_success']) {
+                echo 0;
+                exit();
+            }else{
+                echo -1;
+                exit();
+            }
+        }
+    }
+    /*
+    *问题详情修改
+    */
+    public function update_wt(){
+        if (I('post.submit')) {
+            $this->_login();  //判断登录是否过期
+            $id             = I('post.id');
+            $title          = I('post.title');
+            $title          = $this->DeleteHtml($title);
+            $description    = I('post.description');
+            $content['data'] = array(
+                'title' => urlencode($title),
+                'description' => urlencode(base64_encode($description))
+                );
+            $content['where'] = array('id'=>$id);
+            $result = $this->_call('Bug.update',$content);
+            if (200 == $result['status_code']
+                && 0 == $result['content']['is_success']) {
+                echo 0;
+                exit();
+            }else{
+                echo -1;
+                exit();
+            }
+        }
+    }
+    /*
+    *解决方案添加
+    */
+    public function solve_add(){
+        if (I('post.submit')) {
+            $this->_login();  //判断登录是否过期
+            $id                = I('post.id');
+            $solve_description = I('post.solve_description');
+            $solve_description = $this->DeleteHtml($solve_description);
+            $solve_explain     = I('post.solve_explain');
+            $solve_explain     = $this->DeleteHtml($solve_explain);
+
+            $content['data'] = array(
+                'solve_description' => urlencode($solve_description),
+                'solve_explain' => urlencode($solve_explain)
+                );
+            $content['where'] = array('id'=>$id);
+            $result = $this->_call('Bug.update',$content);
+            if (200 == $result['status_code']
+                && 0 == $result['content']['is_success']) {
+                echo 0;
+                exit();
+            }else{
+                echo -1;
+                exit();
+            }
+        }
+    }
+    /*
+    *反馈添加
+    */
+    public function feedback(){
+        $this->_login();  //判断登录是否过期
+        $zt_map = $this->_map_state_list();  //状态
+        //用户名称
+        $u_name = $this->grtmap();
+        $u_name = $u_name['admin'];
+        
+        $bug_id        = I('post.bug_id');
+        $create        = session('user_id');
+        $contentt      = I('post.content');
+        $contentt      = $this->DeleteHtml($contentt);
+        $option_process = I('post.option_process');
+        $state_id      = I('post.state_id');
+        $status_ex     = I('post.status_ex'); 
+        $get_member    = I('post.get_member');
+        $get_member_ex = I('post.get_member_ex');
+        
+        if ($contentt == "") {
+            echo -2;
+            exit();
+        }
+        //判断受理人是否改变
+        if ($get_member_ex == $get_member) {
+            $person_remark = "";
+        }else {
+            $person_remark = $u_name[$get_member].' ==》'.$u_name[$get_member_ex]; 
+        }
+        //判断状态是否改变
+        if ($state_id == $status_ex) {
+            $status_remark = $zt_map[$status_ex];
+        }else{
+            $status_remark = $zt_map[$state_id].' ==》'.$zt_map[$status_ex]; 
+        }
+        //反馈添加
+        $content = array(
+            'bug_id'        => $bug_id,
+            'create'        => $create,
+            'person_remark' => urlencode($person_remark),
+            'content'       => urlencode($contentt),
+            'option_process' => urlencode(base64_encode($option_process)),
+            'status_remark' => urlencode($status_remark)
+            );
+        $result = $this->_call('Bugfeedback.add',$content);
+        //bug状态修改
+        $con = array();
+        $con['data'] = array(
+            'status'           => $status_ex,
+            'last_update'      => $create,
+            'last_update_time' => time()
+            );
+        //判断受理人是否修改
+        if ($get_member_ex == $get_member) {
+            $con['data']['get_member'] = $get_member;
+        }else {
+            $con['data']['get_member'] = $get_member_ex;
+        }
+        $con['where'] = array('id'=>$bug_id);
+        $res = $this->_call('Bug.update',$con);
+        if (200 == $result['status_code'] && 0 == $result['content']['is_success'] 
+            && 200 == $res['status_code'] && 0 == $res['content']['is_success']) {
+            echo 0;
+            exit();
+        }else{
+            echo -1;
+            exit();
+        }
+    }
+    //批量删除简历
+    public function batch_delete(){
+        $id_list = I('post.id');
+        $item = explode(',', $id_list);
+        if(0<count($item))
+        {
+            foreach($item as $id)
+            {
+                $result = $this->_call("Bug.delete",array('id'=>$id));
+                if($result && 200 == $result['status_code']
+                && 0 == $result['content']['is_success']
+                ){
+                }else
+                {
+                    echo -1;
+                    exit();
+                }
+            }
+            
+        }
+    }
+    //导出数据方法
+    protected function goods_export($con=array())
+    {
+        //print_r($con);exit;
+        $con = $con;
+        $data = array();
+        $u_map = $this->grtmap();
+        //print_r($u_map);
+        foreach ($con as $k=>$v){
+            $data[$k][title] = $v['title'];  //bug描述
+            $data[$k][level] = $v['level']; //优先级
+            //$data[$k][put_member] = $u_map['admin'][$v['put_member']]; //BUG反馈人
+            //$data[$k][put_part] = $u_map['part'][$this->ugetinfo($v['put_member'])]; //反馈部门
+            $data[$k][add_time]  = $v['add_time']; //反馈时间
+            $data[$k][solve_description]  = $v['solve_description']; //bug原因描述
+            $data[$k][solve_explain]  = $v['solve_explain']; //解决方案
+            $data[$k][get_member] = $u_map['admin'][$v['get_member']]; //处理人
+            $data[$k][last_update_time] = $v['last_update_time']; //处理时间
+        }
+
+        // print_r($con);
+        // print_r($data);exit;
+
+        foreach ($data as $field=>$v){
+            if($field == 'title'){
+                $headArr[]='BUG描述';
+            }
+            if($field == 'level'){
+                $headArr[]='优先级';
+            }
+            // if($field == 'put_member'){
+            //     $headArr[]='BUG反馈人';
+            // }
+            // if($field == 'put_part'){
+            //     $headArr[]='反馈部门';
+            // }
+            if($field == 'add_time'){
+                $headArr[]='反馈时间';
+            }
+            if($field == 'solve_description'){
+                $headArr[]='BUG原因描述';
+            }
+            if($field == 'solve_explain'){
+                $headArr[]='解决方案';
+            }
+            if($field == 'get_member'){
+                $headArr[]='处理人';
+            }
+            if($field == 'last_update_time'){
+                $headArr[]='处理时间';
+            }
+        }
+
+        $filename="bug_report";
+
+        $this->getExcel($filename,$headArr,$data);
+    }
+
+
+    private  function getExcel($fileName,$headArr,$data){
+        //导入PHPExcel类库，因为PHPExcel没有用命名空间，只能inport导入
+        import("Org.Util.PHPExcel");
+        import("Org.Util.PHPExcel.Writer.Excel5");
+        import("Org.Util.PHPExcel.IOFactory.php");
+
+        $date = date("Y_m_d",time());
+        $fileName .= "_{$date}.xls";
+
+        //创建PHPExcel对象，注意，不能少了\
+        $objPHPExcel = new \PHPExcel();
+        $objProps = $objPHPExcel->getProperties();
+
+        //设置表头
+        $key = ord("A");
+        //print_r($headArr);exit;
+        foreach($headArr as $v){
+            $colum = chr($key);
+            $objPHPExcel->setActiveSheetIndex(0) ->setCellValue($colum.'1', $v);
+            $objPHPExcel->setActiveSheetIndex(0) ->setCellValue($colum.'1', $v);
+            $key += 1;
+        }
+
+        $column = 2;
+        $objActSheet = $objPHPExcel->getActiveSheet();
+
+        //print_r($data);exit;
+        foreach($data as $key => $rows){ //行写入
+            $span = ord("A");
+            foreach($rows as $keyName=>$value){// 列写入
+                $j = chr($span);
+                $objActSheet->setCellValue($j.$column, $value);
+                $span++;
+            }
+            $column++;
+        }
+        
+        $fileName = iconv("utf-8", "gb2312", $fileName);
+
+        //重命名表
+        //$objPHPExcel->getActiveSheet()->setTitle('test');
+        //设置活动单指数到第一个表,所以Excel打开这是第一个表
+        $objPHPExcel->setActiveSheetIndex(0);
+        ob_end_clean();//清除缓冲区,避免乱码
+        header('Content-Type: application/vnd.ms-excel');
+        header("Content-Disposition: attachment;filename=\"$fileName\"");
+        header('Cache-Control: max-age=0');
+
+        $objWriter = \PHPExcel_IOFactory::createWriter($objPHPExcel, 'Excel5');
+        $objWriter->save('php://output'); //文件通过浏览器下载
+        exit;
+    }
+}

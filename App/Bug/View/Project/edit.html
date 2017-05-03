@@ -1,0 +1,564 @@
+<!doctype html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>运营管理系统</title>
+    <link rel="stylesheet" type="text/css" href="__PUBLIC__/Home/css/common.css"/>
+    <link rel="stylesheet" type="text/css" href="__PUBLIC__/Home/css/main.css"/>
+    <link rel="stylesheet" type="text/css" href="__PUBLIC__/jquery-ui-multiselect/css/jquery.multiselect.css" />
+    <link rel="stylesheet" type="text/css" href="__PUBLIC__/jquery-ui-multiselect/css/jquery.multiselect.filter.css" />
+    <link rel="stylesheet" type="text/css" href="__PUBLIC__/jquery-ui-multiselect/css/jquery-ui.css" />
+    <link rel="stylesheet" type="text/css" href="__PUBLIC__/jquery-ui-multiselect/assets/style.css" />
+    <link rel="stylesheet" type="text/css" href="__PUBLIC__/jquery-ui-multiselect/assets/prettify.css" />
+
+    <script type="text/javascript" src="__PUBLIC__/js/jquery-1.8.3.min.js" ></script>
+    <script type="text/javascript" src="__PUBLIC__/Home/js/main.js" ></script>
+    <script type="text/javascript" src="__PUBLIC__/Home/js/mh_dialog.js" ></script>
+    <script type="text/javascript" src="__PUBLIC__/Home/js/jquery.form.js" ></script>
+    <script type="text/javascript" src="__PUBLIC__/jquery-ui-multiselect/assets/prettify.js"></script>
+    <script type="text/javascript" src="__PUBLIC__/jquery-ui-multiselect/src/jquery-ui.min.js"></script>
+    <script type="text/javascript" src="__PUBLIC__/jquery-ui-multiselect/src/jquery.multiselect.js"></script>
+    <script type="text/javascript" src="__PUBLIC__/jquery-ui-multiselect/src/jquery.multiselect.filter.js"></script>
+    <script type="text/javascript">
+        $(function(){
+            $(".select_dx").multiselect({
+                noneSelectedText: "===请选择===",
+                checkAllText: "全选",
+                uncheckAllText: '全不选',
+                selectedList:4
+            });
+        });
+    </script>
+    <style type="text/css">
+     .fankui_tr td{ text-align: center;}
+    </style>
+</head>
+<body>
+<div class="container clearfix">
+    <div class="main-wrap">
+
+        <div class="crumb-wrap">
+            <div class="crumb-list"><i class="icon-font"></i><a target="_top" href="__ROOT__/">首页</a><span class="crumb-step">&gt;</span><a class="crumb-name" href="index.html">项目列表</a><span class="crumb-step">&gt;</span><span>查看项目</span></div>
+        </div>
+        <div class="result-wrap">
+            <div class="result-content" id="show">
+                    <table class="insert-tab" width="100%">
+                        <tbody>
+                            <tr>
+                                <th colspan="2">
+                                    <h1 class="xiangq">项目详情</h1>
+                                    <if condition="($enit_list.create eq $user_id) OR ($role_id eq 1) OR ($role_id eq 11)">
+                                    <a id="edit" href="javascript:void(0);" class="bianj"><i class="icon-font">&#xe065;</i> 编辑</a>
+                                    </if>
+                                </th>
+                            </tr>
+                            <tr>
+                                <th style="width:200px;"><i class="require-red">*</i>项目名称：</th>
+                                <td>{$enit_list.name}</td>
+                            </tr>
+                            <tr>
+                                <th><i class="require-red">*</i>项目分类：</th>
+                                <td>{$u_map['project_class'][$enit_list['class_id']]}</td>
+                            </tr>
+                            <tr>
+                                <th>项目状态：</th>
+                                <td><if condition="$enit_list.status eq 0">开发中
+                                    <else />已上线
+                                    </if>
+                                </td>
+                            </tr>
+                            <tr>
+                                <th>编号：</th>
+                                <td>{$enit_list.number}</td>
+                            </tr>
+                            <tr>
+                                <th>创建人：</th>
+                                <td>{$u_map['admin'][$enit_list['create']]}</td>
+                            </tr>
+                            <tr>
+                                <th>创建时间：</th>
+                                <td>{$enit_list.add_time}</td>
+                            </tr>
+                            <tr>
+                                <th>项目描述：</th>
+                                <td>{$enit_list.description}</td>
+                            </tr>
+                            <tr>
+                                <th><i class="require-red">*</i>成员：</th>
+                                <td class="chengyuan">
+                                    <foreach name="u_map.admin" item="list" key="k">
+                                        <foreach name="m_list" item="li" key="k1">
+                                            <if condition="$k eq $k1">
+                                            <span>{$list}</span>　
+                                            </if>
+                                        </foreach>
+                                    </foreach> 
+                                    <!-- <p>
+                                        <font>产品经理：</font>
+                                            <foreach name="u_map.admin" item="list" key="k">
+                                                <foreach name="m_list" item="li" key="k1">
+                                                    <if condition="$k eq $k1">
+                                                    <span>{$list}</span>　
+                                                    </if>
+                                                </foreach>
+                                            </foreach>                                        
+                                    </p>
+                                    <p>
+                                        <font>UI设计：</font>
+                                            <foreach name="u_list.2" item="list" key="k">
+                                                <foreach name="m_list" item="li" key="k1">
+                                                    <if condition="$k eq $k1">
+                                                    <span>{$list}</span>　
+                                                    </if>
+                                                </foreach>
+                                            </foreach>
+                                    </p>
+                                    <p>
+                                        <font>前端html：</font>
+                                            <foreach name="u_list.3" item="list" key="k">
+                                                <foreach name="m_list" item="li" key="k1">
+                                                    <if condition="$k eq $k1">
+                                                    <span>{$list}</span>　
+                                                    </if>
+                                                </foreach>
+                                            </foreach>
+                                    </p>
+                                    <p>
+                                        <font>前端开发：</font>
+                                            <foreach name="u_list.4" item="list" key="k">
+                                                <foreach name="m_list" item="li" key="k1">
+                                                    <if condition="$k eq $k1">
+                                                    <span>{$list}</span>　
+                                                    </if>
+                                                </foreach>
+                                            </foreach>
+                                    </p>
+                                    <p>
+                                        <font>后端开发：</font>
+                                            <foreach name="u_list.5" item="list" key="k">
+                                                <foreach name="m_list" item="li" key="k1">
+                                                    <if condition="$k eq $k1">
+                                                    <span>{$list}</span>　
+                                                    </if>
+                                                </foreach>
+                                            </foreach>
+                                    </p>
+                                    <p>
+                                        <font>测试：</font>
+                                            <foreach name="u_list.6" item="list" key="k">
+                                                <foreach name="m_list" item="li" key="k1">
+                                                    <if condition="$k eq $k1">
+                                                    <span>{$list}</span>　
+                                                    </if>
+                                                </foreach>
+                                            </foreach>
+                                    </p>
+                                    <p>
+                                        <font>SEO：</font>
+                                            <foreach name="u_list.7" item="list" key="k">
+                                                <foreach name="m_list" item="li" key="k1">
+                                                    <if condition="$k eq $k1">
+                                                    <span>{$list}</span>　
+                                                    </if>
+                                                </foreach>
+                                            </foreach>
+                                    </p>
+                                    <p>
+                                        <font>项目主管：</font>
+                                            <foreach name="u_list.8" item="list" key="k">
+                                                <foreach name="m_list" item="li" key="k1">
+                                                    <if condition="$k eq $k1">
+                                                    <span>{$list}</span>　
+                                                    </if>
+                                                </foreach>
+                                            </foreach>
+                                    </p>
+                                    <p>
+                                        <font>开发主管：</font>
+                                            <foreach name="u_list.9" item="list" key="k">
+                                                <foreach name="m_list" item="li" key="k1">
+                                                    <if condition="$k eq $k1">
+                                                    <span>{$list}</span>　
+                                                    </if>
+                                                </foreach>
+                                            </foreach>
+                                    </p>
+                                    <p>
+                                        <font>产品主管：</font>
+                                            <foreach name="u_list.10" item="list" key="k">
+                                                <foreach name="m_list" item="li" key="k1">
+                                                    <if condition="$k eq $k1">
+                                                    <span>{$list}</span>　
+                                                    </if>
+                                                </foreach>
+                                            </foreach>
+                                    </p> -->
+                                </td>
+                            </tr>
+                            <tr>
+                                <th><i class="require-red">*</i>模块：</th>
+                                <td>
+                                    <div>  
+                                        <volist name="mod_list" id="list">
+                                        <div>{$list.name}</div>  
+                                        </volist>
+                                    </div>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+            </div>
+            <div class="result-content" id="hide">    
+                <form class="registerform" name="theForm" id="theForm" autocomplete="off" action="__URL__/edit" method="post" enctype="multipart/form-data">
+                    <table class="insert-tab" width="100%">
+                        <tbody>
+                            <tr>
+                                <th colspan="2">
+                                    <h1 class="xiangq">项目详情</h1>
+                                    <a id="historygo" href="javascript:void(0);" class="bianj"><< 返回</a>
+                                </th>
+                            </tr>
+                            <tr>
+                                <th><i class="require-red">*</i>项目名称：</th>
+                                <td>
+                                    <input class="common-text" id="xm_name" name="xm_name" size="50" value="{$enit_list.name}" type="text">
+                                </td>
+                            </tr>
+                            <tr>
+                                <th><i class="require-red">*</i>项目分类：</th>
+                                <td>
+                                    <select class="required" id ="class_id" name="class_id">
+                                        <option value="">---请选择---</option>
+                                        <volist name="u_map.project_class" id="list">
+                                            <option value="{$key}"  <if condition="$enit_list.class_id eq $key">selected="selected"</if>>{$list}</option>
+                                        </volist>
+                                    </select>
+                                </td>
+                            </tr>
+                            <tr>
+                                <th>项目状态：</th>
+                                <td><if condition="$enit_list.status eq 0">开发中
+                                    <else />已上线
+                                    </if>
+                                </td>
+                            </tr>
+                            <tr>
+                                <th>编号：</th>
+                                <td>{$enit_list.number}</td>
+                            </tr>
+                            <tr>
+                                <th>创建人：</th>
+                                <td>{$u_map['admin'][$enit_list['create']]}</td>
+                            </tr>
+                            <tr>
+                                <th>创建时间：</th>
+                                <td>{$enit_list.add_time}</td>
+                            </tr>
+                            <tr>
+                                <th>项目描述：</th>
+                                <td><textarea class="wtms" name="description" id="description">{$enit_list.description}</textarea></td>
+                            </tr>
+                            <tr>
+                                <th><i class="require-red">*</i>成员：</th>
+                                <td>
+                                    <select class="select_dx" id ="cp" multiple="multiple" name="example-basic[]" size="5">
+                                    <foreach name="u_map.admin" item="list" key="k">
+                                        <option value="{$k}" <foreach name="m_list" item="li" key="k1"><if condition="$k eq $k1">selected="selected"</if></foreach>>{$list}</option>
+                                    </foreach>
+                                    </select>
+                                    <!-- <p>
+                                        <font>产品经理：</font>
+                                        <span>
+                                            <select class="select_dx" id ="cp" multiple="multiple" name="example-basic[]" size="5">
+                                            <foreach name="u_list.1" item="list" key="k">
+                                                <option value="{$k}" <foreach name="m_list" item="li" key="k1"><if condition="$k eq $k1">selected="selected"</if></foreach>>{$list}</option>
+                                            </foreach>
+                                            </select>
+                                        </span>
+                                    </p>
+                                    <p>
+                                        <font>UI设计：</font>
+                                        <span>
+                                            <select class="select_dx" id ="ui" multiple="multiple" name="example-basic[]" size="5">
+                                            <foreach name="u_list.2" item="list" key="k">
+                                                <option value="{$k}" <foreach name="m_list" item="li" key="k1"><if condition="$k eq $k1">selected="selected"</if></foreach>>{$list}</option>
+                                            </foreach>
+                                            </select>
+                                        </span>
+                                    </p>
+                                    <p>
+                                        <font>前端html：</font>
+                                        <span>
+                                            <select class="select_dx" id ="html" multiple="multiple" name="example-basic[]" size="5">
+                                            <foreach name="u_list.3" item="list" key="k">
+                                                <option value="{$k}" <foreach name="m_list" item="li" key="k1"><if condition="$k eq $k1">selected="selected"</if></foreach>>{$list}</option>
+                                            </foreach>
+                                            </select>
+                                        </span>
+                                    </p>
+                                    <p>
+                                        <font>前端开发：</font>
+                                        <span>
+                                            <select class="select_dx" id ="qkf" multiple="multiple" name="example-basic[]" size="5">
+                                            <foreach name="u_list.4" item="list" key="k">
+                                                <option value="{$k}" <foreach name="m_list" item="li" key="k1"><if condition="$k eq $k1">selected="selected"</if></foreach>>{$list}</option>
+                                            </foreach>
+                                            </select>
+                                        </span>
+                                    </p>
+                                    <p>
+                                        <font>后端开发：</font>
+                                        <span>
+                                            <select class="select_dx" id ="hkf" multiple="multiple" name="example-basic[]" size="5">
+                                            <foreach name="u_list.5" item="list" key="k">
+                                                <option value="{$k}" <foreach name="m_list" item="li" key="k1"><if condition="$k eq $k1">selected="selected"</if></foreach>>{$list}</option>
+                                            </foreach>
+                                            </select>
+                                        </span>
+                                    </p>
+                                    <p>
+                                        <font>测试：</font>
+                                        <span>
+                                            <select class="select_dx" id ="cs" multiple="multiple" name="example-basic[]" size="5">
+                                            <foreach name="u_list.6" item="list" key="k">
+                                                <option value="{$k}" <foreach name="m_list" item="li" key="k1"><if condition="$k eq $k1">selected="selected"</if></foreach>>{$list}</option>
+                                            </foreach>
+                                            </select>
+                                        </span>
+                                    </p>
+                                    <p>
+                                        <font>SEO：</font>
+                                        <span>
+                                            <select class="select_dx" id ="seo" multiple="multiple" name="example-basic[]" size="5">
+                                            <foreach name="u_list.7" item="list" key="k">
+                                                <option value="{$k}" <foreach name="m_list" item="li" key="k1"><if condition="$k eq $k1">selected="selected"</if></foreach>>{$list}</option>
+                                            </foreach>
+                                            </select>
+                                        </span>
+                                    </p>
+                                    <p>
+                                        <font>项目主管：</font>
+                                        <span>
+                                            <select class="select_dx" id ="xzg" multiple="multiple" name="example-basic[]" size="5">
+                                            <foreach name="u_list.8" item="list" key="k">
+                                                <option value="{$k}" <foreach name="m_list" item="li" key="k1"><if condition="$k eq $k1">selected="selected"</if></foreach>>{$list}</option>
+                                            </foreach>
+                                            </select>
+                                        </span>
+                                    </p>
+                                    <p>
+                                        <font>开发主管：</font>
+                                        <span>
+                                            <select class="select_dx" id ="kzg" multiple="multiple" name="example-basic[]" size="5">
+                                            <foreach name="u_list.9" item="list" key="k">
+                                                <option value="{$k}" <foreach name="m_list" item="li" key="k1"><if condition="$k eq $k1">selected="selected"</if></foreach>>{$list}</option>
+                                            </foreach>
+                                            </select>
+                                        </span>
+                                    </p>
+                                    <p>
+                                        <font>产品主管：</font>
+                                        <span>
+                                            <select class="select_dx" id ="czh" multiple="multiple" name="example-basic[]" size="5">
+                                            <foreach name="u_list.10" item="list" key="k">
+                                                <option value="{$k}" <foreach name="m_list" item="li" key="k1"><if condition="$k eq $k1">selected="selected"</if></foreach>>{$list}</option>
+                                            </foreach>
+                                            </select>
+                                        </span>
+                                    </p> -->
+                                </td>
+                            </tr>
+                            <tr>
+                                <th><i class="require-red">*</i>模块：</th>
+                                <td>
+                                    <div id="main">
+                                        <volist name="mod_list" id="list" key ="k">
+                                            <div>
+                                            <input class="text_wb" type="text" value="{$list.name}" size="50" name="projectmod[{$list.id}]"/>
+                                            <if condition="$k eq 1">
+                                            <input class="but_an but_tj" type="button" id="addTextImput1" value="+"/>  
+                                            <else />
+                                            <input id="del-text" class="but_an but_sc" type="button" value="-">
+                                            </if>
+                                            </div>  
+                                        </volist>
+                                    </div>
+                                </td>
+                            </tr>
+                            <tr>
+                                <th></th>
+                                <td>
+                                    <input type="hidden" id="id" name="id" value="{$enit_list.id}">
+                                    <input class="btn btn-primary btn6 mr10" id="submit" name="submit" value="提交" type="submit" />
+                                    <input class="btn btn6" onClick="history.go(-1)" value="返回" type="button" />
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </form>
+            </div>
+            <if condition="($role_id eq 1) OR ($role_id eq 11)">
+            <div class="result-content" id="fankui">
+                <form class="registerform" name="theForm_fk" autocomplete="off" id="theForm_fk" action="__URL__/project_status" method="post" enctype="multipart/form-data">
+                    <table class="insert-tab" width="100%">
+                        <tbody>
+                            <tr>
+                                <th colspan="2">
+                                    <h1 class="xiangq">项目状态管理</h1>
+                                    <input class="btn btn-primary mr10" value="保存" id="fankui_edit" name="submit" type="submit">
+                                </th>
+                            </tr>
+                            <tr>
+                                <th width="120">项目状态记录：</th>
+                                <td>
+                                    <table class="result-tab" width="100%">
+                                        <tr>
+                                            <th>项目状态</th>
+                                            <th>创建人</th>
+                                            <th>创建时间</th>
+                                            <th>说明</th>
+                                        </tr>
+                                        <volist name="zt_list" id="zt_list">
+                                        <tr class="fankui_tr">
+                                            <td>
+                                                <if condition="$zt_list.status eq 0">开发中
+                                                <else />已上线
+                                                </if>
+                                            </td>
+                                            <td>{$u_map['admin'][$zt_list['create']]}</td>
+                                            <td>{$zt_list.add_time}</td>
+                                            <td>{$zt_list.description}</td>
+                                        </tr>
+                                        </volist>
+                                    </table>
+                                </td>
+                            </tr>
+                            <tr>
+                                <th><i class="require-red">*</i>项目状态：</th>
+                                <td>
+                                    <input type="hidden" name="project_id" value="{$enit_list.id}">
+                                    <input type="hidden" id="is_current" name="is_current" value="{$enit_list.status}">
+                                    <select name="status_ex" id="status_ex" class="required">
+                                        <option value="0" <if condition="$enit_list.status eq 0">selected="selected"</if>>开发中</option>
+                                        <option value="1" <if condition="$enit_list.status eq 1">selected="selected"</if>>已上线</option>
+                                    </select>
+                                </td>
+                            </tr>
+                            <tr>
+                                <th><i class="require-red">*</i>说明：</th>
+                                <td>
+                                    <textarea class="wtms" name="description_ex" id="description_ex"></textarea>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </form>
+            </div>
+            </if>
+        </div>
+
+    </div>
+    <!--/main-->
+</div>
+</body>
+<script type="text/javascript">
+    $(function(){
+        //动态添加文本框
+        var i = 2;  
+        $('#addTextImput1').click(function(){  
+            if(i < 100) {  
+                $('#main').append('<div><input class="text_wb" size="50" type="text" name="projectmod_ex[]"/><input class="but_an but_sc" type="button" id="del-text" value="-"></div>');  
+                i++;  
+            } else {  
+                alert("最多加100个");  
+            }      
+        }); 
+    });
+    $(function () {
+        //项目信息修改
+        $("#submit").click(function(){
+            var xm_name      = $('#xm_name').val();
+            var text_wb      = $('.text_wb').val();
+            var class_id     = $('#class_id').val();
+            if (xm_name == "") {
+                mh_dialogShow('mh_warning','项目名称不能为空！',2,true); 
+                return false;
+            } 
+            if (class_id == "") {
+                mh_dialogShow('mh_warning','请选择项目分类！',2,true); 
+                return false;
+            }
+            if (text_wb == "") {
+                mh_dialogShow('mh_warning','模块不能为空！',2,true); 
+                return false;
+            } 
+            var options = {
+                beforeSend:function(){
+                    $("#submit").val('提交').attr('disabled',true);
+                },
+                success: function (data) {
+                    if(data){
+                      if (data == 0) {
+                        mh_dialogShow('mh_success','修改成功!',2,true,'__APP__/Project/index.html'); 
+                        return false;
+                      }else if(data == -1){
+                        mh_dialogShow('mh_warning','修改失败！',2,true); 
+                        return false;
+                      }else if(data == 1){
+                        mh_dialogShow('mh_warning','请选择添加成员！',2,true); 
+                        return false;
+                      }else if(data == 100){
+                        top.location.href="__APP__/Login/index.html"
+                        return false;
+                      }else{
+                        mh_dialogShow('mh_warning','修改失败！',2,true); 
+                        return false;
+                      }
+                    }
+                },
+                complete:function(){
+                    $("#submit").val('提交').attr('disabled',false);
+                }
+            };
+            $("#theForm").ajaxForm(options);
+        });
+        //项目状态管理添加
+        $("#fankui_edit").click(function(){
+            var objButton   = $(this);
+            var description_ex = $('#description_ex').val();
+            if (description_ex == "") {
+              mh_dialogShow('mh_warning','说明不能为空！',2,true); 
+              return false;
+            }
+          
+            var options = {
+                beforeSend:function(){
+                    objButton.text('保存').attr('disabled',true);
+                },
+                success: function (data) {
+                  if (data) {
+                    if (data == 0) {
+                      alert('添加成功！');
+                      init();
+                      return false;
+                    }else if(data == -1){
+                      alert('添加失败！');  
+                      return false;
+                    }else if(data == 100){
+                        top.location.href="__APP__/Login/index.html"
+                        return false;
+                    }else{
+                     alert('添加失败！');   
+                      return false;
+                    }
+                  }
+                },
+                complete:function(){
+                    objButton.val('保存').attr('disabled',false);
+                }
+            };
+            $("#theForm_fk").ajaxForm(options);
+        });
+    });
+</script>
+</html>

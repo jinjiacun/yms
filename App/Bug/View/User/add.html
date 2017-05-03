@@ -1,0 +1,202 @@
+<!doctype html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>运营管理系统</title>
+    <link rel="stylesheet" type="text/css" href="__PUBLIC__/Home/css/common.css"/>
+    <link rel="stylesheet" type="text/css" href="__PUBLIC__/Home/css/main.css"/>
+    <script type="text/javascript" src="__PUBLIC__/js/jquery-1.8.3.min.js" ></script>
+    <script type="text/javascript" src="__PUBLIC__/Home/js/mh_dialog.js" ></script>
+    <script type="text/javascript" src="__PUBLIC__/Home/js/jquery.form.js" ></script>
+    <script type="text/javascript" src="__PUBLIC__/Home/js/Validform_v5.3.2.js" ></script>
+</head>
+<body>
+<div class="container clearfix">
+    <div class="main-wrap">
+
+        <div class="crumb-wrap">
+            <div class="crumb-list">
+                <i class="icon-font"></i>
+                <a target="_top" href="__ROOT__/">首页</a>
+                <span class="crumb-step">&gt;</span>
+                <a href="index.html">用户管理</a>
+                <span class="crumb-step">&gt;</span>
+                <span>新增用户</span>
+            </div>
+        </div>
+        <div class="result-wrap">
+            <div class="result-content">
+                <form class="registerform" name="theForm" id="theForm" autocomplete="off" action="__URL__/add" method="post" enctype="multipart/form-data" onsubmit="return ValidateFile()">
+                    <table class="insert-tab" width="100%">
+                        <tbody>
+                            <tr>
+                                <th>编号：</th>
+                                <td><input class="common-text yinc" readonly="readonly" name="number" size="50" value="{$number}"></td>
+                            </tr>
+                            <tr>
+                                <th><i class="require-red">*</i>用户帐号：</th>
+                                <td>
+                                    <input class="common-text" name="admin_name" id="admin_name" type="text" datatype="*1-12" ajaxurl="{:U('User/ex_name')}" nullmsg="请输入用户帐号！" errormsg="用户帐号为1-12位字符！" />
+                                    <span class="Validform_checktip"></span>
+                                </td>
+                            </tr>
+                            <tr>
+                                <th><i class="require-red">*</i>密码：</th>
+                                <td>
+                                    <input class="common-text" name="passwd" id="passwd" size="50" type="password" datatype="*1-12" nullmsg="请输入密码！" errormsg="密码为1-12位字符！">
+                                    <span class="Validform_checktip"></span>
+                                </td>
+                                
+                            </tr>
+                            <tr>
+                                <th><i class="require-red">*</i>确认密码：</th>
+                                <td>
+                                    <input class="common-text" name="pwd" id="pwd" size="50" type="password" datatype="*" recheck="passwd" nullmsg="请再输入一次密码！" errormsg="您两次输入的账号密码不一致！">
+                                    <span class="Validform_checktip"></span>
+                                </td>
+                            </tr>
+                            <tr>
+                                <th><i class="require-red">*</i>姓名：</th>
+                                <td>
+                                    <input class="common-text required" id="" name="xname" size="50" value="" type="text">
+                                </td>
+                            </tr>
+                            <tr>
+                                <th width="120"><i class="require-red">*</i>状态：</th>
+                                <td>
+                                    <select name="status" id="status" class="required">
+                                        <option value="0">正常</option>
+                                        <option value="-1">禁用</option>
+                                    </select>
+                                </td>
+                            </tr>
+                            <tr>
+                                <th width="120"><i class="require-red">*</i>部门：</th>
+                                <td>
+                                    <select name="part" id="part" class="required">
+                                        <option value="">请选择</option>
+                                        <volist name="u_map.part" id="par">
+                                        <option value="{$key}">{$par}</option>
+                                        </volist>
+                                    </select>
+                                </td>
+                            </tr>
+                            <tr>
+                                <th width="120"><i class="require-red">*</i>角色：</th>
+                                <td>
+                                    <select name="role" id="role" class="required">
+                                        <option value="">请选择</option>
+                                        <volist name="u_map.role" id="ro">
+                                        <option value="{$key}">{$ro}</option>
+                                        </volist>
+                                    </select>
+                                </td>
+                            </tr>
+                            <!-- <tr>
+                                <th width="120"><i class="require-red">*</i>岗位：</th>
+                                <td>
+                                    <select name="position" id="position" class="required">
+                                        <option value="">请选择</option>
+                                        <volist name="u_map.position" id="pos">
+                                        <option value="{$key}">{$pos}</option>
+                                        </volist>
+                                    </select>
+                                </td>
+                            </tr> -->
+                            <tr>
+                                <th></th>
+                                <td>
+                                    <input class="btn btn-primary btn6 mr10" id="submit" name="submit" value="提交" type="submit">
+                                    <input class="btn btn6" onClick="history.go(-1)" value="返回" type="button">
+                                </td>
+                            </tr>
+                        </tbody></table>
+                </form>
+            </div>
+        </div>
+
+    </div>
+    <!--/main-->
+</div>
+</body>
+<script type="text/javascript">
+    //表单验证
+    $(function(){
+        $(".registerform").Validform({
+            tiptype:function(msg,o,cssctl){
+              if(!o.obj.is("form")){
+                var objtip=o.obj.siblings(".Validform_checktip");
+                cssctl(objtip,o.type);
+                objtip.text(msg);
+              }
+            }
+        });
+    });
+    //判断必填项
+    function ValidateFile(){
+        var admin_name = $('#admin_name').val();
+        var passwd = $('#passwd').val();
+        var pwd    = $('#pwd').val();
+        var xname  = $('#xname').val();
+        var part   = $('#part').val();
+        var role   = $('#role').val();
+        var position = $('#position').val();
+        if (admin_name == "") {
+            mh_dialogShow('mh_warning','用户帐号不能为空！',2,true); 
+            return false;
+        } 
+        if (passwd == "") {
+            mh_dialogShow('mh_warning','密码不能为空',2,true); 
+            return false;
+        } 
+        if (pwd == "") {
+            mh_dialogShow('mh_warning','确认密码不能为空！',2,true); 
+            return false;
+        }else if(pwd != passwd){
+            mh_dialogShow('mh_warning','两次密码不一致！',2,true); 
+            return false;
+        }
+        if (xname == "") {
+            mh_dialogShow('mh_warning','姓名不能为空！',2,true); 
+            return false;
+        } 
+        if (part == "") {
+            mh_dialogShow('mh_warning','请选择部门！',2,true); 
+            return false;
+        } 
+        if (role == "") {
+            mh_dialogShow('mh_warning','请选择角色！',2,true); 
+            return false;
+        } 
+        // if (position == "") {
+        //     mh_dialogShow('mh_warning','请选择岗位！',2,true); 
+        //     return false;
+        // } 
+    }
+    $(function () {
+        var options = {
+            beforeSend:function(){
+                $("#submit").val('提交').attr('disabled',true);
+            },
+            success: function (data) {
+                if(data){
+                  if (data == 0) {
+                    mh_dialogShow('mh_success','添加成功!',2,true,'__APP__/User/index'); 
+                    return false;
+                  }else if(data == -1){
+                    mh_dialogShow('mh_warning','添加失败！',2,true); 
+                    return false;
+                  }else{
+                    mh_dialogShow('mh_warning','添加失败！',2,true); 
+                    return false;
+                  }
+                }
+            },
+            complete:function(){
+                $("#submit").val('提交').attr('disabled',false);
+            }
+        };
+        $("#theForm").ajaxForm(options);
+    });
+</script>
+</html>

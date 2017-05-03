@@ -1,0 +1,67 @@
+<!doctype html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>运营管理系统</title>
+    <link rel="stylesheet" type="text/css" href="__PUBLIC__/Home/css/common.css"/>
+    <link rel="stylesheet" type="text/css" href="__PUBLIC__/Home/css/main.css"/>
+    <script type="text/javascript" src="__PUBLIC__/js/jquery-1.8.3.min.js" ></script>
+</head>
+<body>
+<div class="container clearfix">
+    <div class="sidebar-wrap">
+        <div class="sidebar-title">
+            <h1>菜单</h1>
+        </div>
+        <div class="sidebar-content">
+            <ul class="sidebar-list">
+                <if condition="count($re_list[1]) gt 0">
+                <li>
+                    <a><i class="icon-font">&#xe003;</i>项目管理</a>
+                    <ul class="sub-menu">
+                        <volist name="re_list.1" id="xm">
+                        <li><a target="main" href="__APP__/{$xm.1}"><i class="icon-font">{$xm.2}</i>{$xm.0}</a></li>
+                        </volist>
+                    </ul>
+                </li>
+                </if>
+                <if condition="count($re_list[2]) gt 0">
+                <li>
+                    <a><i class="icon-font">&#xe018;</i>系统管理</a>
+                    <ul class="sub-menu">
+                        <volist name="re_list.2" id="xt">
+                        <li><a target="main" href="__APP__/{$xt.1}"><i class="icon-font">{$xt.2}</i>{$xt.0}</a></li>
+                        </volist>
+                    </ul>
+                </li>
+                </if>
+                <if condition="count($re_list[3]) gt 0">
+                <li>
+                    <a><i class="icon-font">&#xe001;</i>简历管理</a>
+                    <ul class="sub-menu">
+                        <volist name="re_list.3" id="jl">
+                        <li><a target="main" href="__APP__/{$jl.1}"><i class="icon-font">{$jl.2}</i>{$jl.0}</a></li>
+                        </volist>
+                    </ul>
+                </li>
+                </if>
+                <li>
+                    <a><i class="icon-font">&#xe006;</i>日志管理</a>
+                    <ul class="sub-menu">
+                        <li><a target="main" href="__APP__/Log/index.html"><i class="icon-font">&#xe048;</i>日志列表</a></li>
+                    </ul>
+                </li>
+            </ul>
+        </div>
+    </div>
+</div>
+</body>
+<script type="text/javascript">
+    $(document).ready(function(){         
+        $(".sub-menu li a").click(function(){
+            $(".sub-menu li a").removeClass("activ");
+            $(this).addClass("activ")   
+        });
+    });
+</script>
+</html>

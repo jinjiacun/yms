@@ -1,0 +1,153 @@
+<!doctype html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>运营管理系统</title>
+    <link rel="stylesheet" type="text/css" href="__PUBLIC__/Home/css/common.css"/>
+    <link rel="stylesheet" type="text/css" href="__PUBLIC__/Home/css/main.css"/>
+    <script type="text/javascript" src="__PUBLIC__/js/jquery-1.8.3.min.js" ></script>
+    <script type="text/javascript" src="__PUBLIC__/Home/js/mh_dialog.js" ></script>
+    <script type="text/javascript" src="__PUBLIC__/Home/js/main.js" ></script>
+    
+</head>
+<body>
+<div class="container clearfix">
+    <div class="main-wrap">
+        <div class="crumb-wrap">
+            <div class="crumb-list"><i class="icon-font"></i><a target="_top" href="__ROOT__/">首页</a><span class="crumb-step">&gt;</span><span class="crumb-name">招聘管理</span></div>
+        </div>
+        <div class="search-wrap">
+            <div class="search-content">
+                <form name="fom" id="fom" action="__URL__/index" method="get">
+                    <table class="search-tab">
+                        <tr>
+                            <th width="120">岗位名称:</th>
+                            <td><input class="common-text" placeholder="关键字" name="keywords" value="{$name}" id="" type="text"></td>
+                            <td><input class="btn btn-primary btn2" name="sub" value="查询" type="submit"></td>
+                        </tr>
+                    </table>
+                </form>
+            </div>
+        </div>
+        <div class="result-wrap">
+                <div class="result-title">
+                    <div class="result-list">
+                        <a href="__URL__/add"><i class="icon-font"></i>新增招聘</a>
+                        <!-- <a id="batchDel" href="javascript:void(0)"><i class="icon-font"></i>批量删除</a> -->
+                        <a href="__URL__/index"><i class="icon-font">&#xe045;</i>查看所有</a>
+                    </div>
+                </div>
+                <div class="result-content">
+                    <table class="result-tab" width="100%">
+                        <tr>
+                            <!-- <th class="tc" width="5%"><input class="allChoose" name="" type="checkbox"></th> -->
+                            <th>岗位</th>
+                            <th>部门</th>
+                            <th>状态</th>
+                            <th>开启时间</th>
+                            <th>发布人</th>
+                            <th>要求</th>
+                            <th>状态管理</th>
+                            <th>操作</th>
+                        </tr>
+                        <volist id="list" name="list">
+                        <tr>
+                            <!-- <td class="tc"><input name="id[]" value="59" type="checkbox"></td> -->
+                            <td>{$list.name}</td>
+                            <td>{$u_map["part"][$list["part_id"]]}</td>
+                            <td class="{$list.id}">
+                            <if condition="$list.status eq 0">开启
+                            <else />关闭
+                            </if>
+                            </td>
+                            <td>{$list.start_time}</td>
+                            <td>{$u_map['admin'][$list['create']]}</td>
+                            <td>{$list.description|subtext=25}</td>
+                            <td>
+                                <if condition="$list.status eq 0">
+                                <a class="link-update" id="{$list.id}" href="javascript:void(0)">关闭</a>
+                                <else />
+                                <a class="link-update" id="{$list.id}" href="javascript:void(0)">开启</a>
+                                </if>
+                            </td>
+                            <td>
+                                <a class="link-update" href="__URL__/edit?id={$list.id}">修改</a>
+                                <a class="link-del" id="{$list.id}" href="javascript:void(0);">删除</a>
+                            </td>
+                        </tr>
+                        </volist>
+                    </table>
+                    <div class="list-page">
+                        <if condition="$record_count gt 0">
+                        <span class="page_span">共有{$record_count}条</span>
+                        </if>
+                        {$page}
+                    </div>
+                </div>
+        </div>
+    </div>
+    <!--/main-->
+</div>
+</body>
+<script type="text/javascript">
+    $(function(){
+        //删除
+        $('.link-del').live('click',function(){
+            var id = $(this).attr('id');
+            if(confirm("确定要删除吗？")) {
+                $.ajax({  
+                    type:"post",  
+                    url:"{$call_url}",
+                    timeout: 5000,  
+                    dataType:"json",  
+                    data:{"method":"Positionhr.delete","type":"text","content":{"id":id}},
+                    success: function aa(data) {  
+                        if (200 == data.status_code && 0 == data.content.is_success) {
+                            alert('删除成功！');
+                            init();
+                            return false;
+                        }else{
+                            alert('删除失败！');
+                            return false;
+                        }
+                    }  
+                }) 
+            } 
+        });
+        //修改状态
+        $('.link-update').click(function(){
+            var id = $(this).attr("id");
+            var name = $(this).text();
+            if (name == "关闭") {
+               $.post('__URL__/status_up', {'id':id, 'status':1},
+                function(data) {
+                    if (data == 0) {
+                        mh_dialogShow('mh_success','修改成功!',2,true); 
+                        $('#'+id).text("开启"); 
+                        $('.'+id).text("关闭"); 
+                        init();
+                        return false;
+                    }else{
+                        mh_dialogShow('mh_warning','修改失败！',2,true); 
+                        return false;
+                    }
+                })
+            }else{
+                $.post('__URL__/status_up', {'id':id, 'status':0},
+                function(data) {
+                    if (data == 0) {
+                        mh_dialogShow('mh_success','修改成功!',2,true); 
+                        $('#'+id).text('关闭'); 
+                        $('.'+id).text("开启"); 
+                        init();
+                        return false;
+                    }else{
+                        mh_dialogShow('mh_warning','修改失败！',2,true); 
+                        return false;
+                    }
+                })
+            }
+        });
+    });
+</script>
+</html>

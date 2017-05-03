@@ -1,0 +1,179 @@
+<!doctype html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>运营管理系统</title>
+    <link rel="stylesheet" type="text/css" href="__PUBLIC__/Home/css/common.css"/>
+    <link rel="stylesheet" type="text/css" href="__PUBLIC__/Home/css/main.css"/>
+    <script type="text/javascript" src="__PUBLIC__/js/jquery-1.8.3.min.js" ></script>
+    <script type="text/javascript" src="__PUBLIC__/Home/js/main.js" ></script>
+    <script type="text/javascript" src="__PUBLIC__/Home/js/mh_dialog.js" ></script>
+    <script type="text/javascript" src="__PUBLIC__/Home/js/jquery.form.js" ></script>
+</head>
+<body>
+<div class="container clearfix">
+    <div class="main-wrap">
+
+        <div class="crumb-wrap">
+            <div class="crumb-list"><i class="icon-font"></i><a target="_top" href="__ROOT__/">首页</a><span class="crumb-step">&gt;</span><a class="crumb-name" href="index.html">简历列表</a><span class="crumb-step">&gt;</span><span>简历来源</span></div>
+        </div>
+        <div class="result-wrap">
+            <div class="result-content">
+                <form class="registerform" name="theForm" id="theForm" action="__URL__/so_updata" method="post" enctype="multipart/form-data">
+                    <table class="insert-tab" width="100%">
+                        <tbody>
+                            <tr>
+                                <th colspan="2">
+                                    <h1 class="xiangq">简历来源</h1>
+                                </th>
+                            </tr>
+                            <tr>
+                                <th>编号：</th>
+                                <td><input class="common-text yinc" readonly="readonly" name="number" size="50" value="{$edit_list.number}"></td>
+                            </tr>
+                            <tr>
+                                <th><i class="require-red">*</i>简历来源：</th>
+                                <td>
+                                    <select name="source_id" id="source_id" class="required">
+                                        <option value="0">请选择</option>
+                                        <volist name="so_list" id="so">
+                                        <option value="{$key}" <if condition="$edit_list.source_id eq $key">selected="selected"</if>>{$so}</option>
+                                        </volist>
+                                    </select>
+                                    <a href="javascript:void(0);" id="jlly">补充来源选项</a>
+                                </td>
+                            </tr>
+                            <tr>
+                                <th></th>
+                                <td>
+                                    <input type="hidden" name="id" value="{$edit_list.id}">
+                                    <input class="btn btn-primary btn6 mr10" id="submit" name="submit" value="提交" type="submit">
+                                    <input class="btn btn6" onClick="history.go(-1)" value="返回" type="button">
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </form>
+            </div>
+            <div class="content_jltj">
+               <form class="registerform" name="theForm_ex" id="theForm_ex" action="__URL__/so_add" method="post" enctype="multipart/form-data">
+                    <table class="insert-tab" width="100%">
+                        <tbody>
+                            <tr>
+                                <th colspan="2">
+                                    <h1 class="xiangq">补充来源选项</h1>
+                                </th>
+                            </tr>
+                            <tr>
+                                <th>简历来源名称：</th>
+                                <td>
+                                    <div id="main">
+                                        <volist name="so_list" id="list" key ="k">
+                                            <div>
+                                            <input class="text_wb" type="text" value="{$list}" size="50" name="sourceid[{$key}]"/>
+                                            <if condition="$k eq 1">
+                                            <input class="but_an but_tj" type="button" id="addTextImput1" value="+"/>  
+                                            <else />
+                                            <input id="del-text" class="but_an but_sc" type="button" value="-">
+                                            </if>
+                                            </div>  
+                                        </volist>
+                                    </div>
+                                </td>
+                            </tr>
+                            <tr>
+                                <th></th>
+                                <td>
+                                    <input type="hidden" name="id" value="{$edit_list.id}">
+                                    <input class="btn btn-primary btn6 mr10" id="submit_ex" name="submit_ex" value="提交" type="submit">
+                                    <input class="btn btn6" id="over" value="取消" type="button">
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </form> 
+            </div>
+        </div>
+
+    </div>
+    <!--/main-->
+</div>
+</body>
+<script type="text/javascript">
+    $(function(){
+        //动态添加文本框
+        var i = 2;  
+        $('#addTextImput1').click(function(){  
+            if(i < 100) {  
+                $('#main').append('<div><input class="text_wb" size="50" type="text" name="sourceid_ex[]"/><input class="but_an but_sc" type="button" id="del-text" value="-"></div>');  
+                i++;  
+            } else {  
+                alert("最多加100个");  
+            }      
+        }); 
+    });
+    $(function () { 
+        //选择修改
+        $("#submit").click(function(){
+            var source_id = $('#source_id').val();
+            if (source_id == 0) {
+                mh_dialogShow('mh_warning','请选择简历来源！',2,true); 
+                return false;
+            }
+            var options = {
+                beforeSend:function(){
+                    $("#submit").val('提交').attr('disabled',true);
+                },
+                success: function (data) {
+                    if(data){
+                      if (data == 0) {
+                        alert('修改成功！')
+                        window.location.href=document.referrer; 
+                        return false;
+                      }else{
+                        alert('修改失败！');                       
+                        return false;
+                      }
+                    }
+                },
+                complete:function(){
+                    $("#submit").val('提交').attr('disabled',false);
+                }
+            };
+            $("#theForm").ajaxForm(options);
+        });
+        //点击显示
+        $('#jlly').click(function(){
+            $('.content_jltj').show();
+        });
+        //点击隐藏
+        $('#over').click(function(){
+            $('.content_jltj').hide();
+        });
+        //简历来源名称修改添加
+        $("#submit_ex").click(function(){
+            var options = {
+                beforeSend:function(){
+                    $("#submit_ex").val('提交').attr('disabled',true);
+                },
+                success: function (data) {
+                    if(data){
+                      if (data == -1) {
+                        alert('添加失败！');
+                        return false;                        
+                      }else{
+                        alert('添加成功！');
+                        init();
+                        return false;
+                      }
+                    }
+                },
+                complete:function(){
+                    $("#submit_ex").val('提交').attr('disabled',false);
+                }
+            };
+            $("#theForm_ex").ajaxForm(options);
+        });
+    });
+</script>
+</html>

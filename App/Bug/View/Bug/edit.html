@@ -1,0 +1,665 @@
+<!doctype html>
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>运营管理系统</title>
+    <link rel="stylesheet" type="text/css" href="__PUBLIC__/Home/css/common.css"/>
+    <link rel="stylesheet" type="text/css" href="__PUBLIC__/Home/css/main.css"/>
+    <script type="text/javascript" src="__PUBLIC__/js/jquery-1.8.3.min.js" ></script>
+    <script type="text/javascript" src="__PUBLIC__/Home/js/main.js" ></script>
+    <script type="text/javascript" src="__PUBLIC__/Home/js/mh_dialog.js" ></script>
+    <script type="text/javascript" src="__PUBLIC__/Home/js/jquery.form.js" ></script>
+    <script type="text/javascript" charset="utf-8" src="__PUBLIC__/ueditor/ueditor.config.js"></script>
+    <script type="text/javascript" charset="utf-8" src="__PUBLIC__/ueditor/ueditor.all.min.js"> </script>
+    <script type="text/javascript" charset="utf-8" src="__PUBLIC__/ueditor/lang/zh-cn/zh-cn.js"></script>
+
+    <script type="text/javascript" charset="utf-8">
+        window.UEDITOR_HOME_URL = "__PUBLIC__/ueditor/";  //UEDITOR_HOME_URL、config、all这三个顺序不能改变
+        $(function(){
+            window.UEDITOR_CONFIG.initialFrameHeight=300;//编辑器的高度
+            window.UEDITOR_CONFIG.imageUrl="{:U('index/Category/checkPic')}";          //图片上传提交地址
+            window.UEDITOR_CONFIG.imagePath=' /Uploads/thumb/';//编辑器调用图片的地址
+            UE.getEditor('editor');//里面的contents是我的textarea的id值
+            UE.getEditor('editor_ex');
+        });
+    </script>
+    <style type="text/css">
+     .fankui_tr td{ text-align: center;}
+    </style>
+</head>
+<body>
+<div class="container clearfix">
+    <div class="main-wrap">
+
+        <div class="crumb-wrap">
+            <div class="crumb-list"><i class="icon-font"></i><a target="_top" href="__ROOT__/">首页</a><span class="crumb-step">&gt;</span><a href="index.html">问题列表</a><span class="crumb-step">&gt;</span><span>问题详情</span></div>
+        </div>
+        <div class="result-wrap">
+            <div class="result-content" id="jbxq">
+                    <table class="insert-tab" width="100%">
+                        <tbody>
+                            <tr>
+                                <th colspan="2">
+                                    <h1 class="xiangq">基本信息</h1>
+                                    <if condition="($edit_info.put_member eq $user_id) or ($user_id eq 1)">
+                                    <a id="jbxq_edit" href="javascript:void(0);" class="bianj"><i class="icon-font">&#xe065;</i> 编辑</a>
+                                    </if>
+                                </th>
+                            </tr>
+                            <tr>
+                                <th width="120">编号：</th>
+                                <td>{$edit_info.number}</td>
+                            </tr>
+                            <tr>
+                                <th><i class="require-red">*</i>优先级：</th>
+                                <td>
+                                    <volist name="priority_list" id="priority">
+                                    <if condition="$edit_info.level eq $key">{$priority}</if>
+                                    </volist>
+                                </td>
+                            </tr>
+                            <tr>
+                                <th><i class="require-red">*</i>状态：</th>
+                                <td>
+                                    <volist name="state_list" id="state">
+                                    <if condition="$edit_info.status eq $key">{$state}</if>
+                                    </volist>
+                                </td>
+                            </tr>
+                            <tr>
+                                <th><i class="require-red">*</i>所属项目：</th>
+                                <td>{$u_map['project'][$edit_info['project_id']]}</td>
+                            </tr>
+                            <tr>
+                                <th><i class="require-red">*</i>所属模块：</th>
+                                <td>{$u_map['mod'][$edit_info['project_mod_id']]}</td>
+                            </tr>
+                            <tr>
+                                <th><i class="require-red">*</i>项目状态：</th>
+                                <td><if condition="$edit_info.project_status_id eq 0">开发中
+                                <else />已上线
+                                </if></td>
+                            </tr>
+                            <tr>
+                                <th>提交人：</th>
+                                <td>{$u_map['admin'][$edit_info['put_member']]}</td>
+                            </tr>
+                            <tr>
+                                <th><i class="require-red">*</i>受理人：</th>
+                                <td>{$u_map['admin'][$edit_info['get_member']]}</td>
+                            </tr>
+                            <tr>
+                                <th>提交时间：</th>
+                                <td>{$edit_info.add_time}</td>
+                            </tr>
+                        </tbody>
+                    </table>
+            </div>
+            <div class="result-content" id="jbxq_ex">
+                <form class="registerform" name="theForm_jbxq" autocomplete="off" id="theForm_jbxq" action="__URL__/update_jb" method="post" enctype="multipart/form-data">
+                    <table class="insert-tab" width="100%">
+                        <tbody>
+                            <tr>
+                                <th colspan="2">
+                                    <h1 class="xiangq">基本信息</h1>
+                                    <input class="btn btn-primary mr10" value="保存" id="jbxq_edit_ex" name="submit" type="submit">
+                                    <input type="hidden" id="id" name="id" value="{$edit_info.id}">
+                                </th>
+                            </tr>
+                            <tr>
+                                <th width="120">编号：</th>
+                                <td><input class="common-text yinc" readonly="readonly" name="number" size="50" value="{$edit_info.number}"></td>
+                            </tr>
+                            <tr>
+                                <th><i class="require-red">*</i>优先级：</th>
+                                <td>
+                                    <select name="level" id="level" class="required">
+                                        <option value="">请选择</option>
+                                        <volist name="priority_list" id="priority">
+                                        <option value="{$key}" <if condition="$edit_info.level eq $key">selected="selected"</if>>{$priority}</option>
+                                        </volist>
+                                    </select>
+                                </td>
+                            </tr>
+                            <tr>
+                                <th><i class="require-red">*</i>状态：</th>
+                                <td>
+                                    <select name="status" id="status" class="required">
+                                        <option value="">请选择</option>
+                                        <volist name="state_list" id="state">
+                                        <option value="{$key}" <if condition="$edit_info.status eq $key">selected="selected"</if>>{$state}</option>
+                                        </volist>
+                                    </select>
+                                </td>
+                            </tr>
+                            <tr>
+                                <th><i class="require-red">*</i>所属项目：</th>
+                                <td>
+                                    <select name="project_id" id="project_id" class="required">
+                                        <option value="">请选择</option>
+                                        <volist name="u_map.project" id="list">
+                                        <option value="{$key}" <if condition="$edit_info.project_id eq $key">selected="selected"</if>>{$list}</option>
+                                        </volist>
+                                    </select>
+                                </td>
+                            </tr>
+                            <tr>
+                                <th><i class="require-red">*</i>所属模块：</th>
+                                <td>
+                                    <select name="project_mod_id" id="project_mod_id" class="required">  
+                                    </select>
+                                </td>
+                            </tr>
+                            <tr>
+                                <th><i class="require-red">*</i>项目状态：</th>
+                                <td><if condition="$edit_info.project_status_id eq 0">开发中
+                                <else />已上线
+                                </if></td>
+                            </tr>
+                            <tr>
+                                <th>提交人：</th>
+                                <td>{$u_map['admin'][$edit_info['put_member']]}</td>
+                            </tr>
+                            <tr>
+                                <th><i class="require-red">*</i>受理人：</th>
+                                <td>
+                                    <select name="get_member" id="get_member" class="required get_member">
+                                    </select>
+                                </td>
+                            </tr>
+                            <tr>
+                                <th>提交时间：</th>
+                                <td>{$edit_info.add_time}</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </form>
+            </div>
+
+            <div class="result-content" id="wtxq">
+                    <table class="insert-tab" width="100%">
+                        <tbody>
+                            <tr>
+                                <th colspan="2">
+                                    <h1 class="xiangq">问题详情</h1>
+                                    <if condition="($edit_info.put_member eq $user_id) or ($user_id eq 1)">
+                                    <a id="wtxq_edit" href="javascript:void(0);" class="bianj"><i class="icon-font">&#xe065;</i> 编辑</a>
+                                    </if>
+                                </th>
+                            </tr>  
+                            <tr>
+                                <th width="120"><i class="require-red">*</i>问题描述：</th>
+                                <td>{$edit_info.title}</td>
+                            </tr>
+                            <tr>
+                                <th>操作过程：</th>
+                                <td class="desc_td">{$edit_info.description|htmlspecialchars_decode|stripslashes}</td>
+                            </tr>
+                        </tbody>
+                    </table>
+            </div>
+            <div class="result-content" id="wtxq_ex">
+                <form class="registerform" name="wtxq_theForm" id="wtxq_theForm" autocomplete="off" action="__URL__/update_wt" method="post" enctype="multipart/form-data">
+                    <table class="insert-tab" width="100%">
+                        <tbody>
+                            <tr>
+                                <th colspan="2">
+                                    <h1 class="xiangq">问题详情</h1>
+                                    <input class="btn btn-primary mr10" value="保存" id="wtxq_submit" name="submit" type="submit">
+                                    <input type="hidden" id="id" name="id" value="{$edit_info.id}">
+                                </th>
+                            </tr>  
+                            <tr>
+                                <th width='120'><i class="require-red">*</i>问题描述：</th>
+                                <td>
+                                    <textarea class="wtms" name="title" id="title" maxlength="255" placeholder="问题描述最多输入255个字符">{$edit_info.title}</textarea>
+                                </td>
+                            </tr>
+                            <tr>
+                                <th>操作过程：</th>
+                                <td>
+                                    <textarea id="editor" name="description" style="width:100%;height:300px;">{$edit_info.description}</textarea>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </form>
+            </div>
+            <if condition="$edit_info.project_status_id eq 1">
+            <div class="result-content" id="solve_jjfa">
+                <form class="registerform" name="jjfa_theForm" id="jjfa_theForm" autocomplete="off" action="__URL__/solve_add" method="post" enctype="multipart/form-data">
+                    <table class="insert-tab" width="100%">
+                        <tbody>
+                            <tr>
+                                <th colspan="2">
+                                    <h1 class="xiangq">解决方案</h1>
+                                </th>
+                            </tr>  
+                            <tr>
+                                <th width='120'><i class="require-red">*</i>BUG原因描述：</th>
+                                <td>
+                                    <textarea class="wtms" name="solve_description" id="solve_description">{$edit_info.solve_description}</textarea>
+                                </td>
+                            </tr>
+                            <tr>
+                                <th><i class="require-red">*</i>解决方案：</th>
+                                <td>
+                                    <textarea class="wtms" name="solve_explain" id="solve_explain">{$edit_info.solve_explain}</textarea>
+                                </td>
+                            </tr>
+                            <tr>
+                                <th></th>
+                                <td>
+                                    <input class="btn btn-primary btn6 mr10" value="保存" id="jjfa_submit" name="submit" type="submit">
+                                    <input type="hidden" id="id" name="id" value="{$edit_info.id}">
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </form>
+            </div>
+            </if>
+            <div class="result-content" id="fankui">
+                <form class="registerform" name="theForm_fk" autocomplete="off" id="theForm_fk" action="__URL__/feedback" method="post" enctype="multipart/form-data">
+                    <table class="insert-tab" width="100%">
+                        <tbody>
+                            <tr>
+                                <th colspan="2">
+                                    <h1 class="xiangq">反馈</h1>
+                                </th>
+                            </tr>
+                            <tr>
+                                <th width="120">反馈记录：</th>
+                                <td>
+                                    <table class="result-tab" width="100%">
+                                        <tr>
+                                            <th>序号</th>
+                                            <th>反馈人</th>
+                                            <th>反馈时间</th>
+                                            <th>问题状态</th>
+                                            <th>变更受理人</th>
+                                            <th>反馈内容</th>
+                                            <th>操作过程</th>
+                                        </tr>
+                                        <volist name="fk_list" id="fk_list">
+                                        <tr class="fankui_tr">
+                                            <td>{$fk_list.id}</td>
+                                            <td>{$u_map['admin'][$fk_list['create']]}</td>
+                                            <td>{$fk_list.add_time}</td>
+                                            <td>{$fk_list.status_remark}</td>
+                                            <td>
+                                            <if condition="$fk_list.person_remark neq ''">
+                                            {$fk_list.person_remark}
+                                            <else />---
+                                            </if>
+                                            </td>
+                                            <td>{$fk_list.content}</td>
+                                            <td class="xq_ex">
+                                            <if condition="$fk_list.option_process neq ''">
+                                            <a class="xq" href="javascript:void(0);">详情</a>
+                                            <else />---
+                                            </if>
+                                            <div class="bd_wd"></div>
+                                            <div class="tcxq">
+                                                <div class="close"><a>关闭</a></div>
+                                                <div class="neirong">{$fk_list.option_process|htmlspecialchars_decode|stripslashes}</div>
+                                            </div>
+                                            </td>
+                                        </tr>
+                                        </volist>
+                                    </table>
+                                </td>
+                            </tr>
+                            <tr>
+                                <th><i class="require-red">*</i>变更受理人：</th>
+                                <td>
+                                    <input type="hidden" name="get_member" value="{$edit_info.get_member}">
+                                    <select name="get_member_ex" id="get_member_ex" class="required get_member">
+                                    </select>
+                                </td>
+                            </tr>
+                            <tr>
+                                <th><i class="require-red">*</i>问题状态：</th>
+                                <td>
+                                    <input type="hidden" id="bug_id" name="bug_id" value="{$edit_info.id}">
+                                    <input type="hidden" id="state_id" name="state_id" value="{$edit_info.status}">
+                                    <input type="hidden" name="get_member" value="{$edit_info.get_member}">
+                                    <select name="status_ex" id="status_ex" class="required">
+                                        <option value="">请选择</option>
+                                        <volist name="state_list" id="state">
+                                        <option value="{$key}" <if condition="$edit_info.status eq $key">selected="selected"</if>>{$state}</option>
+                                        </volist>
+                                    </select>
+                                </td>
+                            </tr>
+                            <tr>
+                                <th><i class="require-red">*</i>反馈：</th>
+                                <td>
+                                    <textarea class="wtms" name="content" id="content"></textarea>
+                                </td>
+                            </tr>
+                            <tr>
+                                <th>操作过程：</th>
+                                <td>
+                                    <textarea id="editor_ex" name="option_process" style="width:100%;height:300px;"></textarea>
+                                </td>
+                            </tr>
+                            <tr>
+                                <th></th>
+                                <td>
+                                    <input class="btn btn-primary btn6 mr10" value="保存" id="fankui_edit" name="submit" type="submit">
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </form>
+            </div>
+        </div>
+
+    </div>
+    <!--/main-->
+</div>
+</body>
+<script type="text/javascript">
+    //项目关联的模块和人员
+    $(function(){
+        var u_map_json     = {$u_map_json};
+        var project_id_ex  = '{$edit_info.project_id}';
+        var project_mod_id = '{$edit_info.project_mod_id}';
+        var get_member     = '{$edit_info.get_member}';   
+        //模块
+        $.ajax({  
+            type:"post",  
+            url:"{$call_url}",
+            timeout: 5000,  
+            dataType:"json",  
+            data:{"method":"Projectmodule.get_list","type":"text","content":{"page_size":"20","where":{"project_id":project_id_ex}}},
+            success: function aa(data) {
+                if (200 == data.status_code) {
+                    $('#project_mod_id').empty();
+                    var list = data.content.list;
+                    $('#project_mod_id').append('<option value="">请选择</option>');
+                    $.each(list, function(i){
+                       var str = '<option value="'+list[i].id+'"';
+                        if (project_mod_id == list[i].id) {
+                            str += ' selected="selected"';
+                        }
+                           str += '>'+list[i].name+'</option>';
+                        $('#project_mod_id').append(str);
+                    });
+                }
+            }
+        });
+        //受理人
+        $.ajax({  
+            type:"post",  
+            url:"{$call_url}",
+            timeout: 5000,  
+            dataType:"json",  
+            data:{"method":"Projectmem.get_list","type":"text","content":{"page_size":"20","where":{"project_id":project_id_ex}}},
+            success: function aa(data) {
+                if (200 == data.status_code) {
+                    $('.get_member').empty();
+                    var list = data.content.list;
+                    $('.get_member').append('<option value="">请选择</option>');
+                    $.each(list, function(i){
+                       var str = '<option value="'+list[i].admin_id+'"';
+                       if (get_member == list[i].admin_id) {
+                            str += ' selected="selected"';
+                        }
+                       str += '>'+u_map_json['admin'][list[i]['admin_id']]+'</option>';
+                        $('.get_member').append(str);
+                    });
+                }
+            }
+        });
+        $("#project_id").change(function(){
+            var project_id = $(this).val();
+            //模块
+            $.ajax({  
+                type:"post",  
+                url:"{$call_url}",
+                timeout: 5000,  
+                dataType:"json",  
+                data:{"method":"Projectmodule.get_list","type":"text","content":{"page_size":"20","where":{"project_id":project_id}}},
+                success: function aa(data) {
+                    if (200 == data.status_code) {
+                        $('#project_mod_id').empty();
+                        var list = data.content.list;
+                        $('#project_mod_id').append('<option value="">请选择</option>');
+                        $.each(list, function(i){
+                            var str = '<option value="'+list[i].id+'">'+list[i].name+'</option>';
+                            $('#project_mod_id').append(str);
+                        });
+                    }
+                }
+            });
+            //受理人
+            $.ajax({  
+                type:"post",  
+                url:"{$call_url}",
+                timeout: 5000,  
+                dataType:"json",  
+                data:{"method":"Projectmem.get_list","type":"text","content":{"page_size":"20","where":{"project_id":project_id}}},
+                success: function aa(data) {
+                    if (200 == data.status_code) {
+                        $('#get_member').empty();
+                        var list = data.content.list;
+                        $('#get_member').append('<option value="">请选择</option>');
+                        $.each(list, function(i){
+                           var str = '<option value="'+list[i].admin_id+'">'+u_map_json['admin'][list[i]['admin_id']]+'</option>';
+                            $('#get_member').append(str);
+                        });
+                    }
+                }
+            });
+        });
+    });
+    $(function(){
+        //基本详情修改
+        $("#jbxq_edit_ex").click(function() {
+            var objButton      = $(this);
+            var level          = $('#level').val();
+            var status         = $('#status').val();
+            var project_id     = $('#project_id').val();
+            var project_mod_id = $('#project_mod_id').val();
+            var get_member     = $('#get_member').val();
+            if (level == "") {
+                mh_dialogShow('mh_warning','请选择优先级！',2,true); 
+                return false;
+            } 
+            if (status == "") {
+                mh_dialogShow('mh_warning','请选择状态！',2,true); 
+                return false;
+            } 
+            if (project_id == "") {
+                mh_dialogShow('mh_warning','请选择所属项目！',2,true); 
+                return false;
+            } 
+            if (project_mod_id == "") {
+                mh_dialogShow('mh_warning','请选择所属模块！',2,true); 
+                return false;
+            } 
+            if(get_member == ""){
+                mh_dialogShow('mh_warning','请选择受理人！',2,true); 
+                return false;
+            } 
+            var options = {
+                beforeSend:function(){
+                    objButton.val('保存').attr('disabled',true);
+                },
+                success: function (data) {
+                  if (data) {
+                    if (data == 0) {
+                        alert('修改成功！');
+                        init();
+                        return false;
+                    }else if(data == -1){
+                        alert('修改失败！');   
+                        return false;
+                    }else if(data == 100){
+                        top.location.href="__APP__/Login/index.html"
+                        return false;
+                    }else{
+                        alert('修改失败！');   
+                        return false;
+                    }
+                  }
+                },
+                complete:function(){
+                    objButton.val('保存').attr('disabled',false);
+                }
+            };
+            $("#theForm_jbxq").ajaxForm(options);
+        });
+        
+        //问题详情修改
+        $("#wtxq_submit").click(function() {
+            var objButton      = $(this);
+            var title = $('#title').val();
+            if(title == ""){
+                mh_dialogShow('mh_warning','问题描述不能为空！',2,true); 
+                return false;
+            } 
+            var options = {
+                beforeSend:function(){
+                    objButton.val('保存').attr('disabled',true);
+                },
+                success: function (data) {
+                  if (data) {
+                    if (data == 0) {
+                        alert('修改成功！');
+                        init();
+                        return false;
+                    }else if(data == -1){
+                        alert('修改失败！');   
+                        return false;
+                    }else if(data == 100){
+                        top.location.href="__APP__/Login/index.html"
+                        return false;
+                    }else{
+                        alert('修改失败！');   
+                        return false;
+                    }
+                  }
+                },
+                complete:function(){
+                    objButton.val('保存').attr('disabled',false);
+                }
+            };
+            $("#wtxq_theForm").ajaxForm(options);
+        });
+
+        //解决方案添加
+        $("#jjfa_submit").click(function() {
+            var objButton         = $(this);
+            var solve_description = $('#solve_description').val();
+            var solve_explain     = $('#solve_explain').val();
+            if(solve_description == ""){
+                mh_dialogShow('mh_warning','BUG原因描述不能为空！',2,true); 
+                return false;
+            } 
+            if(solve_explain == ""){
+                mh_dialogShow('mh_warning','解决方案不能为空！',2,true); 
+                return false;
+            } 
+            var options = {
+                beforeSend:function(){
+                    objButton.val('保存').attr('disabled',true);
+                },
+                success: function (data) {
+                  if (data) {
+                    if (data == 0) {
+                        alert('修改成功！');
+                        init();
+                        return false;
+                    }else if(data == -1){
+                        alert('修改失败！');   
+                        return false;
+                    }else if(data == 100){
+                        top.location.href="__APP__/Login/index.html"
+                        return false;
+                    }else{
+                        alert('修改失败！');   
+                        return false;
+                    }
+                  }
+                },
+                complete:function(){
+                    objButton.val('保存').attr('disabled',false);
+                }
+            };
+            $("#jjfa_theForm").ajaxForm(options);
+        });
+        //添加反馈
+        //var editor_ex = UE.getEditor('editor_ex');
+        $("#fankui_edit").click(function(){
+          var role_id = "{$role_id}";
+          var objButton = $(this);
+          var solve_description = "{$edit_info.solve_description}";
+          var project_status_id = "{$edit_info.project_status_id}";
+          var status_ex = $('#status_ex').val();
+          var content   = $('#content').val();
+          var get_member_ex = $('#get_member_ex').val();
+          if (solve_description == "" && project_status_id == 1) {
+              var a = $("#solve_jjfa").offset().top;
+              $("html,body").animate({scrollTop:a}, 'slow'); 
+              $("#solve_description").select();
+              mh_dialogShow('mh_warning','请先填写解决方案模块！',2,true); 
+              return false;
+          }
+          if (get_member_ex == "") {
+              mh_dialogShow('mh_warning','请选择变更受理人！',2,true); 
+              return false;
+          }
+          if (status_ex == "") {
+              mh_dialogShow('mh_warning','请选择状态！',2,true); 
+              return false;
+          }else{
+                if (role_id != 1 && role_id != 4) {
+                    if (status_ex == 3 || status_ex == 4) {
+                        mh_dialogShow('mh_warning','您没有”关闭“和”不修改“问题状态的权限！',2,true); 
+                        return false;
+                    }
+                }
+          }
+          if (content == "") {
+              mh_dialogShow('mh_warning','反馈内容不能为空！',2,true); 
+              return false;
+          }
+          
+          var options = {
+                beforeSend:function(){
+                    objButton.text('保存').attr('disabled',true);
+                },
+                success: function (data) {
+                  if (data) {
+                    if (data == 0) {
+                      alert('添加成功！');
+                      window.location.href=document.referrer; 
+                      return false;
+                    }else if(data == -1){
+                      alert('添加失败！');  
+                      return false;
+                    }else if(data == -2){
+                      alert('反馈不能为空！');  
+                      return false;
+                    }else if(data == 100){
+                        top.location.href="__APP__/Login/index.html"
+                        return false;
+                    }else{
+                     alert('添加失败！');   
+                      return false;
+                    }
+                  }
+                },
+                complete:function(){
+                    objButton.val('保存').attr('disabled',false);
+                }
+            };
+            $("#theForm_fk").ajaxForm(options);
+        });
+
+    });
+</script>
+</html>

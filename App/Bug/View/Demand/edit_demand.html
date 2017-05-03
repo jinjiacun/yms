@@ -1,0 +1,540 @@
+<!doctype html>
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>运营管理系统</title>
+    <link rel="stylesheet" type="text/css" href="__PUBLIC__/Home/css/common.css"/>
+    <link rel="stylesheet" type="text/css" href="__PUBLIC__/Home/css/main.css"/>
+    <link rel="stylesheet" type="text/css" href="__PUBLIC__/jquery-ui-multiselect/css/jquery.multiselect.css" />
+    <link rel="stylesheet" type="text/css" href="__PUBLIC__/jquery-ui-multiselect/css/jquery.multiselect.filter.css" />
+    <link rel="stylesheet" type="text/css" href="__PUBLIC__/jquery-ui-multiselect/css/jquery-ui.css" />
+    <script type="text/javascript" src="__PUBLIC__/js/jquery-1.8.3.min.js" ></script>
+    <script type="text/javascript" src="__PUBLIC__/Home/js/main.js" ></script>
+    <script type="text/javascript" src="__PUBLIC__/Home/js/mh_dialog.js" ></script>
+    <script type="text/javascript" src="__PUBLIC__/Home/js/jquery.form.js" ></script>
+    <script type="text/javascript" src="__PUBLIC__/Home/js/laydate.js"></script>
+    <style type="text/css">
+     .fankui_tr td{ text-align: center;}
+     .duoxuan{top:515px;}
+    </style>
+    <script type="text/javascript">
+        var url_ajax = "__APP__/Demand/demand_log_ajax";
+        $(function() {
+            $("#ajax_lists").delegate(".list-page a", "click", function() {
+                var page = $(this).attr("data-page");
+                getPage(page);
+            })
+            getPage(1);
+
+        })
+        function getPage(page) {
+            // $("#ajax_lists").html("<div class='loading'><img src='__PUBLIC__/images/loading.gif' alt='loading'></div>");
+            var id = "{$edit_info.id}";
+            $.get(url_ajax, {demand_id: id, p: page}, function(data) {
+                $('#ajax_lists').html(data);
+            })
+        }
+    </script>
+</head>
+<body>
+<div class="container clearfix">
+    <div class="main-wrap">
+
+        <div class="crumb-wrap">
+            <div class="crumb-list"><i class="icon-font"></i><a target="_top" href="__ROOT__/">首页</a><span class="crumb-step">&gt;</span><a href="index.html">需求列表</a><span class="crumb-step">&gt;</span><span>需求修改</span></div>
+        </div>
+        <div class="result-wrap">
+            <div class="result-content" id="jbxq">
+                    <table class="insert-tab" width="100%">
+                        <tbody>
+                            <tr>
+                                <th colspan="2">
+                                    <h1 class="xiangq">基本信息</h1>
+                                    <if condition="$edit_info.create eq $user_id">
+                                    <a id="jbxq_edit" href="javascript:void(0);" class="bianj"><i class="icon-font">&#xe065;</i> 编辑</a>
+                                    </if>
+                                </th>
+                            </tr>
+                            <tr>
+                                <th width="120">编号：</th>
+                                <td>{$edit_info.number}</td>
+                            </tr>
+                            <tr>
+                                <th><i class="require-red">*</i>需求描述：</th>
+                                <td>{$edit_info.description}</td>
+                            </tr>
+                            
+                            <tr>
+                                <th>提交时间：</th>
+                                <td>{$edit_info.add_time}</td>
+                            </tr>
+                            
+                        </tbody>
+                    </table>
+            </div>
+            <div class="result-content" id="jbxq_ex">
+                <form class="registerform" name="theForm_jbxq" autocomplete="off" id="theForm_jbxq" action="__URL__/update_demand" method="post" enctype="multipart/form-data">
+                    <table class="insert-tab" width="100%">
+                        <tbody>
+                            <tr>
+                                <th colspan="2">
+                                    <h1 class="xiangq">基本信息</h1>
+                                    <input class="btn btn-primary mr10" value="保存" id="jbxq_edit_ex" name="submit" type="submit">
+                                    <input type="hidden" id="id" name="id" value="{$edit_info.id}">
+                                </th>
+                            </tr>
+                            <tr>
+                                <th width="120">编号：</th>
+                                <td><input class="common-text yinc" readonly="readonly" name="number" size="50" value="{$edit_info.number}"></td>
+                            </tr>
+                            <tr>
+                                <th><i class="require-red">*</i>需求描述：</th>
+                                <td><textarea class="wtms" name="description" id="description">{$edit_info.description}</textarea>
+                                <input type="hidden" name="old_description" value="{$edit_info.description}"/></td>
+                            </tr>
+                           
+                            <tr>
+                                <th>提交人：</th>
+                                <td>{$u_map['admin'][$edit_info['create']]}</td>
+                            </tr>
+                            <tr>
+                                <th>提交时间：</th>
+                                <td>{$edit_info.add_time}</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </form>
+            </div>
+            <div class="result-content" id="fankui">
+                    <table class="insert-tab" width="100%">
+                        <tbody>
+                           
+                            <tr>
+                                <th width="120">需求修改记录：</th>
+                                <td>
+                                    <div class="content" id="ajax_lists"></div>                                    
+                                </td>
+                            </tr>
+                           
+                        </tbody>
+                    </table>
+            </div>
+        </div>
+
+    </div>
+    <!--/main-->
+</div>
+</body>
+<script type="text/javascript">
+    //日期皮肤
+    !function(){
+        laydate.skin('molv');//切换皮肤，请查看skins下面皮肤库
+        laydate({elem: '#demo'});//绑定元素
+    }();
+    $(function(){
+        //区域选中
+        $(".xuanze, .xuanze_ex").click(function(){
+            $(this).find("input[type=radio]").attr("checked", 'checked');
+        });
+    });
+    //项目关联的模块和人员
+    // $(function(){
+    //     var u_map_json     = {$u_map_json};
+    //     //选择项目改变受理人
+    //     $("#project_id").change(function(){
+    //         var project_id = $(this).val();
+    //         //受理人
+    //         $.ajax({  
+    //             type:"post",  
+    //             url:"{$call_url}",
+    //             timeout: 5000,  
+    //             dataType:"json",  
+    //             data:{"method":"Projectmem.get_list","type":"text","content":{"page_size":"20","where":{"project_id":project_id}}},
+    //             success: function aa(data) {
+    //                 if (200 == data.status_code) {
+    //                     $('.select_dx').empty();
+    //                     $('#renyuan').empty();
+    //                     var list = data.content.list;
+    //                     $('.select_dx').append('<option value="">===请选择===</option>');
+    //                     $.each(list, function(i){
+    //                        var str = '<option value="'+list[i].admin_id+'">'+u_map_json['admin'][list[i]['admin_id']]+'</option>';
+    //                        var strr = '<li><label class="ui-corner-all" for="ui-multiselect-select_dx-option-0">';
+    //                             strr += '<input class="checkk" id="'+u_map_json['admin'][list[i]['admin_id']]+'" type="checkbox" value="'+list[i].admin_id+'" name="slr[1][]" aria-selected="false" />';
+    //                             strr += '<span>'+u_map_json['admin'][list[i]['admin_id']]+'</span></label></li>';
+    //                         $('.select_dx').append(str);
+    //                         $('#renyuan').append(strr);
+    //                     });
+    //                 }
+    //             }
+    //         });
+    //         $('#zhi').text('===请选择===');
+    //     });
+    // });
+    $(function(){
+        var statuss = "{$edit_info.status}";
+        //基本详情修改
+        $("#jbxq_edit_ex").click(function() {
+            var objButton      = $(this);
+            var description    = $('description').val();
+            var level          = $('#level').val();
+            var project_id     = $('#project_id').val();
+            var project_mod_id = $('#project_mod_id').val();
+            var get_member     = $('#get_member').val();
+            if (description == "") {
+                mh_dialogShow('mh_warning','需求描述不能为空！',2,true); 
+                return false;
+            } 
+            if (level == "") {
+                mh_dialogShow('mh_warning','请选择优先级！',2,true); 
+                return false;
+            } 
+            if (project_id == "") {
+                mh_dialogShow('mh_warning','请选择所属项目！',2,true); 
+                return false;
+            } 
+            var options = {
+                beforeSend:function(){
+                    objButton.val('保存').attr('disabled',true);
+                },
+                success: function (data) {
+                  if (data) {
+                    if (data == 0) {
+                        alert('修改成功！');
+                        init();
+                        return false;
+                    }else if(data == -1){
+                        alert('修改失败！');   
+                        return false;
+                    }else if(data == 100){
+                        top.location.href="__APP__/Login/index.html"
+                        return false;
+                    }else{
+                        alert('修改失败！');   
+                        return false;
+                    }
+                  }
+                },
+                complete:function(){
+                    objButton.val('保存').attr('disabled',false);
+                }
+            };
+            $("#theForm_jbxq").ajaxForm(options);
+        });
+
+        //新需求确认
+        $("#submit_xq").click(function() {
+            var objButton = $(this);
+            if (statuss == 7) {
+                alert('项目已上线，禁止操作！');
+                return false;
+            }
+            var result    = confirm("确认交付新版本？");
+            if (result == false) {
+                return false;
+            }
+            var options = {
+                beforeSend:function(){
+                    objButton.val('确认交付').attr('disabled',true);
+                },
+                success: function (data) {
+                  if (data) {
+                    if (data == 0) {
+                        alert('提交成功！');
+                        init();
+                        return false;
+                    }else if(data == -1){
+                        alert('提交失败！');   
+                        return false;
+                    }else if(data == 100){
+                        top.location.href="__APP__/Login/index.html"
+                        return false;
+                    }else if(data == -5){
+                        alert('你没有操作权限！');   
+                        return false;
+                    }else{
+                        alert('提交失败！');   
+                        return false;
+                    }
+                  }
+                },
+                complete:function(){
+                    objButton.val('确认交付').attr('disabled',false);
+                }
+            }; 
+            $("#theForm_xq").ajaxForm(options);
+        });
+        //UI设计
+        $("#submit_ui").click(function() {
+            var objButton = $(this);
+            if (statuss == 7) {
+                alert('项目已上线，禁止操作！');
+                return false;
+            }
+            var result    = confirm("确认交付新版本？");
+            if (result == false) {
+                return false;
+            }
+            var options = {
+                beforeSend:function(){
+                    objButton.val('确认交付').attr('disabled',true);
+                },
+                success: function (data) {
+                  if (data) {
+                    if (data == 0) {
+                        alert('提交成功！');
+                        init();
+                        return false;
+                    }else if(data == -1){
+                        alert('提交失败！');   
+                        return false;
+                    }else if(data == 100){
+                        top.location.href="__APP__/Login/index.html"
+                        return false;
+                    }else if(data == -5){
+                        alert('你没有操作权限！');   
+                        return false;
+                    }else{
+                        alert('提交失败！');   
+                        return false;
+                    }
+                  }
+                },
+                complete:function(){
+                    objButton.val('确认交付').attr('disabled',false);
+                }
+            }; 
+            $("#theForm_ui").ajaxForm(options);
+        });
+        //html处理
+        $("#submit_html").click(function() {
+            var objButton = $(this);
+            if (statuss == 7) {
+                alert('项目已上线，禁止操作！');
+                return false;
+            }
+            var result    = confirm("确认交付新版本？");
+            if (result == false) {
+                return false;
+            }
+            var options = {
+                beforeSend:function(){
+                    objButton.val('确认交付').attr('disabled',true);
+                },
+                success: function (data) {
+                  if (data) {
+                    if (data == 0) {
+                        alert('提交成功！');
+                        init();
+                        return false;
+                    }else if(data == -1){
+                        alert('提交失败！');   
+                        return false;
+                    }else if(data == 100){
+                        top.location.href="__APP__/Login/index.html"
+                        return false;
+                    }else if(data == -5){
+                        alert('你没有操作权限！');   
+                        return false;
+                    }else{
+                        alert('提交失败！');   
+                        return false;
+                    }
+                  }
+                },
+                complete:function(){
+                    objButton.val('确认交付').attr('disabled',false);
+                }
+            }; 
+            $("#theForm_html").ajaxForm(options);
+        });
+        //新需求开发
+        $("#submit_kf").click(function() {
+            var objButton = $(this);
+            if (statuss == 7) {
+                alert('项目已上线，禁止操作！');
+                return false;
+            }
+            var result    = confirm("确认交付新版本？");
+            if (result == false) {
+                return false;
+            }
+            var options = {
+                beforeSend:function(){
+                    objButton.val('确认交付').attr('disabled',true);
+                },
+                success: function (data) {
+                  if (data) {
+                    if (data == 0) {
+                        alert('提交成功！');
+                        init();
+                        return false;
+                    }else if(data == -1){
+                        alert('提交失败！');   
+                        return false;
+                    }else if(data == 100){
+                        top.location.href="__APP__/Login/index.html"
+                        return false;
+                    }else if(data == -5){
+                        alert('你没有操作权限！');   
+                        return false;
+                    }else{
+                        alert('提交失败！');   
+                        return false;
+                    }
+                  }
+                },
+                complete:function(){
+                    objButton.val('确认交付').attr('disabled',false);
+                }
+            };  
+            $("#theForm_kf").ajaxForm(options);
+        });
+        //功能测试
+        $("#submit_cs").click(function() {
+            var objButton = $(this);
+            var status    = $('input[name="delay"]:checked').val();
+            var ycyy      = $('#ycyy').val();
+            if (statuss == 7) {
+                alert('项目已上线，禁止操作！');
+                return false;
+            }
+            var result    = confirm("确认交付新版本？");
+            if (result == false) {
+                return false;
+            }
+            if (status == "2") {
+                if (ycyy == "") {
+                    mh_dialogShow('mh_warning','延迟原因不能为空！',2,true); 
+                    return false;
+                }    
+            }
+            var options = {
+                beforeSend:function(){
+                    objButton.val('确认交付').attr('disabled',true);
+                },
+                success: function (data) {
+                  if (data) {
+                    if (data == 0) {
+                        alert('提交成功！');
+                        init();
+                        return false;
+                    }else if(data == -1){
+                        alert('提交失败！');   
+                        return false;
+                    }else if(data == 100){
+                        top.location.href="__APP__/Login/index.html"
+                        return false;
+                    }else if(data == -5){
+                        alert('你没有操作权限！');   
+                        return false;
+                    }else{
+                        alert('提交失败！');   
+                        return false;
+                    }
+                  }
+                },
+                complete:function(){
+                    objButton.val('确认交付').attr('disabled',false);
+                }
+            };   
+            $("#theForm_cs").ajaxForm(options);
+        });
+        //开发主管上线确认
+        $("#submit_kfzg").click(function() {
+            var objButton = $(this);
+            var mast_develop = "{$edit_info.mast_develop}";
+            var user_id      = "{$user_id}";
+            if (statuss == 7) {
+                alert('项目已上线，禁止操作！');
+                return false;
+            }
+            if (mast_develop != user_id) {
+                alert('你没有操作权限！');   
+                return false;
+            }
+            var result    = confirm("确认上线吗？");
+            if (result == false) {
+                return false;
+            }
+            var options = {
+                beforeSend:function(){
+                    objButton.val('确认交付').attr('disabled',true);
+                },
+                success: function (data) {
+                  if (data) {
+                    if (data == 0) {
+                        alert('提交成功！');
+                        init();
+                        return false;
+                    }else if(data == -1){
+                        alert('提交失败！');   
+                        return false;
+                    }else if(data == 100){
+                        top.location.href="__APP__/Login/index.html"
+                        return false;
+                    }else if(data == -5){
+                        alert('你没有操作权限！');   
+                        return false;
+                    }else{
+                        alert('提交失败！');   
+                        return false;
+                    }
+                  }
+                },
+                complete:function(){
+                    objButton.val('确认交付').attr('disabled',false);
+                }
+            };  
+            $("#theForm_kfzg").ajaxForm(options);
+        });
+        //产品主管上线确认
+        $("#submit_cpzg").click(function() {
+            var objButton = $(this);
+            var mast_product = "{$edit_info.mast_product}";
+            var user_id      = "{$user_id}";
+            if (statuss == 7) {
+                alert('项目已上线，禁止操作！');
+                return false;
+            }
+            if (mast_product != user_id) {
+                alert('你没有操作权限！');   
+                return false;
+            }
+            var result    = confirm("确认上线吗？");
+            if (result == false) {
+                return false;
+            }
+            var options = {
+                beforeSend:function(){
+                    objButton.val('确认交付').attr('disabled',true);
+                },
+                success: function (data) {
+                  if (data) {
+                    if (data == 0) {
+                        alert('提交成功！');
+                        init();
+                        return false;
+                    }else if(data == -1){
+                        alert('提交失败！');   
+                        return false;
+                    }else if(data == 100){
+                        top.location.href="__APP__/Login/index.html"
+                        return false;
+                    }else if(data == -5){
+                        alert('你没有操作权限！');   
+                        return false;
+                    }else{
+                        alert('提交失败！');   
+                        return false;
+                    }
+                  }
+                },
+                complete:function(){
+                    objButton.val('确认交付').attr('disabled',false);
+                }
+            };  
+            $("#theForm_cpzg").ajaxForm(options);
+        });
+    });
+</script>
+</html>

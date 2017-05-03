@@ -1,0 +1,144 @@
+<!doctype html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>Bug管理系统</title>
+    <link rel="stylesheet" type="text/css" href="__PUBLIC__/Home/css/common.css"/>
+    <link rel="stylesheet" type="text/css" href="__PUBLIC__/Home/css/main.css"/>
+    <script type="text/javascript" src="__PUBLIC__/js/jquery-1.8.3.min.js" ></script>
+    <script type="text/javascript" src="__PUBLIC__/Home/js/mh_dialog.js" ></script>
+    <script type="text/javascript" src="__PUBLIC__/Home/js/jquery.form.js" ></script>
+</head>
+<body>
+<div class="container clearfix">
+    <div class="main-wrap">
+
+        <div class="crumb-wrap">
+            <div class="crumb-list">
+                <i class="icon-font"></i>
+                <a target="_top" href="__ROOT__/">首页</a>
+                <span class="crumb-step">&gt;</span>
+                <a href="index.html">角色管理</a>
+                <span class="crumb-step">&gt;</span>
+                <span>新增角色</span>
+            </div>
+        </div>
+        <div class="result-wrap">
+            <div class="result-content">
+                <form class="registerform" name="theForm" id="theForm" action="__URL__/add" method="post" onsubmit="return ValidateFile()">
+                    <table class="insert-tab" width="100%">
+                        <tbody>
+                            <tr>
+                                <th width="120">编号：</th>
+                                <td><input class="common-text yinc" readonly="readonly" name="number" size="50" value="{$number}"></td>
+                            </tr>
+                            <tr>
+                                <th><i class="require-red">*</i>角色名称：</th>
+                                <td>
+                                    <input class="common-text required" id="jsname" name="jsname" size="50" value="" type="text">
+                                </td>
+                            </tr>
+                            <tr>
+                                <th><i class="require-red">*</i>权限：</th>
+                                <td>
+                                    <volist name="res_list" id="list">
+                                    <span class="res_list" <if condition="$key eq 8">style="display:none;"</if>>
+                                    <input class="allChoose" value="{$key}" name="resource[]" id="res{$key}" type="checkbox">  {$list}
+                                    </span>
+                                    </volist>
+                                    <p class="shuoming">说明：列表名称相同的‘全’或‘部分’，只能选择其中一个选项 </p>
+                                </td>
+                            </tr>
+                            <tr>
+                                <th></th>
+                                <td>
+                                    <input class="btn btn-primary btn6 mr10" id="submit" value="提交" name="submit" type="submit">
+                                    <input class="btn btn6" onClick="history.go(-1)" value="返回" type="button">
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </form>
+            </div>
+        </div>
+
+    </div>
+    <!--/main-->
+</div>
+</body>
+<script type="text/javascript">
+    //判断必填项
+    function ValidateFile(){
+        var jsname = $('#jsname').val();
+        var author = $("input[name='resource[]']:checked");
+        var isChecked1 = $("#res1").attr("checked");
+        var isChecked2 = $("#res2").attr("checked");
+        var isChecked3 = $("#res3").attr("checked");
+        var isChecked4 = $("#res4").attr("checked");
+        var isChecked9 = $("#res9").attr("checked");
+        var isChecked10 = $("#res10").attr("checked");
+        var isChecked12 = $("#res12").attr("checked");
+        var isChecked13 = $("#res13").attr("checked");
+        var chk_value = [];
+        $(author).each(function(i){ 
+            chk_value.push($(this).val()); 
+        }); 
+        if (jsname == "") {
+            mh_dialogShow('mh_warning','角色名称不能为空！',2,true); 
+            return false;
+        } 
+        if (chk_value.length == "" ) {
+            mh_dialogShow('mh_warning','请选择权限！',2,true); 
+            return false;
+        }else{
+            if (isChecked1 == "checked" && isChecked2 == "checked") {
+                mh_dialogShow('mh_warning','项目列表只能选择一个！',2,true); 
+                return false; 
+            }
+            if (isChecked3 == "checked" && isChecked4 == "checked") {
+                mh_dialogShow('mh_warning','问题列表只能选择一个！',2,true); 
+                return false; 
+            }
+            if (isChecked9 == "checked" && isChecked10 == "checked") {
+                mh_dialogShow('mh_warning','简历列表只能选择一个！',2,true); 
+                return false; 
+            }
+            if (isChecked12 == "checked" && isChecked13 == "checked") {
+                mh_dialogShow('mh_warning','新需求列表只能选择一个！',2,true); 
+                return false; 
+            }
+        }
+    }
+    $(function () {
+        var options = {
+            beforeSend:function(){
+                $("#submit").val('提交').attr('disabled',true);
+            },
+            success: function (data) {
+                if(data){
+                  if (data == 0) {
+                    mh_dialogShow('mh_success','添加成功!',2,true,'__APP__/Role/index.html'); 
+                    return false;
+                  }else if(data == -1){
+                    mh_dialogShow('mh_warning','添加失败！',2,true); 
+                    return false;
+                  }else if(data == 1){
+                    mh_dialogShow('mh_warning','角色名称不能为空！',2,true); 
+                    return false;
+                  }else if(data == 2){
+                    mh_dialogShow('mh_warning','权限不能为空！',2,true); 
+                    return false;
+                  // }else{
+                  //   mh_dialogShow('mh_warning','添加失败！',2,true); 
+                  //   return false;
+                  }
+                }
+            },
+            complete:function(){
+                $("#submit").val('提交').attr('disabled',false);
+            }
+        };
+        $("#theForm").ajaxForm(options);
+    });
+</script>
+</html>

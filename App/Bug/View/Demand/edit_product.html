@@ -1,0 +1,229 @@
+<!doctype html>
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>运营管理系统</title>
+    <link rel="stylesheet" type="text/css" href="__PUBLIC__/Home/css/common.css"/>
+    <link rel="stylesheet" type="text/css" href="__PUBLIC__/Home/css/main.css"/>
+    <script type="text/javascript" src="__PUBLIC__/js/jquery-1.8.3.min.js" ></script>
+    <script type="text/javascript" src="__PUBLIC__/Home/js/main.js" ></script>
+    <script type="text/javascript" src="__PUBLIC__/Home/js/mh_dialog.js" ></script>
+    <script type="text/javascript" src="__PUBLIC__/Home/js/jquery.form.js" ></script>
+    <style type="text/css">
+     .fankui_tr td{ text-align: center;}
+     .duoxuan{top:515px;}
+    </style>
+    <script type="text/javascript">
+        var url_ajax = "__APP__/Demand/product_log_ajax";
+        $(function() {
+            $("#ajax_lists").delegate(".list-page a", "click", function() {
+                var page = $(this).attr("data-page");
+                getPage(page);
+            })
+            getPage(1);
+
+        })
+        function getPage(page) {
+            // $("#ajax_lists").html("<div class='loading'><img src='__PUBLIC__/images/loading.gif' alt='loading'></div>");
+            var id = "{$edit_info.id}";
+            $.get(url_ajax, {demand_id: id, p: page}, function(data) {
+                $('#ajax_lists').html(data);
+            })
+        }
+    </script>
+</head>
+<body>
+<div class="container clearfix">
+    <div class="main-wrap">
+
+        <div class="crumb-wrap">
+            <div class="crumb-list"><i class="icon-font"></i><a target="_top" href="__ROOT__/">首页</a><span class="crumb-step">&gt;</span><a href="index.html">需求列表</a><span class="crumb-step">&gt;</span><span>需求修改</span></div>
+        </div>
+        <div class="result-wrap">
+            <!-- <div class="result-content" id="jbxq">
+                    <table class="insert-tab" width="100%">
+                        <tbody>
+                            <tr>
+                                <th colspan="2">
+                                    <h1 class="xiangq">基本信息</h1>
+                                    <if condition="$user_id eq 15">
+                                    <a id="jbxq_edit" href="javascript:void(0);" class="bianj"><i class="icon-font">&#xe065;</i> 编辑</a>
+                                    </if>
+                                </th>
+                            </tr>
+                            <tr>
+                                <th width="140"><i class="require-red">*</i>编号：</th>
+                                <td>{$edit_info.number}</td>
+                            </tr>
+                            <tr>
+                                <th><i class="require-red">*</i>需求描述：</th>
+                                <td>{$edit_info.description}</td>
+                            </tr>
+                            
+                            <tr>
+                                <th><i class="require-red">*</i>确认结果：</th>
+                                <td><if condition="$log.result eq 1">暂缓
+                                <elseif condition="$log.result eq 2" />通过
+                                <else />---
+                                <if />
+                                </td>
+                            </tr>
+                            
+                            <tr>
+                                <th><i class="require-red">*</i>确认说明：</th>
+                                <td>{$log.content}</td>
+                            </tr>
+                            
+                             <tr>
+                                <th><i class="require-red">*</i>指定任务派发人：</th>
+                                <td><if condition="$log.to_user_id neq 0">{$u_map['admin'][$log['to_user_id']]}</if></td>
+                            </tr>
+                            
+                        </tbody>
+                    </table>
+            </div> -->
+            <div class="result-content">
+                <form class="registerform" name="theForm_jbxq" autocomplete="off" id="theForm_jbxq" action="__URL__/update_demand_product" method="post" enctype="multipart/form-data">
+                    <table class="insert-tab" width="100%">
+                        <tbody>
+                            <tr>
+                                <th colspan="2">
+                                    <h1 class="xiangq">基本信息</h1>
+                                    <input class="btn btn-primary mr10" value="保存" id="jbxq_edit_ex" name="submit" type="submit">
+                                    <input type="hidden" id="id" name="id" value="{$edit_info.id}">
+                                </th>
+                            </tr>
+                            <tr>
+                                <th width="140">编号：</th>
+                                <td><input class="common-text yinc" readonly="readonly" name="number" size="50" value="{$edit_info.number}"></td>
+                            </tr>
+                            <tr>
+                                <th><i class="require-red">*</i>需求描述：</th>
+                                <td>{$edit_info.description}</td>
+                            </tr>
+                           
+                            <tr>
+                                <th><i class="require-red">*</i>确认结果：</th>
+                                <td>
+                                <select class="required select_dx" id ="result" name="result">
+                                <option value="1" <if condition="$log.result eq 1">selected="selected"</if>>暂缓</option>
+                                <option value="2" <if condition="$log.result eq 2">selected="selected"</if>>通过</option>
+                                </select>
+									</td>
+                            </tr>
+                            
+                            <tr>
+                                <th><i class="require-red">*</i>确认说明：</th>
+                                <td>
+                                	<textarea class="wtms" name="content" id="content">{$log.content}</textarea>
+                                </td>
+                            </tr>
+                            
+                            <tr id="zt_rq">
+                                <th><i class="require-red">*</i>指定任务派发人：</th>
+                                <td>
+                                <select class="required select_dx" id ="to_user_id" name="to_user_id">
+                                <option value="0">---请选择---</option>
+                                <foreach name="u_map.admin" item="list" key="k">
+                                        <option value="{$k}" 
+                                           <foreach name="m_list" item="li" key="k1">
+                                            <if condition="$k eq $k1">selected="selected"</if>
+                                           </foreach>
+                                           >
+                                           {$list}</option>
+                                </foreach>
+                                </select>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </form>
+            </div>
+            <div class="result-content" id="fankui">
+                    <table class="insert-tab" width="100%">
+                        <tbody>
+                           
+                            <tr>
+                                <th width="140">确认记录：</th>
+                                <td>
+                                    <div class="content" id="ajax_lists"></div>                                    
+                                </td>
+                            </tr>
+                           
+                        </tbody>
+                    </table>
+            </div>
+        </div>
+
+    </div>
+    <!--/main-->
+</div>
+</body>
+<script type="text/javascript">
+    $(document).ready(function(){ 
+    　  var result = $("#result").val();
+        if (result == 2) {
+            $("#zt_rq").show();              
+        }else{
+            $("#zt_rq").hide(); 
+        }
+　　}); 
+    $(function(){
+        //确认结果判断
+        $("#result").change(function(){
+            var result = $(this).val();
+            if (result == 2) {
+                $("#zt_rq").show();   
+            }else{
+                $("#zt_rq").hide();
+            }
+        });
+        var statuss = "{$edit_info.status}";
+        //基本详情修改
+        $("#jbxq_edit_ex").click(function() {
+            var objButton      = $(this);
+            var content        = $('#content').val();
+                content        = $.trim(content);
+            var result         = $('#result').val();
+            var to_user_id     = $('#to_user_id').val();
+            if (content == "") {
+                mh_dialogShow('mh_warning','确认说明不能为空！',2,true); 
+                return false;
+            } 
+            if (result == 2) {
+                if (to_user_id == 0) {
+                    mh_dialogShow('mh_warning','指定任务派发人！',2,true); 
+                    return false; 
+                }
+            }
+            var options = {
+                beforeSend:function(){
+                    objButton.val('保存').attr('disabled',true);
+                },
+                success: function (data) {
+                  if (data) {
+                    if (data == 0) {
+                        alert('修改成功！');
+                        init();
+                        return false;
+                    }else if(data == -1){
+                        alert('修改失败！');   
+                        return false;
+                    }else if(data == 100){
+                        top.location.href="__APP__/Login/index.html"
+                        return false;
+                    }else{
+                        alert('修改失败！');   
+                        return false;
+                    }
+                  }
+                },
+                complete:function(){
+                    objButton.val('保存').attr('disabled',false);
+                }
+            };
+            $("#theForm_jbxq").ajaxForm(options);
+        });
+    });
+</script>
+</html>

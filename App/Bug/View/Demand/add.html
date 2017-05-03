@@ -1,0 +1,108 @@
+<!doctype html>
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>运营管理系统</title>
+    <link rel="stylesheet" type="text/css" href="__PUBLIC__/Home/css/common.css"/>
+    <link rel="stylesheet" type="text/css" href="__PUBLIC__/Home/css/main.css"/>
+    <link rel="stylesheet" type="text/css" href="__PUBLIC__/jquery-ui-multiselect/css/jquery.multiselect.css" />
+    <link rel="stylesheet" type="text/css" href="__PUBLIC__/jquery-ui-multiselect/css/jquery.multiselect.filter.css" />
+    <link rel="stylesheet" type="text/css" href="__PUBLIC__/jquery-ui-multiselect/css/jquery-ui.css" />
+    <script type="text/javascript" src="__PUBLIC__/js/jquery-1.8.3.min.js" ></script>
+    <script type="text/javascript" src="__PUBLIC__/Home/js/main.js" ></script>
+    <script type="text/javascript" src="__PUBLIC__/Home/js/mh_dialog.js" ></script>
+    <script type="text/javascript" src="__PUBLIC__/Home/js/jquery.form.js" ></script>
+    <script type="text/javascript" src="__PUBLIC__/Home/js/laydate.js"></script>
+</head>
+<body>
+<div class="container clearfix">
+    <div class="main-wrap">
+
+        <div class="crumb-wrap">
+            <div class="crumb-list"><i class="icon-font"></i><a target="_top" href="__ROOT__/">首页</a><span class="crumb-step">&gt;</span><a href="index.html">需求列表</a><span class="crumb-step">&gt;</span><span>新增需求</span></div>
+        </div>
+        <div class="result-wrap">
+            <div class="result-content" style="margin-bottom: 150px;">
+                <form class="registerform" name="theForm" id="theForm" autocomplete="off" action="__URL__/add" method="post" enctype="multipart/form-data" onsubmit="return ValidateFile()">
+                    <table class="insert-tab" width="100%">
+                        <tbody>
+                            <tr>
+                                <th>编号：</th>
+                                <td><input class="common-text yinc" readonly="readonly" name="number" size="50" value="{$number}"></td>
+                            </tr>
+                            <tr>
+                                <th><i class="require-red">*</i>需求描述：</th>
+                                <td>
+                                    <textarea class="wtms" name="description" id="description"></textarea>
+                                </td>
+                            </tr>
+                            
+                            <tr>
+                                <th></th>
+                                <td>
+                                    <input class="btn btn-primary btn6 mr10" value="提交" id="submit" name="submit" type="submit">
+                                    <input class="btn btn6" onClick="history.go(-1)" value="返回" type="button">
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </form>
+            </div>
+        </div>
+
+    </div>
+    <!--/main-->
+</div>
+</body>
+<script type="text/javascript" charset="utf-8">
+    //日期皮肤
+    !function(){
+        laydate.skin('molv');//切换皮肤，请查看skins下面皮肤库
+        laydate({elem: '#demo'});//绑定元素
+    }();
+    $(function(){
+        //区域选中
+        $(".xuanze, .xuanze_ex").click(function(){
+            $(this).find("input[type=radio]").attr("checked", 'checked');
+        });
+    });
+    //判断必填项
+    function ValidateFile(){
+        var description    = $('#description').val();
+            description    = $.trim(description);
+        if(description == ""){
+            mh_dialogShow('mh_warning','需求描述不能为空！',2,true); 
+            return false;
+        } 
+    }
+    //表单提交
+    $(function () {
+        var options = {
+            beforeSend:function(){
+                $("#submit").val('提交').attr('disabled',true);
+            },
+            success: function (data) {
+                if(data){
+                    if (data == 0) {
+                        mh_dialogShow('mh_success','添加成功!',2,true,'__APP__/Demand/index.html'); 
+                        return false;
+                    }else if(data == -1){
+                        mh_dialogShow('mh_warning','添加失败！',2,true); 
+                        return false;
+                    }else if(data == 100){
+                        top.location.href="__APP__/Login/index.html"
+                        return false;
+                    }else{
+                        mh_dialogShow('mh_warning','添加失败！',2,true); 
+                        return false;
+                    }
+                }
+            },
+            complete:function(){
+                $("#submit").val('提交').attr('disabled',false);
+            } 
+        };
+        $("#theForm").ajaxForm(options);
+    });
+</script>
+</html>

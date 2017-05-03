@@ -1,0 +1,26 @@
+<table class="result-tab" width="100%">
+    <tr>
+        <th>序号</th>
+        <th>修改人</th>
+        <th>修改时间</th>
+        <th>修改前内容</th>
+    </tr>
+    <if condition="$record_count gt 0">
+    <volist name="fk_list" id="fk_list">
+    <tr class="fankui_tr">
+        <td width="4%">{$fk_list.id}</td>
+        <td width="7%">{$u_map['admin'][$fk_list['user_id']]}</td>
+        <td width="14%">{$fk_list.add_time}</td>
+        <td width="75%" style="text-align: left;"><span title="{$fk_list.content}">{$fk_list.content|subtext=130}</span></td>
+    </tr>
+    </volist>
+    <else />
+    <tr><td colspan="4">暂无信息！</td></tr>
+    </if>
+</table>
+<div class="list-page">
+    <if condition="$record_count gt 0">
+    <span class="page_span">共有{$record_count}条</span>
+    </if>
+    {$pages}
+</div>

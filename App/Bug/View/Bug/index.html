@@ -1,0 +1,388 @@
+<!doctype html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>运营管理系统</title>
+    <link rel="stylesheet" type="text/css" href="__PUBLIC__/Home/css/common.css"/>
+    <link rel="stylesheet" type="text/css" href="__PUBLIC__/Home/css/main.css"/>
+    <script type="text/javascript" src="__PUBLIC__/js/jquery-1.8.3.min.js" ></script>
+    <script type="text/javascript" src="__PUBLIC__/Home/js/main.js" ></script>
+    <link href="__PUBLIC__/dist/css/theme.default.min.css" rel="stylesheet">
+    <script src="__PUBLIC__/dist/js/jquery.tablesorter.min.js"></script>
+    <script src="__PUBLIC__/dist/js/jquery.tablesorter.widgets.min.js"></script>
+    <script type="text/javascript" src="__PUBLIC__/Home/js/laydate.js"></script>
+    <!-- <script type="text/javascript" src="__PUBLIC__/DataTables/js/jquery.tablesorter.js" ></script> -->
+    <style type="text/css">
+    .result-dj{background:#F7A59D;}
+    .result-yj{background:#AFFCC4;}
+    .result-gb{background:#C9CCC4;}
+    .result-dgc{background:#FCE863;}
+    .result-zh{background: #0ABCCB;}
+    .sousuok{width: 100px;}
+    </style>
+    <script>
+        $(function(){
+            $("#sortTable").tablesorter({
+                widgets        : ['zebra', 'columns'],
+                usNumberFormat : false,
+                sortReset      : true,
+                sortRestart    : true
+            });
+        });
+    </script>
+</head>
+<body>
+<div class="container clearfix">
+    <div class="main-wrap">
+        <div class="crumb-wrap">
+            <div class="crumb-list"><i class="icon-font"></i><a target="_top" href="__ROOT__/">首页</a><span class="crumb-step">&gt;</span><span class="crumb-name">问题列表</span></div>
+        </div>
+        <div class="search-wrap">
+            <div class="search-content">
+                <form name="fom" id="fom" action="__URL__/index" method="get">
+                    <table class="search-tab" width="100%">
+                        <tr>
+                            <th>项目分类:</th>
+                            <td>
+                                <select name="class_id" id="class_id" class="requir">
+                                    <option value="">---全部---</option>
+                                    <volist name="u_map.project_class" id="list">
+                                    <option value="{$key}" <if condition="$class_id eq $key">selected="selected"</if>>{$list}</option>
+                                    </volist>
+                                </select>
+                            </td>
+                            <th>项目:</th>
+                            <td>
+                                <select name="project_id" id="project_id" class="requir">
+                                    <option value="">---全部---</option>
+                                </select>
+                            </td>
+                            <th>模块:</th>
+                            <td>
+                                <select name="project_mod_id" id="project_mod_id" class="requir">
+                                    <option value="">---全部---</option>  
+                                </select>
+                            </td>
+                            <th>状态:</th>
+                            <td>
+                                <select name="status" id="status" class="requir">
+                                    <option value="0">---全部---</option>
+                                    <volist name="state_list" id="state">
+                                    <option value="{$key}" <if condition="$sta eq $key">selected="selected"</if>>{$state}</option>
+                                    </volist>                                    
+                                </select>
+                            </td>
+                            <th>分类:</th>
+                            <td>
+                                <select name="fenl" class="requir">
+                                    <option value="0">---全部---</option>
+                                    <volist name="mybug" id="mybug">
+                                    <option value="{$key}" <if condition="$fenl eq $key">selected="selected"</if>>{$mybug}</option>
+                                    </volist>  
+                                </select>
+                            </td>
+                            <th>优先级</th>
+                            <td>
+                               <select name="level" class="requir">
+                                  <option value=0>---全部---</option>
+                                  <option value=1>超高</option>
+                                  <option value=2>高</option>
+                                  <option value=3>一般</option>
+                               </select>
+                            </td>
+                            <th>解决人:</th>
+                            <td><input class="common-text sousuok" placeholder="用户名" name="get_member" value="{$get_member}" type="text"></td>
+                            <th>关键字:</th>
+                            <td><input class="common-text sousuok" placeholder="编号/项目描述" name="keywords" value="{$name}" id="" type="text"></td>
+                            <td><input class="btn btn-primary btn2" name="sub" value="查询" type="submit"></td>
+                        </tr>
+                    </table>
+                </form>
+            </div>
+        </div>
+        <div class="result-wrap">
+                <div class="result-title">
+                    <div class="result-list re_list">
+                        <a href="__URL__/add.html"><i class="icon-font"></i>新增问题</a>
+                        <if condition="($role_id eq 1) or ($role_id eq 4)">
+                        <a id="batchDel" href="javascript:void(0)"><i class="icon-font"></i>批量删除</a>
+                        </if>
+                        <a href="__URL__/index"><i class="icon-font">&#xe045;</i>查看所有</a>
+                        <a href="__URL__/index?sub=sub&status=5"><i class="icon-font">&#xe060;</i>暂缓({$count_ex})</a>
+                    </div>
+                    <if condition="($role_id eq 1) OR ($role_id eq 11)">
+                    <div class="search">
+                        <form id="searchForm" name="searchform" class="well form-search" action="" method="post">
+                          <span>选择时间：
+                            <input type="text" placeholder="请选择日期" name="q_time" id="q_time" class="laydate-icon"></span> ——
+                            <input type="text" placeholder="请选择日期" name="t_time" id="t_time" class="laydate-icon">
+                          <input type="submit" name="subb" class="btn" value="导出报表" onclick="checkaction();"/> 
+                        </form>
+                    </div>
+                    </if>
+                </div>
+                <div class="result-content">
+                    <table class="result-tabb" width="100%" id="sortTable">
+                        <thead>
+                        <tr class="result-tabb">
+                            <th class="tc" width="5%"><input id="checkall" class="allChoose" name="" type="checkbox"></th>
+                            <th><a href="javascript:void(0)">编号</a></th>
+                            <th><a href="javascript:void(0)">所属项目</a></th>                            
+                            <th><a href="javascript:void(0)">所属模块</a></th>
+                            <th><a href="javascript:void(0)">优先级</a></th>
+                            <th><a href="javascript:void(0)">描述</a></th>
+                            <th><a href="javascript:void(0)">指派给</a></th>
+                            
+
+                            <!--
+                            <th><a href="javascript:void(0)">最后更新人</a></th>
+                            -->
+                            <th><a href="javascript:void(0)">修复时间</a></th>
+                            <th><a href="javascript:void(0)">提交时间</a></th>
+                            <th><a href="javascript:void(0)">提交人</a></th>
+                            <th><a href="javascript:void(0)">状态</a></th>
+                            <th>操作</th>
+                        </tr>
+                        </thead>
+                        <volist name="con" id="con">
+                        <tr <if condition="$con.status eq '待解决'">class="result-dj"<elseif condition="$con.status eq '已解决'"/>class="result-yj"<elseif condition="$con.status eq '待观察'"/>class="result-dgc"<elseif condition="$con.status eq '暂缓'"/>class="result-zh"<else />class="result-gb"</if>>
+                            <td class="tc"><input name="id[]" value="{$con.id}" type="checkbox"></td>
+                            <td>{$con.number}</td>
+                            <td>{$u_map['project'][$con['project_id']]}</td>
+                            
+                            <td>{$u_map['mod'][$con['project_mod_id']]}</td>
+                            <td>{$con.level}</td>
+                            <td>{$con.title|subtext=15}</td>
+                            <td>{$u_map['admin'][$con['get_member']]}</td>
+                            <!--
+                            <td>
+                                <if condition="$con.last_update eq 0">{$u_map['admin'][$con['put_member']]}
+                                <else />
+                                {$u_map['admin'][$con['last_update']]}
+                                </if>
+                            </td>
+                            -->
+                            <td>
+                                <if condition="$con.status eq '已解决'">
+                                <span title="{$con.last_update_time_ex}">{$con.last_update_time}</span>
+                                <else />
+                                ---- 
+                                </if>
+                            </td>
+                            <td>
+                                <span title="{$con.add_time_ex}">{$con.add_time}</span>
+                            </td>
+                            
+                            <td>{$u_map['admin'][$con['put_member']]}</td>
+                            <td>{$con.status}</td>
+                            <td>
+                                <a class="link-update" href="__URL__/edit?id={$con.id}">查看</a>
+                                <if condition="($role_id eq 1) or ($role_id eq 4)">
+                                <a class="link-del" id="{$con.id}" href="javascript:void(0);">删除</a>
+                                </if>
+                            </td>
+                        </tr>
+                        </volist>
+                    </table>
+                    <div class="list-page">
+                        <if condition="$record_count gt 0">
+                        <span class="page_span">共有{$record_count}条</span>
+                        </if>
+                        {$page}
+                    </div>
+                </div>
+        </div>
+    </div>
+    <!--/main-->
+</div>
+</body>
+<script type="text/javascript">
+    laydate({
+        elem: '#t_time', 
+        event: 'focus' 
+    });
+    laydate({
+        elem: '#q_time', 
+        event: 'focus' 
+    });
+    function checkaction(){ 
+        document.searchform.action="{:U('export')}"; 
+        searchform.submit(); 
+    } 
+    //批量删除
+    $(document).ready(function() {
+        
+        // 全选
+        $("#checkall").click(function() {
+            $("input[name='id[]']").prop("checked",this.checked);
+
+        });
+        // 单选
+        var subChk = $("input[name='id[]']")
+        subChk.click(function() {
+            $("#checkall").prop("checked", subChk.length == subChk.filter(":checked").length ? true:false);
+        });
+        /* 批量删除 */
+        $("#batchDel").click(function() {
+            // 判断是否至少选择一项
+            var checkedNum = $("input[name='id[]']:checked").length;
+            if(checkedNum == 0) {
+                alert("请选择至少一项！");
+                return;
+            }
+            // 批量选择
+            if(confirm("确定要删除所选项目？")) {
+                var checkedList = new Array();
+                $("input[name='id[]']:checked").each(function() {
+                    checkedList.push($(this).val());
+                });
+                $.ajax({
+                    type: "POST",
+                    url: "__URL__/batch_delete",
+                    dataType:"json",
+                    data: {'id':checkedList.toString()},
+                    success: function(data) {
+                        if (data == -1) {
+                            alert('删除失败！');
+                            return false;
+                        }else{
+                            $("[name ='id[]']:checkbox").attr("checked", false); 
+                            alert('删除成功');
+                            init();
+                            return false;
+                        }
+                    }
+                });
+            }
+        });
+    });
+    $(function(){
+        //项目
+        var class_id  = '{$class_id}';
+        var project_id_ex  = '{$proj}';
+        $.ajax({  
+            type:"post",  
+            url:"{$call_url}",
+            timeout: 5000,  
+            dataType:"json",  
+            data:{"method":"Project.get_list","type":"text","content":{"page_size":"20","where":{"class_id":class_id},"order":{'id':'ASC'}}},
+            success: function aa(data) {
+                if (200 == data.status_code) {
+                    $('#project_id').empty();
+                    var list = data.content.list;
+                    $('#project_id').append('<option value="">---全部---</option>');
+                    $.each(list, function(i){
+                       var str = '<option value="'+list[i].id+'"';
+                        if (project_id_ex == list[i].id) {
+                            str += ' selected="selected"';
+                        }
+                           str += '>'+list[i].name+'</option>';
+                        $('#project_id').append(str);
+                    });
+                }
+            }
+        });
+        $("#class_id").change(function(){
+            var class_id = $(this).val();
+            //项目
+            $.ajax({  
+                type:"post",  
+                url:"{$call_url}",
+                timeout: 5000,  
+                dataType:"json",  
+                data:{"method":"Project.get_list","type":"text","content":{"page_size":"20","where":{"class_id":class_id},"order":{'id':'ASC'}}},
+                success: function aa(data) {
+                    if (200 == data.status_code) {
+                        $('#project_id').empty();
+                        $('#project_mod_id').html('<option value="">---全部---</option>');
+                        var list = data.content.list;
+                        $('#project_id').append('<option value="">---全部---</option>');
+                        $.each(list, function(i){
+                           var str = '<option value="'+list[i].id+'">'+list[i].name+'</option>';
+                            $('#project_id').append(str);
+                        });
+                    }
+                }
+            });
+        });
+        //模块
+        var project_mod_id = '{$prmod}';
+        $.ajax({  
+            type:"post",  
+            url:"{$call_url}",
+            timeout: 5000,  
+            dataType:"json",  
+            data:{"method":"Projectmodule.get_list","type":"text","content":{"page_size":"20","where":{"project_id":project_id_ex},"order":{'id':'ASC'}}},
+            success: function aa(data) {
+                if (200 == data.status_code) {
+                    $('#project_mod_id').empty();
+                    var list = data.content.list;
+                    $('#project_mod_id').append('<option value="">---全部---</option>');
+                    $.each(list, function(i){
+                       var str = '<option value="'+list[i].id+'"';
+                        if (project_mod_id == list[i].id) {
+                            str += ' selected="selected"';
+                        }
+                           str += '>'+list[i].name+'</option>';
+                        $('#project_mod_id').append(str);
+                    });
+                }
+            }
+        });
+        //筛选
+        $("#project_id").change(function(){
+            var project_id = $(this).val();
+            //模块
+            $.ajax({  
+                type:"post",  
+                url:"{$call_url}",
+                timeout: 5000,  
+                dataType:"json",  
+                data:{"method":"Projectmodule.get_list","type":"text","content":{"page_size":"20","where":{"project_id":project_id},"order":{'id':'ASC'}}},
+                success: function aa(data) {
+                    if (200 == data.status_code) {
+                        $('#project_mod_id').empty();
+                        var list = data.content.list;
+                        $('#project_mod_id').append('<option value="">---全部---</option>');
+                        $.each(list, function(i){
+                           var str = '<option value="'+list[i].id+'">'+list[i].name+'</option>';
+                            $('#project_mod_id').append(str);
+                        });
+                    }
+                }
+            });
+        });
+        //删除
+        $('.link-del').live('click',function(){
+            var id = $(this).attr('id');
+            if(confirm("确定要删除吗？")) {
+                $.ajax({  
+                    type:"post",  
+                    url:"{$call_url}",
+                    timeout: 5000,  
+                    dataType:"json",  
+                    data:{"method":"Bug.delete","type":"text","content":{"id":id}},
+                    success: function aa(data) {  
+                        if (200 == data.status_code && 0 == data.content.is_success) {
+                            alert('删除成功！');
+                            init();
+                            return false;
+                        }else{
+                            alert('删除失败！');
+                            return false;
+                        }
+                    }  
+                }) 
+            }       
+        });
+    });
+</script>
+<!-- <script type="text/javascript">
+    $(function(){
+        var con = "{$record_count}";
+        if (con > 0) {
+            $("#sortTable").tablesorter();
+        }
+    });
+</script> -->
+</html>

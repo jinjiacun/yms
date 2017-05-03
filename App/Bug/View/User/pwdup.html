@@ -1,0 +1,100 @@
+<!doctype html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>运营管理系统</title>
+    <link rel="stylesheet" type="text/css" href="__PUBLIC__/Home/css/common.css"/>
+    <link rel="stylesheet" type="text/css" href="__PUBLIC__/Home/css/main.css"/>
+    <script type="text/javascript" src="__PUBLIC__/js/jquery-1.8.3.min.js" ></script>
+    <script type="text/javascript" src="__PUBLIC__/Home/js/mh_dialog.js" ></script>
+    <script type="text/javascript" src="__PUBLIC__/Home/js/jquery.form.js" ></script>
+</head>
+<body>
+<div class="container clearfix">
+    <div class="main-wrap">
+
+        <div class="crumb-wrap">
+            <div class="crumb-list">
+                <i class="icon-font"></i>
+                <a target="_top" href="__ROOT__/">首页</a>
+                <span class="crumb-step">&gt;</span>
+                <span>密码修改</span>
+            </div>
+        </div>
+        <div class="result-wrap">
+            <div class="result-content">
+                <form class="registerform" name="theForm" id="theForm" action="__URL__/pwdup" method="post" enctype="multipart/form-data" onsubmit="return ValidateFile()">
+                    <table class="insert-tab" width="100%">
+                        <tbody>
+                            <tr>
+                                <th><i class="require-red">*</i>用户帐号：</th>
+                                <td><input class="common-text yinc" readonly="readonly" name="admin_name" size="50" value="{$u_map['admin'][$user_id]}"></td>
+                            </tr>
+                            <tr>
+                                <th><i class="require-red">*</i>密码：</th>
+                                <td><input class="common-text" name="passwd" id="passwd" size="50" value="" type="password"></td>
+                            </tr>
+                            <tr>
+                                <th><i class="require-red">*</i>确认密码：</th>
+                                <td><input class="common-text" name="pwd" id="pwd" size="50" value="" type="password"></td>
+                            </tr>
+                            <tr>
+                                <th></th>
+                                <td>
+                                    <input class="btn btn-primary btn6 mr10" id="submit" name="submit" value="提交" type="submit">
+                                    <input class="btn btn6" onClick="history.go(-1)" value="返回" type="button">
+                                </td>
+                            </tr>
+                        </tbody></table>
+                </form>
+            </div>
+        </div>
+
+    </div>
+    <!--/main-->
+</div>
+</body>
+<script type="text/javascript">
+    //判断必填项
+    function ValidateFile(){
+        var passwd = $('#passwd').val();
+        var pwd      = $('#pwd').val();
+        if (passwd == "") {
+            mh_dialogShow('mh_warning','密码不能为空',2,true); 
+            return false;
+        } 
+        if (pwd == "") {
+            mh_dialogShow('mh_warning','确认密码不能为空！',2,true); 
+            return false;
+        }else if(pwd != passwd){
+            mh_dialogShow('mh_warning','两次密码不一致！',2,true); 
+            return false;
+        } 
+    }
+    $(function () {
+        var options = {
+            beforeSend:function(){
+                $("#submit").val('提交').attr('disabled',true);
+            },
+            success: function (data) {
+                if(data){
+                  if (data == 0) {
+                    top.location.href="__APP__/Login/index";
+                    return false;
+                  }else if(data == -1){
+                    mh_dialogShow('mh_warning','修改失败！',2,true); 
+                    return false;
+                  }else{
+                    mh_dialogShow('mh_warning','修改失败！',2,true); 
+                    return false;
+                  }
+                }
+            },
+            complete:function(){
+                $("#submit").val('提交').attr('disabled',false);
+            }
+        };
+        $("#theForm").ajaxForm(options);
+    });
+</script>
+</html>

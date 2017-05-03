@@ -1,0 +1,136 @@
+<!DOCTYPE html PUBLIC '-//W3C//DTD XHTML 1.0 Transitional//EN' 'http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd'>
+<html xmlns='http://www.w3.org/1999/xhtml'>
+<head>
+<meta http-equiv='Content-Type' content='text/html; charset=UTF-8' />
+<title>产品-开发新需求提交工单</title>
+<link rel="stylesheet" type="text/css" href="__PUBLIC__/Home/css/common.css"/>
+<link rel="stylesheet" type="text/css" href="__PUBLIC__/Home/css/main.css"/>
+<style type="text/css">  
+<!-- 
+.content{width:100%;padding-bottom:50px; }
+.content h1{ font-size: 18px;height: 80px;line-height: 80px; margin-top: 20px;text-align: center; width: auto;}
+.con_nr{text-align: left; padding: 10px 20px 10px 50px;}
+td {  
+background-color: #FFFFFF;  
+border: 1px solid #bdbdbd;
+text-align: center;
+height:40px;   
+}
+.content_xu{text-align: left;padding:5px;min-height: 150px;}
+-->  
+</style>
+</head>
+<body>
+<div class="content">
+<h1>产品-开发新需求提交工单</h1>
+<table width="700" align="center">
+    <tr>
+      <td>需求部门(人)</td>
+      <td colspan="2">{$u_map['admin'][$edit_info['create']]}</td>
+      <td>提出时间</td>
+      <td colspan="2">{$edit_info.add_time}</td>
+    </tr>
+    <tr>
+      <td>需求描述</td>
+      <td colspan="5">
+        <div class="content_xu">{$edit_info.description}</div>
+      </td>
+    </tr>
+    <tr>
+      <td>产品部确认</td>
+      <td width="100">{$u_map['admin'][$edit_info['mast_product']]}</td>
+      <td>开发部确认</td>
+      <td>{$u_map['admin'][$edit_info['mast_develop']]}</td>
+      <td>预计上线时间</td>
+      <td>
+        <if condition="$edit_info.plan_online eq 1">随时
+        <else />
+        {$edit_info.plan_online_ex}
+        </if>
+      </td>
+    </tr>
+    <tr>
+      <td colspan="6">
+      <div class="con_nr">初版交付日期：{$c_jf.add_time}</div>
+      <div class="con_nr">
+      终板交付时间：{$z_jf.add_time}
+      <span class="fankuisp">产品经理：
+        <volist name="d_list.1" id="list">
+            {$list}　
+        </volist>
+      </span>
+      </div>
+      </td>
+    </tr>
+    <tr>
+      <td colspan="6">
+      <div class="con_nr">初版交付日期：{$uic_jf.add_time}</div>
+      <div class="con_nr">
+      终板交付时间：{$uiz_jf.add_time}
+      <span class="fankuisp">UI设计：
+      <volist name="d_list.2" id="list">
+          {$list}　
+      </volist>
+      </span>
+      </div>
+      </td>
+    </tr>
+    <tr>
+      <td colspan="6">
+      <div class="con_nr">
+      终板交付时间：{$qdz_jf.add_time}
+      <span class="fankuisp">前端：
+      <volist name="d_list.3" id="list">
+          {$list}　
+      </volist>
+      </span>
+      </div>
+      </td>
+    </tr>
+    <tr>
+      <td colspan="6">
+      <div class="con_nr">
+      测试版交付时间：{$kfz_jf.add_time}
+      <span class="fankuisp">开发：
+      <volist name="d_list.4" id="list">
+          {$list}　
+      </volist>
+      </span>
+      </div>
+      </td>
+    </tr>
+    <tr>
+      <td colspan="6">
+      <div class="con_nr">
+      终板交付时间：{$csz_jf.add_time}
+      <span class="fankuisp">测试：
+      <volist name="d_list.5" id="list">
+          {$list}　
+      </volist>
+      </span>
+      </div>
+      <div class="con_nr">{$csz_jf.content}{$csz_jf.add_time}</div>
+      </td>
+    </tr>
+    <tr>
+      <td colspan="6">上线确认</td>
+    </tr>
+    <tr>
+      <td>开发主管</td>
+      <td colspan="2">{$u_map['admin'][$edit_info['mast_develop']]}</td>
+      <td>产品主管</td>
+      <td colspan="2">{$u_map['admin'][$edit_info['mast_product']]}</td>
+    </tr>
+    <tr>
+      <td>最终上线时间</td>
+      <td colspan="5">
+        <if condition="$edit_info.last_online eq ''">---
+        <else />
+        {$edit_info.last_online_ex}
+        </if>
+      </td>
+    </tr>
+</table>
+</div>
+</body>
+</html>

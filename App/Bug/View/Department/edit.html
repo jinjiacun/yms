@@ -1,0 +1,95 @@
+<!doctype html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>Bug管理系统</title>
+    <link rel="stylesheet" type="text/css" href="__PUBLIC__/Home/css/common.css"/>
+    <link rel="stylesheet" type="text/css" href="__PUBLIC__/Home/css/main.css"/>
+    <script type="text/javascript" src="__PUBLIC__/js/jquery-1.8.3.min.js" ></script>
+    <script type="text/javascript" src="__PUBLIC__/Home/js/mh_dialog.js" ></script>
+    <script type="text/javascript" src="__PUBLIC__/Home/js/jquery.form.js" ></script>
+</head>
+<body>
+<div class="container clearfix">
+    <div class="main-wrap">
+
+        <div class="crumb-wrap">
+            <div class="crumb-list">
+                <i class="icon-font"></i>
+                <a target="_top" href="__ROOT__/">首页</a>
+                <span class="crumb-step">&gt;</span>
+                <a href="index.html">部门管理</a>
+                <span class="crumb-step">&gt;</span>
+                <span>修改部门</span>
+            </div>
+        </div>
+        <div class="result-wrap">
+            <div class="result-content">
+                <form class="registerform" name="theForm" id="theForm" action="__URL__/edit" method="post" enctype="multipart/form-data" onsubmit="return ValidateFile()">
+                    <table class="insert-tab" width="100%">
+                        <tbody>
+                            <tr>
+                                <th><i class="require-red">*</i>编号：</th>
+                                <td><input class="common-text yinc" value="{$enit_list.number}" size="50" name="number" readonly="readonly">
+                                </td>
+                            </tr>
+                            <tr>
+                                <th><i class="require-red">*</i>部门名称：</th>
+                                <td><input class="common-text" name="pname" id="pname" size="50" value="{$enit_list.name}" type="text"></td>
+                            </tr>
+                            <tr>
+                                <th></th>
+                                <td>
+                                    <input type="hidden" id="id" name="id" value="{$enit_list.id}">
+                                    <input class="btn btn-primary btn6 mr10" value="提交" id="submit" type="submit" name="submit">
+                                    <input class="btn btn6" onClick="history.go(-1)" value="返回" type="button">
+                                </td>
+                            </tr>
+                        </tbody></table>
+                </form>
+            </div>
+        </div>
+
+    </div>
+    <!--/main-->
+</div>
+</body>
+<script type="text/javascript">
+    //判断必填项
+    function ValidateFile(){
+        var pname = $('#pname').val();
+        if (pname == "") {
+            mh_dialogShow('mh_warning','部门名称不能为空！',2,true); 
+            return false;
+        } 
+    }
+    $(function () {
+        var options = {
+            beforeSend:function(){
+                $("#submit").val('提交').attr('disabled',true);
+            },
+            success: function (data) {
+                if(data){
+                  if (data == 0) {
+                    mh_dialogShow('mh_success','修改成功!',2,true,'__APP__/Department/index.html'); 
+                    return false;
+                  }else if(data == -1){
+                    mh_dialogShow('mh_warning','修改失败！',2,true); 
+                    return false;
+                  }else if(data == 1){
+                    mh_dialogShow('mh_warning','部门名称不能为空！',2,true); 
+                    return false;
+                  }else{
+                    mh_dialogShow('mh_warning','修改失败！',2,true); 
+                    return false;
+                  }
+                }
+            },
+            complete:function(){
+                $("#submit").val('提交').attr('disabled',false);
+            } 
+        };
+        $("#theForm").ajaxForm(options);
+    });
+</script>
+</html>

@@ -1,0 +1,146 @@
+<!doctype html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>运营管理系统</title>
+    <link rel="stylesheet" type="text/css" href="__PUBLIC__/Home/css/common.css"/>
+    <link rel="stylesheet" type="text/css" href="__PUBLIC__/Home/css/main.css"/>
+    <script type="text/javascript" src="__PUBLIC__/js/jquery-1.8.3.min.js" ></script>
+    <script type="text/javascript" src="__PUBLIC__/Home/js/main.js" ></script>
+    <script type="text/javascript" src="__PUBLIC__/Home/js/mh_dialog.js" ></script>
+    <script type="text/javascript" src="__PUBLIC__/Home/js/jquery.form.js" ></script>
+</head>
+<body>
+<div class="container clearfix">
+    <div class="main-wrap">
+
+        <div class="crumb-wrap">
+            <div class="crumb-list"><i class="icon-font"></i><a target="_top" href="__ROOT__/">首页</a><span class="crumb-step">&gt;</span><a class="crumb-name" href="index.html">简历列表</a><span class="crumb-step">&gt;</span><span>上传简历</span></div>
+        </div>
+        <div class="result-wrap">
+            <div class="result-content">
+                <form class="registerform" name="theForm" id="theForm" action="__URL__/add_jl" method="post" enctype="multipart/form-data" onsubmit="return ValidateFile()">
+                    <table class="insert-tab" width="100%">
+                        <tbody>
+                            <tr>
+                                <th colspan="2">
+                                    <h1 class="xiangq">新增简历</h1>
+                                </th>
+                            </tr>
+                            <tr>
+                                <th><i class="require-red">*</i>应聘部门：</th>
+                                <td>
+                                    <select name="part_id" id="part_id" class="required">
+                                        <option value="">请选择</option>
+                                        <volist name="u_map.part" id="par">
+                                        <option value="{$key}">{$par}</option>
+                                        </volist>
+                                    </select>
+                                </td>
+                            </tr>
+                            <tr>
+                                <th><i class="require-red">*</i>上传简历：</th>
+                                <td>
+                                    <input id="accessories" type="file" name="accessories">
+                                </td>
+                            </tr>
+                            <tr>
+                                <th>备注：</th>
+                                <td><textarea class="wtms" name="remartk" id="remartk"></textarea></td>
+                            </tr>
+                            <tr>
+                                <th></th>
+                                <td>
+                                    <input class="btn btn-primary btn6 mr10" id="submit" name="submit" value="提交" type="submit">
+                                    <input class="btn btn6" onClick="history.go(-1)" value="返回" type="button">
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </form>
+            </div>
+        </div>
+
+    </div>
+    <!--/main-->
+</div>
+</body>
+<script type="text/javascript">
+    //判断必填项
+    function ValidateFile(){
+        var part_id = $('#part_id').val();
+        var tmp     = document.getElementById("accessories").value;  
+        if (part_id == "") {
+            mh_dialogShow('mh_warning','请选择应聘部门！',2,true); 
+            return false;
+        } 
+        if(tmp != ""){
+            var size    = document.getElementById("accessories").files[0].size/1024;
+            if(!/.(doc|docx|zip|rar|DOC|DOCX|ZIP)$/.test(tmp)){
+                mh_dialogShow('mh_warning','简历附件类型为.doc,docx,zip,rar！',2,true); 
+                return false;
+            }
+            if (size >= 20480) {
+                mh_dialogShow('mh_warning','简历附件不能大于20M！',2,true); 
+                return false;
+            }
+        }else{
+            mh_dialogShow('mh_warning','简历附件不能为空！',2,true); 
+            return false;
+        } 
+       
+    }
+    $(function () {
+        var options = {
+            beforeSend:function(){
+                $("#submit").val('提交').attr('disabled',true);
+            },
+            success: function (data) {
+                if(data){
+                  if (data == 0) {
+                    mh_dialogShow('mh_success','添加成功!',2,true,'__APP__/Resume/index.html'); 
+                    return false;
+                  }else if(data == -1){
+                    mh_dialogShow('mh_warning','添加失败！',2,true); 
+                    return false;
+                  }else if(data == -2){
+                    mh_dialogShow('mh_warning','上传的压缩包文件不能大于20M！',2,true); 
+                    return false;
+                  }else if(data == 7){
+                    mh_dialogShow('mh_warning','上传的压缩包为空！',2,true); 
+                    return false;
+                  }else if(data == 8){
+                    mh_dialogShow('mh_warning','压缩包文件不能多于10个！',2,true); 
+                    return false;
+                  }else if(data == 1){
+                    mh_dialogShow('mh_warning','简历上传失败！',2,true); 
+                    return false;
+                  }else if(data == 2){
+                    mh_dialogShow('mh_warning','没有文件上传！',2,true); 
+                    return false;
+                  }else if(data == 3){
+                    mh_dialogShow('mh_warning','文件上传错误！',2,true); 
+                    return false;
+                  }else if(data == 4){
+                    mh_dialogShow('mh_warning','上传文件不能大于2M！',2,true); 
+                    return false;
+                  }else if(data == 5){
+                    mh_dialogShow('mh_warning','上传文件格式错误！',2,true); 
+                    return false;
+                  }else if(data == 6){
+                    mh_dialogShow('mh_warning','简历附件不能为空！',2,true); 
+                    return false;
+                  }else{
+                    mh_dialogShow('mh_warning','添加失败！',2,true); 
+                    return false;
+                  }
+                }
+            },
+            complete:function(){
+                $("#submit").val('提交').attr('disabled',false);
+            }
+        };
+        $("#theForm").ajaxForm(options);
+    });
+</script>
+</html>

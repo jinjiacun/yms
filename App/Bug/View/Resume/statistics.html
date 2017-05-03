@@ -1,0 +1,141 @@
+<!doctype html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>运营管理系统</title>
+    <link rel="stylesheet" type="text/css" href="__PUBLIC__/Home/css/common.css"/>
+    <link rel="stylesheet" type="text/css" href="__PUBLIC__/Home/css/main.css"/>
+    <script type="text/javascript" src="__PUBLIC__/js/jquery-1.8.3.min.js" ></script>
+    <script type="text/javascript" src="__PUBLIC__/Home/js/main.js" ></script>
+    <script type="text/javascript" src="__PUBLIC__/Home/js/laydate.js"></script>
+    <style type="text/css">
+    .result-tr td{color: #999;}
+    </style>
+</head>
+<body>
+<div class="container clearfix">
+    <div class="main-wrap">
+        <div class="crumb-wrap">
+            <div class="crumb-list"><i class="icon-font"></i><a target="_top" href="__ROOT__/">首页</a><span class="crumb-step">&gt;</span><span class="crumb-name">简历统计</span></div>
+        </div>
+        <div class="search-wrap">
+            <div class="search-content">
+                <form name="searchForm" id="searchForm" action="" method="post">
+                    <table class="search-tab">
+                        <tr>
+                            <th width="120">起始时间:</th>
+                            <td>
+                                <span>
+                                <input type="text" value="{$q_time}" placeholder="请选择日期" name="q_time" id="q_time" class="laydate-icon"></span>
+                            <th width="70">截止时间:</th>
+                            <td>
+                                <input type="text" value="{$t_time}" placeholder="请选择日期" name="t_time" id="t_time" class="laydate-icon">
+                            </td>
+                            <td><input class="btn btn-primary btn2" name="subb" value="查询" type="submit" onclick="checkaction();"></td>
+                        </tr>
+                    </table>
+                </form>
+            </div>
+        </div>
+        <div class="result-wrap">
+                <div class="result-title">
+                    <div class="result-list">
+                        <a href="__URL__/statistics"><i class="icon-font">&#xe045;</i>查看所有</a>
+                    </div>
+                </div>
+                <div class="result-content">
+                    <h2>按状态统计</h2>
+                    <table class="result-tabb" width="100%">
+                        <tr>
+                            <th>项目</th>
+                            <th>简历总数</th>
+                            <volist name="jl_list" id="list">
+                            <th>{$list}</th>
+                            </volist>
+                        </tr>
+                        <tr>
+                            <td>数量</td>
+                            <td>{$jl_count}</td>
+                            <volist name='ztt_count' id='count'>
+                            <td>{$count}</td>
+                            </volist>
+                        </tr>
+                        <tr>
+                            <td>占比</td>
+                            <td>
+                            <if condition="$jl_count eq 0">0%
+                            <else />100%
+                            </if>
+                            </td>
+                            <volist name='zbb_count' id='count'>
+                            <td>{$count}</td>
+                            </volist>
+                        </tr>
+                    </table>
+                </div>
+                <div class="result-content">
+                    <h2>按部门统计</h2>
+                    <table class="result-tabb" width="100%">
+                        <tr>
+                            <th width="8%">项目</th>
+                            <volist name="u_map.part" id="list">
+                            <th>{$list}</th>
+                            </volist>
+                        </tr>
+                        <tr>
+                            <td>数量</td>
+                            <volist name="bmsh_count" id="count">
+                            <td>{$count}</td>
+                            </volist>
+                        </tr>
+                        <tr>
+                            <td>占比</td>
+                            <volist name="bmzb_count" id="count">
+                            <td>{$count}</td>
+                            </volist>
+                        </tr>
+                    </table>
+                </div>
+                <div class="result-content">
+                    <h2>按来源统计</h2>
+                    <table class="result-tabb" width="100%">
+                        <tr>
+                            <th>项目</th>
+                            <volist name='so_list' id='list'>
+                            <th>{$list}</th>
+                            </volist>
+                        </tr>
+                        <tr>
+                            <td>数量</td>
+                            <volist name='lysh_count' id='list'>
+                            <td>{$list}</td>
+                            </volist>
+                        </tr>
+                        <tr>
+                            <td>占比</td>
+                            <volist name='lyzb_count' id='list'>
+                            <td>{$list}</td>
+                            </volist>
+                        </tr>
+                    </table>
+                </div>
+        </div>
+    </div>
+    <!--/main-->
+</div>
+</body>
+<script type="text/javascript">
+    laydate({
+        elem: '#t_time', 
+        event: 'focus' 
+    });
+    laydate({
+        elem: '#q_time', 
+        event: 'focus' 
+    });
+    function checkaction(){ 
+        document.searchform.action="{:U('statistics')}"; 
+        searchform.submit(); 
+    } 
+</script>
+</html>

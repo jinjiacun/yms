@@ -1,0 +1,173 @@
+<!doctype html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>运营管理系统</title>
+    <link rel="stylesheet" type="text/css" href="__PUBLIC__/Home/css/common.css"/>
+    <link rel="stylesheet" type="text/css" href="__PUBLIC__/Home/css/main.css"/>
+    <script type="text/javascript" src="__PUBLIC__/js/jquery-1.8.3.min.js" ></script>
+    <script type="text/javascript" src="__PUBLIC__/Home/js/main.js" ></script>
+    <script type="text/javascript" src="__PUBLIC__/Home/js/mh_dialog.js" ></script>
+    <script type="text/javascript" src="__PUBLIC__/Home/js/jquery.form.js" ></script>
+</head>
+<body>
+<div class="container clearfix">
+    <div class="main-wrap">
+
+        <div class="crumb-wrap">
+            <div class="crumb-list"><i class="icon-font"></i><a target="_top" href="__ROOT__/">首页</a><span class="crumb-step">&gt;</span><a class="crumb-name" href="index.html">简历列表</a><span class="crumb-step">&gt;</span><span>新增简历</span></div>
+        </div>
+        <div class="result-wrap">
+            <div class="result-content">
+                <form class="registerform" name="theForm" id="theForm" action="__URL__/add" method="post" enctype="multipart/form-data" onsubmit="return ValidateFile()">
+                    <table class="insert-tab" width="100%">
+                        <tbody>
+                            <tr>
+                                <th>编号：</th>
+                                <td><input class="common-text yinc" readonly="readonly" name="number" size="50" value="{$number}"></td>
+                            </tr>
+                            <tr>
+                                <th><i class="require-red">*</i>应聘人：</th>
+                                <td>
+                                    <input class="common-text" id="candidates" name="candidates" size="50" value="" type="text">
+                                </td>
+                            </tr>
+                            <tr>
+                                <th><i class="require-red">*</i>联系方式：</th>
+                                <td>
+                                    <input class="common-text" id="telephone" name="telephone" size="50" value="" type="text">
+                                </td>
+                            </tr>
+                            <tr>
+                                <th><i class="require-red">*</i>应聘岗位：</th>
+                                <td>
+                                    <select name="position_id" id="position_id" class="required">
+                                        <option value="">请选择</option>
+                                        <volist name="pos_list" id="pos">
+                                        <option value="{$key}">{$pos}</option>
+                                        </volist>
+                                    </select>
+                                </td>
+                            </tr>
+                            <tr>
+                                <th><i class="require-red">*</i>应聘部门：</th>
+                                <td>
+                                    <select name="part_id" id="part_id" class="required">
+                                        <option value="">请选择</option>
+                                        <volist name="u_map.part" id="par">
+                                        <option value="{$key}">{$par}</option>
+                                        </volist>
+                                    </select>
+                                </td>
+                            </tr>
+                            <tr>
+                                <th><i class="require-red">*</i>简历附件：</th>
+                                <td>
+                                    <input id="accessories" type="file" name="accessories">
+                                </td>
+                            </tr>
+                            <tr>
+                                <th>备注：</th>
+                                <td><textarea class="wtms" name="remartk" id="remartk"></textarea></td>
+                            </tr>
+                            <tr>
+                                <th></th>
+                                <td>
+                                    <input class="btn btn-primary btn6 mr10" id="submit" name="submit" value="提交" type="submit">
+                                    <input class="btn btn6" onClick="history.go(-1)" value="返回" type="button">
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </form>
+            </div>
+        </div>
+
+    </div>
+    <!--/main-->
+</div>
+</body>
+<script type="text/javascript">
+    //判断必填项
+    function ValidateFile(){
+        var candidates  = $('#candidates').val();
+        var telephone   = $('#telephone').val();
+        var position_id = $('#position_id').val();
+        var part_id     = $('#part_id').val();
+        var tmp         = document.getElementById("accessories").value; 
+        if (candidates == "") {
+            mh_dialogShow('mh_warning','应聘人不能为空！',2,true); 
+            return false;
+        } 
+        if (telephone == "") {
+            mh_dialogShow('mh_warning','联系方式不能为空！',2,true); 
+            return false;
+        }else{
+            if (!telephone.match(/^13[0-9]{9}$|14[0-9]{9}|15[0-9]{9}$|18[0-9]{9}$|17[0-9]{9}$/)) {
+                mh_dialogShow('mh_warning','输入的手机号码有误！',2,true); 
+                return false;
+            }
+        } 
+        if (position_id == "") {
+            mh_dialogShow('mh_warning','请选择应聘岗位！',2,true); 
+            return false;
+        } 
+        if (part_id == "") {
+            mh_dialogShow('mh_warning','请选择应聘部门！',2,true); 
+            return false;
+        } 
+        if(tmp != ""){
+            if(!/.(pdf|doc|docx|xls|xlsx|zip|rar|PDF|DOC|DOCX|XLS|XLSX|ZIP)$/.test(tmp)){
+              mh_dialogShow('mh_warning','简历附件类型为.pdf,doc,docx,xls,xlsx,zip,rar！',2,true); 
+              return false;
+            }
+        }else{
+            mh_dialogShow('mh_warning','简历附件不能为空！',2,true); 
+            return false;
+        } 
+    }
+    $(function () {
+        var options = {
+            beforeSend:function(){
+                $("#submit").val('提交').attr('disabled',true);
+            },
+            success: function (data) {
+                if(data){
+                  if (data == 0) {
+                    mh_dialogShow('mh_success','添加成功!',2,true,'__APP__/Resume/index.html'); 
+                    return false;
+                  }else if(data == -1){
+                    mh_dialogShow('mh_warning','添加失败！',2,true); 
+                    return false;
+                  }else if(data == 1){
+                    mh_dialogShow('mh_warning','简历上传失败！',2,true); 
+                    return false;
+                  }else if(data == 2){
+                    mh_dialogShow('mh_warning','没有文件上传！',2,true); 
+                    return false;
+                  }else if(data == 3){
+                    mh_dialogShow('mh_warning','文件上传错误！',2,true); 
+                    return false;
+                  }else if(data == 4){
+                    mh_dialogShow('mh_warning','上传文件不能大于200kb！',2,true); 
+                    return false;
+                  }else if(data == 5){
+                    mh_dialogShow('mh_warning','上传文件格式错误！',2,true); 
+                    return false;
+                  }else if(data == 6){
+                    mh_dialogShow('mh_warning','简历附件不能为空！',2,true); 
+                    return false;
+                  }else{
+                    mh_dialogShow('mh_warning','添加失败！',2,true); 
+                    return false;
+                  }
+                }
+            },
+            complete:function(){
+                $("#submit").val('提交').attr('disabled',false);
+            }
+        };
+        $("#theForm").ajaxForm(options);
+    });
+</script>
+</html>

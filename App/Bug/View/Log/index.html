@@ -1,0 +1,81 @@
+<!doctype html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>运营管理系统</title>
+    <link rel="stylesheet" type="text/css" href="__PUBLIC__/Home/css/common.css"/>
+    <link rel="stylesheet" type="text/css" href="__PUBLIC__/Home/css/main.css"/>
+    
+</head>
+<body>
+<div class="container clearfix">
+    <div class="main-wrap">
+        <div class="crumb-wrap">
+            <div class="crumb-list"><i class="icon-font"></i><a target="_top" href="__ROOT__/">首页</a><span class="crumb-step">&gt;</span><span class="crumb-name">日志管理</span></div>
+        </div>
+        <div class="search-wrap">
+            <div class="search-content">
+                <form name="fom" id="fom" action="__URL__/index" method="get">
+                    <table class="search-tab">
+                        <tr>
+                            <th width="120">系统类型:</th>
+                            <td>
+                                <select name="system" id="system" class="req">
+                                    <option value="">---全部---</option>
+                                    <option value="IOS" <if condition="$ver eq 'IOS'">selected="selected"</if>>IOS</option>
+                                    <option value="Android" <if condition="$ver eq 'Android'">selected="selected"</if>>Android</option>
+                                </select>
+                            </td>
+                            <th width="70">应用名称:</th>
+                            <td><input class="common-text" placeholder="请输入关键字" name="keywords" value="{$name}" id="" type="text"></td>
+                            <td><input class="btn btn-primary btn2" name="sub" value="查询" type="submit"></td>
+                        </tr>
+                    </table>
+                </form>
+            </div>
+        </div>
+        <div class="result-wrap">
+                <div class="result-content">
+                    <table class="result-tab" width="100%">
+                        <tr>
+                            <th>编号</th>
+                            <th>应用名称</th>
+                            <th>版本名称</th>
+                            <th>系统类型</th>
+                            <th>日期</th>
+                            <th>手机型号</th>
+                            <th>错误日志</th>
+                            <th>提交IP</th>
+                            <th>手机头</th>
+                            <th>添加日期</th>
+                            <th>操作</th>
+                        </tr>
+                        <volist id="list" name="list">
+                        <tr>
+                            <td>{$list.id}</td>
+                            <td>{$list.app_name}</td>
+                            <td>{$list.version_name}</td>
+                            <td>{$list.system}</td>
+                            <td>{$list.time}</td>
+                            <td>{$list.model}</td>
+                            <td>{$list.loginfo|subtext=50}</td>
+                            <td>{$list.ip_address}</td>
+                            <td>{$list.user_agent}</td>
+                            <td>{$list.add_time}</td>
+                            <td><a class="link-update" href="__URL__/edit?id={$list.id}">查看</a></td>
+                        </tr>
+                        </volist>
+                    </table>
+                    <div class="list-page">
+                        <if condition="$record_count gt 0">
+                        <span class="page_span">共有{$record_count}条</span>
+                        </if>
+                        {$page}
+                    </div>
+                </div>
+        </div>
+    </div>
+    <!--/main-->
+</div>
+</body>
+</html>

@@ -1,0 +1,35 @@
+<table class="result-tab" width="100%">
+    <tr>
+        <th>序号</th>
+        <th>确认人</th>
+        <th>确认时间</th>
+        <th>确认结果</th>
+        <th>预计上线时间</th>
+        <th>确认说明</th>
+    </tr>
+    <if condition="$record_count gt 0">
+    <volist name="fk_list" id="fk_list">
+    <tr class="fankui_tr">
+        <td>{$fk_list.id}</td>
+        <td>{$u_map['admin'][$fk_list['user_id']]}</td>
+        <td>{$fk_list.add_time}</td>
+        <td><if condition="$fk_list.result eq 1">暂缓<else />通过</if></td>
+        <td>
+        <if condition="$fk_list.plan_online_time eq 1">随时
+        <elseif condition="$fk_list.plan_online_time eq 0" />---
+        <else />{$fk_list.plan_online_time}
+        </if>
+        </td>
+        <td width="55%" style="text-align: left"><span title="{$fk_list.content}">{$fk_list.content|subtext=80}</span></td>
+    </tr>
+    </volist>
+    <else />
+    <tr><td colspan="6">暂无信息！</td></tr>
+    </if>
+</table>
+<div class="list-page">
+    <if condition="$record_count gt 0">
+    <span class="page_span">共有{$record_count}条</span>
+    </if>
+    {$pages}
+</div>

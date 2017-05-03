@@ -1,0 +1,26 @@
+<table class="result-tab" width="100%">
+    <tr>
+        <th>序号</th>
+        <th>反馈人</th>
+        <th>反馈时间</th>
+        <th>反馈内容</th>
+    </tr>
+    <if condition="$record_count gt 0">
+    <volist name="fk_list" id="fk_list">
+    <tr class="fankui_tr">
+        <td>{$fk_list.id}</td>
+        <td>{$u_map['admin'][$fk_list['user_id']]}</td>
+        <td>{$fk_list.add_time}</td>
+        <td>{$fk_list.content}{$fk_list.add_time}</td>
+    </tr>
+    </volist>
+    <else />
+    <tr><td colspan="4">暂时没有反馈信息！</td></tr>
+    </if>
+</table>
+<div class="list-page">
+    <if condition="$record_count gt 0">
+    <span class="page_span">共有{$record_count}条</span>
+    </if>
+    {$pages}
+</div>

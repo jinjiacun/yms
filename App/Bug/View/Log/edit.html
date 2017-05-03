@@ -1,0 +1,81 @@
+<!doctype html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>运营管理系统</title>
+    <link rel="stylesheet" type="text/css" href="__PUBLIC__/Home/css/common.css"/>
+    <link rel="stylesheet" type="text/css" href="__PUBLIC__/Home/css/main.css"/>
+</head>
+<body>
+<div class="container clearfix">
+    <div class="main-wrap">
+
+        <div class="crumb-wrap">
+            <div class="crumb-list">
+                <i class="icon-font"></i>
+                <a target="_top" href="__ROOT__/">首页</a>
+                <span class="crumb-step">&gt;</span>
+                <a class="crumb-name" href="index.html">日志管理</a>
+                <span class="crumb-step">&gt;</span>
+                <span>日志详情</span>
+            </div>
+        </div>
+        <div class="result-wrap">
+            <div class="result-content">
+                    <table class="insert-tab" width="100%">
+                        <tbody>
+                            <tr>
+                                <th colspan="2">
+                                    <a onClick="history.go(-1)" href="javascript:void(0);" class="bianj"><< 返回</a>
+                                </th>
+                            </tr>
+                            <tr>
+                                <th width="120">编号：</th>
+                                <td>{$list.id}</td>
+                            </tr>
+                            <tr>
+                                <th>应用名称：</th>
+                                <td>{$list.app_name}</td>
+                            </tr>
+                            <tr>
+                                <th>版本名称：</th>
+                                <td>{$list.version_name}</td>
+                            </tr>
+                            <tr>
+                                <th>系统类型：</th>
+                                <td>{$list.system}</td>
+                            </tr>
+                            <tr>
+                                <th>日期：</th>
+                                <td>{$list.time}</td>
+                            </tr>
+                            <tr>
+                                <th>手机型号：</th>
+                                <td>{$list.model}</td>
+                            </tr>
+                            <tr>
+                                <th>错误日志：</th>
+                                <td>{$list.loginfo}</td>
+                            </tr>
+                            <tr>
+                                <th>提交IP：</th>
+                                <td>{$list.ip_address}</td>
+                            </tr>
+                            <tr>
+                                <th>手机头：</th>
+                                <td>{$list.user_agent}</td>
+                            </tr>
+                            <tr>
+                                <th>添加日期：</th>
+                                <td>{$list.add_time}</td>
+                            </tr>
+                        </tbody>
+                    </table>
+            </div>
+        </div>
+
+    </div>
+    <!--/main-->
+</div>
+</body>
+</html>

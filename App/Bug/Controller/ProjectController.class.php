@@ -1,0 +1,428 @@
+<?php
+namespace Home\Controller;
+use Think\Controller;
+header('Content-type: text/html; charset=utf-8');
+include_once(dirname(__FILE__)."/BaseController.class.php");
+class ProjectController extends BaseController {
+    public function _initialize(){
+        parent::_initialize();
+        if("" == session('user_id'))
+        {
+            exit('<script>top.location.href="../Login/index"</script>');
+        }
+    }
+	//项目列表
+    public function index(){
+
+        //查询全部还是自己权限
+        $pro_id = session('pro_id');
+	    $page_index = 1;
+        $page_size  = 20;
+        $content = array();
+        if(I('get.p'))
+        {
+            $page_index = I('get.p');
+            $content['page_size']  = $page_size;
+            $content['page_index'] = $page_index;
+        }else{
+            $content['page_size']  = $page_size;
+            $content['page_index'] = $page_index;
+        }
+        if ($pro_id == 2) {
+            $xm_id = $this->project_mem_xm();
+            if ($xm_id == "") {
+                $content['where']['create'] = session("user_id");
+            }else{
+                $content['where'] = array(
+                    '_string' => '`create` = '.session("user_id").' or id in ('.$xm_id.')'
+                );  
+            }
+            
+        }
+        //搜索
+        if (I('get.sub')) {
+            $name = I('get.keywords');
+            if ("" != $name) {
+                $this->assign('name', $name);
+                $content['where']['name'] = array('like', '$'.urlencode($name).'$');
+                $this->assign('name', $name);
+            }
+        }
+        $result = $this->_call('Project.get_list',$content);
+        if (200 == $result['status_code']) {
+            $con = $result['content']['list']; 
+            foreach ($con as $key => $rs) {
+                $con[$key]['last_time_ex'] = date('Y-m-d H:i',$rs['last_time']);
+            } 
+            $this->assign('con',$con);
+            $record_count = $result['content']['record_count'];
+            $this->assign('record_count', $record_count);
+            $this->get_page($record_count, $page_size);
+        }
+        $this->display();
+    }
+    /*
+    *项目添加
+    */
+    public function add(){
+        //表单提交
+    	if (I('post.submit')) {
+            $this->_login();  //判断登录是否过期
+            $name        = I('post.xm_name');
+            $class_id    = I('post.class_id');
+            $number      = I('post.number');
+            $description = I('post.description');
+            $description = $this->DeleteHtml($description);
+            $create      = session('user_id');
+            $projectmem  = I('post.example-basic');
+            $projectmod  = I('post.projectmod');
+		    
+            if ($projectmem == '') {
+                echo 1;
+                exit();
+            }
+            $content = array(
+                'number'      => urlencode($number),
+                'class_id'    => $class_id,
+                'name'        => urlencode($name),
+                'create'      => $create,
+                'description' => urlencode($description),
+                );
+            $result = $this->_call('Project.add', $content);
+            if (200 == $result['status_code']
+                && 0 == $result['content']['is_success']) {
+            	//项目成员添加
+            	$project_id = $result['content']['id'];
+                foreach ($projectmem as $key => $value) {
+		    		$content_mem = array(
+		    			'project_id'  => $project_id,
+		    			'admin_id'    => $value
+		    			);
+		    		$res_mem = $this->_call('Projectmem.add', $content_mem);
+		    		if (200 == $res_mem['status_code']
+            			&& -1 == $res_mem['content']['is_success']) {
+		    			echo -1;
+		    		    exit();
+		    		}
+			    }
+			    //项目模块添加
+                foreach ($projectmod as $k => $v) {
+                	$content_mod = array(
+                		'project_id' => $project_id,
+                		'name'       => urlencode($v)
+                		);
+                	$res_mod = $this->_call('Projectmodule.add', $content_mod);
+                	if (200 == $res_mod['status_code']
+                			&& -1 == $res_mod['content']['is_success']) {
+			    			echo -1;
+			    		    exit();
+			    	}
+                }
+                echo 0;
+                S('get_map',null);
+                exit();
+            }else{
+                echo -1;
+                exit();
+            }
+        }
+        //编号
+        $mod = "Project.get_list";
+        $type = "XM-";
+        $this->_number($mod, $type);
+        //$this->user_wap();     //用户信息查询
+    	$this->display();
+    }
+    /*
+    *项目修改
+    */
+    public function edit(){
+        $id = I('get.id');
+        //修改信息查询
+        $content['id'] = $id;
+        $result = $this->_call('Project.get_info',$content);
+        if ($result && 200 == $result['status_code']) {
+            $enit_list = $result['content'];
+            $enit_list['add_time'] = date('Y-m-d H:i',$result['content']['add_time']);
+            $this->assign('enit_list',$enit_list);
+        }
+        //项目状态管理信息查询
+        $content_zt = array();
+        $content_zt['page_size'] = 20;
+        $content_zt['where'] = array('project_id' => $id);
+        $result_zt = $this->_call('Projectstatus.get_list', $content_zt);
+        if (200 == $result_zt['status_code']) {
+            $zt_list = $result_zt['content']['list'];
+            foreach ($zt_list as $key => $v) {
+                $zt_list[$key]['add_time'] = date('Y-m-d H:i:s',$v['add_time']);
+            }
+            $this->assign('zt_list',$zt_list);
+        }
+        //成员
+        $this->project_mem($id);
+        //模块
+        $this->project_mod($id);
+        //修改提交
+        if (I('post.submit')) {
+            $this->_login();  //判断登录是否过期
+            $id          = I('post.id');
+            $name        = I('post.xm_name');
+            $class_id    = I('post.class_id');
+            $description = I('post.description');
+            $description = $this->DeleteHtml($description);
+            $projectmem  = I('post.example-basic');
+            $projectmod  = I('post.projectmod');
+            $projectmod_ex  = I('post.projectmod_ex');
+            
+            if ($projectmem == '') {
+                echo 1;
+                exit();
+            }
+            /****修改项目成员****/
+            //成员
+            $m_list = $this->project_mem($id);
+            //新增加的成员
+            $mem1 = array_diff($projectmem, array_intersect($projectmem, $m_list));
+            //取消的成员
+            $mem2 = array_diff($m_list, array_intersect($projectmem, $m_list)); 
+            //添加新加成员
+            if (!empty($mem1)) {
+                foreach ($mem1 as $value) {
+                    $content_memm = array(
+                        'project_id'  => $id,
+                        'admin_id'    => $value
+                        );
+                    $res_memm = $this->_call('Projectmem.add', $content_memm);
+                    if (200 == $res_memm['status_code']
+                        && -1 == $res_memm['content']['is_success']) {
+                        echo -100;
+                        exit();
+                    }
+                }
+            }
+            //删除不存在的成员
+            if (!empty($mem2)) {
+                $adminid = implode(',',$mem2);
+                $content_mem['project_id'] = $id;
+                $content_mem['admin_id']   = array('in', $adminid);
+                $res_mem = $this->_call("Projectmem.delete", $content_mem);
+                if (200 == $res_mem['status_code']
+                    && -1 == $res_mem['content']['is_success']) {
+                    echo -101;
+                    exit();
+                }
+            }
+            /****修改项目成员--end****/
+
+            /****修改项目模块****/
+            //已有模块
+            $mm_list = $this->project_mod($id);
+            //已有模块的删除修改
+            foreach ($mm_list as $k => $v) {
+                if (isset($projectmod[$k])) {
+                    //存在的修改
+                    $cont_mod['data']  = array('name' => urlencode($projectmod[$k]));
+                    $cont_mod['where'] = array('id' => $k);
+                    $result_mod = $this->_call('Projectmodule.update',$cont_mod);
+                    if(200 == $result_mod['status_code'] 
+                        && -1 == $result_mod['content']['is_success']){
+                        echo -102;
+                        exit();
+                    }
+                }else{
+                    //不存在的删除
+                    $content_mod['id'] = $k;
+                    $res_mod = $this->_call("Projectmodule.delete", $content_mod);
+                    if (200 == $res_mod['status_code']
+                        && -1 == $res_mod['content']['is_success']) {
+                        echo -103;
+                        exit();
+                    }
+                }
+            }        
+            //添加新加模块
+            if (!empty($projectmod_ex)) {
+                foreach ($projectmod_ex as $v) {
+                    $content_modd = array(
+                        'project_id' => $id,
+                        'name'       => urlencode($v)
+                        );
+                    $res_modd = $this->_call('Projectmodule.add', $content_modd);
+                    if (200 == $res_modd['status_code']
+                        && -1 == $res_modd['content']['is_success']) {
+                        echo -104;
+                        exit();
+                    }
+                }
+            }
+            /****修改项目模块****/                 
+            $content['data'] = array(
+                'name'        => urlencode($name),
+                'description' => urlencode($description),
+                'class_id'    => $class_id,
+                'last_time'   => time()
+                ); 
+            $content['where'] = array('id' => $id);
+            $result = $this->_call('Project.update',$content);
+            if($result){
+            	if(200 == $result['status_code'] 
+                	&& $result['content']['is_success'] == 0){
+                	echo 0;
+                	S('get_map',null);
+                	exit();
+            	}else{
+                	echo -105;
+                	exit();
+            	}
+	    }else{
+		echo -106;
+		exit();
+	    }
+        }
+        $this->display();
+    }
+    //项目状态管理添加
+    public function project_status(){
+        if (I('post.submit')) {
+            $this->_login();  //判断登录是否过期
+            $project_id = I('post.project_id');
+            $status     = I('post.status_ex');
+            $description= I('post.description_ex');
+            $description= $this->DeleteHtml($description);
+            $is_current = I('post.is_current');
+            
+            //方法名
+            $method_list = array(
+                'Projectstatus.add', //项目状态添加
+                'Project.update'  //项目状态修改
+                );
+            //插入的值和条件
+            $comment_list = array(
+                //添加
+                array(
+                    'project_id' => $project_id,
+                    'status'     => $status,
+                    'description'=> urlencode($description),
+                    'create'     => session('user_id'),
+                    'is_current' => $is_current,
+                ),
+                array(
+                    'data' => array(
+                        'status' => $status
+                    ),
+                    'where' => array('id'=>$project_id)
+                )
+            );
+            $result = $this->_mul_call($method_list, $comment_list);
+            if (200 == $result['status_code'][0] && 200 == $result['status_code'][1]) {
+                if (0 == $result['content'][0]['is_success'] && 0 == $result['content'][1]['is_success']) {
+                    echo 0;
+                    exit();
+                }else {
+                    echo -1;
+                    exit();
+                }
+            }else {
+                echo -1;
+                exit();
+            }
+        }
+    }
+    //成员查询
+    public function project_mem($id){
+        //用户名称
+        $u_name = $this->grtmap();
+        $u_name = $u_name['admin'];
+	$record_count  = 0;
+        //成员和模块信息
+        $cont = array();
+        $cont['page_size']  = 20;
+        $cont['where'] = array('project_id' => $id);
+        //成员
+        $result_mem = $this->_call('Projectmem.get_list',$cont);
+        if ($result_mem && 200 == $result_mem['status_code']) {
+            $mem_list = $result_mem['content']['list'];
+            foreach($mem_list as $value)
+            {
+                $m_list[$value['admin_id']] = $u_name[$value['admin_id']];
+                $mm_list[] = $value['admin_id']; 
+            }
+	    $record_count = $result_mem['content']['record_count'];
+        }
+	if($record_count > 20){
+	    $pages = $record_count/20;
+	    for($i = 1; $i < $pages; $i++){
+		$cont['page_index'] = $i +1;
+		$result_mem = $this->_call('Projectmem.get_list',$cont);
+                if ($result_mem && 200 == $result_mem['status_code']) {
+                    $mem_list = $result_mem['content']['list'];
+                    foreach($mem_list as $value)
+                    {
+                        $m_list[$value['admin_id']] = $u_name[$value['admin_id']];
+                        $mm_list[] = $value['admin_id']; 
+                    }
+                }
+	    }
+	}
+
+	$this->assign('m_list', $m_list);
+	return $mm_list;	
+    }
+    //模块查询
+    public function project_mod($id){
+        $cont = array();
+        $cont['page_size']  = 20;
+        $cont['order']['id'] = 'ASC';
+        $cont['where'] = array('project_id' => $id);
+        //模块
+        $result_mod = $this->_call('Projectmodule.get_list',$cont);
+        if ($result_mod && 200 == $result_mod['status_code']) {
+            $mod_list = $result_mod['content']['list'];
+            foreach($mod_list as $value)
+            {
+                $mm_list[$value['id']] = $value['name']; 
+            }
+            $mod_count = $result_mod['content']['record_count'];
+            $this->assign('mod_list',$mod_list);
+            $this->assign('mod_count',$mod_count);
+            return $mm_list;
+        }
+    }
+    //删除单条数据
+    public function delete(){
+        $id = I('post.id');
+        $result = $this->_call("Project.delete",array('id'=>$id));
+        if($result && 200 == $result['status_code']
+                && 0 == $result['content']['is_success']
+                ){
+            S('get_map',null);
+            echo 0;
+            exit();
+        }else{
+            echo -1;
+            exit();
+        }
+    }
+    //批量删除项目
+    public function batch_delete(){
+        $id_list = I('post.id');
+        $item = explode(',', $id_list);
+        S('get_map',null);
+        if(0<count($item))
+        {
+            foreach($item as $id)
+            {
+                $result = $this->_call("Project.delete",array('id'=>$id));
+                if($result && 200 == $result['status_code']
+                && 0 == $result['content']['is_success']
+                ){
+                }else
+                {
+                    echo -1;
+                    exit();
+                }
+            }
+            
+        }
+    }
+}

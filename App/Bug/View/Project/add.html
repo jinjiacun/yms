@@ -1,0 +1,277 @@
+<!doctype html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>运营管理系统</title>
+    <link rel="stylesheet" type="text/css" href="__PUBLIC__/Home/css/common.css"/>
+    <link rel="stylesheet" type="text/css" href="__PUBLIC__/Home/css/main.css"/>
+    <link rel="stylesheet" type="text/css" href="__PUBLIC__/jquery-ui-multiselect/css/jquery.multiselect.css" />
+    <link rel="stylesheet" type="text/css" href="__PUBLIC__/jquery-ui-multiselect/css/jquery.multiselect.filter.css" />
+    <link rel="stylesheet" type="text/css" href="__PUBLIC__/jquery-ui-multiselect/css/jquery-ui.css" />
+    <link rel="stylesheet" type="text/css" href="__PUBLIC__/jquery-ui-multiselect/assets/style.css" />
+    <link rel="stylesheet" type="text/css" href="__PUBLIC__/jquery-ui-multiselect/assets/prettify.css" />
+
+    <script type="text/javascript" src="__PUBLIC__/js/jquery-1.8.3.min.js" ></script>
+    <script type="text/javascript" src="__PUBLIC__/Home/js/main.js" ></script>
+    <script type="text/javascript" src="__PUBLIC__/Home/js/mh_dialog.js" ></script>
+    <script type="text/javascript" src="__PUBLIC__/Home/js/jquery.form.js" ></script>
+    <script type="text/javascript" src="__PUBLIC__/jquery-ui-multiselect/assets/prettify.js"></script>
+    <script type="text/javascript" src="__PUBLIC__/jquery-ui-multiselect/src/jquery-ui.min.js"></script>
+    <script type="text/javascript" src="__PUBLIC__/jquery-ui-multiselect/src/jquery.multiselect.js"></script>
+    <script type="text/javascript" src="__PUBLIC__/jquery-ui-multiselect/src/jquery.multiselect.filter.js"></script>
+    <script type="text/javascript">
+        $(function(){
+            $("#select_dx").multiselect({
+                noneSelectedText: "===请选择===",
+                checkAllText: "全选",
+                uncheckAllText: '全不选',
+                selectedList:5
+            });
+        });
+        function showValues() {
+            
+         var array_of_checked_values = $("#sela").multiselect("getChecked").map(function(){
+                       return this.value;   
+        }).get();
+         alert(array_of_checked_values);
+        }
+        </script>
+</head>
+<body>
+<div class="container clearfix">
+    <div class="main-wrap">
+
+        <div class="crumb-wrap">
+            <div class="crumb-list"><i class="icon-font"></i><a target="_top" href="__ROOT__/">首页</a><span class="crumb-step">&gt;</span><a class="crumb-name" href="index.html">项目列表</a><span class="crumb-step">&gt;</span><span>新增项目</span></div>
+        </div>
+        <div class="result-wrap">
+            <div class="result-content">
+                <form class="registerform" name="theForm" id="theForm" action="__URL__/add" method="post" enctype="multipart/form-data" onsubmit="return ValidateFile()">
+                    <table class="insert-tab" width="100%">
+                        <tbody>
+                            <tr>
+                                <th><i class="require-red">*</i>项目名称：</th>
+                                <td>
+                                    <input class="common-text" id="xm_name" name="xm_name" size="50" value="" type="text">
+                                </td>
+                            </tr>
+                            <tr>
+                                <th><i class="require-red">*</i>项目分类：</th>
+                                <td>
+                                    <select class="required" id ="class_id" name="class_id">
+                                        <option value="">---请选择---</option>
+                                        <volist name="u_map.project_class" id="list">
+                                            <option value="{$key}">{$list}</option>
+                                        </volist>
+                                    </select>
+                                </td>
+                            </tr>
+                            <tr>
+                                <th>编号：</th>
+                                <td><input class="common-text yinc" readonly="readonly" name="number" size="50" value="{$number}"></td>
+                            </tr>
+                            <tr>
+                                <th>项目描述：</th>
+                                <td><textarea class="wtms" name="description" id="description"></textarea></td>
+                            </tr>
+                            <tr>
+                                <th><i class="require-red">*</i>成员：</th>
+                                <td>
+                                    <select class="select_dx" id ="select_dx" multiple="multiple" name="example-basic[]" size="5">
+                                        <volist name="u_map.admin" id="list">
+                                            <option value="{$key}">{$list}</option>
+                                        </volist>
+                                    </select>
+                                    <!-- <p>
+                                        <font>产品经理：</font>
+
+                                        <span>
+                                            <select class="select_dx" id ="cp" multiple="multiple" name="example-basic[]" size="5">
+                                            <volist name="u_list.1" id="list">
+                                                <option value="{$key}">{$list}</option>
+                                            </volist>
+                                            </select>
+                                        </span>
+                                    </p>
+                                    <p>
+                                        <font>UI设计：</font>
+                                        <span>
+                                            <select class="select_dx" id ="ui" multiple="multiple" name="example-basic[]" size="5">
+                                            <volist name="u_list.2" id="list">
+                                                <option value="{$key}">{$list}</option>
+                                            </volist>
+                                            </select>
+                                        </span>
+                                    </p>
+                                    <p>
+                                        <font>前端html：</font>
+                                        <span>
+                                            <select class="select_dx" id ="html" multiple="multiple" name="example-basic[]" size="5">
+                                            <volist name="u_list.3" id="list">
+                                                <option value="{$key}">{$list}</option>
+                                            </volist>
+                                            </select>
+                                        </span>
+                                    </p>
+                                    <p>
+                                        <font>前端开发：</font>
+                                        <span>
+                                            <select class="select_dx" id ="qkf" multiple="multiple" name="example-basic[]" size="5">
+                                            <volist name="u_list.4" id="list">
+                                                <option value="{$key}">{$list}</option>
+                                            </volist>
+                                            </select>
+                                        </span>
+                                    </p>
+                                    <p>
+                                        <font>后端开发：</font>
+                                        <span>
+                                            <select class="select_dx" id ="hkf" multiple="multiple" name="example-basic[]" size="5">
+                                            <volist name="u_list.5" id="list">
+                                                <option value="{$key}">{$list}</option>
+                                            </volist>
+                                            </select>
+                                        </span>
+                                    </p>
+                                    <p>
+                                        <font>测试：</font>
+                                        <span>
+                                            <select class="select_dx" id ="cs" multiple="multiple" name="example-basic[]" size="5">
+                                            <volist name="u_list.6" id="list">
+                                                <option value="{$key}">{$list}</option>
+                                            </volist>
+                                            </select>
+                                        </span>
+                                    </p>
+                                    <p>
+                                        <font>SEO：</font>
+                                        <span>
+                                            <select class="select_dx" id ="seo" multiple="multiple" name="example-basic[]" size="5">
+                                            <volist name="u_list.7" id="list">
+                                                <option value="{$key}">{$list}</option>
+                                            </volist>
+                                            </select>
+                                        </span>
+                                    </p>
+                                    <p>
+                                        <font>项目主管：</font>
+                                        <span>
+                                            <select class="select_dx" id ="xzg" multiple="multiple" name="example-basic[]" size="5">
+                                            <volist name="u_list.8" id="list">
+                                                <option value="{$key}">{$list}</option>
+                                            </volist>
+                                            </select>
+                                        </span>
+                                    </p>
+                                    <p>
+                                        <font>开发主管：</font>
+                                        <span>
+                                            <select class="select_dx" id ="kzg" multiple="multiple" name="example-basic[]" size="5">
+                                            <volist name="u_list.9" id="list">
+                                                <option value="{$key}">{$list}</option>
+                                            </volist>
+                                            </select>
+                                        </span>
+                                    </p>
+                                    <p>
+                                        <font>产品主管：</font>
+                                        <span>
+                                            <select class="select_dx" id ="czh" multiple="multiple" name="example-basic[]" size="5">
+                                            <volist name="u_list.10" id="list">
+                                                <option value="{$key}">{$list}</option>
+                                            </volist>
+                                            </select>
+                                        </span>
+                                    </p> -->
+                                </td>
+                            </tr>
+                            <tr>
+                                <th><i class="require-red">*</i>模块：</th>
+                                <td>
+                                    <div id="main">  
+                                        <div>
+                                          <input class="text_wb" type="text" size="50" name="projectmod[]"/>
+                                          <input class="but_an but_tj" type="button" id="addTextImput" value="+"/>  
+                                        </div>  
+                                    </div>
+                                </td>
+                            </tr>
+                            <tr>
+                                <th></th>
+                                <td>
+                                    <input class="btn btn-primary btn6 mr10" id="submit" name="submit" value="提交" type="submit">
+                                    <input class="btn btn6" onClick="history.go(-1)" value="返回" type="button">
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </form>
+            </div>
+        </div>
+
+    </div>
+    <!--/main-->
+</div>
+</body>
+<script type="text/javascript">
+    //判断必填项
+    function ValidateFile(){
+        var xm_name      = $('#xm_name').val();
+        var class_id     = $('#class_id').val();
+        //var description  = $('#description').val();
+        var select_dx    = $('.select_dx').val();
+        var text_wb      = $('.text_wb').val();
+        if (xm_name == "") {
+            mh_dialogShow('mh_warning','项目名称不能为空！',2,true); 
+            return false;
+        } 
+        if (class_id == "") {
+            mh_dialogShow('mh_warning','请选择项目分类！',2,true); 
+            return false;
+        }
+        // if (description == "") {
+        //     mh_dialogShow('mh_warning','项目描述不能为空！',2,true); 
+        //     return false;
+        // }
+        if (select_dx == null) {
+            mh_dialogShow('mh_warning','请选择添加成员！',2,true); 
+            return false;
+        }
+        if (text_wb == "") {
+            mh_dialogShow('mh_warning','模块不能为空！',2,true); 
+            return false;
+        } 
+    }
+    $(function () {
+        var options = {
+            beforeSend:function(){
+                $("#submit").val('提交').attr('disabled',true);
+            },
+            success: function (data) {
+                if(data){
+                  if (data == 0) {
+                    mh_dialogShow('mh_success','添加成功!',2,true,'__APP__/Project/index.html'); 
+                    return false;
+                  }else if(data == -1){
+                    mh_dialogShow('mh_warning','添加失败！',2,true); 
+                    return false;
+                  }else if(data == 1){
+                    mh_dialogShow('mh_warning','请选择添加成员！',2,true); 
+                    return false;
+                  }else if(data == 100){
+                    top.location.href="__APP__/Login/index.html"
+                    return false;
+                  }else{
+                    mh_dialogShow('mh_warning','添加失败！',2,true); 
+                    return false;
+                  }
+                }
+            },
+            complete:function(){
+                $("#submit").val('提交').attr('disabled',false);
+            }
+        };
+        $("#theForm").ajaxForm(options);
+    });
+</script>
+</html>

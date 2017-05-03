@@ -1,0 +1,337 @@
+<!doctype html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>运营管理系统</title>
+    <link rel="stylesheet" type="text/css" href="__PUBLIC__/Home/css/common.css"/>
+    <link rel="stylesheet" type="text/css" href="__PUBLIC__/Home/css/main.css"/>
+    <script type="text/javascript" src="__PUBLIC__/js/jquery-1.8.3.min.js" ></script>
+    <script type="text/javascript" src="__PUBLIC__/Home/js/main.js" ></script>
+    <script type="text/javascript" src="__PUBLIC__/Home/js/mh_dialog.js" ></script>
+    <script type="text/javascript" src="__PUBLIC__/Home/js/jquery.form.js" ></script>
+    <script type="text/javascript" src="__PUBLIC__/Home/js/laydate.js"></script>
+</head>
+<body>
+<div class="container clearfix">
+    <div class="main-wrap">
+        <div class="crumb-wrap">
+            <div class="crumb-list"><i class="icon-font"></i><a target="_top" href="__ROOT__/">首页</a><span class="crumb-step">&gt;</span><a class="crumb-name" href="index.html">简历列表</a><span class="crumb-step">&gt;</span><span>编辑简历</span></div>
+        </div>
+        <div class="result-wrap">
+            <div class="result-content">
+                <form class="registerform" name="theForm" id="theForm" action="__URL__/edit" method="post" enctype="multipart/form-data">
+                    <table class="insert-tab" width="100%">
+                        <tbody>
+                            <tr>
+                                <th>编号：</th>
+                                <td><input class="common-text yinc" readonly="readonly" name="number" size="50" value="{$edit_list.number}"></td>
+                            </tr>
+                            <tr>
+                                <th>文档标题：</th>
+                                <td>
+                                    <input class="common-text" id="title" name="title" size="50" value="{$edit_list.title}" type="text">
+                                </td>
+                            </tr>
+                            <tr>
+                                <th><i class="require-red">*</i>应聘人：</th>
+                                <td>
+                                    <input class="common-text" id="candidates" name="candidates" size="50" value="{$edit_list.candidates}" type="text">
+                                </td>
+                            </tr>
+                            <tr>
+                                <th><i class="require-red">*</i>联系方式：</th>
+                                <td>
+                                    <input class="common-text" id="telephone" name="telephone" size="50" value="{$edit_list.telephone}" type="text">
+                                </td>
+                            </tr>
+                            <tr>
+                                <th><i class="require-red">*</i>应聘岗位：</th>
+                                <td>
+                                    <select name="position_id" id="position_id" class="required">
+                                        <option value="">请选择</option>
+                                        <volist name="pos_list" id="par">
+                                        <option value="{$key}" <if condition="$edit_list.position_id eq $key">selected="selected"</if>>{$par}</option>
+                                        </volist>
+                                    </select>
+                                </td>
+                            </tr>
+                            <tr>
+                                <th><i class="require-red">*</i>应聘部门：</th>
+                                <td>
+                                    <select name="part_id" id="part_id" class="required">
+                                        <option value="">请选择</option>
+                                        <volist name="u_map.part" id="par">
+                                        <option value="{$key}" <if condition="$edit_list.part_id eq $key">selected="selected"</if>>{$par}</option>
+                                        </volist>
+                                    </select>
+                                </td>
+                            </tr>
+                            <tr>
+                                <th>简历来源：</th>
+                                <td>
+                                    <select name="source_id" id="source_id" class="required">
+                                        <option value="">请选择</option>
+                                        <volist name="so_list" id="so">
+                                        <option value="{$key}" <if condition="$edit_list.source_id eq $key">selected="selected"</if>>{$so}</option>
+                                        </volist>
+                                    </select>
+                                    <a href="javascript:void(0);" id="jlly">补充来源选项</a>
+                                </td>
+                            </tr>
+                            <tr>
+                                <th><i class="require-red">*</i>简历附件：</th>
+                                <td>
+                                    <input id="accessories" type="file" name="accessories">
+                                    <if condition="$edit_list.accessories neq ''">
+                                    <a target="_blank" href="__URL__/false?url={$edit_list.accessories}">【查看】</a>
+                                    <else />
+                                    <a target="_blank" href="{$edit_list['accessoriess']['http_url']}">【查看】</a> 
+                                    </if>
+                                </td>
+                            </tr>
+                            <tr>
+                                <th><i class="require-red">*</i>状态：</th>
+                                <td>
+                                    <select name="stage" id="stage" class="required">
+                                        <volist name="jl_list" id="list">
+                                        <option value="{$key}" <if condition="$edit_list.stage eq $key">selected="selected"</if>>{$list}</option>
+                                        </volist>
+                                    </select>
+                                </td>
+                            </tr>
+                            <tr id="zt_rq">
+                                <th><i class="require-red">*</i>面试时间：</th>
+                                <td>
+                                    <span class="xuanze_ex">
+                                    <input type="text" <if condition="$edit_list.stage_time gt 0">value="{$edit_list.stage_time_ex}"</if> placeholder="请选择日期" name="stage_time" id="stage_time" class="laydate-icon" onClick="laydate({istime: true, format: 'YYYY-MM-DD hh:mm:ss'})"></span>                                    
+                                </td>
+                            </tr>
+                            <tr>
+                                <th>备注：</th>
+                                <td><textarea class="wtms" name="remartk" id="remartk">{$edit_list.remartk}</textarea></td>
+                            </tr>
+                            <tr>
+                                <th></th>
+                                <td>
+                                    <input type="hidden" id="id" name="id" value="{$edit_list.id}">
+                                    <input class="btn btn-primary btn6 mr10" id="submit" name="submit" value="提交" type="submit">
+                                    <input class="btn btn6" onClick="history.go(-1)" value="返回" type="button">
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </form>
+            </div>
+        </div>
+
+    </div>
+    <!--/main-->
+    <div class="fankui_tr">
+        <div class="xq_ex">
+           <div class="bd_wd"></div>
+            <div class="tcxq">
+               <form class="registerform_ex" name="theForm_ex" id="theForm_ex" action="__URL__/so_add" method="post" enctype="multipart/form-data">
+                    <table class="insert-tab" width="100%">
+                        <tbody>
+                            <tr>
+                                <th colspan="2">
+                                    <h1 class="xiangq">补充来源选项</h1>
+                                </th>
+                            </tr>
+                            <tr>
+                                <th>简历来源名称：</th>
+                                <td>
+                                    <div id="main">
+                                        <volist name="so_list" id="list" key ="k">
+                                            <div>
+                                            <input class="text_wb" type="text" value="{$list}" size="50" name="sourceid[{$key}]"/>
+                                            <if condition="$k eq 1">
+                                            <input class="but_an but_tj" type="button" id="addTextImput1" value="+"/>  
+                                            <else />
+                                            <input id="del-text" class="but_an but_sc" type="button" value="-">
+                                            </if>
+                                            </div>  
+                                        </volist>
+                                    </div>
+                                </td>
+                            </tr>
+                            <tr>
+                                <th></th>
+                                <td>
+                                    <input type="hidden" name="id" value="{$edit_list.id}">
+                                    <input class="btn btn-primary btn6 mr10" id="submit_ex" name="submit_ex" value="提交" type="submit">
+                                    <input class="btn btn6" id="over" value="取消" type="button">
+                                </td>
+                            </tr>
+                            
+                        </tbody>
+                    </table>
+                </form> 
+            </div> 
+        </div>
+    </div>
+</div>
+</body>
+<script type="text/javascript">
+    //日期皮肤
+    !function(){
+        laydate.skin('molv');//切换皮肤，请查看skins下面皮肤库
+        laydate({elem: '#demo'});//绑定元素
+    }();
+    $(function(){
+        //动态添加文本框
+        var i = 2;  
+        $('#addTextImput1').click(function(){  
+            if(i < 100) {  
+                $('#main').append('<div><input class="text_wb" size="50" type="text" name="sourceid_ex[]"/><input class="but_an but_sc" type="button" id="del-text" value="-"></div>');  
+                i++;  
+            } else {  
+                alert("最多加100个");  
+            }      
+        }); 
+    });
+    //根据进度选择时间
+    $(document).ready(function(){ 
+    　  var stage = $("#stage").val();
+
+        if (stage == 5) {
+            $("#zt_rq").show();              
+        }else{
+            $("#zt_rq").hide(); 
+        }
+　　}); 
+    $(function(){
+        $("#jlly").click(function(){
+            $(".bd_wd").css("width", $(document).width());
+            $(".bd_wd").css("height", $(document).height());
+            $(".bd_wd").show();
+            $(".tcxq").show();
+        });
+        //反馈详情关闭
+        $("#over").click(function(){
+            $(".tcxq").hide();
+            $(".bd_wd").hide(); 
+        });
+        $("#stage").change(function(){
+            var stage = $(this).val();
+            if (stage == 5) {
+                $("#zt_rq").show();   
+            }else{
+                $("#zt_rq").hide();
+            }
+        });
+        //查询结果页区域选中
+        $(".xuanze_ex").click(function(){
+          $(this).find("input[type=radio]").attr("checked", 'checked');
+        });
+        //简历来源名称修改添加
+        $("#submit_ex").click(function(){
+            var options = {
+                beforeSend:function(){
+                    $("#submit_ex").val('提交').attr('disabled',true);
+                },
+                success: function (data) {
+                    if(data){
+                      if (data == -1) {
+                        alert('添加失败！');
+                        return false;                        
+                      }else{
+                        alert('添加成功！');
+                        window.location.reload();//刷新当前页面.
+                        return false;
+                      }
+                    }
+                },
+                complete:function(){
+                    $("#submit_ex").val('提交').attr('disabled',false);
+                }
+            };
+            $("#theForm_ex").ajaxForm(options);
+        });
+        //简历信息修改提交
+        $("#submit").click(function(){
+            var candidates  = $('#candidates').val();
+            var telephone   = $('#telephone').val();
+            var position_id = $('#position_id').val();
+            var part_id     = $('#part_id').val();
+            var stage       = $('#stage').val();
+            var stage_time  = $('#stage_time').val();
+            var tmp         = document.getElementById("accessories").value; 
+            if (candidates == "") {
+                mh_dialogShow('mh_warning','应聘人不能为空！',2,true); 
+                return false;
+            } 
+            if (telephone == "") {
+                mh_dialogShow('mh_warning','联系方式不能为空！',2,true); 
+                return false;
+            }else{
+                if (!telephone.match(/^13[0-9]{9}$|14[0-9]{9}|15[0-9]{9}$|18[0-9]{9}$|17[0-9]{9}$/)) {
+                    mh_dialogShow('mh_warning','输入的手机号码有误！',2,true); 
+                    return false;
+                }
+            }  
+            if (position_id == "") {
+                mh_dialogShow('mh_warning','请选择应聘岗位！',2,true); 
+                return false;
+            } 
+            if (part_id == "") {
+                mh_dialogShow('mh_warning','请选择应聘部门！',2,true); 
+                return false;
+            } 
+            if(tmp != ""){
+                if(!/.(pdf|doc|docx|xls|xlsx|zip|rar|html|PDF|DOC|DOCX|XLS|XLSX|ZIP|HTML)$/.test(tmp)){
+                  mh_dialogShow('mh_warning','简历附件类型为.pdf,doc,docx,xls,xlsx,zip,rar,html！',2,true); 
+                  return false;
+                }
+            }
+            if (stage == 5) {
+                if (stage_time == "") {
+                    mh_dialogShow('mh_warning','请添加面试时间！',2,true); 
+                    return false;
+                }
+            }
+            var options = {
+                beforeSend:function(){
+                    $("#submit").val('提交').attr('disabled',true);
+                },
+                success: function (data) {
+                    if(data){
+                      if (data == 0) {
+                        mh_dialogShow('mh_success','修改成功!',2,true,'__APP__/Resume/index.html'); 
+                        return false;
+                      }else if(data == -1){
+                        mh_dialogShow('mh_warning','修改失败！',2,true); 
+                        return false;
+                      }else if(data == 1){
+                        mh_dialogShow('mh_warning','简历上传失败！',2,true); 
+                        return false;
+                      }else if(data == 2){
+                        mh_dialogShow('mh_warning','没有文件上传！',2,true); 
+                        return false;
+                      }else if(data == 3){
+                        mh_dialogShow('mh_warning','文件上传错误！',2,true); 
+                        return false;
+                      }else if(data == 4){
+                        mh_dialogShow('mh_warning','上传文件不能大于200kb！',2,true); 
+                        return false;
+                      }else if(data == 5){
+                        mh_dialogShow('mh_warning','上传文件格式错误！',2,true); 
+                        return false;
+                      }else if(data == 6){
+                        mh_dialogShow('mh_warning','简历附件不能为空！',2,true); 
+                        return false;
+                      }else{
+                        mh_dialogShow('mh_warning','修改失败！',2,true); 
+                        return false;
+                      }
+                    }
+                },
+                complete:function(){
+                    $("#submit").val('提交').attr('disabled',false);
+                }
+            };
+            $("#theForm").ajaxForm(options);
+        });
+    });
+</script>
+</html>
